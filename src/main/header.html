@@ -1,0 +1,510 @@
+<!doctype html>
+<html lang="tr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Başlangıç Sayfası</title>
+
+    <!-- Project Fonts -->
+    <link rel="stylesheet" href="/public/fonts/custom/font.css" />
+
+    <!-- Important Preload Fonts -->
+    <link
+      rel="preload"
+      href="/public/fonts/custom/extra-bold.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin="anonymous"
+    />
+
+    <link
+      rel="preload"
+      href="/public/fonts/custom/bold.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin="anonymous"
+    />
+
+    <link
+      rel="preload"
+      href="/public/fonts/custom/semibold.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin="anonymous"
+    />
+
+    <link
+      rel="preload"
+      href="/public/fonts/custom/medium.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin="anonymous"
+    />
+
+    <link
+      rel="preload"
+      href="/public/fonts/custom/regular.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin="anonymous"
+    />
+
+    <!-- Images -->
+    <link
+      rel="preload"
+      href="/public/images/brand-images/logo.webp"
+      as="image"
+    />
+
+    <script type="module" defer src="/main.js"></script>
+    <script type="module" defer src="/navigation.js"></script>
+    <link rel="stylesheet" href="/globals.css" />
+  </head>
+  <body class="font-custom">
+    <header class="h-[80px] w-full border-b border-gray-200">
+      <!-- Desktop Navigation -->
+      <nav
+        class="mx-auto hidden h-full max-w-7xl items-center justify-between px-4 lg:flex"
+        role="navigation"
+        aria-label="Main Navigation"
+      >
+        <div class="flex items-center gap-8">
+          <!-- Logo Section -->
+          <div class="flex-shrink-0">
+            <a href="/">
+              <img
+                src="/public/images/brand-images/logo.webp"
+                alt="MBD Travel"
+                class="h-auto w-[128px] object-scale-down"
+                loading="lazy"
+              />
+            </a>
+          </div>
+          <!-- Navigation Links -->
+          <div class="hidden text-wrap lg:block">
+            <ul class="flex gap-5 text-sm font-medium">
+              <li>
+                <a
+                  href="#"
+                  class="transition-colors duration-300 hover:text-primary-500"
+                  aria-label="Abu Dhabi Şehir Turu"
+                  >Abu Dhabi Şehir Turu</a
+                >
+              </li>
+              <li>
+                <a
+                  href="#"
+                  class="transition-colors duration-300 hover:text-primary-500"
+                  aria-label="İkonik Yerler Gezisi"
+                  >İkonik Yerler Gezisi</a
+                >
+              </li>
+              <li>
+                <a
+                  href="#"
+                  class="transition-colors duration-300 hover:text-primary-500"
+                  aria-label="Dubai Çölde Safari"
+                  >Dubai Çölde Safari</a
+                >
+              </li>
+              <li>
+                <a
+                  href="#"
+                  class="transition-colors duration-300 hover:text-primary-500"
+                  aria-label="Dubai Atlı Safari"
+                  >Dubai Atlı Safari</a
+                >
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div class="flex items-center gap-8 text-nowrap">
+          <!-- Language and Currency Selector -->
+          <button
+            id="language-currency-selector-button"
+            class="flex items-center gap-2"
+            aria-label="Select Language and Currency"
+          >
+            <img
+              src="/public/images/flags/tr.svg"
+              alt="Turkey Flag"
+              class="size-[28px] rounded-full object-cover"
+            />
+            <span class="text-sm">TL</span>
+          </button>
+          <!-- Login Link -->
+          <a href="#" class="text-sm font-semibold" aria-label="Giriş Yap">
+            Giriş Yap
+          </a>
+          <!-- Sign Up Button -->
+          <a
+            href="#"
+            class="flex h-[40px] items-center rounded-full bg-gray-200 px-7 text-center text-sm font-semibold"
+            aria-label="Üye Ol"
+          >
+            <span> Üye Ol </span>
+          </a>
+        </div>
+      </nav>
+
+      <!--  Mobile Navigation -->
+      <nav
+        data-state="closed"
+        class="group relative mx-auto flex h-full items-center justify-between px-4 lg:hidden"
+        role="navigation"
+        id="mobile-navigation"
+      >
+        <!-- Hamburger Button -->
+        <button
+          id="mobile-menu-button"
+          class="relative z-20 w-full"
+          aria-expanded="false"
+          aria-controls="mobile-navigation-content"
+          aria-label="Toggle navigation menu"
+        >
+          <img
+            src="/public/images/icons/hamburger.svg"
+            alt="Menu Icon"
+            loading="lazy"
+            class="size-[28px] group-data-[state=closed]:block group-data-[state=open]:hidden"
+          />
+          <img
+            src="/public/images/icons/hamburger-close.svg"
+            loading="lazy"
+            alt="Close Icon"
+            class="size-[28px] group-data-[state=open]:block group-data-[state=closed]:hidden"
+          />
+        </button>
+
+        <!-- Logo -->
+        <a
+          href="/"
+          class="absolute left-1/2 -translate-x-1/2"
+          aria-label="MBD Travel Home"
+        >
+          <img
+            src="/public/images/brand-images/logo.webp"
+            alt="MBD Travel"
+            class="h-auto w-[128px] object-scale-down"
+            loading="lazy"
+          />
+        </a>
+
+        <!-- Mobile Menu Overlay -->
+        <div
+          class="absolute left-0 top-0 z-10 h-screen min-h-fit w-full bg-gray-500/40 group-data-[state=closed]:hidden"
+          aria-hidden="true"
+          role="dialog"
+        >
+          <aside
+            id="mobile-navigation-content"
+            class="relative flex h-full min-h-fit w-full max-w-96 flex-col justify-between border-r border-neutral-200 bg-slate-100 shadow-lg"
+            role="menu"
+          >
+            <!-- Header Section -->
+            <section
+              class="flex w-full items-center justify-between bg-white px-6 pt-28"
+            >
+              <div class="flex items-center gap-3">
+                <img
+                  src="/public/images/icons/circle-user.svg"
+                  alt="User Icon"
+                  class="size-6"
+                />
+                <div class="flex flex-col gap-1.5">
+                  <a
+                    href="#"
+                    class="font-semibold text-primary-900 transition hover:text-primary-800"
+                    >Giriş Yapın</a
+                  >
+                  <a
+                    href="#"
+                    class="text-sm text-gray-700 transition hover:text-gray-900"
+                    >Üye Olun</a
+                  >
+                </div>
+              </div>
+              <img
+                src="/public/images/icons/chevron-right.svg"
+                alt="Chevron Right Icon"
+                class="size-5"
+              />
+            </section>
+
+            <!-- Navigation Section -->
+            <nav
+              class="flex min-h-fit w-full flex-1 flex-col justify-end overflow-y-auto bg-white px-6 py-8"
+            >
+              <!-- Sen Nasıl İstersen Section -->
+              <h4 class="mb-6 font-semibold text-primary-900">
+                Sen Nasıl İstersen
+              </h4>
+              <ul
+                class="flex w-full flex-col gap-5 border-b border-neutral-200 pb-8"
+              >
+                <li class="group flex items-center justify-between">
+                  <div class="flex items-center gap-3">
+                    <img
+                      src="/public/images/icons/circle-user.svg"
+                      alt="User Icon"
+                      class="size-6"
+                    />
+                    <a
+                      href="#"
+                      class="text-gray-700 transition group-hover:text-gray-900"
+                      >
+                          Abu Dhabi Şehir Turu
+                      </a>
+                  </div>
+                  <img
+                    src="/public/images/icons/chevron-right.svg"
+                    alt="Chevron Right Icon"
+                    class="size-5"
+                  />
+                </li>
+                <li class="group flex items-center justify-between">
+                  <div class="flex items-center gap-3">
+                    <img
+                      src="/public/images/icons/circle-user.svg"
+                      alt="User Icon"
+                      class="size-6"
+                    />
+                    <a
+                      href="#"
+                      class="text-gray-700 transition group-hover:text-gray-900"
+                      >
+                          İkonik Yerler Gezisi
+                      </a
+                    >
+                  </div>
+                  <img
+                    src="/public/images/icons/chevron-right.svg"
+                    alt="Chevron Right Icon"
+                    class="size-5"
+                  />
+                </li>
+                <li class="group flex items-center justify-between">
+                  <div class="flex items-center gap-3">
+                    <img
+                      src="/public/images/icons/circle-user.svg"
+                      alt="User Icon"
+                      class="size-6"
+                    />
+                    <a
+                      href="#"
+                      class="text-gray-700 transition group-hover:text-gray-900"
+                      >
+                          Dubai Çölde Safari
+                      </a
+                    >
+                  </div>
+                  <img
+                    src="/public/images/icons/chevron-right.svg"
+                    alt="Chevron Right Icon"
+                    class="size-5"
+                  />
+                </li>
+                <li class="group flex items-center justify-between">
+                  <div class="flex items-center gap-3">
+                    <img
+                      src="/public/images/icons/circle-user.svg"
+                      alt="User Icon"
+                      class="size-6"
+                    />
+                    <a
+                      href="#"
+                      class="text-gray-700 transition group-hover:text-gray-900"
+                      >Dubai Atlı Safari</a
+                    >
+                  </div>
+                  <img
+                    src="/public/images/icons/chevron-right.svg"
+                    alt="Chevron Right Icon"
+                    class="size-5"
+                  />
+                </li>
+              </ul>
+
+              <!-- Turkish Airlines Section -->
+              <h4 class="mb-6 mt-8 font-semibold text-primary-900">
+                MBD Travel Hakkında
+              </h4>
+              <ul
+                class="flex w-full flex-col gap-5 border-b border-neutral-200 pb-8"
+              >
+                <li class="group flex items-center justify-between">
+                  <div class="flex items-center gap-3">
+                    <img
+                      src="/public/images/icons/circle-user.svg"
+                      alt="User Icon"
+                      class="size-6"
+                    />
+                    <a
+                      href="#"
+                      class="text-gray-700 transition group-hover:text-gray-900"
+                    >
+                      Sıkça Sorulan Sorular
+                    </a>
+                  </div>
+                  <img
+                    src="/public/images/icons/chevron-right.svg"
+                    alt="Chevron Right Icon"
+                    class="size-5"
+                  />
+                </li>
+                <li class="group flex items-center justify-between">
+                  <div class="flex items-center gap-3">
+                    <img
+                      src="/public/images/icons/circle-user.svg"
+                      alt="User Icon"
+                      class="size-6"
+                    />
+                    <a
+                      href="#"
+                      class="text-gray-700 transition group-hover:text-gray-900"
+                      >Kurumsal</a
+                    >
+                  </div>
+                  <img
+                    src="/public/images/icons/chevron-right.svg"
+                    alt="Chevron Right Icon"
+                    class="size-5"
+                  />
+                </li>
+              </ul>
+
+              <!-- Language/Currency Button -->
+              <button
+                id="language-currency-selector-button-mobile"
+                class="mt-8 flex items-center gap-3 text-gray-700 transition hover:text-gray-900"
+              >
+                <img
+                  src="/public/images/flags/tr.svg"
+                  alt="Phone Icon"
+                  class="size-6 rounded-full"
+                />
+                <span>Dil/Para Birimi</span>
+              </button>
+            </nav>
+          </aside>
+        </div>
+      </nav>
+
+      <!-- Language Options -->
+      <div
+        id="language-currency-selector-options"
+        data-state="closed"
+        class="fixed inset-0 z-[40] flex items-start justify-center overflow-y-auto bg-gray-500/40 p-4 data-[state=closed]:pointer-events-none data-[state=closed]:hidden"
+      >
+        <div class="min-h-full w-full flex items-center justify-center py-4">
+          <section
+            id="language-currency-selector-options-content"
+            class="relative w-full max-w-[360px] flex flex-col gap-7 rounded-lg bg-white p-4 py-8 text-gray-950 my-auto"
+          >
+          <!-- Close Button -->
+          <div class="flex justify-end px-1">
+            <button
+              id="language-selector-closed-button"
+            >
+              <img
+                src="/public/images/icons/x.svg"
+                alt="Close Icon"
+                loading="lazy"
+                class="size-[28px] object-cover"
+              />
+            </button>
+          </div>
+          <!-- Language and Currency Selector Form -->
+          <form class="flex h-fit flex-col gap-7">
+            <h2 id="language-currency-selector-title" class="sr-only">
+              Language and Currency Selector
+            </h2>
+            <!-- Country Selector -->
+            <div class="relative" >
+              <label
+                id="country-selector-label"
+                for="country-selector"
+                class="absolute ml-4 -translate-y-1/2 bg-white text-xs"
+              >
+                Ülke
+              </label>
+              <select
+                id="country-selector"
+                name="country"
+                class="h-[50px] w-full cursor-pointer rounded-lg border border-gray-200 px-4 text-sm font-semibold hover:border-gray-600 focus:border-gray-600"
+              >
+                <option value="tr">Türkiye</option>
+                <option value="qa">Qatar</option>
+                <option value="sa">Suudi Arabistan</option>
+                <option value="om">Umman</option>
+              </select>
+              <img
+                src="/public/images/icons/chevron-down.svg"
+                alt="Arrow Down Icon"
+                loading="lazy"
+                class="absolute right-2 top-1/2 size-[24px] -translate-y-1/2 transform object-cover"
+              />
+            </div>
+            <!-- Language Selector -->
+            <div class="relative" >
+              <label
+                id="language-selector-label"
+                for="language-selector"
+                class="absolute ml-4 -translate-y-1/2 bg-white text-xs"
+              >
+                Dil
+              </label>
+              <select
+                id="language-selector"
+                name="language"
+                class="h-[50px] w-full cursor-pointer rounded-lg border border-gray-200 px-4 text-sm font-semibold hover:border-gray-600 focus:border-gray-600"
+              >
+                <option value="tr">Türkçe</option>
+                <option value="en">İngilizce</option>
+              </select>
+              <img
+                src="/public/images/icons/chevron-down.svg"
+                alt="Arrow Down Icon"
+                loading="lazy"
+                class="absolute right-2 top-1/2 size-[24px] -translate-y-1/2 transform object-cover"
+              />
+            </div>
+            <!-- Currency Selector -->
+            <div class="relative" aria-labelledby="currency-selector-label">
+              <label
+                id="currency-selector-label"
+                for="currency-selector"
+                class="absolute ml-4 -translate-y-1/2 bg-white text-xs"
+              >
+                Para Birimi
+              </label>
+              <select
+                id="currency-selector"
+                name="currency"
+                class="h-[50px] w-full cursor-pointer rounded-lg border border-gray-200 px-4 text-sm font-semibold hover:border-gray-600 focus:border-gray-600"
+              >
+                <option value="lira">TL</option>
+                <option value="euro">EURO</option>
+                <option value="usd">USD</option>
+              </select>
+              <img
+                src="/public/images/icons/chevron-down.svg"
+                alt="Arrow Down Icon"
+                loading="lazy"
+                class="absolute right-2 top-1/2 size-[24px] -translate-y-1/2 transform object-cover"
+              />
+            </div>
+            <!-- Apply Button -->
+            <button
+              type="submit"
+              id="apply-language-currency-selector-button"
+              class="h-[52px] w-full cursor-pointer rounded-lg bg-primary-500 font-semibold text-white hover:opacity-90"
+            >
+              Uygula
+            </button>
+          </form>
+        </section>
+      </div>
+    </header>
+  </body>
+</html>

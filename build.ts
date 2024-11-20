@@ -14,7 +14,7 @@ const distDir = "./dist";
 const packagesDir = path.join(srcDir, "app", "packages");
 
 // Sayfa listesini burada tanımla
-const pages = ["main", "product"]; // Sayfa listesini genişletebilirsiniz
+const scripts = ["main", "product", "navigation", "carousel"]; // Sayfa listesini genişletebilirsiniz
 
 // Eski versiyondaki izleme fonksiyonunu geri ekledim
 function copyFileRecursive(src: string, dest: string) {
@@ -33,8 +33,8 @@ function copyFileRecursive(src: string, dest: string) {
 }
 
 function copyAssets() {
-  const assetsDir = path.join(srcDir, "assets");
-  const distAssetsDir = path.join(distDir, "assets");
+  const assetsDir = path.join(srcDir, "public");
+  const distAssetsDir = path.join(distDir, "public");
   if (existsSync(assetsDir)) {
     if (!existsSync(distAssetsDir)) {
       mkdirSync(distAssetsDir, { recursive: true });
@@ -70,11 +70,11 @@ function copyHTML() {
   copyHtmlRecursive(srcDir);
 }
 
-async function buildPageSpecificTS(page: string) {
+async function buildPageSpecificTS(script: string) {
   const isMinify: boolean = false;
 
-  const entrypoint = path.join(srcDir, "app", `${page}.ts`);
-  const filename = isMinify ? `${page}.min.js` : `${page}.js`;
+  const entrypoint = path.join(srcDir, "app", `${script}.ts`);
+  const filename = isMinify ? `${script}.min.js` : `${script}.js`;
 
   if (!existsSync(distDir)) {
     mkdirSync(distDir, { recursive: true });
@@ -124,9 +124,9 @@ async function buildSharedPackages() {
 
 async function buildAll() {
   // Sayfaya özgü derlemeler
-  for (const page of pages) {
-    await buildPageSpecificTS(page);
-    // await buildPageSpecificTS(page, true);
+  for (const script of scripts) {
+    await buildPageSpecificTS(script);
+    // await buildPageSpecificTS(script, true);
   }
 
   // Shared paketleri derle
@@ -148,9 +148,9 @@ function watchFiles() {
 
       if (filename.endsWith(".ts")) {
         // Hangi dosyada değişiklik olduğuna göre ilgili derlemeyi yap
-        const page = pages.find((p) => filename.includes(`${p}.ts`));
-        if (page) {
-          await buildPageSpecificTS(page);
+        const script = scripts.find((p) => filename.includes(`${p}.ts`));
+        if (script) {
+          await buildPageSpecificTS(script);
         }
 
         if (filename.includes("packages/")) {

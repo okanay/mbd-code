@@ -6,12 +6,12 @@
     <title>Başlangıç Sayfası</title>
 
     <!-- Project Fonts -->
-    <link rel="stylesheet" href="/assets/fonts/custom/font.css" />
+    <link rel="stylesheet" href="/public/fonts/custom/font.css" />
 
     <!-- Important Preload Fonts -->
     <link
       rel="preload"
-      href="/assets/fonts/custom/extra-bold.woff2"
+      href="/public/fonts/custom/extra-bold.woff2"
       as="font"
       type="font/woff2"
       crossorigin="anonymous"
@@ -19,7 +19,7 @@
 
     <link
       rel="preload"
-      href="/assets/fonts/custom/bold.woff2"
+      href="/public/fonts/custom/bold.woff2"
       as="font"
       type="font/woff2"
       crossorigin="anonymous"
@@ -27,7 +27,7 @@
 
     <link
       rel="preload"
-      href="/assets/fonts/custom/semibold.woff2"
+      href="/public/fonts/custom/semibold.woff2"
       as="font"
       type="font/woff2"
       crossorigin="anonymous"
@@ -35,7 +35,7 @@
 
     <link
       rel="preload"
-      href="/assets/fonts/custom/medium.woff2"
+      href="/public/fonts/custom/medium.woff2"
       as="font"
       type="font/woff2"
       crossorigin="anonymous"
@@ -43,21 +43,1020 @@
 
     <link
       rel="preload"
-      href="/assets/fonts/custom/regular.woff2"
+      href="/public/fonts/custom/regular.woff2"
       as="font"
       type="font/woff2"
       crossorigin="anonymous"
+    />
+
+    <!-- Images -->
+    <link
+      rel="preload"
+      href="/public/images/brand-images/logo.webp"
+      as="image"
     />
 
     <script type="module" defer src="/main.js"></script>
+    <script type="module" defer src="/navigation.js"></script>
     <link rel="stylesheet" href="/globals.css" />
   </head>
-  <body>
-    <div
-      id="main"
-      class="absolute m-4 w-fit rounded border border-gray-200 bg-red-400 px-4 py-2 font-custom"
-    >
-      Main
-    </div>
+  <body class="font-custom">
+    <header class="h-[80px] w-full border-gray-200 lg:border-b">
+      <!-- Desktop Navigation -->
+      <nav
+        class="mx-auto hidden h-full max-w-7xl items-center justify-between px-4 lg:flex"
+        role="navigation"
+        aria-label="Main Navigation"
+      >
+        <div class="flex items-center gap-8">
+          <!-- Logo Section -->
+          <div class="flex-shrink-0">
+            <a href="/">
+              <img
+                src="/public/images/brand-images/logo.webp"
+                alt="MBD Travel"
+                class="h-auto w-[128px] object-scale-down"
+                loading="lazy"
+              />
+            </a>
+          </div>
+          <!-- Navigation Links -->
+          <div class="hidden text-wrap lg:block">
+            <ul class="flex gap-5 text-sm font-medium">
+              <li>
+                <a
+                  href="#"
+                  class="transition-colors duration-300 hover:text-primary-500"
+                  aria-label="Abu Dhabi Şehir Turu"
+                  >Abu Dhabi Şehir Turu</a
+                >
+              </li>
+              <li>
+                <a
+                  href="#"
+                  class="transition-colors duration-300 hover:text-primary-500"
+                  aria-label="İkonik Yerler Gezisi"
+                  >İkonik Yerler Gezisi</a
+                >
+              </li>
+              <li>
+                <a
+                  href="#"
+                  class="transition-colors duration-300 hover:text-primary-500"
+                  aria-label="Dubai Çölde Safari"
+                  >Dubai Çölde Safari</a
+                >
+              </li>
+              <li>
+                <a
+                  href="#"
+                  class="transition-colors duration-300 hover:text-primary-500"
+                  aria-label="Dubai Atlı Safari"
+                  >Dubai Atlı Safari</a
+                >
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div class="flex items-center gap-8 text-nowrap">
+          <!-- Language and Currency Selector -->
+          <button
+            id="language-currency-selector-button"
+            class="flex items-center gap-2 transition-opacity duration-300 hover:opacity-75"
+            aria-label="Select Language and Currency"
+          >
+            <img
+              src="/public/images/flags/tr.svg"
+              alt="Turkey Flag"
+              class="size-[28px] rounded-full object-cover"
+            />
+            <span class="text-sm">TL</span>
+          </button>
+          <!-- Login Link -->
+          <a
+            href="#"
+            class="text-sm font-semibold transition-opacity duration-300 hover:opacity-75"
+            aria-label="Giriş Yap"
+          >
+            Giriş Yap
+          </a>
+          <!-- Sign Up Button -->
+          <a
+            href="#"
+            class="flex h-[40px] items-center rounded-full bg-gray-200 px-7 text-center text-sm font-semibold transition-opacity duration-300 hover:opacity-75"
+            aria-label="Üye Ol"
+          >
+            <span> Üye Ol </span>
+          </a>
+        </div>
+      </nav>
+
+      <!--  Mobile Navigation -->
+      <nav
+        data-state="closed"
+        class="group relative z-[8000] mx-auto flex h-full items-center justify-between px-4 lg:hidden"
+        role="navigation"
+        id="mobile-navigation"
+      >
+        <!-- Hamburger Button -->
+        <button
+          id="mobile-menu-button"
+          class="relative z-20 w-full"
+          aria-expanded="false"
+          aria-controls="mobile-navigation-content"
+          aria-label="Toggle navigation menu"
+        >
+          <img
+            src="/public/images/icons/hamburger.svg"
+            alt="Menu Icon"
+            loading="lazy"
+            class="size-[32px] group-data-[state=closed]:block group-data-[state=open]:hidden"
+          />
+          <img
+            src="/public/images/icons/hamburger-close.svg"
+            loading="lazy"
+            alt="Close Icon"
+            class="size-[32px] group-data-[state=open]:block group-data-[state=closed]:hidden"
+          />
+        </button>
+
+        <!-- Logo -->
+        <a
+          href="/"
+          class="absolute left-1/2 -translate-x-1/2"
+          aria-label="MBD Travel Home"
+        >
+          <img
+            src="/public/images/brand-images/logo.webp"
+            alt="MBD Travel"
+            class="h-auto w-[128px] object-scale-down"
+            loading="lazy"
+          />
+        </a>
+
+        <!-- Mobile Menu Overlay -->
+        <div
+          class="absolute left-0 top-0 z-10 h-screen min-h-fit w-full bg-gray-500/40 group-data-[state=closed]:hidden"
+          aria-hidden="true"
+          role="dialog"
+        >
+          <aside
+            id="mobile-navigation-content"
+            class="flex h-full max-h-[100vh] w-full max-w-96 flex-col justify-between overflow-y-auto border-r border-neutral-200 bg-slate-100 shadow-lg"
+            style="scrollbar-width: none"
+            role="menu"
+          >
+            <!-- Header Section -->
+            <section
+              class="flex w-full items-center justify-between bg-white px-6 pt-28"
+            >
+              <div class="flex items-center gap-3">
+                <img
+                  src="/public/images/icons/circle-user.svg"
+                  alt="User Icon"
+                  class="size-6"
+                />
+                <div class="flex flex-col gap-1.5">
+                  <a
+                    href="#"
+                    class="font-semibold text-primary-900 transition hover:text-primary-800"
+                    >Giriş Yapın</a
+                  >
+                  <a
+                    href="#"
+                    class="text-sm text-gray-700 transition hover:text-gray-900"
+                    >Üye Olun</a
+                  >
+                </div>
+              </div>
+              <img
+                src="/public/images/icons/chevron-right.svg"
+                alt="Chevron Right Icon"
+                class="size-5"
+              />
+            </section>
+
+            <!-- Navigation Section -->
+            <nav
+              class="flex h-fit w-full flex-1 flex-col justify-end bg-white px-6 py-8"
+            >
+              <!-- Sen Nasıl İstersen Section -->
+              <h4 class="mb-6 font-semibold text-primary-900">
+                Sen Nasıl İstersen
+              </h4>
+              <ul
+                class="flex w-full flex-col gap-5 border-b border-neutral-200 pb-8"
+              >
+                <li class="group flex items-center justify-between">
+                  <div class="flex items-center gap-3">
+                    <img
+                      src="/public/images/icons/circle-user.svg"
+                      alt="User Icon"
+                      class="size-6"
+                    />
+                    <a
+                      href="#"
+                      class="text-gray-700 transition group-hover:text-gray-900"
+                    >
+                      Abu Dhabi Şehir Turu
+                    </a>
+                  </div>
+                  <img
+                    src="/public/images/icons/chevron-right.svg"
+                    alt="Chevron Right Icon"
+                    class="size-5"
+                  />
+                </li>
+                <li class="group flex items-center justify-between">
+                  <div class="flex items-center gap-3">
+                    <img
+                      src="/public/images/icons/circle-user.svg"
+                      alt="User Icon"
+                      class="size-6"
+                    />
+                    <a
+                      href="#"
+                      class="text-gray-700 transition group-hover:text-gray-900"
+                    >
+                      İkonik Yerler Gezisi
+                    </a>
+                  </div>
+                  <img
+                    src="/public/images/icons/chevron-right.svg"
+                    alt="Chevron Right Icon"
+                    class="size-5"
+                  />
+                </li>
+                <li class="group flex items-center justify-between">
+                  <div class="flex items-center gap-3">
+                    <img
+                      src="/public/images/icons/circle-user.svg"
+                      alt="User Icon"
+                      class="size-6"
+                    />
+                    <a
+                      href="#"
+                      class="text-gray-700 transition group-hover:text-gray-900"
+                    >
+                      Dubai Çölde Safari
+                    </a>
+                  </div>
+                  <img
+                    src="/public/images/icons/chevron-right.svg"
+                    alt="Chevron Right Icon"
+                    class="size-5"
+                  />
+                </li>
+                <li class="group flex items-center justify-between">
+                  <div class="flex items-center gap-3">
+                    <img
+                      src="/public/images/icons/circle-user.svg"
+                      alt="User Icon"
+                      class="size-6"
+                    />
+                    <a
+                      href="#"
+                      class="text-gray-700 transition group-hover:text-gray-900"
+                      >Dubai Atlı Safari</a
+                    >
+                  </div>
+                  <img
+                    src="/public/images/icons/chevron-right.svg"
+                    alt="Chevron Right Icon"
+                    class="size-5"
+                  />
+                </li>
+              </ul>
+
+              <!-- Turkish Airlines Section -->
+              <h4 class="mb-6 mt-8 font-semibold text-primary-900">
+                MBD Travel Hakkında
+              </h4>
+              <ul
+                class="flex w-full flex-col gap-5 border-b border-neutral-200 pb-8"
+              >
+                <li class="group flex items-center justify-between">
+                  <div class="flex items-center gap-3">
+                    <img
+                      src="/public/images/icons/circle-user.svg"
+                      alt="User Icon"
+                      class="size-6"
+                    />
+                    <a
+                      href="#"
+                      class="text-gray-700 transition group-hover:text-gray-900"
+                    >
+                      Sıkça Sorulan Sorular
+                    </a>
+                  </div>
+                  <img
+                    src="/public/images/icons/chevron-right.svg"
+                    alt="Chevron Right Icon"
+                    class="size-5"
+                  />
+                </li>
+                <li class="group flex items-center justify-between">
+                  <div class="flex items-center gap-3">
+                    <img
+                      src="/public/images/icons/circle-user.svg"
+                      alt="User Icon"
+                      class="size-6"
+                    />
+                    <a
+                      href="#"
+                      class="text-gray-700 transition group-hover:text-gray-900"
+                      >Kurumsal</a
+                    >
+                  </div>
+                  <img
+                    src="/public/images/icons/chevron-right.svg"
+                    alt="Chevron Right Icon"
+                    class="size-5"
+                  />
+                </li>
+              </ul>
+
+              <!-- Language/Currency Button -->
+              <button
+                id="language-currency-selector-button-mobile"
+                class="mt-8 flex items-center gap-3 text-gray-700 transition hover:text-gray-900"
+              >
+                <img
+                  src="/public/images/flags/tr.svg"
+                  alt="Phone Icon"
+                  class="size-6 rounded-full"
+                />
+                <span>Dil/Para Birimi</span>
+              </button>
+            </nav>
+          </aside>
+        </div>
+      </nav>
+
+      <!-- Language Options -->
+      <div
+        id="language-currency-selector-options"
+        data-state="closed"
+        class="fixed inset-0 z-[8001] flex items-start justify-center overflow-y-auto bg-gray-500/40 p-4 data-[state=closed]:pointer-events-none data-[state=closed]:hidden"
+      >
+        <div class="flex min-h-full w-full items-center justify-center py-4">
+          <section
+            id="language-currency-selector-options-content"
+            class="relative my-auto flex w-full max-w-[360px] flex-col gap-7 rounded-lg bg-white p-4 py-8 text-gray-950"
+          >
+            <!-- Close Button -->
+            <div class="flex justify-end px-1">
+              <button id="language-selector-closed-button">
+                <img
+                  src="/public/images/icons/x.svg"
+                  alt="Close Icon"
+                  loading="lazy"
+                  class="size-[28px] object-cover"
+                />
+              </button>
+            </div>
+            <!-- Language and Currency Selector Form -->
+            <form class="flex h-fit flex-col gap-7">
+              <h2 id="language-currency-selector-title" class="sr-only">
+                Language and Currency Selector
+              </h2>
+              <!-- Country Selector -->
+              <div class="relative">
+                <label
+                  id="country-selector-label"
+                  for="country-selector"
+                  class="absolute ml-4 -translate-y-1/2 bg-white text-xs"
+                >
+                  Ülke
+                </label>
+                <select
+                  id="country-selector"
+                  name="country"
+                  class="h-[50px] w-full cursor-pointer rounded-lg border border-gray-200 px-4 text-sm font-semibold hover:border-gray-600 focus:border-gray-600"
+                >
+                  <option value="tr">Türkiye</option>
+                  <option value="qa">Qatar</option>
+                  <option value="sa">Suudi Arabistan</option>
+                  <option value="om">Umman</option>
+                </select>
+                <img
+                  src="/public/images/icons/chevron-down.svg"
+                  alt="Arrow Down Icon"
+                  loading="lazy"
+                  class="absolute right-2 top-1/2 size-[24px] -translate-y-1/2 transform object-cover"
+                />
+              </div>
+              <!-- Language Selector -->
+              <div class="relative">
+                <label
+                  id="language-selector-label"
+                  for="language-selector"
+                  class="absolute ml-4 -translate-y-1/2 bg-white text-xs"
+                >
+                  Dil
+                </label>
+                <select
+                  id="language-selector"
+                  name="language"
+                  class="h-[50px] w-full cursor-pointer rounded-lg border border-gray-200 px-4 text-sm font-semibold hover:border-gray-600 focus:border-gray-600"
+                >
+                  <option value="tr">Türkçe</option>
+                  <option value="en">İngilizce</option>
+                </select>
+                <img
+                  src="/public/images/icons/chevron-down.svg"
+                  alt="Arrow Down Icon"
+                  loading="lazy"
+                  class="absolute right-2 top-1/2 size-[24px] -translate-y-1/2 transform object-cover"
+                />
+              </div>
+              <!-- Currency Selector -->
+              <div class="relative" aria-labelledby="currency-selector-label">
+                <label
+                  id="currency-selector-label"
+                  for="currency-selector"
+                  class="absolute ml-4 -translate-y-1/2 bg-white text-xs"
+                >
+                  Para Birimi
+                </label>
+                <select
+                  id="currency-selector"
+                  name="currency"
+                  class="h-[50px] w-full cursor-pointer rounded-lg border border-gray-200 px-4 text-sm font-semibold hover:border-gray-600 focus:border-gray-600"
+                >
+                  <option value="lira">TL</option>
+                  <option value="euro">EURO</option>
+                  <option value="usd">USD</option>
+                </select>
+                <img
+                  src="/public/images/icons/chevron-down.svg"
+                  alt="Arrow Down Icon"
+                  loading="lazy"
+                  class="absolute right-2 top-1/2 size-[24px] -translate-y-1/2 transform object-cover"
+                />
+              </div>
+              <!-- Apply Button -->
+              <button
+                type="submit"
+                id="apply-language-currency-selector-button"
+                class="h-[52px] w-full cursor-pointer rounded-lg bg-primary-500 font-semibold text-white hover:opacity-90"
+              >
+                Uygula
+              </button>
+            </form>
+          </section>
+        </div>
+      </div>
+    </header>
+
+    <main class="space-y-8 pb-16">
+      <!-- HERO -->
+      <section
+        class="mx-auto mt-[24px] flex w-full max-w-7xl flex-col gap-8 lg:mt-[32px]"
+      >
+        <div class="grid grid-cols-6 grid-rows-4 gap-x-6 gap-y-8 lg:px-6">
+          <!-- Main Hero Section -->
+          <div
+            class="relative col-span-full row-span-4 flex h-[320px] flex-col items-start justify-center overflow-hidden border border-gray-200 bg-white px-2 py-8 sm:h-[380px] sm:px-8 sm:py-8 lg:col-span-4 lg:rounded-2xl"
+          >
+            <!-- Placeholder for Background Image -->
+            <div
+              class="absolute left-0 top-0 z-10 h-full w-[160%] justify-end bg-gray-100 sm:flex sm:h-[150%] sm:w-[150%]"
+            >
+              <img
+                src="/public/images/gallery/1-blur.webp"
+                data-src="/public/images/gallery/1.jpg"
+                alt="Hero Image"
+                class="lazy-load h-full w-full translate-x-[-8%] object-cover sm:translate-x-[-10%] sm:translate-y-[-30%]"
+                style="filter: blur(10px); transition: filter 0.3s ease"
+              />
+            </div>
+
+            <div
+              class="relative z-20 flex h-full max-w-[280px] flex-col gap-6 rounded-bl-xl rounded-br-3xl rounded-tl-3xl rounded-tr-xl border border-gray-200 bg-white p-6 sm:max-w-[360px]"
+            >
+              <h1 class="text-2xl font-semibold sm:text-4xl sm:leading-10">
+                Dubai’de Rüya gibi Balayı Tatili %20 İndirimli!
+              </h1>
+              <p class="text-pretty text-xs sm:text-sm">
+                Dubai tatilinizi MBD Travel ile planlayın, size özel sunulan %20
+                indiriminizi <br />
+                yakalayın.
+              </p>
+            </div>
+          </div>
+          <!-- Secondary Section 1 -->
+          <div
+            class="relative col-span-2 col-start-5 row-span-2 hidden overflow-hidden rounded-2xl border border-gray-200 bg-white lg:flex"
+          >
+            <!-- Placeholder for Image -->
+            <div class="h-full w-[45%] bg-gray-100">
+              <img
+                src="/public/images/gallery/2-blur.webp"
+                data-src="/public/images/gallery/2.jpg"
+                alt="Hero Image"
+                class="lazy-load h-full w-full object-cover"
+                style="filter: blur(10px); transition: filter 0.3s ease"
+              />
+            </div>
+            <div class="flex w-[55%] flex-col justify-center gap-4 px-6">
+              <h4 class="font-medium leading-5">
+                Dünya’nın Sayılı Camilerinden Biri: Şeyh Zayid Cami
+              </h4>
+
+              <a
+                href="#"
+                class="flex items-center justify-between transition-all duration-300 hover:scale-105 active:scale-100"
+              >
+                <span> Fırsatları Göster </span>
+                <img
+                  src="/public/images/icons/chevron-right.svg"
+                  alt="Arrow Right Icon"
+                  loading="lazy"
+                  class="size-[24px] transform object-cover"
+                />
+              </a>
+            </div>
+          </div>
+          <!-- Secondary Section 2 -->
+          <div
+            class="relative col-span-2 col-start-5 row-span-2 row-start-3 hidden overflow-hidden rounded-2xl border border-gray-200 bg-white lg:flex"
+          >
+            <!-- Placeholder for Image -->
+            <div class="h-full w-[45%] bg-gray-100">
+              <img
+                src="/public/images/gallery/3-blur.webp"
+                data-src="/public/images/gallery/3.jpg"
+                alt="Hero Image"
+                class="lazy-load h-full w-full object-cover"
+                style="filter: blur(10px); transition: filter 0.3s ease"
+              />
+            </div>
+            <div class="flex w-[55%] flex-col justify-center gap-4 px-6">
+              <h4 class="font-medium leading-5">
+                Mistik, Görkemli ve Modern: Dubai
+              </h4>
+
+              <a
+                href="#"
+                class="flex items-center justify-between transition-all duration-300 hover:scale-105 active:scale-100"
+              >
+                <span> Fırsatları Göster </span>
+                <img
+                  src="/public/images/icons/chevron-right.svg"
+                  alt="Arrow Right Icon"
+                  loading="lazy"
+                  class="size-[24px] transform object-cover"
+                />
+              </a>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Carousel Section -->
+      <section class="relative mx-auto flex max-w-7xl justify-center">
+        <ul
+          class="pointer-events-none absolute top-0 z-[99] flex h-full w-full max-w-[100vw] items-center justify-between px-6"
+        >
+          <button
+            id="prev-btn"
+            class="pointer-events-auto rounded-full bg-gray-200 p-2 hover:bg-gray-300 focus:outline-none disabled:cursor-not-allowed disabled:hover:bg-gray-200 xl:translate-x-[-40%]"
+          >
+            <img
+              src="/public/images/icons/chevron-left.svg"
+              alt="Previous"
+              loading="lazy"
+              class="size-[24px]"
+            />
+          </button>
+          <button
+            id="next-btn"
+            class="pointer-events-auto rounded-full bg-gray-200 p-2 hover:bg-gray-300 focus:outline-none disabled:cursor-not-allowed disabled:hover:bg-gray-200 xl:translate-x-[40%]"
+          >
+            <img
+              src="/public/images/icons/chevron-right.svg"
+              alt="Next"
+              loading="lazy"
+              class="size-[24px]"
+            />
+          </button>
+        </ul>
+        <ul
+          id="activity-list"
+          class="pointer-events-auto flex space-x-4 overflow-x-auto px-4"
+          aria-label="Dubai Aktiviteleri"
+          style="scrollbar-width: none; -ms-overflow-style: none"
+        >
+          <a
+            href="#"
+            class="group relative z-40 w-[220px] flex-shrink-0 py-2 transition-all duration-300 active:scale-[98%]"
+            itemscope
+            itemtype="http://schema.org/Event"
+          >
+            <div
+              class="flex gap-2 rounded-lg border border-gray-200 bg-white p-2 transition-colors duration-300 group-hover:border-primary-700"
+            >
+              <!-- Placeholder Image -->
+              <div
+                class="size-[52px] flex-shrink-0 overflow-hidden rounded-lg bg-gray-100"
+                role="img"
+                aria-label="Dubai Akşam Yemeği Etkinliği Görseli"
+              >
+                <img
+                  src="/public/images/gallery/4-blur.webp"
+                  data-src="/public/images/gallery/4.jpg"
+                  alt="Hero Image"
+                  class="lazy-load h-full object-cover"
+                  style="filter: blur(10px); transition: filter 0.3s ease"
+                />
+              </div>
+              <div class="flex flex-col justify-center">
+                <h3 class="text-pretty text-xs font-medium" itemprop="name">
+                  Dubai Gökyüzünde Akşam Yemeği
+                </h3>
+              </div>
+            </div>
+          </a>
+
+          <a
+            href="#"
+            class="group relative z-40 w-[220px] flex-shrink-0 py-2 transition-all duration-300 active:scale-[98%]"
+            itemscope
+            itemtype="http://schema.org/Event"
+          >
+            <div
+              class="flex gap-2 rounded-lg border border-gray-200 bg-white p-2 transition-colors duration-300 group-hover:border-primary-700"
+            >
+              <!-- Placeholder Image -->
+              <div
+                class="size-[52px] flex-shrink-0 rounded-lg bg-gray-100"
+                role="img"
+                aria-label="Dubai Akşam Yemeği Etkinliği Görseli"
+              ></div>
+              <div class="flex flex-col justify-center">
+                <h3 class="text-pretty text-xs font-medium" itemprop="name">
+                  Deep Dive Dubai
+                </h3>
+              </div>
+            </div>
+          </a>
+
+          <a
+            href="#"
+            class="group relative z-40 w-[220px] flex-shrink-0 py-2 transition-all duration-300 active:scale-[98%]"
+            itemscope
+            itemtype="http://schema.org/Event"
+          >
+            <div
+              class="flex gap-2 rounded-lg border border-gray-200 bg-white p-2 transition-colors duration-300 group-hover:border-primary-700"
+            >
+              <!-- Placeholder Image -->
+              <div
+                class="size-[52px] flex-shrink-0 rounded-lg bg-gray-100"
+                role="img"
+                aria-label="Dubai Akşam Yemeği Etkinliği Görseli"
+              ></div>
+              <div class="flex flex-col justify-center">
+                <h3 class="text-pretty text-xs font-medium" itemprop="name">
+                  Evlilik Teklifinize Özel %20 İndirim
+                </h3>
+              </div>
+            </div>
+          </a>
+
+          <a
+            href="#"
+            class="group relative z-40 w-[220px] flex-shrink-0 py-2 transition-all duration-300 active:scale-[98%]"
+            itemscope
+            itemtype="http://schema.org/Event"
+          >
+            <div
+              class="flex gap-2 rounded-lg border border-gray-200 bg-white p-2 transition-colors duration-300 group-hover:border-primary-700"
+            >
+              <!-- Placeholder Image -->
+              <div
+                class="size-[52px] flex-shrink-0 rounded-lg bg-gray-100"
+                role="img"
+                aria-label="Dubai Akşam Yemeği Etkinliği Görseli"
+              ></div>
+              <div class="flex flex-col justify-center">
+                <h3 class="text-pretty text-xs font-medium" itemprop="name">
+                  Dubai Sonsuzluk Havuzu
+                </h3>
+              </div>
+            </div>
+          </a>
+
+          <a
+            href="#"
+            class="group relative z-40 w-[220px] flex-shrink-0 py-2 transition-all duration-300 active:scale-[98%]"
+            itemscope
+            itemtype="http://schema.org/Event"
+          >
+            <div
+              class="flex gap-2 rounded-lg border border-gray-200 bg-white p-2 transition-colors duration-300 group-hover:border-primary-700"
+            >
+              <!-- Placeholder Image -->
+              <div
+                class="size-[52px] flex-shrink-0 rounded-lg bg-gray-100"
+                role="img"
+                aria-label="Dubai Akşam Yemeği Etkinliği Görseli"
+              ></div>
+              <div class="flex flex-col justify-center">
+                <h3 class="text-pretty text-xs font-medium" itemprop="name">
+                  Dubai Jetcar Su Aktivitesi
+                </h3>
+              </div>
+            </div>
+          </a>
+        </ul>
+      </section>
+
+      <!-- Activity -->
+      <section class="mx-auto max-w-7xl space-y-8 px-6">
+        <h2 class="text-2xl font-semibold">Dubai Etkinlikleri</h2>
+        <ul class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
+          <a
+            href="#"
+            class="relative flex h-[300px] flex-col overflow-hidden rounded-lg border border-gray-200 transition-all duration-300 hover:border-primary-800 active:scale-[99%]"
+            aria-label="Lüks Safari Platinium Heritage"
+          >
+            <!-- Placeholder Image -->
+            <div
+              class="h-1/2 flex-shrink-0 rounded-b-xl bg-gray-100"
+              role="img"
+              aria-label="Lüks Safari Platinium Heritage Görseli"
+            ></div>
+
+            <div
+              class="flex h-full max-w-[75%] flex-col items-start justify-center gap-y-4 px-6"
+            >
+              <!-- Başlık -->
+              <h5 class="text-lg font-semibold">
+                Lüks Safari Platinium Heritage
+              </h5>
+              <div class="flex items-center gap-2">
+                <!-- Derecelendirme -->
+                <div
+                  class="rounded-custom flex items-center justify-center bg-primary-400 px-2.5 py-0.5 text-center text-xs text-white"
+                >
+                  <span class="font-semibold">4.9</span>
+                  <span>/5</span>
+                </div>
+                <p class="font-medium">Mükemmel</p>
+              </div>
+            </div>
+          </a>
+
+          <a
+            href="#"
+            class="relative flex h-[300px] flex-col overflow-hidden rounded-lg border border-gray-200 transition-all duration-300 hover:border-primary-800 active:scale-[99%]"
+            aria-label="Lüks Safari Platinium Heritage"
+          >
+            <!-- Placeholder Image -->
+            <div
+              class="h-1/2 flex-shrink-0 rounded-b-xl bg-gray-100"
+              role="img"
+              aria-label="Lüks Safari Platinium Heritage Görseli"
+            ></div>
+
+            <div
+              class="flex h-full max-w-[75%] flex-col items-start justify-center gap-y-4 px-6"
+            >
+              <!-- Başlık -->
+              <h5 class="text-lg font-semibold">
+                Deluxe Safari Royal Al Sahara
+              </h5>
+              <div class="flex items-center gap-2">
+                <!-- Derecelendirme -->
+                <div
+                  class="rounded-custom flex items-center justify-center bg-primary-400 px-2.5 py-0.5 text-center text-xs text-white"
+                >
+                  <span class="font-semibold">4.9</span>
+                  <span>/5</span>
+                </div>
+                <p class="font-medium">Mükemmel</p>
+              </div>
+            </div>
+          </a>
+
+          <a
+            href="#"
+            class="relative flex h-[300px] flex-col overflow-hidden rounded-lg border border-gray-200 transition-all duration-300 hover:border-primary-800 active:scale-[99%]"
+            aria-label="Lüks Safari Platinium Heritage"
+          >
+            <!-- Placeholder Image -->
+            <div
+              class="h-1/2 flex-shrink-0 rounded-b-xl bg-gray-100"
+              role="img"
+              aria-label="Lüks Safari Platinium Heritage Görseli"
+            ></div>
+
+            <div
+              class="flex h-full max-w-[75%] flex-col items-start justify-center gap-y-4 px-6"
+            >
+              <!-- Başlık -->
+              <h5 class="text-lg font-semibold">Dubai Şehir Turu</h5>
+              <div class="flex items-center gap-2">
+                <!-- Derecelendirme -->
+                <div
+                  class="rounded-custom flex items-center justify-center bg-primary-400 px-2.5 py-0.5 text-center text-xs text-white"
+                >
+                  <span class="font-semibold">4.9</span>
+                  <span>/5</span>
+                </div>
+                <p class="font-medium">Mükemmel</p>
+              </div>
+            </div>
+          </a>
+
+          <a
+            href="#"
+            class="relative flex h-[300px] flex-col overflow-hidden rounded-lg border border-gray-200 transition-all duration-300 hover:border-primary-800 active:scale-[99%]"
+            aria-label="Lüks Safari Platinium Heritage"
+          >
+            <!-- Placeholder Image -->
+            <div
+              class="h-1/2 flex-shrink-0 rounded-b-xl bg-gray-100"
+              role="img"
+              aria-label="Lüks Safari Platinium Heritage Görseli"
+            ></div>
+
+            <div
+              class="flex h-full max-w-[75%] flex-col items-start justify-center gap-y-4 px-6"
+            >
+              <!-- Başlık -->
+              <h5 class="text-lg font-semibold">Abu Dhabi Çöl Safari</h5>
+              <div class="flex items-center gap-2">
+                <!-- Derecelendirme -->
+                <div
+                  class="rounded-custom flex items-center justify-center bg-primary-400 px-2.5 py-0.5 text-center text-xs text-white"
+                >
+                  <span class="font-semibold">4.9</span>
+                  <span>/5</span>
+                </div>
+                <p class="font-medium">Mükemmel</p>
+              </div>
+            </div>
+          </a>
+        </ul>
+      </section>
+
+      <!-- Most Popular -->
+      <section class="mx-auto max-w-7xl space-y-8">
+        <h2 class="px-6 text-2xl font-semibold">En Çok Arananlar</h2>
+        <!-- Carousel Section -->
+        <div class="relative mx-auto flex max-w-7xl justify-center">
+          <ul
+            class="pointer-events-none absolute top-0 z-[99] flex h-full w-full max-w-[100vw] items-center justify-between px-6"
+          >
+            <button
+              id="prev-btn-most-popular"
+              class="pointer-events-auto rounded-full bg-gray-200 p-2 hover:bg-gray-300 focus:outline-none disabled:cursor-not-allowed disabled:hover:bg-gray-200 xl:translate-x-[-40%]"
+            >
+              <img
+                src="/public/images/icons/chevron-left.svg"
+                alt="Previous"
+                loading="lazy"
+                class="size-[24px]"
+              />
+            </button>
+            <button
+              id="next-btn-most-popular"
+              class="pointer-events-auto rounded-full bg-gray-200 p-2 hover:bg-gray-300 focus:outline-none disabled:cursor-not-allowed disabled:hover:bg-gray-200 xl:translate-x-[40%]"
+            >
+              <img
+                src="/public/images/icons/chevron-right.svg"
+                alt="Next"
+                loading="lazy"
+                class="size-[24px]"
+              />
+            </button>
+          </ul>
+          <ul
+            id="activity-list-most-popular"
+            class="pointer-events-auto flex space-x-4 overflow-x-auto px-4"
+            aria-label="Dubai Aktiviteleri"
+            style="scrollbar-width: none; -ms-overflow-style: none"
+          >
+            <a
+              href="#"
+              class="group relative z-40 w-[220px] flex-shrink-0 py-2 transition-all duration-300 active:scale-[98%]"
+              itemscope
+              itemtype="http://schema.org/Event"
+            >
+              <div
+                class="flex gap-2 rounded-lg border border-gray-200 bg-white p-2 transition-colors duration-300 group-hover:border-primary-700"
+              >
+                <!-- Placeholder Image -->
+                <div
+                  class="size-[52px] flex-shrink-0 rounded-lg bg-gray-100"
+                  role="img"
+                ></div>
+                <div class="flex flex-col justify-center text-xs">
+                  <h4 class="text-pretty font-semibold" itemprop="name">
+                    Dubai Araç Kiralama
+                  </h4>
+                  <p>Araç Kataloğu ve Fiyatlar</p>
+                </div>
+              </div>
+            </a>
+
+            <a
+              href="#"
+              class="group relative z-40 w-[220px] flex-shrink-0 py-2 transition-all duration-300 active:scale-[98%]"
+              itemscope
+              itemtype="http://schema.org/Event"
+            >
+              <div
+                class="flex gap-2 rounded-lg border border-gray-200 bg-white p-2 transition-colors duration-300 group-hover:border-primary-700"
+              >
+                <!-- Placeholder Image -->
+                <div
+                  class="size-[52px] flex-shrink-0 rounded-lg bg-gray-100"
+                  role="img"
+                ></div>
+                <div class="flex flex-col justify-center text-xs">
+                  <h4 class="text-pretty font-semibold" itemprop="name">
+                    Dubai Vizesi
+                  </h4>
+                  <p>Başvuru Süreci</p>
+                </div>
+              </div>
+            </a>
+
+            <a
+              href="#"
+              class="group relative z-40 w-[220px] flex-shrink-0 py-2 transition-all duration-300 active:scale-[98%]"
+              itemscope
+              itemtype="http://schema.org/Event"
+            >
+              <div
+                class="flex gap-2 rounded-lg border border-gray-200 bg-white p-2 transition-colors duration-300 group-hover:border-primary-700"
+              >
+                <!-- Placeholder Image -->
+                <div
+                  class="size-[52px] flex-shrink-0 rounded-lg bg-gray-100"
+                  role="img"
+                ></div>
+                <div class="flex flex-col justify-center text-xs">
+                  <h4 class="text-pretty font-semibold" itemprop="name">
+                    Dubai Helikopter Turu
+                  </h4>
+                  <p>Paket Seçimi</p>
+                </div>
+              </div>
+            </a>
+
+            <a
+              href="#"
+              class="group relative z-40 w-[220px] flex-shrink-0 py-2 transition-all duration-300 active:scale-[98%]"
+              itemscope
+              itemtype="http://schema.org/Event"
+            >
+              <div
+                class="flex gap-2 rounded-lg border border-gray-200 bg-white p-2 transition-colors duration-300 group-hover:border-primary-700"
+              >
+                <!-- Placeholder Image -->
+                <div
+                  class="size-[52px] flex-shrink-0 rounded-lg bg-gray-100"
+                  role="img"
+                ></div>
+                <div class="flex flex-col justify-center text-xs">
+                  <h4 class="text-pretty font-semibold" itemprop="name">
+                    Ekonomik Safari
+                  </h4>
+                  <p>En Çok Tercih Edilen</p>
+                </div>
+              </div>
+            </a>
+
+            <a
+              href="#"
+              class="group relative z-40 w-[220px] flex-shrink-0 py-2 transition-all duration-300 active:scale-[98%]"
+              itemscope
+              itemtype="http://schema.org/Event"
+            >
+              <div
+                class="flex gap-2 rounded-lg border border-gray-200 bg-white p-2 transition-colors duration-300 group-hover:border-primary-700"
+              >
+                <!-- Placeholder Image -->
+                <div
+                  class="size-[52px] flex-shrink-0 rounded-lg bg-gray-100"
+                  role="img"
+                ></div>
+                <div class="flex flex-col justify-center text-xs">
+                  <h4 class="text-pretty font-semibold" itemprop="name">
+                    Abu Dhabi Turu
+                  </h4>
+                  <p>En Çok Tercih Edilen</p>
+                </div>
+              </div>
+            </a>
+          </ul>
+        </div>
+      </section>
+    </main>
   </body>
 </html>
