@@ -31,4 +31,5 @@ document.addEventListener("DOMContentLoaded", () => {
   setupCarousel("activity-list", "prev-btn", "next-btn");
   setupCarousel("most-popular", "prev-most-popular", "next-most-popular");
   setupCarousel("popular-list", "prev-popular-list", "next-popular-list");
+  setupCarousel("holiday-list", "prev-holiday-list", "next-holiday-list");
 });
