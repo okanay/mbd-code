@@ -15,48 +15,61 @@ function createCarousel(
     return;
   }
 
+  let isScrolling = false; // Scrolling lock
+
   function updateButtonStates() {
     const scrollPosition = listElement.scrollLeft;
     const maxScroll = listElement.scrollWidth - listElement.clientWidth;
-
     prevButton.disabled = scrollPosition <= 0;
     nextButton.disabled = scrollPosition >= maxScroll;
   }
 
-  function getScrollAmount(direction: "next" | "prev") {
+  function getScrollAmount() {
     const firstItem = listElement.children[0] as HTMLElement;
-    const itemWidth = firstItem.offsetWidth + extraGap;
-    const scrollAmount = itemWidth * itemsToScroll;
-
-    const maxScroll = listElement.scrollWidth - listElement.clientWidth;
-    const currentScroll = listElement.scrollLeft;
-
-    if (direction === "next") {
-      // Sınırı aşmamak için maksimum kaydırmayı kontrol et
-      return Math.min(scrollAmount, maxScroll - currentScroll);
-    } else {
-      // Sınırı aşmamak için minimum kaydırmayı kontrol et
-      return Math.min(scrollAmount, currentScroll);
-    }
+    return (firstItem.offsetWidth + extraGap) * itemsToScroll;
   }
 
-  prevButton.addEventListener("click", () => {
-    const scrollAmount = -getScrollAmount("prev");
-    listElement.scrollBy({
-      left: scrollAmount,
-      behavior: "smooth",
-    });
-    setTimeout(updateButtonStates, 300);
-  });
+  function scrollNext() {
+    if (isScrolling) return; // Prevent overlapping scrolls
+    isScrolling = true;
 
-  nextButton.addEventListener("click", () => {
-    const scrollAmount = getScrollAmount("next");
+    const scrollAmount = Math.min(
+      getScrollAmount(),
+      listElement.scrollWidth -
+        listElement.clientWidth -
+        listElement.scrollLeft,
+    );
+
     listElement.scrollBy({
       left: scrollAmount,
       behavior: "smooth",
     });
-    setTimeout(updateButtonStates, 300);
-  });
+
+    setTimeout(() => {
+      updateButtonStates();
+      isScrolling = false; // Unlock scrolling
+    }, 300); // Match this to the smooth scroll duration
+  }
+
+  function scrollPrev() {
+    if (isScrolling) return; // Prevent overlapping scrolls
+    isScrolling = true;
+
+    const scrollAmount = Math.min(getScrollAmount(), listElement.scrollLeft);
+
+    listElement.scrollBy({
+      left: -scrollAmount,
+      behavior: "smooth",
+    });
+
+    setTimeout(() => {
+      updateButtonStates();
+      isScrolling = false; // Unlock scrolling
+    }, 300); // Match this to the smooth scroll duration
+  }
+
+  prevButton.addEventListener("click", scrollPrev);
+  nextButton.addEventListener("click", scrollNext);
 
   listElement.addEventListener("scroll", updateButtonStates);
   window.addEventListener("load", updateButtonStates);
@@ -65,22 +78,8 @@ function createCarousel(
   updateButtonStates();
 
   return {
-    scrollNext: () => {
-      const scrollAmount = getScrollAmount("next");
-      listElement.scrollBy({
-        left: scrollAmount,
-        behavior: "smooth",
-      });
-      setTimeout(updateButtonStates, 300);
-    },
-    scrollPrev: () => {
-      const scrollAmount = -getScrollAmount("prev");
-      listElement.scrollBy({
-        left: scrollAmount,
-        behavior: "smooth",
-      });
-      setTimeout(updateButtonStates, 300);
-    },
+    scrollNext,
+    scrollPrev,
     updateButtonStates,
   };
 }
