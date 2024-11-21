@@ -59,11 +59,11 @@
       as="image"
     />
 
-    <link rel="stylesheet" href="/globals.css?v=5" />
+    <link rel="stylesheet" href="/globals.css?v=6" />
 
-    <script type="module" src="/lazy-image-load.js?v=5"></script>
-    <script type="module" src="/navigation.js?v=5"></script>
-    <script type="module" src="/main.js?v=5"></script>
+    <script type="module" src="/lazy-image-load.js?v=6"></script>
+    <script type="module" src="/navigation.js?v=6"></script>
+    <script type="module" src="/main.js?v=6"></script>
   </head>
   <body class="">
     <header class="h-[80px] w-full border-gray-200 lg:border-b">
@@ -406,8 +406,14 @@
             class="relative my-auto flex w-full max-w-[360px] flex-col gap-7 rounded-lg bg-white p-4 py-8 text-gray-950"
           >
             <!-- Close Button -->
-            <div class="flex justify-end px-1">
-              <button id="language-selector-closed-button">
+            <div class="flex justify-between px-1">
+              <h4 class="text-lg font-semibold text-primary-600">
+                Dil Seçenekleri
+              </h4>
+              <button
+                id="language-selector-closed-button"
+                class="transition-all duration-300 hover:opacity-75 active:scale-95"
+              >
                 <img
                   src="/public/images/icons/x.svg"
                   alt="Close Icon"
