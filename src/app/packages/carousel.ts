@@ -154,7 +154,43 @@ export function createCarousel(
     };
   }
 
+  // Hassas scroll modu için optimizasyon
+  function setupMomentumScroll(carouselList: HTMLElement) {
+    let startX = 0;
+    let startTime = 0;
+    let velocityX = 0;
+
+    carouselList.addEventListener("touchstart", (e) => {
+      startX = e.touches[0].clientX;
+      startTime = Date.now();
+      velocityX = 0;
+    });
+
+    carouselList.addEventListener("touchmove", (e) => {
+      const currentX = e.touches[0].clientX;
+      const currentTime = Date.now();
+
+      // Calculate velocity
+      velocityX = (currentX - startX) / (currentTime - startTime);
+
+      startX = currentX;
+      startTime = currentTime;
+    });
+
+    carouselList.addEventListener("touchend", () => {
+      // Apply momentum scroll
+      if (Math.abs(velocityX) > 0.1) {
+        const momentumDistance = velocityX * 100; // Adjust multiplier for desired effect
+        carouselList.scrollBy({
+          left: momentumDistance,
+          behavior: "smooth",
+        });
+      }
+    });
+  }
+
   // Touch etkileşimini başlat
+  setupMomentumScroll(carouselList);
   setupTouchInteraction();
 
   return {
