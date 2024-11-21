@@ -1,36 +1,67 @@
-import { createCarousel } from "./packages/carousel.js";
+import {
+  createCarousel,
+  enhanceCarouselPerformance,
+} from "./packages/carousel.js";
 import { lazyLoadImages } from "./packages/lazy-image-load.js";
 
-const list = document.getElementById("activity-list") as HTMLElement;
-const prevBtn = document.getElementById("prev-btn") as HTMLButtonElement;
-const nextBtn = document.getElementById("next-btn") as HTMLButtonElement;
+// Güvenli element seçimi ve null kontrolü için yardımcı fonksiyon
+function safeGetElement<T extends HTMLElement>(selector: string): T | null {
+  return document.getElementById(selector) as T | null;
+}
 
-const carousel = createCarousel(list, {
-  scrollMode: "precise",
-  snapAlign: "center",
-  itemSpacing: 16,
+// Güvenli carousel kurulum fonksiyonu
+function setupCarousel(listId: string, prevBtnId: string, nextBtnId: string) {
+  const list = safeGetElement<HTMLElement>(listId);
+  const prevBtn = safeGetElement<HTMLButtonElement>(prevBtnId);
+  const nextBtn = safeGetElement<HTMLButtonElement>(nextBtnId);
+
+  if (!list || !prevBtn || !nextBtn) {
+    console.warn(`Carousel setup failed for ${listId}. Missing elements.`);
+    return null;
+  }
+
+  // Performans geliştirmesi
+  enhanceCarouselPerformance(list);
+
+  const carousel = createCarousel(list, {
+    scrollMode: "precise",
+    snapAlign: "center",
+    itemSpacing: 16,
+  });
+
+  carousel.setupNavigationButtons(prevBtn, nextBtn);
+
+  return carousel;
+}
+
+// Sayfa yüklendiğinde çalıştır
+document.addEventListener("DOMContentLoaded", () => {
+  // Lazy load resimleri
+  lazyLoadImages(".lazy-load");
+
+  // Her iki carousel için de güvenli kurulum
+  const mainCarousel = setupCarousel("activity-list", "prev-btn", "next-btn");
+
+  const mostPopularCarousel = setupCarousel(
+    "activity-list-most-popular",
+    "prev-btn-most-popular",
+    "next-btn-most-popular",
+  );
+
+  // Opsiyonel: Hata ayıklama için carousel state'lerini logla
+  if (mainCarousel) {
+    console.log("Main Carousel Initial State:", mainCarousel.getCurrentState());
+  }
+
+  if (mostPopularCarousel) {
+    console.log(
+      "Most Popular Carousel Initial State:",
+      mostPopularCarousel.getCurrentState(),
+    );
+  }
 });
 
-carousel.setupNavigationButtons(prevBtn, nextBtn);
-carousel.scrollTo(1);
-
-const listMostPopular = document.getElementById(
-  "activity-list-most-popular",
-) as HTMLElement;
-const prevBtnMostPopular = document.getElementById(
-  "prev-btn-most-popular",
-) as HTMLButtonElement;
-const nextBtnMostPopular = document.getElementById(
-  "next-btn-most-popular",
-) as HTMLButtonElement;
-
-const carouselMost = createCarousel(listMostPopular, {
-  scrollMode: "precise",
-  snapAlign: "center",
-  itemSpacing: 16,
+// Pencere yeniden boyutlandırıldığında carousel'ı güncelle
+window.addEventListener("resize", () => {
+  // Gerekirse carousel state'ini yeniden hesaplayabilirsiniz
 });
-
-carouselMost.setupNavigationButtons(prevBtnMostPopular, nextBtnMostPopular);
-carouselMost.scrollTo(1);
-
-lazyLoadImages(".lazy-load");

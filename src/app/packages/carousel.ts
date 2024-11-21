@@ -163,3 +163,36 @@ export function createCarousel(
     setupNavigationButtons,
   };
 }
+
+export function enhanceCarouselPerformance(carouselElement: HTMLElement) {
+  // Mobil cihazlar için touch event optimizasyonu
+  let startX = 0;
+  let isDragging = false;
+
+  carouselElement.addEventListener("touchstart", (e) => {
+    startX = e.touches[0].clientX;
+    isDragging = true;
+    // Momentum scrolling için gerekli hazırlık
+    carouselElement.style.scrollSnapType = "x mandatory";
+  });
+
+  carouselElement.addEventListener("touchmove", (e) => {
+    if (!isDragging) return;
+
+    // Dikey kaydırmayı engelle
+    e.preventDefault();
+
+    const currentX = e.touches[0].clientX;
+    const diffX = startX - currentX;
+
+    // Hassas scroll kontrolü
+    carouselElement.scrollLeft += diffX;
+    startX = currentX;
+  });
+
+  carouselElement.addEventListener("touchend", () => {
+    isDragging = false;
+    // Scroll snap ayarını geri al
+    carouselElement.style.scrollSnapType = "none";
+  });
+}

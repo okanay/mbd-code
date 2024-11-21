@@ -2,7 +2,10 @@
 <html lang="tr">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    />
     <title>Başlangıç Sayfası</title>
 
     <!-- Project Fonts -->
@@ -605,7 +608,33 @@
       </section>
 
       <!-- Carousel Section -->
-      <section class="relative mx-auto flex max-w-7xl justify-center">
+      <section
+        class="relative mx-auto flex max-w-7xl justify-center overflow-hidden"
+      >
+        <div
+          class="pointer-events-none absolute top-0 z-[99] flex h-full w-full max-w-[100vw] items-center justify-between px-6"
+        >
+          <button
+            id="prev-btn"
+            class="pointer-events-auto rounded-full bg-gray-200 p-2 hover:bg-gray-300 focus:outline-none disabled:cursor-not-allowed disabled:hover:bg-gray-200 xl:translate-x-[-40%]"
+          >
+            <img
+              src="/public/images/icons/chevron-left.svg"
+              alt="Previous"
+              class="size-[24px]"
+            />
+          </button>
+          <button
+            id="next-btn"
+            class="pointer-events-auto rounded-full bg-gray-200 p-2 hover:bg-gray-300 focus:outline-none disabled:cursor-not-allowed disabled:hover:bg-gray-200 xl:translate-x-[40%]"
+          >
+            <img
+              src="/public/images/icons/chevron-right.svg"
+              alt="Next"
+              class="size-[24px]"
+            />
+          </button>
+        </div>
         <nav
           id="activity-list"
           class="hide-scrollbar pointer-events-auto flex space-x-4 overflow-x-auto px-4"
@@ -761,31 +790,6 @@
             </div>
           </a>
         </nav>
-
-        <div
-          class="pointer-events-none absolute top-0 z-[99] flex h-full w-full max-w-[100vw] items-center justify-between px-6"
-        >
-          <button
-            id="prev-btn"
-            class="pointer-events-auto rounded-full bg-gray-200 p-2 hover:bg-gray-300 focus:outline-none disabled:cursor-not-allowed disabled:hover:bg-gray-200 xl:translate-x-[-40%]"
-          >
-            <img
-              src="/public/images/icons/chevron-left.svg"
-              alt="Previous"
-              class="size-[24px]"
-            />
-          </button>
-          <button
-            id="next-btn"
-            class="pointer-events-auto rounded-full bg-gray-200 p-2 hover:bg-gray-300 focus:outline-none disabled:cursor-not-allowed disabled:hover:bg-gray-200 xl:translate-x-[40%]"
-          >
-            <img
-              src="/public/images/icons/chevron-right.svg"
-              alt="Next"
-              class="size-[24px]"
-            />
-          </button>
-        </div>
       </section>
 
       <!-- Activity -->
@@ -949,11 +953,13 @@
         </nav>
       </section>
 
-      <!-- Most Popular -->
+      <!-- Most Popular Search -->
       <section class="mx-auto max-w-7xl space-y-4">
         <h2 class="px-6 text-2xl font-semibold">En Çok Arananlar</h2>
         <!-- Carousel Section -->
-        <div class="relative mx-auto flex max-w-7xl justify-center">
+        <div
+          class="relative mx-auto flex max-w-7xl justify-center overflow-hidden"
+        >
           <div
             class="pointer-events-none absolute top-0 z-[99] flex h-full w-full max-w-[100vw] items-center justify-between px-6"
           >
@@ -980,8 +986,9 @@
           </div>
           <nav
             id="activity-list-most-popular"
-            class="hide-scrollbar pointer-events-auto flex space-x-4 overflow-x-auto px-4"
+            class="hide-scrollbar pointer-events-auto flex touch-pan-x space-x-4 overflow-x-auto px-4"
             aria-label="Dubai Aktiviteleri"
+            role="region"
           >
             <a
               href="#"

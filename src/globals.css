@@ -33,11 +33,16 @@
   }
 
   .hide-scrollbar {
+    -webkit-overflow-scrolling: touch; /* Mobil cihazlarda daha yumuşak scroll */
+    scroll-behavior: smooth; /* Daha yumuşak kaydırma */
+    overscroll-behavior-x: contain; /* Tarayıcı seviyesinde overscroll'u engelle */
+
     /*FireFox*/
     scrollbar-width: none;
     /*IE10+*/
-    -ms-overflow-style: -ms-autohiding-scrollbar;
+    -ms-overflow-style: none;
   }
+
   .hide-scrollbar::-webkit-scrollbar {
     /*Chrome, Safari, Edge*/
     display: none;
