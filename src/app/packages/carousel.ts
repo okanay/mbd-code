@@ -1,106 +1,116 @@
-function createCarousel(
+function debounce(func: Function, wait: number = 200) {
+  let timeout: number;
+  return function (this: any, ...args: any[]) {
+    const context = this;
+    clearTimeout(timeout);
+    timeout = window.setTimeout(() => {
+      func.apply(context, args);
+    }, wait);
+  };
+}
+
+export function createCarousel(
   listElement: HTMLElement,
   prevButton: HTMLButtonElement,
   nextButton: HTMLButtonElement,
-  itemsToScroll = 1,
-  extraGap = 16,
+  options: {
+    itemsToScroll?: number;
+    extraGap?: number;
+    threshold?: number;
+  } = {},
 ) {
-  if (
-    !listElement ||
-    !listElement.children.length ||
-    !prevButton ||
-    !nextButton
-  ) {
-    console.error("Invalid carousel configuration");
-    return;
-  }
+  const {
+    itemsToScroll = 1,
+    extraGap = 16,
+    threshold = 50, // Swipe threshold
+  } = options;
 
-  let isScrolling = false; // Scroll lock to prevent overlapping animations
-
-  function updateButtonStates() {
-    const scrollPosition = listElement.scrollLeft;
-    const maxScroll = listElement.scrollWidth - listElement.clientWidth;
-
-    // Disable buttons if at boundaries
-    prevButton.disabled = scrollPosition <= 0;
-    nextButton.disabled = scrollPosition >= maxScroll;
-  }
+  let startX = 0;
+  let isDragging = false;
+  let isAnimating = false;
 
   function getScrollAmount() {
     const firstItem = listElement.children[0] as HTMLElement;
     return (firstItem.offsetWidth + extraGap) * itemsToScroll;
   }
 
-  function scrollNext() {
-    if (isScrolling) return; // Prevent overlapping scrolls
-    isScrolling = true;
-
+  function updateButtonStates() {
+    const scrollPosition = listElement.scrollLeft;
     const maxScroll = listElement.scrollWidth - listElement.clientWidth;
-    const remainingScroll = maxScroll - listElement.scrollLeft;
-    const scrollAmount = Math.min(getScrollAmount(), remainingScroll);
 
-    listElement.scrollBy({
-      left: scrollAmount,
+    prevButton.disabled = scrollPosition <= 0;
+    nextButton.disabled = scrollPosition >= maxScroll;
+  }
+
+  const safeScroll = (amount: number) => {
+    if (isAnimating) return;
+
+    isAnimating = true;
+    const maxScroll = listElement.scrollWidth - listElement.clientWidth;
+    const currentScroll = listElement.scrollLeft;
+    const newScrollPosition = Math.min(
+      Math.max(0, currentScroll + amount),
+      maxScroll,
+    );
+
+    listElement.scrollTo({
+      left: newScrollPosition,
       behavior: "smooth",
     });
 
-    // Delay until scrolling animation finishes
-    setTimeout(() => {
-      updateButtonStates();
-      isScrolling = false;
-    }, 750);
-  }
-
-  function scrollPrev() {
-    if (isScrolling) return; // Prevent overlapping scrolls
-    isScrolling = true;
-
-    const scrollAmount = Math.min(getScrollAmount(), listElement.scrollLeft);
-
-    listElement.scrollBy({
-      left: -scrollAmount,
-      behavior: "smooth",
+    requestAnimationFrame(() => {
+      setTimeout(() => {
+        isAnimating = false;
+        updateButtonStates();
+      }, 300);
     });
+  };
 
-    setTimeout(() => {
-      updateButtonStates();
-      isScrolling = false;
-    }, 750);
+  // Touch Event Handlers
+  function handleTouchStart(e: TouchEvent) {
+    startX = e.touches[0].clientX;
+    isDragging = true;
   }
 
-  function resetScroll() {
-    // Prevents overscrolling if spam occurs
-    const maxScroll = listElement.scrollWidth - listElement.clientWidth;
+  function handleTouchMove(e: TouchEvent) {
+    if (!isDragging) return;
+    e.preventDefault(); // Prevent scrolling
+  }
 
-    if (listElement.scrollLeft < 0) {
-      listElement.scrollLeft = 0;
-    } else if (listElement.scrollLeft > maxScroll) {
-      listElement.scrollLeft = maxScroll;
+  function handleTouchEnd(e: TouchEvent) {
+    if (!isDragging) return;
+
+    const endX = e.changedTouches[0].clientX;
+    const diffX = startX - endX;
+
+    if (Math.abs(diffX) > threshold) {
+      diffX > 0
+        ? safeScroll(getScrollAmount())
+        : safeScroll(-getScrollAmount());
     }
+
+    isDragging = false;
   }
 
-  prevButton.addEventListener("click", scrollPrev);
-  nextButton.addEventListener("click", scrollNext);
+  // Debounced Resize Handler
+  const debouncedResize = debounce(updateButtonStates, 200);
 
-  // Reset scroll if spam or resize happens
-  listElement.addEventListener("scroll", () => {
-    resetScroll();
-    updateButtonStates();
-  });
+  // Event Listeners
+  prevButton.addEventListener("click", () => safeScroll(-getScrollAmount()));
+  nextButton.addEventListener("click", () => safeScroll(getScrollAmount()));
 
-  window.addEventListener("resize", () => {
-    resetScroll();
-    updateButtonStates();
-  });
+  listElement.addEventListener("touchstart", handleTouchStart);
+  listElement.addEventListener("touchmove", handleTouchMove);
+  listElement.addEventListener("touchend", handleTouchEnd);
 
-  // Initial setup
+  window.addEventListener("resize", debouncedResize);
+
+  // Initial Setup
   updateButtonStates();
 
   return {
-    scrollNext,
-    scrollPrev,
+    scrollNext: () => safeScroll(getScrollAmount()),
+    scrollPrev: () => safeScroll(-getScrollAmount()),
     updateButtonStates,
   };
 }
-
-export { createCarousel };
