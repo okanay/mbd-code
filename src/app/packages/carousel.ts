@@ -3,9 +3,14 @@ export function createCarousel(
   options: {
     snapAlign?: "start" | "center" | "end";
     itemSpacing?: number;
+    screenSizes?: { width: number; items: number }[];
   } = {},
 ) {
-  const { snapAlign = "start", itemSpacing = 16 } = options;
+  const {
+    snapAlign = "start",
+    itemSpacing = 16,
+    screenSizes = [{ width: 0, items: 1 }],
+  } = options;
 
   // Carousel elemanlarını al
   const items = Array.from(carouselList.children) as HTMLElement[];
@@ -15,6 +20,17 @@ export function createCarousel(
     currentIndex: 0,
     isScrolling: false,
   };
+
+  // Ekran genişliğine göre item sayısını belirle
+  function getItemsPerPage() {
+    const width = window.innerWidth;
+    for (let i = screenSizes.length - 1; i >= 0; i--) {
+      if (width >= screenSizes[i].width) {
+        return screenSizes[i].items;
+      }
+    }
+    return 1; // Default değer
+  }
 
   // Ekran genişliğini ve item boyutlarını hesapla
   function calculateMetrics() {
@@ -132,11 +148,13 @@ export function createCarousel(
     nextButton: HTMLButtonElement,
   ) {
     prevButton.addEventListener("click", () => {
-      scrollToPrecise(Math.max(state.currentIndex - 1, 0));
+      scrollToPrecise(Math.max(state.currentIndex - getItemsPerPage(), 0));
     });
 
     nextButton.addEventListener("click", () => {
-      scrollToPrecise(Math.min(state.currentIndex + 1, items.length - 1));
+      scrollToPrecise(
+        Math.min(state.currentIndex + getItemsPerPage(), items.length - 1),
+      );
     });
   }
 

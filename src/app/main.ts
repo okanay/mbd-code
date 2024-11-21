@@ -20,6 +20,11 @@ function setupCarousel(listId: string, prevBtnId: string, nextBtnId: string) {
   const carousel = createCarousel(list, {
     snapAlign: "center",
     itemSpacing: 16,
+    screenSizes: [
+      { width: 512, items: 3 },
+      { width: 768, items: 3 },
+      { width: 1024, items: 3 },
+    ],
   });
 
   carousel.setupNavigationButtons(prevBtn, nextBtn);
