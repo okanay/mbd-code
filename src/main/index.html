@@ -1,71 +1,71 @@
 <!doctype html>
 <html lang="tr">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Başlangıç Sayfası</title>
+    <head>
+      <meta charset="UTF-8" />
+      <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <title>Başlangıç Sayfası</title>
 
-    <!-- Project Fonts -->
-    <link rel="stylesheet" href="/public/fonts/custom/font.css" />
+      <!-- Project Fonts -->
+      <link rel="stylesheet" href="/public/fonts/custom/font.css" />
 
-    <!-- Important Preload Fonts -->
-    <link
-      rel="preload"
-      href="/public/fonts/custom/extra-bold.woff2"
-      as="font"
-      type="font/woff2"
-      crossorigin="anonymous"
-    />
+      <!-- Important Preload Fonts -->
+      <link
+        rel="preload"
+        href="/public/fonts/custom/extra-bold.woff2"
+        as="font"
+        type="font/woff2"
+        crossorigin="anonymous"
+      />
 
-    <link
-      rel="preload"
-      href="/public/fonts/custom/bold.woff2"
-      as="font"
-      type="font/woff2"
-      crossorigin="anonymous"
-    />
+      <link
+        rel="preload"
+        href="/public/fonts/custom/bold.woff2"
+        as="font"
+        type="font/woff2"
+        crossorigin="anonymous"
+      />
 
-    <link
-      rel="preload"
-      href="/public/fonts/custom/semibold.woff2"
-      as="font"
-      type="font/woff2"
-      crossorigin="anonymous"
-    />
+      <link
+        rel="preload"
+        href="/public/fonts/custom/semibold.woff2"
+        as="font"
+        type="font/woff2"
+        crossorigin="anonymous"
+      />
 
-    <link
-      rel="preload"
-      href="/public/fonts/custom/medium.woff2"
-      as="font"
-      type="font/woff2"
-      crossorigin="anonymous"
-    />
+      <link
+        rel="preload"
+        href="/public/fonts/custom/medium.woff2"
+        as="font"
+        type="font/woff2"
+        crossorigin="anonymous"
+      />
 
-    <link
-      rel="preload"
-      href="/public/fonts/custom/regular.woff2"
-      as="font"
-      type="font/woff2"
-      crossorigin="anonymous"
-    />
+      <link
+        rel="preload"
+        href="/public/fonts/custom/regular.woff2"
+        as="font"
+        type="font/woff2"
+        crossorigin="anonymous"
+      />
 
-    <!-- Images -->
-    <link
-      rel="preload"
-      href="/public/images/brand-images/logo.webp"
-      as="image"
-    />
+      <!-- Images -->
+      <link
+        rel="preload"
+        href="/public/images/brand-images/logo.webp"
+        as="image"
+      />
 
-    <script type="module" defer src="/main.js"></script>
-    <script type="module" defer src="/navigation.js"></script>
-    <link rel="stylesheet" href="/globals.css" />
+      <script type="module" src="/main.js"></script>
+      <script type="module" src="/navigation.js"></script>
+      <link rel="stylesheet" href="/globals.css" />
+    </head>
   </head>
   <body class="font-custom">
     <header class="h-[80px] w-full border-gray-200 lg:border-b">
       <!-- Desktop Navigation -->
       <nav
         class="mx-auto hidden h-full max-w-7xl items-center justify-between px-4 lg:flex"
-        role="navigation"
         aria-label="Main Navigation"
       >
         <div class="flex items-center gap-8">
@@ -157,7 +157,6 @@
       <nav
         data-state="closed"
         class="group relative z-[8000] mx-auto flex h-full items-center justify-between px-4 lg:hidden"
-        role="navigation"
         id="mobile-navigation"
       >
         <!-- Hamburger Button -->
@@ -203,7 +202,6 @@
             id="mobile-navigation-content"
             class="flex h-full max-h-[100vh] min-h-fit w-full max-w-96 flex-col justify-between overflow-y-auto border-r border-neutral-200 bg-slate-100 shadow-lg"
             style="scrollbar-width: none"
-            role="menu"
           >
             <!-- Header Section -->
             <section
@@ -609,7 +607,7 @@
 
       <!-- Carousel Section -->
       <section class="relative mx-auto flex max-w-7xl justify-center">
-        <ul
+        <div
           class="pointer-events-none absolute top-0 z-[99] flex h-full w-full max-w-[100vw] items-center justify-between px-6"
         >
           <button
@@ -632,8 +630,8 @@
               class="size-[24px]"
             />
           </button>
-        </ul>
-        <ul
+        </div>
+        <nav
           id="activity-list"
           class="hide-scrollbar pointer-events-auto flex space-x-4 overflow-x-auto px-4"
           aria-label="Dubai Aktiviteleri"
@@ -948,7 +946,7 @@
               </div>
             </div>
           </a>
-        </ul>
+          </nav>
       </section>
 
       <!-- Most Popular -->
@@ -956,7 +954,7 @@
         <h2 class="px-6 text-2xl font-semibold">En Çok Arananlar</h2>
         <!-- Carousel Section -->
         <div class="relative mx-auto flex max-w-7xl justify-center">
-          <ul
+          <div
             class="pointer-events-none absolute top-0 z-[99] flex h-full w-full max-w-[100vw] items-center justify-between px-6"
           >
             <button
@@ -979,8 +977,8 @@
                 class="size-[24px]"
               />
             </button>
-          </ul>
-          <ul
+          </div>
+          <nav
             id="activity-list-most-popular"
             class="hide-scrollbar pointer-events-auto flex space-x-4 overflow-x-auto px-4"
             aria-label="Dubai Aktiviteleri"
@@ -1139,7 +1137,7 @@
                 </div>
               </div>
             </a>
-          </ul>
+          </nav>
         </div>
       </section>
 

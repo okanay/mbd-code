@@ -17,6 +17,11 @@
 }
 
 @layer base {
+  * {
+    margin: 0;
+    padding: 0;
+  }
+
   select {
     -webkit-appearance: none;
     -moz-appearance: none;
