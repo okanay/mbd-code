@@ -28,6 +28,6 @@ app.get("/", (c) => {
   return c.html(html.text());
 });
 
-const port = 3000;
+const port = 3080;
 console.log(`Server is running on port ${port}`);
 export default { fetch: app.fetch, port };
