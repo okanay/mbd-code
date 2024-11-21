@@ -52,6 +52,7 @@
     <!-- Images -->
     <link
       rel="preload"
+      crossorigin="anonymous"
       href="/public/images/brand-images/logo.webp"
       as="image"
     />
@@ -75,8 +76,10 @@
               <img
                 src="/public/images/brand-images/logo.webp"
                 alt="MBD Travel"
-                class="h-auto w-[128px] object-scale-down"
-                loading="lazy"
+                width="128"
+                height="64"
+                class="object-cover"
+                loading="eager"
               />
             </a>
           </div>
@@ -647,9 +650,8 @@
         </ul>
         <ul
           id="activity-list"
-          class="pointer-events-auto flex space-x-4 overflow-x-auto px-4"
+          class="hide-scrollbar pointer-events-auto flex space-x-4 overflow-x-auto px-4"
           aria-label="Dubai Aktiviteleri"
-          style="scrollbar-width: none; -ms-overflow-style: none"
         >
           <a
             href="#"
@@ -1006,9 +1008,8 @@
           </ul>
           <ul
             id="activity-list-most-popular"
-            class="pointer-events-auto flex space-x-4 overflow-x-auto px-4"
+            class="hide-scrollbar pointer-events-auto flex space-x-4 overflow-x-auto px-4"
             aria-label="Dubai Aktiviteleri"
-            style="scrollbar-width: none; -ms-overflow-style: none"
           >
             <a
               href="#"
