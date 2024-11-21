@@ -15,11 +15,13 @@ function createCarousel(
     return;
   }
 
-  let isScrolling = false; // Scrolling lock
+  let isScrolling = false; // Scroll lock to prevent overlapping animations
 
   function updateButtonStates() {
     const scrollPosition = listElement.scrollLeft;
     const maxScroll = listElement.scrollWidth - listElement.clientWidth;
+
+    // Disable buttons if at boundaries
     prevButton.disabled = scrollPosition <= 0;
     nextButton.disabled = scrollPosition >= maxScroll;
   }
@@ -33,22 +35,20 @@ function createCarousel(
     if (isScrolling) return; // Prevent overlapping scrolls
     isScrolling = true;
 
-    const scrollAmount = Math.min(
-      getScrollAmount(),
-      listElement.scrollWidth -
-        listElement.clientWidth -
-        listElement.scrollLeft,
-    );
+    const maxScroll = listElement.scrollWidth - listElement.clientWidth;
+    const remainingScroll = maxScroll - listElement.scrollLeft;
+    const scrollAmount = Math.min(getScrollAmount(), remainingScroll);
 
     listElement.scrollBy({
       left: scrollAmount,
       behavior: "smooth",
     });
 
+    // Delay until scrolling animation finishes
     setTimeout(() => {
       updateButtonStates();
-      isScrolling = false; // Unlock scrolling
-    }, 300); // Match this to the smooth scroll duration
+      isScrolling = false;
+    }, 750);
   }
 
   function scrollPrev() {
@@ -64,17 +64,36 @@ function createCarousel(
 
     setTimeout(() => {
       updateButtonStates();
-      isScrolling = false; // Unlock scrolling
-    }, 300); // Match this to the smooth scroll duration
+      isScrolling = false;
+    }, 750);
+  }
+
+  function resetScroll() {
+    // Prevents overscrolling if spam occurs
+    const maxScroll = listElement.scrollWidth - listElement.clientWidth;
+
+    if (listElement.scrollLeft < 0) {
+      listElement.scrollLeft = 0;
+    } else if (listElement.scrollLeft > maxScroll) {
+      listElement.scrollLeft = maxScroll;
+    }
   }
 
   prevButton.addEventListener("click", scrollPrev);
   nextButton.addEventListener("click", scrollNext);
 
-  listElement.addEventListener("scroll", updateButtonStates);
-  window.addEventListener("load", updateButtonStates);
-  window.addEventListener("resize", updateButtonStates);
+  // Reset scroll if spam or resize happens
+  listElement.addEventListener("scroll", () => {
+    resetScroll();
+    updateButtonStates();
+  });
 
+  window.addEventListener("resize", () => {
+    resetScroll();
+    updateButtonStates();
+  });
+
+  // Initial setup
   updateButtonStates();
 
   return {
