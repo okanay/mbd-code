@@ -1,5 +1,4 @@
 import { createCarousel } from "./packages/carousel.js";
-import { lazyLoadImages } from "./packages/lazy-image-load.js";
 
 // Güvenli element seçimi ve null kontrolü için yardımcı fonksiyon
 function getByID<T extends HTMLElement>(selector: string): T | null {
@@ -20,11 +19,6 @@ function setupCarousel(listId: string, prevBtnId: string, nextBtnId: string) {
   const carousel = createCarousel(list, {
     snapAlign: "center",
     itemSpacing: 16,
-    screenSizes: [
-      { width: 1024, jumpVal: 3 },
-      { width: 768, jumpVal: 2 },
-      { width: 512, jumpVal: 1 },
-    ],
   });
 
   carousel.setupNavigationButtons(prevBtn, nextBtn);
@@ -34,21 +28,7 @@ function setupCarousel(listId: string, prevBtnId: string, nextBtnId: string) {
 
 // Sayfa yüklendiğinde çalıştır
 document.addEventListener("DOMContentLoaded", () => {
-  // Lazy load resimleri
-  lazyLoadImages(".lazy-load");
-
-  // Her iki carousel için de güvenli kurulum
   setupCarousel("activity-list", "prev-btn", "next-btn");
-
-  setupCarousel(
-    "activity-list-most-popular",
-    "prev-btn-most-popular",
-    "next-btn-most-popular",
-  );
-
-  setupCarousel(
-    "popular-holiday-list",
-    "prev-popular-holiday-list",
-    "next-popular-holiday-list",
-  );
+  setupCarousel("most-popular", "prev-most-popular", "next-most-popular");
+  setupCarousel("popular-list", "prev-popular-list", "next-popular-list");
 });

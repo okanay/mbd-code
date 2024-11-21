@@ -59,9 +59,11 @@
       as="image"
     />
 
-    <script type="module" src="/main.js?v=3"></script>
-    <script type="module" src="/navigation.js?v=3"></script>
-    <link rel="stylesheet" href="/globals.css?v=3" />
+    <link rel="stylesheet" href="/globals.css?v=4" />
+
+    <script type="module" src="/lazy-image-load.js?v=4"></script>
+    <script type="module" src="/navigation.js?v=4"></script>
+    <script type="module" src="/main.js?v=4"></script>
   </head>
   <body class="">
     <header class="h-[80px] w-full border-gray-200 lg:border-b">
@@ -798,7 +800,7 @@
         <nav class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
           <a
             href="#"
-            class="relative flex h-[320px] flex-col overflow-hidden rounded-lg border border-gray-200 transition-all duration-300 hover:border-primary-600 active:scale-[99%] active:border-primary-500"
+            class="relative flex h-[360px] flex-col overflow-hidden rounded-lg border border-gray-200 transition-all duration-300 hover:border-primary-600 active:scale-[99%] active:border-primary-500"
             aria-label="Lüks Safari Platinium Heritage"
           >
             <!-- Görsel -->
@@ -845,7 +847,7 @@
 
           <a
             href="#"
-            class="relative flex h-[320px] flex-col overflow-hidden rounded-lg border border-gray-200 transition-all duration-300 hover:border-primary-800 active:scale-[99%]"
+            class="relative flex h-[360px] flex-col overflow-hidden rounded-lg border border-gray-200 transition-all duration-300 hover:border-primary-800 active:scale-[99%]"
             aria-label="Lüks Safari Platinium Heritage"
           >
             <!-- Image -->
@@ -893,7 +895,7 @@
 
           <a
             href="#"
-            class="relative flex h-[320px] flex-col overflow-hidden rounded-lg border border-gray-200 transition-all duration-300 hover:border-primary-800 active:scale-[99%]"
+            class="relative flex h-[360px] flex-col overflow-hidden rounded-lg border border-gray-200 transition-all duration-300 hover:border-primary-800 active:scale-[99%]"
             aria-label="Lüks Safari Platinium Heritage"
           >
             <!-- Image -->
@@ -942,7 +944,7 @@
 
           <a
             href="#"
-            class="relative flex h-[320px] flex-col overflow-hidden rounded-lg border border-gray-200 transition-all duration-300 hover:border-primary-800 active:scale-[99%]"
+            class="relative flex h-[360px] flex-col overflow-hidden rounded-lg border border-gray-200 transition-all duration-300 hover:border-primary-800 active:scale-[99%]"
             aria-label="Lüks Safari Platinium Heritage"
           >
             <!-- Image -->
@@ -1001,7 +1003,7 @@
             class="pointer-events-none absolute top-0 z-[99] flex h-full w-full max-w-[100vw] items-center justify-between px-6"
           >
             <button
-              id="prev-btn-most-popular"
+              id="prev-most-popular"
               class="pointer-events-auto rounded-full border border-gray-200 bg-white p-1.5 hover:bg-gray-300 focus:outline-none disabled:cursor-not-allowed disabled:hover:bg-gray-200 xl:translate-x-[-40%]"
             >
               <img
@@ -1011,7 +1013,7 @@
               />
             </button>
             <button
-              id="next-btn-most-popular"
+              id="next-most-popular"
               class="pointer-events-auto rounded-full border border-gray-200 bg-white p-1.5 hover:bg-gray-300 focus:outline-none disabled:cursor-not-allowed disabled:hover:bg-gray-200 xl:translate-x-[40%]"
             >
               <img
@@ -1022,7 +1024,7 @@
             </button>
           </div>
           <nav
-            id="activity-list-most-popular"
+            id="most-popular"
             class="hide-scrollbar pointer-events-auto flex touch-pan-x space-x-4 overflow-x-auto px-4"
             aria-label="Dubai Aktiviteleri"
             role="region"
@@ -1193,7 +1195,7 @@
           class="pointer-events-none absolute top-0 z-[99] flex h-full w-full max-w-[100vw] items-center justify-between px-2"
         >
           <button
-            id="prev-popular-holiday-list"
+            id="prev-popular-list"
             class="pointer-events-auto rounded-full border border-gray-200 bg-white p-1.5 hover:bg-gray-300 focus:outline-none disabled:cursor-not-allowed disabled:hover:bg-gray-200 xl:translate-x-[-40%]"
           >
             <img
@@ -1203,7 +1205,7 @@
             />
           </button>
           <button
-            id="next-popular-holiday-list"
+            id="next-popular-list"
             class="pointer-events-auto rounded-full border border-gray-200 bg-white p-1.5 hover:bg-gray-300 focus:outline-none disabled:cursor-not-allowed disabled:hover:bg-gray-200 xl:translate-x-[40%]"
           >
             <img
@@ -1214,7 +1216,7 @@
           </button>
         </div>
         <nav
-          id="popular-holiday-list"
+          id="popular-list"
           class="hide-scrollbar pointer-events-auto flex touch-pan-x space-x-4 overflow-x-auto px-4"
           aria-label="Popüler Tatil Seçenekleri"
           role="region"

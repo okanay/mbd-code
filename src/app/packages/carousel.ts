@@ -9,10 +9,12 @@ export function createCarousel(
   const {
     snapAlign = "start",
     itemSpacing = 16,
-    screenSizes = [{ width: 0, jumpVal: 1 }],
+    screenSizes = [
+      { width: 1024, jumpVal: 3 },
+      { width: 768, jumpVal: 2 },
+      { width: 512, jumpVal: 1 },
+    ],
   } = options;
-
-  console.log("Carousel created with options:", options);
 
   // Carousel elemanlarını al
   const items = Array.from(carouselList.children) as HTMLElement[];
@@ -93,7 +95,6 @@ export function createCarousel(
   // Scroll fonksiyonu
   function scrollToPrecise(index: number) {
     if (state.isScrolling || index < 0 || index >= items.length) return;
-    console.log("Scrolling to index:", index);
 
     state.isScrolling = true;
     state.currentIndex = index;
@@ -133,13 +134,13 @@ export function createCarousel(
       const diffX = startX - endX;
 
       const metrics = calculateMetrics();
-      const swipeThreshold = metrics.averageItemWidth / 2;
+      const swipeThreshold = metrics.averageItemWidth / 4;
 
       if (Math.abs(diffX) > swipeThreshold) {
         const newIndex =
           diffX > 0
-            ? Math.min(state.currentIndex + 1, items.length - 1)
-            : Math.max(state.currentIndex - 1, 0);
+            ? Math.min(state.currentIndex + getItemsPerPage(), items.length - 1)
+            : Math.max(state.currentIndex - getItemsPerPage(), 0);
 
         scrollToPrecise(newIndex);
       }
