@@ -1,190 +1,165 @@
-interface Point {
-  x: number;
-  y: number;
-}
-
 export function createCarousel(
-  listElement: HTMLElement,
-  prevButton: HTMLButtonElement,
-  nextButton: HTMLButtonElement,
+  carouselList: HTMLElement,
   options: {
-    itemsToScroll?: number;
-    extraGap?: number;
-    threshold?: number;
+    scrollMode?: "precise" | "default";
     snapAlign?: "start" | "center" | "end";
-    preventOverscroll?: boolean;
-    autoplay?: {
-      enabled: boolean;
-      delay?: number;
-    };
+    itemSpacing?: number;
   } = {},
 ) {
   const {
-    itemsToScroll = 1,
-    extraGap = 16,
-    threshold = 50,
+    scrollMode = "precise",
     snapAlign = "start",
-    preventOverscroll = true,
-    autoplay = { enabled: false, delay: 3000 },
+    itemSpacing = 16,
   } = options;
 
-  // Gelişmiş state yönetimi
+  // Carousel elemanlarını al
+  const items = Array.from(carouselList.children) as HTMLElement[];
+
+  // Scroll state'i
   const state = {
-    startX: 0,
-    startY: 0,
-    isDragging: false,
-    isAnimating: false,
     currentIndex: 0,
-    autoplayTimer: null as number | null,
+    isScrolling: false,
   };
 
-  // Performans ve hassasiyet için gelişmiş scroll hesaplaması
-  function calculateScrollMetrics() {
-    const items = Array.from(listElement.children) as HTMLElement[];
+  // Ekran genişliğini ve item boyutlarını hesapla
+  function calculateMetrics() {
+    const containerWidth = carouselList.clientWidth;
     const firstItem = items[0];
 
-    // Farklı snap alignment senaryoları için hesaplama
-    const scrollAmount =
-      snapAlign === "center"
-        ? (firstItem.offsetWidth + extraGap) * itemsToScroll -
-          listElement.clientWidth / 2
-        : (firstItem.offsetWidth + extraGap) * itemsToScroll;
+    const itemWidths = items.map((item) => {
+      const rect = item.getBoundingClientRect();
+      return rect.width;
+    });
+
+    const averageItemWidth =
+      itemWidths.reduce((a, b) => a + b, 0) / itemWidths.length;
 
     return {
-      itemWidth: firstItem.offsetWidth,
-      scrollAmount,
-      maxScroll: listElement.scrollWidth - listElement.clientWidth,
+      containerWidth,
+      itemWidths,
+      averageItemWidth,
+      totalWidth: items.reduce((total, item) => {
+        const rect = item.getBoundingClientRect();
+        return total + rect.width + itemSpacing;
+      }, 0),
     };
   }
 
-  // Gelişmiş dokunmatik gezinme
-  function handleTouchInteraction() {
-    let startPoint: Point = { x: 0, y: 0 };
-    let endPoint: Point = { x: 0, y: 0 };
+  // Hassas scroll hesaplama
+  function calculatePreciseScroll(targetIndex: number) {
+    const metrics = calculateMetrics();
+    let scrollPosition = 0;
 
-    function handleStart(e: TouchEvent) {
-      const touch = e.touches[0];
-      startPoint = { x: touch.clientX, y: touch.clientY };
-
-      // Autoplay'i duraklat
-      if (state.autoplayTimer) {
-        clearInterval(state.autoplayTimer);
-      }
+    // Farklı snap alignment senaryoları
+    for (let i = 0; i < targetIndex; i++) {
+      scrollPosition += items[i].getBoundingClientRect().width + itemSpacing;
     }
 
-    function handleMove(e: TouchEvent) {
-      if (e.touches.length > 1) return; // Çoklu dokunma desteği
-
-      const touch = e.touches[0];
-      endPoint = { x: touch.clientX, y: touch.clientY };
-
-      // Dikey ve yatay kaydırma arasındaki farkı hesapla
-      const deltaX = startPoint.x - endPoint.x;
-      const deltaY = Math.abs(startPoint.y - endPoint.y);
-
-      // Yatay kaydırmayı tercih et
-      if (Math.abs(deltaX) > deltaY) {
-        e.preventDefault(); // Dikey kaydırmayı engelle
-      }
+    // Align ayarlamaları
+    switch (snapAlign) {
+      case "center":
+        scrollPosition -=
+          metrics.containerWidth / 2 - metrics.itemWidths[targetIndex] / 2;
+        break;
+      case "end":
+        scrollPosition -=
+          metrics.containerWidth - metrics.itemWidths[targetIndex];
+        break;
     }
 
-    function handleEnd(e: TouchEvent) {
-      const touch = e.changedTouches[0];
-      endPoint = { x: touch.clientX, y: touch.clientY };
-
-      const deltaX = startPoint.x - endPoint.x;
-
-      // Gelişmiş eşik kontrolü
-      if (Math.abs(deltaX) > threshold) {
-        deltaX > 0 ? scrollNext() : scrollPrev();
-      }
-
-      // Autoplay'i yeniden başlat
-      startAutoplay();
-    }
-
-    return { handleStart, handleMove, handleEnd };
+    return scrollPosition;
   }
 
-  // Gelişmiş scroll fonksiyonu
-  function safeScroll(amount: number) {
-    if (state.isAnimating) return;
+  // Scroll fonksiyonu
+  function scrollToPrecise(index: number) {
+    if (state.isScrolling || index < 0 || index >= items.length) return;
 
-    const { scrollAmount, maxScroll } = calculateScrollMetrics();
-    const currentScroll = listElement.scrollLeft;
+    state.isScrolling = true;
+    state.currentIndex = index;
 
-    state.isAnimating = true;
+    const scrollPosition = calculatePreciseScroll(index);
 
-    // Overscroll önleme
-    const newScrollPosition = preventOverscroll
-      ? Math.min(Math.max(0, currentScroll + amount), maxScroll)
-      : currentScroll + amount;
-
-    listElement.scrollTo({
-      left: newScrollPosition,
+    carouselList.scrollTo({
+      left: scrollPosition,
       behavior: "smooth",
     });
 
-    requestAnimationFrame(() => {
-      setTimeout(() => {
-        state.isAnimating = false;
-        updateButtonStates();
-      }, 300);
+    // Scroll tamamlandığında state'i sıfırla
+    setTimeout(() => {
+      state.isScrolling = false;
+    }, 300);
+  }
+
+  // Dokunmatik etkileşim yönetimi
+  function setupTouchInteraction() {
+    let startX = 0;
+    let isDragging = false;
+
+    function handleTouchStart(e: TouchEvent) {
+      startX = e.touches[0].clientX;
+      isDragging = true;
+    }
+
+    function handleTouchMove(e: TouchEvent) {
+      if (!isDragging) return;
+      e.preventDefault(); // Varsayılan kaydırmayı engelle
+    }
+
+    function handleTouchEnd(e: TouchEvent) {
+      if (!isDragging) return;
+
+      const endX = e.changedTouches[0].clientX;
+      const diffX = startX - endX;
+
+      const metrics = calculateMetrics();
+      const swipeThreshold = metrics.averageItemWidth / 2;
+
+      if (Math.abs(diffX) > swipeThreshold) {
+        const newIndex =
+          diffX > 0
+            ? Math.min(state.currentIndex + 1, items.length - 1)
+            : Math.max(state.currentIndex - 1, 0);
+
+        scrollToPrecise(newIndex);
+      }
+
+      isDragging = false;
+    }
+
+    carouselList.addEventListener("touchstart", handleTouchStart);
+    carouselList.addEventListener("touchmove", handleTouchMove);
+    carouselList.addEventListener("touchend", handleTouchEnd);
+  }
+
+  // Navigation butonları için destek
+  function setupNavigationButtons(
+    prevButton: HTMLButtonElement,
+    nextButton: HTMLButtonElement,
+  ) {
+    prevButton.addEventListener("click", () => {
+      scrollToPrecise(Math.max(state.currentIndex - 1, 0));
+    });
+
+    nextButton.addEventListener("click", () => {
+      scrollToPrecise(Math.min(state.currentIndex + 1, items.length - 1));
     });
   }
 
-  // Otomatik oynatma
-  function startAutoplay() {
-    if (!autoplay.enabled) return;
-
-    if (state.autoplayTimer) {
-      clearInterval(state.autoplayTimer);
-    }
-
-    state.autoplayTimer = window.setInterval(() => {
-      scrollNext();
-    }, autoplay.delay);
+  // Hesaplama metodları ve state'i dışarı ver
+  function getCurrentState() {
+    return {
+      currentIndex: state.currentIndex,
+      totalItems: items.length,
+      ...calculateMetrics(),
+    };
   }
 
-  // Button state güncelleme
-  function updateButtonStates() {
-    const { maxScroll } = calculateScrollMetrics();
-    const scrollPosition = listElement.scrollLeft;
-
-    prevButton.disabled = scrollPosition <= 0;
-    nextButton.disabled = scrollPosition >= maxScroll;
-  }
-
-  // Touch event yöneticisi
-  const touchHandler = handleTouchInteraction();
-
-  // Event listener'ları ekle
-  listElement.addEventListener("touchstart", touchHandler.handleStart);
-  listElement.addEventListener("touchmove", touchHandler.handleMove);
-  listElement.addEventListener("touchend", touchHandler.handleEnd);
-
-  prevButton.addEventListener("click", scrollPrev);
-  nextButton.addEventListener("click", scrollNext);
-
-  // Metodlar
-  function scrollNext() {
-    const { scrollAmount } = calculateScrollMetrics();
-    safeScroll(scrollAmount);
-  }
-
-  function scrollPrev() {
-    const { scrollAmount } = calculateScrollMetrics();
-    safeScroll(-scrollAmount);
-  }
-
-  // İlk durumu ayarla
-  updateButtonStates();
-  startAutoplay();
+  // Touch etkileşimini başlat
+  setupTouchInteraction();
 
   return {
-    scrollNext,
-    scrollPrev,
-    updateButtonStates,
-    startAutoplay,
+    scrollTo: scrollToPrecise,
+    getCurrentState,
+    setupNavigationButtons,
   };
 }

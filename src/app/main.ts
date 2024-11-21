@@ -5,15 +5,14 @@ const list = document.getElementById("activity-list") as HTMLElement;
 const prevBtn = document.getElementById("prev-btn") as HTMLButtonElement;
 const nextBtn = document.getElementById("next-btn") as HTMLButtonElement;
 
-createCarousel(list, prevBtn, nextBtn, {
-  itemsToScroll: 2,
+const carousel = createCarousel(list, {
+  scrollMode: "precise",
   snapAlign: "center",
-  preventOverscroll: true,
-  autoplay: {
-    enabled: false,
-    delay: 5000, // 5 saniyede bir otomatik kaydır
-  },
+  itemSpacing: 16,
 });
+
+carousel.setupNavigationButtons(prevBtn, nextBtn);
+carousel.scrollTo(1);
 
 const listMostPopular = document.getElementById(
   "activity-list-most-popular",
@@ -25,14 +24,13 @@ const nextBtnMostPopular = document.getElementById(
   "next-btn-most-popular",
 ) as HTMLButtonElement;
 
-createCarousel(listMostPopular, prevBtnMostPopular, nextBtnMostPopular, {
-  itemsToScroll: 2,
+const carouselMost = createCarousel(listMostPopular, {
+  scrollMode: "precise",
   snapAlign: "center",
-  preventOverscroll: true,
-  autoplay: {
-    enabled: false,
-    delay: 5000, // 5 saniyede bir otomatik kaydır
-  },
+  itemSpacing: 16,
 });
+
+carouselMost.setupNavigationButtons(prevBtnMostPopular, nextBtnMostPopular);
+carouselMost.scrollTo(1);
 
 lazyLoadImages(".lazy-load");
