@@ -1,16 +1,11 @@
 export function createCarousel(
   carouselList: HTMLElement,
   options: {
-    scrollMode?: "precise" | "default";
     snapAlign?: "start" | "center" | "end";
     itemSpacing?: number;
   } = {},
 ) {
-  const {
-    scrollMode = "precise",
-    snapAlign = "start",
-    itemSpacing = 16,
-  } = options;
+  const { snapAlign = "start", itemSpacing = 16 } = options;
 
   // Carousel elemanlarını al
   const items = Array.from(carouselList.children) as HTMLElement[];
@@ -190,6 +185,7 @@ export function createCarousel(
   }
 
   // Touch etkileşimini başlat
+  // enhanceCarouselPerformance(carouselList);
   setupMomentumScroll(carouselList);
   setupTouchInteraction();
 
@@ -200,7 +196,7 @@ export function createCarousel(
   };
 }
 
-export function enhanceCarouselPerformance(carouselElement: HTMLElement) {
+function enhanceCarouselPerformance(carouselElement: HTMLElement) {
   // Mobil cihazlar için touch event optimizasyonu
   let startX = 0;
   let isDragging = false;

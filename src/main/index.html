@@ -63,7 +63,7 @@
     <script type="module" src="/navigation.js"></script>
     <link rel="stylesheet" href="/globals.css" />
   </head>
-  <body class="font-custom">
+  <body class="">
     <header class="h-[80px] w-full border-gray-200 lg:border-b">
       <!-- Desktop Navigation -->
       <nav
@@ -616,22 +616,22 @@
         >
           <button
             id="prev-btn"
-            class="pointer-events-auto rounded-full bg-gray-200 p-2 hover:bg-gray-300 focus:outline-none disabled:cursor-not-allowed disabled:hover:bg-gray-200 xl:translate-x-[-40%]"
+            class="pointer-events-auto rounded-full bg-gray-200 p-1.5 hover:bg-gray-300 focus:outline-none disabled:cursor-not-allowed disabled:hover:bg-gray-200 xl:translate-x-[-40%]"
           >
             <img
               src="/public/images/icons/chevron-left.svg"
               alt="Previous"
-              class="size-[24px]"
+              class="size-[16px] sm:size-[24px]"
             />
           </button>
           <button
             id="next-btn"
-            class="pointer-events-auto rounded-full bg-gray-200 p-2 hover:bg-gray-300 focus:outline-none disabled:cursor-not-allowed disabled:hover:bg-gray-200 xl:translate-x-[40%]"
+            class="pointer-events-auto rounded-full bg-gray-200 p-1.5 hover:bg-gray-300 focus:outline-none disabled:cursor-not-allowed disabled:hover:bg-gray-200 xl:translate-x-[40%]"
           >
             <img
               src="/public/images/icons/chevron-right.svg"
               alt="Next"
-              class="size-[24px]"
+              class="size-[16px] sm:size-[24px]"
             />
           </button>
         </div>
@@ -649,7 +649,7 @@
             <div
               class="flex gap-2 rounded-lg border border-gray-200 bg-white p-2 transition-colors duration-300 group-hover:border-primary-700"
             >
-              <!-- Placeholder Image -->
+              <!-- Image -->
               <div
                 class="size-[52px] flex-shrink-0 overflow-hidden rounded-lg bg-gray-100"
                 role="img"
@@ -679,7 +679,7 @@
             <div
               class="flex gap-2 rounded-lg border border-gray-200 bg-white p-2 transition-colors duration-300 group-hover:border-primary-700"
             >
-              <!-- Placeholder Image -->
+              <!-- Image -->
               <div
                 class="size-[52px] flex-shrink-0 overflow-hidden rounded-lg bg-gray-100"
                 role="img"
@@ -709,7 +709,7 @@
             <div
               class="flex gap-2 rounded-lg border border-gray-200 bg-white p-2 transition-colors duration-300 group-hover:border-primary-700"
             >
-              <!-- Placeholder Image -->
+              <!-- Image -->
               <div
                 class="size-[52px] flex-shrink-0 overflow-hidden rounded-lg bg-gray-100"
                 role="img"
@@ -739,7 +739,7 @@
             <div
               class="flex gap-2 rounded-lg border border-gray-200 bg-white p-2 transition-colors duration-300 group-hover:border-primary-700"
             >
-              <!-- Placeholder Image -->
+              <!-- Image -->
               <div
                 class="size-[52px] flex-shrink-0 overflow-hidden rounded-lg bg-gray-100"
                 role="img"
@@ -769,7 +769,7 @@
             <div
               class="flex gap-2 rounded-lg border border-gray-200 bg-white p-2 transition-colors duration-300 group-hover:border-primary-700"
             >
-              <!-- Placeholder Image -->
+              <!-- Image -->
               <div
                 class="size-[52px] flex-shrink-0 overflow-hidden rounded-lg bg-gray-100"
                 role="img"
@@ -798,10 +798,10 @@
         <nav class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
           <a
             href="#"
-            class="relative flex h-[380px] flex-col overflow-hidden rounded-lg border border-gray-200 transition-all duration-300 hover:border-primary-800 active:scale-[99%] sm:h-[300px]"
+            class="relative flex h-[320px] flex-col overflow-hidden rounded-lg border border-gray-200 transition-all duration-300 hover:border-primary-600 active:scale-[99%] active:border-primary-500"
             aria-label="Lüks Safari Platinium Heritage"
           >
-            <!-- Placeholder Image -->
+            <!-- Görsel -->
             <div
               class="h-1/2 flex-shrink-0 overflow-hidden rounded-b-xl bg-gray-100"
               role="img"
@@ -810,37 +810,45 @@
                 src="/public/images/gallery/9-blur.webp"
                 data-src="/public/images/gallery/9.webp"
                 alt="Dubai Lüks Safari Platinium Heritage"
-                class="lazy-load h-full w-full object-cover"
-                style="filter: blur(10px); transition: filter 0.3s ease"
+                class="lazy-load filter-blur h-full w-full object-cover transition-transform duration-300 hover:scale-105 hover:filter-none"
               />
             </div>
 
             <div
-              class="flex h-full max-w-[75%] flex-col items-start justify-center gap-y-4 px-6"
+              class="flex h-full flex-col items-start justify-center gap-y-3 px-6"
             >
               <!-- Başlık -->
-              <h5 class="text-lg font-semibold">
+              <h5 class="text-xl font-semibold text-gray-800">
                 Lüks Safari Platinium Heritage
               </h5>
+
+              <!-- Derecelendirme -->
               <div class="flex items-center gap-2">
-                <!-- Derecelendirme -->
+                <p class="text-sm font-medium text-gray-600">Mükemmel</p>
                 <div
                   class="rounded-custom flex items-center justify-center bg-primary-400 px-2.5 py-0.5 text-center text-xs text-white"
                 >
                   <span class="font-semibold">4.9</span>
                   <span>/5</span>
                 </div>
-                <p class="font-medium">Mükemmel</p>
+              </div>
+
+              <!-- Fiyat Bilgisi -->
+              <div class="flex items-end gap-1">
+                <span
+                  class="text-2xl font-semibold tracking-wide text-primary-500"
+                  >499$
+                </span>
               </div>
             </div>
           </a>
 
           <a
             href="#"
-            class="relative flex h-[380px] flex-col overflow-hidden rounded-lg border border-gray-200 transition-all duration-300 hover:border-primary-800 active:scale-[99%] sm:h-[300px]"
+            class="relative flex h-[320px] flex-col overflow-hidden rounded-lg border border-gray-200 transition-all duration-300 hover:border-primary-800 active:scale-[99%]"
             aria-label="Lüks Safari Platinium Heritage"
           >
-            <!-- Placeholder Image -->
+            <!-- Image -->
             <div
               class="h-1/2 flex-shrink-0 overflow-hidden rounded-b-xl bg-gray-100"
               role="img"
@@ -855,31 +863,40 @@
             </div>
 
             <div
-              class="flex h-full max-w-[75%] flex-col items-start justify-center gap-y-4 px-6"
+              class="flex h-full flex-col items-start justify-center gap-y-3 px-6"
             >
               <!-- Başlık -->
-              <h5 class="text-lg font-semibold">
+              <h5 class="text-xl font-semibold text-gray-800">
                 Deluxe Safari Royal Al Sahara
               </h5>
+
+              <!-- Derecelendirme -->
               <div class="flex items-center gap-2">
-                <!-- Derecelendirme -->
+                <p class="text-sm font-medium text-gray-600">Mükemmel</p>
                 <div
                   class="rounded-custom flex items-center justify-center bg-primary-400 px-2.5 py-0.5 text-center text-xs text-white"
                 >
                   <span class="font-semibold">4.9</span>
                   <span>/5</span>
                 </div>
-                <p class="font-medium">Mükemmel</p>
+              </div>
+
+              <!-- Fiyat Bilgisi -->
+              <div class="flex items-end gap-1">
+                <span
+                  class="text-2xl font-semibold tracking-wide text-primary-500"
+                  >199$
+                </span>
               </div>
             </div>
           </a>
 
           <a
             href="#"
-            class="relative flex h-[380px] flex-col overflow-hidden rounded-lg border border-gray-200 transition-all duration-300 hover:border-primary-800 active:scale-[99%] sm:h-[300px]"
+            class="relative flex h-[320px] flex-col overflow-hidden rounded-lg border border-gray-200 transition-all duration-300 hover:border-primary-800 active:scale-[99%]"
             aria-label="Lüks Safari Platinium Heritage"
           >
-            <!-- Placeholder Image -->
+            <!-- Image -->
             <div
               class="h-1/2 flex-shrink-0 overflow-hidden rounded-b-xl bg-gray-100"
               role="img"
@@ -894,32 +911,41 @@
             </div>
 
             <div
-              class="flex h-full max-w-[75%] flex-col items-start justify-center gap-y-4 px-6"
+              class="flex h-full flex-col items-start justify-center gap-y-3 px-6"
             >
               <!-- Başlık -->
-              <h5 class="text-lg font-semibold">
+              <h5 class="text-xl font-semibold text-gray-800">
                 Dubai Şehir <br />
                 Turu
               </h5>
+
+              <!-- Derecelendirme -->
               <div class="flex items-center gap-2">
-                <!-- Derecelendirme -->
+                <p class="text-sm font-medium text-gray-600">Mükemmel</p>
                 <div
                   class="rounded-custom flex items-center justify-center bg-primary-400 px-2.5 py-0.5 text-center text-xs text-white"
                 >
                   <span class="font-semibold">4.9</span>
                   <span>/5</span>
                 </div>
-                <p class="font-medium">Mükemmel</p>
+              </div>
+
+              <!-- Fiyat Bilgisi -->
+              <div class="flex items-end gap-1">
+                <span
+                  class="text-2xl font-semibold tracking-wide text-primary-500"
+                  >629$
+                </span>
               </div>
             </div>
           </a>
 
           <a
             href="#"
-            class="relative flex h-[380px] flex-col overflow-hidden rounded-lg border border-gray-200 transition-all duration-300 hover:border-primary-800 active:scale-[99%] sm:h-[300px]"
+            class="relative flex h-[320px] flex-col overflow-hidden rounded-lg border border-gray-200 transition-all duration-300 hover:border-primary-800 active:scale-[99%]"
             aria-label="Lüks Safari Platinium Heritage"
           >
-            <!-- Placeholder Image -->
+            <!-- Image -->
             <div
               class="h-1/2 flex-shrink-0 overflow-hidden rounded-b-xl bg-gray-100"
               role="img"
@@ -934,19 +960,30 @@
             </div>
 
             <div
-              class="flex h-full max-w-[75%] flex-col items-start justify-center gap-y-4 px-6"
+              class="flex h-full flex-col items-start justify-center gap-y-3 px-6"
             >
               <!-- Başlık -->
-              <h5 class="text-lg font-semibold">Abu Dhabi Çöl Safari</h5>
+              <h5 class="text-xl font-semibold text-gray-800">
+                Abu Dhabi Çöl Safari
+              </h5>
+
+              <!-- Derecelendirme -->
               <div class="flex items-center gap-2">
-                <!-- Derecelendirme -->
+                <p class="text-sm font-medium text-gray-600">Mükemmel</p>
                 <div
                   class="rounded-custom flex items-center justify-center bg-primary-400 px-2.5 py-0.5 text-center text-xs text-white"
                 >
                   <span class="font-semibold">4.9</span>
                   <span>/5</span>
                 </div>
-                <p class="font-medium">Mükemmel</p>
+              </div>
+
+              <!-- Fiyat Bilgisi -->
+              <div class="flex items-end gap-1">
+                <span
+                  class="text-2xl font-semibold tracking-wide text-primary-500"
+                  >329$
+                </span>
               </div>
             </div>
           </a>
@@ -965,22 +1002,22 @@
           >
             <button
               id="prev-btn-most-popular"
-              class="pointer-events-auto rounded-full bg-gray-200 p-2 hover:bg-gray-300 focus:outline-none disabled:cursor-not-allowed disabled:hover:bg-gray-200 xl:translate-x-[-40%]"
+              class="pointer-events-auto rounded-full bg-gray-200 p-1.5 hover:bg-gray-300 focus:outline-none disabled:cursor-not-allowed disabled:hover:bg-gray-200 xl:translate-x-[-40%]"
             >
               <img
                 src="/public/images/icons/chevron-left.svg"
                 alt="Previous"
-                class="size-[24px]"
+                class="size-[16px] sm:size-[24px]"
               />
             </button>
             <button
               id="next-btn-most-popular"
-              class="pointer-events-auto rounded-full bg-gray-200 p-2 hover:bg-gray-300 focus:outline-none disabled:cursor-not-allowed disabled:hover:bg-gray-200 xl:translate-x-[40%]"
+              class="pointer-events-auto rounded-full bg-gray-200 p-1.5 hover:bg-gray-300 focus:outline-none disabled:cursor-not-allowed disabled:hover:bg-gray-200 xl:translate-x-[40%]"
             >
               <img
                 src="/public/images/icons/chevron-right.svg"
                 alt="Next"
-                class="size-[24px]"
+                class="size-[16px] sm:size-[24px]"
               />
             </button>
           </div>
@@ -999,7 +1036,7 @@
               <div
                 class="flex gap-2 rounded-lg border border-gray-200 bg-white p-2 transition-colors duration-300 group-hover:border-primary-700"
               >
-                <!-- Placeholder Image -->
+                <!-- Image -->
                 <div
                   class="size-[52px] flex-shrink-0 overflow-hidden rounded-lg bg-gray-100"
                   role="img"
@@ -1030,7 +1067,7 @@
               <div
                 class="flex gap-2 rounded-lg border border-gray-200 bg-white p-2 transition-colors duration-300 group-hover:border-primary-700"
               >
-                <!-- Placeholder Image -->
+                <!-- Image -->
                 <div
                   class="size-[52px] flex-shrink-0 overflow-hidden rounded-lg bg-gray-100"
                   role="img"
@@ -1061,7 +1098,7 @@
               <div
                 class="flex gap-2 rounded-lg border border-gray-200 bg-white p-2 transition-colors duration-300 group-hover:border-primary-700"
               >
-                <!-- Placeholder Image -->
+                <!-- Image -->
                 <div
                   class="size-[52px] flex-shrink-0 overflow-hidden rounded-lg bg-gray-100"
                   role="img"
@@ -1092,7 +1129,7 @@
               <div
                 class="flex gap-2 rounded-lg border border-gray-200 bg-white p-2 transition-colors duration-300 group-hover:border-primary-700"
               >
-                <!-- Placeholder Image -->
+                <!-- Image -->
                 <div
                   class="size-[52px] flex-shrink-0 overflow-hidden rounded-lg bg-gray-100"
                   role="img"
@@ -1123,7 +1160,7 @@
               <div
                 class="flex gap-2 rounded-lg border border-gray-200 bg-white p-2 transition-colors duration-300 group-hover:border-primary-700"
               >
-                <!-- Placeholder Image -->
+                <!-- Image -->
                 <div
                   class="size-[52px] flex-shrink-0 overflow-hidden rounded-lg bg-gray-100"
                   role="img"
@@ -1157,7 +1194,7 @@
             class="relative flex h-[200px] flex-col overflow-hidden rounded-lg border border-gray-200 transition-all duration-300 hover:border-primary-800 active:scale-[99%]"
             aria-label="Lüks Safari Platinium Heritage"
           >
-            <!-- Placeholder Image -->
+            <!-- Image -->
             <div
               class="h-full flex-shrink-0 overflow-hidden bg-gray-100"
               role="img"
@@ -1185,7 +1222,7 @@
             class="relative flex h-[200px] flex-col overflow-hidden rounded-lg border border-gray-200 transition-all duration-300 hover:border-primary-800 active:scale-[99%]"
             aria-label="Lüks Safari Platinium Heritage"
           >
-            <!-- Placeholder Image -->
+            <!-- Image -->
             <div
               class="h-full flex-shrink-0 overflow-hidden bg-gray-100"
               role="img"
@@ -1213,7 +1250,7 @@
             class="relative flex h-[200px] flex-col overflow-hidden rounded-lg border border-gray-200 transition-all duration-300 hover:border-primary-800 active:scale-[99%]"
             aria-label="Lüks Safari Platinium Heritage"
           >
-            <!-- Placeholder Image -->
+            <!-- Image -->
             <div
               class="h-full flex-shrink-0 overflow-hidden bg-gray-100"
               role="img"
@@ -1239,7 +1276,7 @@
             class="relative flex h-[200px] flex-col overflow-hidden rounded-lg border border-gray-200 transition-all duration-300 hover:border-primary-800 active:scale-[99%]"
             aria-label="Lüks Safari Platinium Heritage"
           >
-            <!-- Placeholder Image -->
+            <!-- Image -->
             <div
               class="h-full flex-shrink-0 overflow-hidden bg-gray-100"
               role="img"

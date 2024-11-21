@@ -1,5 +1,4 @@
-// prettier-ignore
-import { createCarousel, enhanceCarouselPerformance} from "./packages/carousel.js";
+import { createCarousel } from "./packages/carousel.js";
 import { lazyLoadImages } from "./packages/lazy-image-load.js";
 
 // Güvenli element seçimi ve null kontrolü için yardımcı fonksiyon
@@ -18,11 +17,7 @@ function setupCarousel(listId: string, prevBtnId: string, nextBtnId: string) {
     return null;
   }
 
-  // Performans geliştirmesi
-  enhanceCarouselPerformance(list);
-
   const carousel = createCarousel(list, {
-    scrollMode: "precise",
     snapAlign: "center",
     itemSpacing: 16,
   });
