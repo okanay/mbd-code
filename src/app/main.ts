@@ -45,4 +45,10 @@ document.addEventListener("DOMContentLoaded", () => {
     "prev-btn-most-popular",
     "next-btn-most-popular",
   );
+
+  setupCarousel(
+    "popular-holiday-list",
+    "prev-popular-holiday-list",
+    "next-popular-holiday-list",
+  );
 });

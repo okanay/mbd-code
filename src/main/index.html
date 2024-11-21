@@ -59,9 +59,9 @@
       as="image"
     />
 
-    <script type="module" src="/main.js?v=2"></script>
-    <script type="module" src="/navigation.js?v=2"></script>
-    <link rel="stylesheet" href="/globals.css?v=2" />
+    <script type="module" src="/main.js?v=3"></script>
+    <script type="module" src="/navigation.js?v=3"></script>
+    <link rel="stylesheet" href="/globals.css?v=3" />
   </head>
   <body class="">
     <header class="h-[80px] w-full border-gray-200 lg:border-b">
@@ -616,7 +616,7 @@
         >
           <button
             id="prev-btn"
-            class="pointer-events-auto rounded-full bg-gray-200 p-1.5 hover:bg-gray-300 focus:outline-none disabled:cursor-not-allowed disabled:hover:bg-gray-200 xl:translate-x-[-40%]"
+            class="pointer-events-auto rounded-full border border-gray-200 bg-white p-1.5 hover:bg-gray-300 focus:outline-none disabled:cursor-not-allowed disabled:hover:bg-gray-200 xl:translate-x-[-40%]"
           >
             <img
               src="/public/images/icons/chevron-left.svg"
@@ -626,7 +626,7 @@
           </button>
           <button
             id="next-btn"
-            class="pointer-events-auto rounded-full bg-gray-200 p-1.5 hover:bg-gray-300 focus:outline-none disabled:cursor-not-allowed disabled:hover:bg-gray-200 xl:translate-x-[40%]"
+            class="pointer-events-auto rounded-full border border-gray-200 bg-white p-1.5 hover:bg-gray-300 focus:outline-none disabled:cursor-not-allowed disabled:hover:bg-gray-200 xl:translate-x-[40%]"
           >
             <img
               src="/public/images/icons/chevron-right.svg"
@@ -1002,7 +1002,7 @@
           >
             <button
               id="prev-btn-most-popular"
-              class="pointer-events-auto rounded-full bg-gray-200 p-1.5 hover:bg-gray-300 focus:outline-none disabled:cursor-not-allowed disabled:hover:bg-gray-200 xl:translate-x-[-40%]"
+              class="pointer-events-auto rounded-full border border-gray-200 bg-white p-1.5 hover:bg-gray-300 focus:outline-none disabled:cursor-not-allowed disabled:hover:bg-gray-200 xl:translate-x-[-40%]"
             >
               <img
                 src="/public/images/icons/chevron-left.svg"
@@ -1012,7 +1012,7 @@
             </button>
             <button
               id="next-btn-most-popular"
-              class="pointer-events-auto rounded-full bg-gray-200 p-1.5 hover:bg-gray-300 focus:outline-none disabled:cursor-not-allowed disabled:hover:bg-gray-200 xl:translate-x-[40%]"
+              class="pointer-events-auto rounded-full border border-gray-200 bg-white p-1.5 hover:bg-gray-300 focus:outline-none disabled:cursor-not-allowed disabled:hover:bg-gray-200 xl:translate-x-[40%]"
             >
               <img
                 src="/public/images/icons/chevron-right.svg"
@@ -1186,12 +1186,42 @@
       </section>
 
       <!-- Activity -->
-      <section class="mx-auto max-w-7xl space-y-6 px-6">
-        <h2 class="text-2xl font-semibold">Popüler Tatil Seçenekleri</h2>
-        <nav class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
+      <section class="relative mx-auto max-w-7xl space-y-6">
+        <h2 class="px-6 text-2xl font-semibold">Popüler Tatil Seçenekleri</h2>
+        <!-- Carousel Section -->
+        <div
+          class="pointer-events-none absolute top-0 z-[99] flex h-full w-full max-w-[100vw] items-center justify-between px-2"
+        >
+          <button
+            id="prev-popular-holiday-list"
+            class="pointer-events-auto rounded-full border border-gray-200 bg-white p-1.5 hover:bg-gray-300 focus:outline-none disabled:cursor-not-allowed disabled:hover:bg-gray-200 xl:translate-x-[-40%]"
+          >
+            <img
+              src="/public/images/icons/chevron-left.svg"
+              alt="Previous"
+              class="size-[16px] sm:size-[24px]"
+            />
+          </button>
+          <button
+            id="next-popular-holiday-list"
+            class="pointer-events-auto rounded-full border border-gray-200 bg-white p-1.5 hover:bg-gray-300 focus:outline-none disabled:cursor-not-allowed disabled:hover:bg-gray-200 xl:translate-x-[40%]"
+          >
+            <img
+              src="/public/images/icons/chevron-right.svg"
+              alt="Next"
+              class="size-[16px] sm:size-[24px]"
+            />
+          </button>
+        </div>
+        <nav
+          id="popular-holiday-list"
+          class="hide-scrollbar pointer-events-auto flex touch-pan-x space-x-4 overflow-x-auto px-4"
+          aria-label="Popüler Tatil Seçenekleri"
+          role="region"
+        >
           <a
             href="#"
-            class="relative flex h-[200px] flex-col overflow-hidden rounded-lg border border-gray-200 transition-all duration-300 hover:border-primary-800 active:scale-[99%]"
+            class="relative flex h-[200px] w-[300px] flex-shrink-0 flex-col overflow-hidden rounded-lg border border-gray-200 transition-all duration-300 hover:border-primary-800 active:scale-[99%]"
             aria-label="Lüks Safari Platinium Heritage"
           >
             <!-- Image -->
@@ -1219,7 +1249,7 @@
 
           <a
             href="#"
-            class="relative flex h-[200px] flex-col overflow-hidden rounded-lg border border-gray-200 transition-all duration-300 hover:border-primary-800 active:scale-[99%]"
+            class="relative flex h-[200px] w-[300px] flex-shrink-0 flex-col overflow-hidden rounded-lg border border-gray-200 transition-all duration-300 hover:border-primary-800 active:scale-[99%]"
             aria-label="Lüks Safari Platinium Heritage"
           >
             <!-- Image -->
@@ -1247,7 +1277,7 @@
 
           <a
             href="#"
-            class="relative flex h-[200px] flex-col overflow-hidden rounded-lg border border-gray-200 transition-all duration-300 hover:border-primary-800 active:scale-[99%]"
+            class="relative flex h-[200px] w-[300px] flex-shrink-0 flex-col overflow-hidden rounded-lg border border-gray-200 transition-all duration-300 hover:border-primary-800 active:scale-[99%]"
             aria-label="Lüks Safari Platinium Heritage"
           >
             <!-- Image -->
@@ -1273,7 +1303,7 @@
 
           <a
             href="#"
-            class="relative flex h-[200px] flex-col overflow-hidden rounded-lg border border-gray-200 transition-all duration-300 hover:border-primary-800 active:scale-[99%]"
+            class="relative flex h-[200px] w-[300px] flex-shrink-0 flex-col overflow-hidden rounded-lg border border-gray-200 transition-all duration-300 hover:border-primary-800 active:scale-[99%]"
             aria-label="Lüks Safari Platinium Heritage"
           >
             <!-- Image -->
