@@ -41,7 +41,3 @@ document.addEventListener("DOMContentLoaded", () => {
     "next-btn-most-popular",
   );
 });
-
-window.addEventListener("resize", () => {
-  // Gerekirse carousel state'ini yeniden hesaplayabilirsiniz
-});
