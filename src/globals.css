@@ -26,6 +26,9 @@
     -webkit-appearance: none;
     -moz-appearance: none;
     appearance: none;
+    border: none;
+    outline: none;
+    background-color: white; /* Beyaz arka plan */
   }
 
   .rounded-custom {
