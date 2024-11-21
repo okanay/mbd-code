@@ -3,14 +3,16 @@ export function createCarousel(
   options: {
     snapAlign?: "start" | "center" | "end";
     itemSpacing?: number;
-    screenSizes?: { width: number; items: number }[];
+    screenSizes?: { width: number; jumpVal: number }[];
   } = {},
 ) {
   const {
     snapAlign = "start",
     itemSpacing = 16,
-    screenSizes = [{ width: 0, items: 1 }],
+    screenSizes = [{ width: 0, jumpVal: 1 }],
   } = options;
+
+  console.log("Carousel created with options:", options);
 
   // Carousel elemanlarını al
   const items = Array.from(carouselList.children) as HTMLElement[];
@@ -24,12 +26,19 @@ export function createCarousel(
   // Ekran genişliğine göre item sayısını belirle
   function getItemsPerPage() {
     const width = window.innerWidth;
-    for (let i = screenSizes.length - 1; i >= 0; i--) {
-      if (width >= screenSizes[i].width) {
-        return screenSizes[i].items;
+
+    // Genişlik sıralamasını yap (Büyükten küçüğe doğru)
+    const sortedSizes = [...screenSizes].sort((a, b) => b.width - a.width);
+
+    // Genişlik sırasına göre eşleşme kontrolü
+    for (let i = 0; i < sortedSizes.length; i++) {
+      if (width >= sortedSizes[i].width) {
+        return sortedSizes[i].jumpVal;
       }
     }
-    return 1; // Default değer
+
+    // Eğer ekran genişliği en küçük değerden de küçükse
+    return sortedSizes[sortedSizes.length - 1].jumpVal;
   }
 
   // Ekran genişliğini ve item boyutlarını hesapla
@@ -84,6 +93,7 @@ export function createCarousel(
   // Scroll fonksiyonu
   function scrollToPrecise(index: number) {
     if (state.isScrolling || index < 0 || index >= items.length) return;
+    console.log("Scrolling to index:", index);
 
     state.isScrolling = true;
     state.currentIndex = index;

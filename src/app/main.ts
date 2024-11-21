@@ -21,9 +21,9 @@ function setupCarousel(listId: string, prevBtnId: string, nextBtnId: string) {
     snapAlign: "center",
     itemSpacing: 16,
     screenSizes: [
-      { width: 512, items: 3 },
-      { width: 768, items: 3 },
-      { width: 1024, items: 3 },
+      { width: 1024, jumpVal: 3 },
+      { width: 768, jumpVal: 2 },
+      { width: 512, jumpVal: 1 },
     ],
   });
 
