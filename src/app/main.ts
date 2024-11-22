@@ -27,11 +27,11 @@ document.addEventListener("DOMContentLoaded", () => {
       duration: 1000,
       timingFunction: "cubic-bezier(0.4, 0, 0.2, 1)",
       transformSelectedInitialPos: "translate(120%, 0%)",
-      transformNotSelectedExitPos: "translate(-50%, -5%)",
+      transformNotSelectedExitPos: "translate(-20%, 0%)",
       opacitySelected: 1,
-      opacityNotSelected: 0.5,
+      opacityNotSelected: 0.75,
       scaleSelected: 1,
-      scaleNotSelected: 0.8,
+      scaleNotSelected: 1,
     },
     options: {
       zIndex: {
