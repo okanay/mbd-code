@@ -55,7 +55,7 @@ app.post("/github-push-event", async (c) => {
   // Build process'i ayrı bir işlemde başlat
   setTimeout(() => {
     runBuildProcess();
-  }, 0);
+  }, 1000);
 
   return;
 });
