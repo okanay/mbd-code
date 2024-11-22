@@ -90,11 +90,11 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   new AccordionController({
-    container: "#accordion-container",
-    accordionSelector: ".accordion",
-    toggleButtonSelector: ".accordion-toggle",
-    contentSelector: ".accordion-content",
-    iconSelector: ".accordion-icon",
+    container: "#faq-container-1",
+    accordionSelector: ".faq",
+    toggleButtonSelector: ".faq-toggle",
+    contentSelector: ".faq-content",
+    iconSelector: ".faq-icon",
     defaultOpenIndex: 0,
     closeOthersOnOpen: true,
     animation: {
@@ -106,8 +106,8 @@ document.addEventListener("DOMContentLoaded", () => {
       stateAttribute: "data-state",
     },
     classes: {
-      activeClass: "accordion-active",
-      inactiveClass: "accordion-inactive",
+      activeClass: "faq-active",
+      inactiveClass: "faq-inactive",
     },
   });
 });

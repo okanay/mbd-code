@@ -42,6 +42,6 @@
   }
 
   .slider-active-btn {
-    @apply !scale-[102%] !border-primary-700;
+    @apply !scale-[102%] !border-primary-500;
   }
 }
