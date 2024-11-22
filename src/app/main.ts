@@ -17,22 +17,31 @@ document.addEventListener("DOMContentLoaded", () => {
     container: "#hero-slider-container",
     slideSelector: ".hero-slide",
     buttonSelector: ".hero-slider-btn",
-    animationDuration: 1000,
+    animationConfig: {
+      duration: 1250,
+      timingFunction: "cubic-bezier(0.4, 0, 0.2, 1)",
+      transformSelectedInitialPos: "translateY(-120%)",
+      transformNotSelectedExitPos: "translateY(120%)",
+      opacitySelected: 1,
+      opacityNotSelected: 0.4,
+      scaleSelected: 1,
+      scaleNotSelected: 0.85,
+    },
     defaultActiveIndex: 0,
     activeButtonClass: "slider-active-btn",
     activeButtonClassTarget: ".hero-slider-btn-item",
     auto: true,
     autoInterval: 6000,
-    onIndexChange: (index) => {
-      if (!index && index !== 0) return;
-      heroSliderCarousel?.scrollTo(index);
-    },
     options: {
       zIndex: {
         selected: 30,
         clone: 40,
         notSelected: -10,
       },
+    },
+    onIndexChange: (index) => {
+      if (!index && index !== 0) return;
+      heroSliderCarousel?.scrollTo(index);
     },
   });
 });

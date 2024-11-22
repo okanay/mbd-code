@@ -1,8 +1,19 @@
+interface SliderAnimationConfig {
+  duration?: number;
+  timingFunction?: string;
+  transformNotSelectedExitPos?: string;
+  transformSelectedInitialPos?: string;
+  opacitySelected?: number;
+  opacityNotSelected?: number;
+  scaleSelected?: number;
+  scaleNotSelected?: number;
+}
+
 interface SliderConfig {
   container: string | HTMLElement;
   slideSelector: string;
   buttonSelector: string;
-  animationDuration?: number;
+  animationConfig?: SliderAnimationConfig;
   defaultActiveIndex?: number;
   activeButtonClass?: string;
   activeButtonClassTarget?: string;
@@ -25,7 +36,6 @@ class Slider {
   private buttons: NodeListOf<HTMLButtonElement>;
   private activeIndex: number;
   private isAnimating: boolean;
-  private animationDuration: number;
   private activeButtonClass: string;
   private activeButtonClassTarget: string;
   private autoEnabled: boolean;
@@ -39,6 +49,7 @@ class Slider {
       notSelected: number;
     };
   };
+  private animationConfig: SliderAnimationConfig;
 
   constructor(config: SliderConfig) {
     // Container elementini al
@@ -65,10 +76,24 @@ class Slider {
       throw new Error("Slides or buttons not found");
     }
 
+    // Default animation configuration
+    this.animationConfig = {
+      duration: config.animationConfig?.duration || 500,
+      timingFunction: config.animationConfig?.timingFunction || "ease-in-out",
+      transformNotSelectedExitPos:
+        config.animationConfig?.transformNotSelectedExitPos || "translateX(0%)",
+      transformSelectedInitialPos:
+        config.animationConfig?.transformSelectedInitialPos ||
+        "translateX(-100%)",
+      opacitySelected: config.animationConfig?.opacitySelected || 1,
+      opacityNotSelected: config.animationConfig?.opacityNotSelected || 0.85,
+      scaleSelected: config.animationConfig?.scaleSelected || 1,
+      scaleNotSelected: config.animationConfig?.scaleNotSelected || 0.85,
+    };
+
     // Configden gelen değerleri ata
     this.activeIndex = config.defaultActiveIndex || 0;
     this.isAnimating = false;
-    this.animationDuration = config.animationDuration || 500;
     this.activeButtonClass = config.activeButtonClass || "slider-active-btn";
     this.activeButtonClassTarget =
       config.activeButtonClassTarget || config.buttonSelector;
@@ -88,8 +113,17 @@ class Slider {
 
   private init(): void {
     if (this.slides.length > 0) {
-      this.slides[this.activeIndex].style.zIndex =
-        this.options.zIndex.selected.toString();
+      this.slides.forEach((slide, index) => {
+        if (index === this.activeIndex) {
+          slide.style.zIndex = this.options.zIndex.selected.toString();
+          slide.style.opacity = `${this.animationConfig.opacitySelected}`;
+          slide.style.scale = `${this.animationConfig.scaleSelected}`;
+        } else {
+          slide.style.zIndex = this.options.zIndex.notSelected.toString();
+          slide.style.opacity = `${this.animationConfig.opacityNotSelected}`;
+          slide.style.scale = `${this.animationConfig.scaleNotSelected}`;
+        }
+      });
       this.updateActiveButton(this.activeIndex);
     }
 
@@ -114,8 +148,10 @@ class Slider {
   private createCloneElement(sourceElement: HTMLElement): HTMLElement {
     const clone = sourceElement.cloneNode(true) as HTMLElement;
     clone.dataset.clone = "true";
-    clone.style.transform = "translateX(100%)";
+    clone.style.transform = `${this.animationConfig.transformSelectedInitialPos}`;
     clone.style.transition = "none";
+    clone.style.opacity = `${this.animationConfig.opacityNotSelected}`;
+    clone.style.scale = `${this.animationConfig.scaleNotSelected}`;
     clone.style.zIndex = this.options.zIndex.clone.toString();
     return clone;
   }
@@ -181,27 +217,45 @@ class Slider {
     clone.offsetHeight;
 
     requestAnimationFrame(() => {
-      clone.style.transition = `transform ${this.animationDuration}ms ease-in-out`;
-      clone.style.transform = "translateX(0)";
+      clone.style.transition = `${this.animationConfig.duration}ms ${this.animationConfig.timingFunction}`;
+      clone.style.transform = `translateX(0%)`;
+      clone.style.opacity = `${this.animationConfig.opacitySelected}`;
+      clone.style.scale = `${this.animationConfig.scaleSelected}`;
 
-      currentSlide.style.transition = `transform ${this.animationDuration}ms ease-in-out`;
-      currentSlide.style.transform = "translateX(-100%)";
+      currentSlide.style.transition = `${this.animationConfig.duration}ms ${this.animationConfig.timingFunction}`;
+      currentSlide.style.transform = `${this.animationConfig.transformNotSelectedExitPos}`;
+      currentSlide.style.opacity = `${this.animationConfig.opacityNotSelected}`;
+      currentSlide.style.scale = `${this.animationConfig.scaleNotSelected}`;
     });
 
     this.onIndexChange && this.onIndexChange(targetIndex);
-    await new Promise((resolve) => setTimeout(resolve, this.animationDuration));
+    await new Promise((resolve) =>
+      setTimeout(resolve, this.animationConfig.duration),
+    );
 
     this.slides.forEach((slide: HTMLElement) => {
       slide.style.zIndex = this.options.zIndex.notSelected.toString();
-      slide.style.transform = "";
+      slide.style.transform = "translateX(0%)";
       slide.style.transition = "none";
+      slide.style.opacity = `${this.animationConfig.opacitySelected}`;
+      slide.style.scale = `${this.animationConfig.scaleSelected}`;
     });
 
     targetSlide.style.zIndex = this.options.zIndex.selected.toString();
+    targetSlide.style.opacity = `${this.animationConfig.opacitySelected}`;
+    targetSlide.style.scale = `${this.animationConfig.scaleSelected}`;
     clone.remove();
 
     this.activeIndex = targetIndex;
     this.isAnimating = false;
+  }
+
+  // Method to update animation configuration dynamically
+  public updateAnimationConfig(config: SliderAnimationConfig): void {
+    this.animationConfig = {
+      ...this.animationConfig,
+      ...config,
+    };
   }
 
   // Public methods
