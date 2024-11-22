@@ -1,6 +1,7 @@
 import { setupCarousel } from "./packages/carousel.js";
 import { Slider } from "./packages/slider.js";
 import { AccordionController } from "./packages/accordion.js";
+import { ModalController } from "./packages/modal.js";
 
 // Slider'ı başlat
 document.addEventListener("DOMContentLoaded", () => {
@@ -9,10 +10,51 @@ document.addEventListener("DOMContentLoaded", () => {
     "prev-hero-slider-btn",
     "next-hero-slider-btn",
   );
-
   setupCarousel("most-popular", "prev-most-popular", "next-most-popular");
   setupCarousel("popular-list", "prev-popular-list", "next-popular-list");
   setupCarousel("holiday-list", "prev-holiday-list", "next-holiday-list");
+
+  new ModalController(
+    [
+      {
+        id: "mobile-menu",
+        triggerElements: ["#mobile-menu-button"],
+        contentElement: "#mobile-navigation",
+        closeElements: [],
+        containers: ["#mobile-navigation-content"],
+      },
+      {
+        id: "language-menu",
+        triggerElements: [
+          "#language-currency-selector-button",
+          "#language-currency-selector-button-mobile",
+        ],
+        contentElement: "#language-currency-selector-options",
+        closeElements: ["#language-selector-closed-button"],
+        containers: ["#language-currency-selector-options-content"],
+      },
+    ],
+    {
+      outsideClickClose: true,
+      escapeClose: true,
+      closeOthersOnOpen: true,
+      scrollLock: {
+        enabled: true,
+        styles: {
+          hidden: {
+            overflow: "hidden",
+            position: "fixed",
+            width: "100%",
+          },
+          visible: {
+            overflow: "auto",
+            position: "static",
+            width: "auto",
+          },
+        },
+      },
+    },
+  );
 
   new Slider({
     container: "#hero-slider-container",
