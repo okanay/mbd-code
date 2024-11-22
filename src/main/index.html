@@ -59,14 +59,14 @@
       as="image"
     />
 
-    <link rel="stylesheet" href="/globals.css?v=1005" />
+    <link rel="stylesheet" href="/globals.css?v=1020" />
 
-    <script type="module" src="/lazy-image-load.js?v=1005"></script>
-    <script type="module" src="/navigation.js?v=1005"></script>
-    <script type="module" src="/main.js?v=1005"></script>
+    <script type="module" src="/lazy-image-load.js?v=1020"></script>
+    <script type="module" src="/navigation.js?v=1020"></script>
+    <script type="module" src="/main.js?v=1020"></script>
   </head>
   <body class="">
-    <header class="h-[80px] w-full border-gray-200 lg:border-b">
+    <header class="w-full border-gray-200 lg:h-[80px] lg:border-b">
       <!-- Desktop Navigation -->
       <nav
         class="mx-auto hidden h-full max-w-7xl items-center justify-between px-4 lg:flex"
@@ -160,7 +160,7 @@
       <!--  Mobile Navigation -->
       <nav
         data-state="closed"
-        class="group relative z-[8000] mx-auto flex h-full items-center justify-between px-4 lg:hidden"
+        class="group absolute left-0 top-0 z-[8000] mx-auto flex h-fit w-full items-center justify-between bg-transparent px-8 py-8 lg:hidden"
         id="mobile-navigation"
       >
         <!-- Hamburger Button -->
@@ -183,6 +183,15 @@
           />
         </button>
 
+        <!-- Profile Button -->
+        <a href="#" class="relative z-20">
+          <img
+            src="/public/images/icons/circle-user.svg"
+            alt="Menu Icon"
+            class="size-[32px] brightness-0 invert group-data-[state=closed]:block group-data-[state=open]:hidden"
+          />
+        </a>
+
         <!-- Logo -->
         <a
           href="/"
@@ -192,7 +201,7 @@
           <img
             src="/public/images/brand-images/logo.webp"
             alt="MBD Travel"
-            class="h-auto w-[128px] object-scale-down"
+            class="h-auto w-[128px] object-scale-down brightness-0 invert"
           />
         </a>
 
@@ -515,7 +524,7 @@
     <main class="space-y-8 pb-16">
       <!-- HERO -->
       <section
-        class="mx-auto mt-[24px] flex w-full max-w-7xl flex-col gap-8 lg:mt-[32px]"
+        class="mx-auto flex w-full max-w-7xl flex-col gap-8 lg:mt-[32px]"
       >
         <div class="grid grid-cols-6 grid-rows-4 gap-x-6 gap-y-8 lg:px-6">
           <!-- Slider Contents -->
@@ -525,13 +534,16 @@
           >
             <ul
               id="slider"
-              class="relative h-full min-h-[320px] w-full bg-gray-100 lg:min-h-[380px]"
+              class="relative h-full min-h-[360px] w-full bg-gray-100 lg:min-h-[380px]"
             >
               <!--  Slider - 0 -->
-              <li data-index="0" class="hero-slide absolute inset-0 px-4 py-6">
+              <li
+                data-index="0"
+                class="hero-slide absolute inset-0 flex flex-col justify-center px-8 py-6 lg:block lg:flex-none lg:justify-normal lg:px-4"
+              >
                 <!-- Image -->
                 <div
-                  class="absolute left-0 top-0 z-10 h-full w-full justify-end bg-gray-100"
+                  class="absolute left-0 top-0 z-10 h-full w-full bg-gray-100"
                 >
                   <img
                     src="/public/images/gallery/1-blur.webp"
@@ -540,82 +552,35 @@
                     class="lazy-image h-full w-full object-cover"
                     style="filter: blur(10px); transition: filter 0.3s ease"
                   />
+                  <div
+                    class="absolute inset-0 z-[60] bg-gradient-to-t from-black/90 via-black/20 to-black/90 lg:hidden"
+                  ></div>
                 </div>
 
                 <div
-                  class="relative z-20 flex h-full max-w-[300px] flex-col gap-6 rounded-bl-xl rounded-br-3xl rounded-tl-3xl rounded-tr-xl border border-gray-200 bg-white p-6 sm:max-w-[360px]"
+                  class="relative z-20 flex max-w-[300px] flex-col gap-6 rounded-bl-xl rounded-br-3xl rounded-tl-3xl rounded-tr-xl border-gray-200 pt-20 sm:max-w-[360px] lg:h-full lg:border lg:bg-white lg:px-6 lg:py-6"
                 >
-                  <h1 class="text-2xl font-semibold sm:text-4xl sm:leading-10">
+                  <h1
+                    class="text-3xl font-bold leading-8 text-white sm:text-4xl sm:leading-10 lg:pt-0 lg:font-semibold lg:text-gray-800"
+                  >
                     Dubai’de Rüya gibi Balayı Tatili %20 İndirimli!
                   </h1>
-                  <p class="text-pretty text-start text-xs sm:text-sm">
+                  <p
+                    class="hidden text-pretty text-start text-xs sm:text-sm lg:block"
+                  >
                     Dubai tatilinizi MBD Travel ile planlayın, size özel sunulan
-                    %20 indiriminizi <br />
-                    yakalayın.
+                    %20 indiriminizi yakalayın.
                   </p>
                 </div>
               </li>
               <!--  Slider - 1 -->
-              <li data-index="1" class="hero-slide absolute inset-0 px-4 py-6">
+              <li
+                data-index="1"
+                class="hero-slide absolute inset-0 flex flex-col justify-center px-8 py-6 lg:block lg:flex-none lg:justify-normal lg:px-4"
+              >
                 <!-- Image -->
                 <div
-                  class="absolute left-0 top-0 z-10 h-full w-full justify-end bg-gray-100 sm:flex"
-                >
-                  <img
-                    src="/public/images/gallery/5-blur.webp"
-                    data-src="/public/images/gallery/5.webp"
-                    alt="Dubai'de Balayı Tatili"
-                    class="lazy-image h-full w-full object-cover"
-                    style="filter: blur(10px); transition: filter 0.3s ease"
-                  />
-                </div>
-
-                <div
-                  class="relative z-20 flex h-full max-w-[300px] flex-col gap-6 rounded-bl-xl rounded-br-3xl rounded-tl-3xl rounded-tr-xl border border-gray-200 bg-white p-6 sm:max-w-[360px]"
-                >
-                  <h1 class="text-2xl font-semibold sm:text-4xl sm:leading-10">
-                    Dubai’de Rüya gibi Balayı Tatili %20 İndirimli!
-                  </h1>
-                  <p class="text-pretty text-xs sm:text-sm">
-                    Dubai tatilinizi MBD Travel ile planlayın, size özel sunulan
-                    %20 indiriminizi <br />
-                    yakalayın.
-                  </p>
-                </div>
-              </li>
-              <!--  Slider - 2 -->
-              <li data-index="2" class="hero-slide absolute inset-0 px-4 py-6">
-                <!-- Image -->
-                <div
-                  class="absolute left-0 top-0 z-10 h-full w-full justify-end bg-gray-100 sm:flex"
-                >
-                  <img
-                    src="/public/images/gallery/6-blur.webp"
-                    data-src="/public/images/gallery/6.webp"
-                    alt="Dubai'de Balayı Tatili"
-                    class="lazy-image h-full w-full object-cover"
-                    style="filter: blur(10px); transition: filter 0.3s ease"
-                  />
-                </div>
-
-                <div
-                  class="relative z-20 flex h-full max-w-[300px] flex-col gap-6 rounded-bl-xl rounded-br-3xl rounded-tl-3xl rounded-tr-xl border border-gray-200 bg-white p-6 sm:max-w-[360px]"
-                >
-                  <h1 class="text-2xl font-semibold sm:text-4xl sm:leading-10">
-                    Dubai’de Rüya gibi Balayı Tatili %20 İndirimli!
-                  </h1>
-                  <p class="text-pretty text-xs sm:text-sm">
-                    Dubai tatilinizi MBD Travel ile planlayın, size özel sunulan
-                    %20 indiriminizi <br />
-                    yakalayın.
-                  </p>
-                </div>
-              </li>
-              <!--  Slider - 3 -->
-              <li data-index="3" class="hero-slide absolute inset-0 px-4 py-6">
-                <!-- Image -->
-                <div
-                  class="absolute left-0 top-0 z-10 h-full w-full justify-end bg-gray-100 sm:flex"
+                  class="absolute left-0 top-0 z-10 h-full w-full bg-gray-100"
                 >
                   <img
                     src="/public/images/gallery/4-blur.webp"
@@ -624,46 +589,135 @@
                     class="lazy-image h-full w-full object-cover"
                     style="filter: blur(10px); transition: filter 0.3s ease"
                   />
+                  <div
+                    class="absolute inset-0 z-[60] bg-gradient-to-t from-black/90 via-black/20 to-black/90 lg:hidden"
+                  ></div>
                 </div>
 
                 <div
-                  class="relative z-20 flex h-full max-w-[300px] flex-col gap-6 rounded-bl-xl rounded-br-3xl rounded-tl-3xl rounded-tr-xl border border-gray-200 bg-white p-6 sm:max-w-[360px]"
+                  class="relative z-20 flex max-w-[300px] flex-col gap-6 rounded-bl-xl rounded-br-3xl rounded-tl-3xl rounded-tr-xl border-gray-200 pt-20 sm:max-w-[360px] lg:h-full lg:border lg:bg-white lg:px-6 lg:py-6"
                 >
-                  <h1 class="text-2xl font-semibold sm:text-4xl sm:leading-10">
+                  <h1
+                    class="text-3xl font-bold leading-8 text-white sm:text-4xl sm:leading-10 lg:pt-0 lg:font-semibold lg:text-gray-800"
+                  >
                     Dubai’de Rüya gibi Balayı Tatili %20 İndirimli!
                   </h1>
-                  <p class="text-pretty text-xs sm:text-sm">
+                  <p
+                    class="hidden text-pretty text-start text-xs sm:text-sm lg:block"
+                  >
                     Dubai tatilinizi MBD Travel ile planlayın, size özel sunulan
-                    %20 indiriminizi <br />
-                    yakalayın.
+                    %20 indiriminizi yakalayın.
                   </p>
                 </div>
               </li>
-              <!--  Slider - 4 -->
-              <li data-index="4" class="hero-slide absolute inset-0 px-4 py-6">
+              <!--  Slider - 2 -->
+              <li
+                data-index="2"
+                class="hero-slide absolute inset-0 flex flex-col justify-center px-8 py-6 lg:block lg:flex-none lg:justify-normal lg:px-4"
+              >
                 <!-- Image -->
                 <div
-                  class="absolute left-0 top-0 z-10 h-full w-full justify-end bg-gray-100 sm:flex"
+                  class="absolute left-0 top-0 z-10 h-full w-full bg-gray-100"
                 >
                   <img
-                    src="/public/images/gallery/8-blur.webp"
-                    data-src="/public/images/gallery/8.webp"
+                    src="/public/images/gallery/5-blur.webp"
+                    data-src="/public/images/gallery/5.webp"
                     alt="Dubai'de Balayı Tatili"
                     class="lazy-image h-full w-full object-cover"
                     style="filter: blur(10px); transition: filter 0.3s ease"
                   />
+                  <div
+                    class="absolute inset-0 z-[60] bg-gradient-to-t from-black/90 via-black/20 to-black/90 lg:hidden"
+                  ></div>
                 </div>
 
                 <div
-                  class="relative z-20 flex h-full max-w-[300px] flex-col gap-6 rounded-bl-xl rounded-br-3xl rounded-tl-3xl rounded-tr-xl border border-gray-200 bg-white p-6 sm:max-w-[360px]"
+                  class="relative z-20 flex max-w-[300px] flex-col gap-6 rounded-bl-xl rounded-br-3xl rounded-tl-3xl rounded-tr-xl border-gray-200 pt-20 sm:max-w-[360px] lg:h-full lg:border lg:bg-white lg:px-6 lg:py-6"
                 >
-                  <h1 class="text-2xl font-semibold sm:text-4xl sm:leading-10">
+                  <h1
+                    class="text-3xl font-bold leading-8 text-white sm:text-4xl sm:leading-10 lg:pt-0 lg:font-semibold lg:text-gray-800"
+                  >
                     Dubai’de Rüya gibi Balayı Tatili %20 İndirimli!
                   </h1>
-                  <p class="text-pretty text-xs sm:text-sm">
+                  <p
+                    class="hidden text-pretty text-start text-xs sm:text-sm lg:block"
+                  >
                     Dubai tatilinizi MBD Travel ile planlayın, size özel sunulan
-                    %20 indiriminizi <br />
-                    yakalayın.
+                    %20 indiriminizi yakalayın.
+                  </p>
+                </div>
+              </li>
+              <!--  Slider - 3 -->
+              <li
+                data-index="3"
+                class="hero-slide absolute inset-0 flex flex-col justify-center px-8 py-6 lg:block lg:flex-none lg:justify-normal lg:px-4"
+              >
+                <!-- Image -->
+                <div
+                  class="absolute left-0 top-0 z-10 h-full w-full bg-gray-100"
+                >
+                  <img
+                    src="/public/images/gallery/6-blur.webp"
+                    data-src="/public/images/gallery/6.webp"
+                    alt="Dubai'de Balayı Tatili"
+                    class="lazy-image h-full w-full object-cover"
+                    style="filter: blur(10px); transition: filter 0.3s ease"
+                  />
+                  <div
+                    class="absolute inset-0 z-[60] bg-gradient-to-t from-black/90 via-black/20 to-black/90 lg:hidden"
+                  ></div>
+                </div>
+
+                <div
+                  class="relative z-20 flex max-w-[300px] flex-col gap-6 rounded-bl-xl rounded-br-3xl rounded-tl-3xl rounded-tr-xl border-gray-200 pt-20 sm:max-w-[360px] lg:h-full lg:border lg:bg-white lg:px-6 lg:py-6"
+                >
+                  <h1
+                    class="text-3xl font-bold leading-8 text-white sm:text-4xl sm:leading-10 lg:pt-0 lg:font-semibold lg:text-gray-800"
+                  >
+                    Dubai’de Rüya gibi Balayı Tatili %20 İndirimli!
+                  </h1>
+                  <p
+                    class="hidden text-pretty text-start text-xs sm:text-sm lg:block"
+                  >
+                    Dubai tatilinizi MBD Travel ile planlayın, size özel sunulan
+                    %20 indiriminizi yakalayın.
+                  </p>
+                </div>
+              </li>
+              <!--  Slider - 4 -->
+              <li
+                data-index="4"
+                class="hero-slide absolute inset-0 flex flex-col justify-center px-8 py-6 lg:block lg:flex-none lg:justify-normal lg:px-4"
+              >
+                <!-- Image -->
+                <div
+                  class="absolute left-0 top-0 z-10 h-full w-full bg-gray-100"
+                >
+                  <img
+                    src="/public/images/gallery/7-blur.webp"
+                    data-src="/public/images/gallery/7.webp"
+                    alt="Dubai'de Balayı Tatili"
+                    class="lazy-image h-full w-full object-cover"
+                    style="filter: blur(10px); transition: filter 0.3s ease"
+                  />
+                  <div
+                    class="absolute inset-0 z-[60] bg-gradient-to-t from-black/90 via-black/20 to-black/90 lg:hidden"
+                  ></div>
+                </div>
+
+                <div
+                  class="relative z-20 flex max-w-[300px] flex-col gap-6 rounded-bl-xl rounded-br-3xl rounded-tl-3xl rounded-tr-xl border-gray-200 pt-20 sm:max-w-[360px] lg:h-full lg:border lg:bg-white lg:px-6 lg:py-6"
+                >
+                  <h1
+                    class="text-3xl font-bold leading-8 text-white sm:text-4xl sm:leading-10 lg:pt-0 lg:font-semibold lg:text-gray-800"
+                  >
+                    Dubai’de Rüya gibi Balayı Tatili %20 İndirimli!
+                  </h1>
+                  <p
+                    class="hidden text-pretty text-start text-xs sm:text-sm lg:block"
+                  >
+                    Dubai tatilinizi MBD Travel ile planlayın, size özel sunulan
+                    %20 indiriminizi yakalayın.
                   </p>
                 </div>
               </li>
