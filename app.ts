@@ -10,7 +10,7 @@ app.get(
   "*",
   cache({
     cacheName: "cache",
-    cacheControl: "max-age=120",
+    cacheControl: "max-age=40",
   }),
 );
 
