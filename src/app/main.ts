@@ -20,7 +20,7 @@ document.addEventListener("DOMContentLoaded", () => {
     defaultActiveIndex: 0,
     activeButtonClass: "slider-active-btn",
     activeButtonClassTarget: ".hero-slider-btn-item",
-    // auto: true,
+    auto: true,
     autoInterval: 6000,
     animationConfig: {
       // TODO:: Direkt olan style degeri verilebilir mi yani init degeri exit degeri anim degeri gibi.
