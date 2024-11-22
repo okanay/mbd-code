@@ -1,5 +1,6 @@
 import { setupCarousel } from "./packages/carousel.js";
 import { Slider } from "./packages/slider.js";
+import { AccordionController } from "./packages/accordion.js";
 
 // Slider'ı başlat
 document.addEventListener("DOMContentLoaded", () => {
@@ -43,6 +44,28 @@ document.addEventListener("DOMContentLoaded", () => {
     onIndexChange: (index) => {
       if (!index && index !== 0) return;
       heroSliderCarousel?.scrollTo(index);
+    },
+  });
+
+  new AccordionController({
+    container: "#accordion-container",
+    accordionSelector: ".accordion",
+    toggleButtonSelector: ".accordion-toggle",
+    contentSelector: ".accordion-content",
+    iconSelector: ".accordion-icon",
+    defaultOpenIndex: 1,
+    closeOthersOnOpen: true,
+    animation: {
+      enabled: true,
+      duration: 300,
+      timingFunction: "ease",
+    },
+    attributes: {
+      stateAttribute: "data-state",
+    },
+    classes: {
+      activeClass: "accordion-active",
+      inactiveClass: "accordion-inactive",
     },
   });
 });

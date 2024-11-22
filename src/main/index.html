@@ -59,11 +59,11 @@
       as="image"
     />
 
-    <link rel="stylesheet" href="/globals.css?v=aboutus" />
+    <link rel="stylesheet" href="/globals.css?v=faq" />
 
-    <script type="module" src="/lazy-image-load.js?v=aboutus"></script>
-    <script type="module" src="/navigation.js?v=aboutus"></script>
-    <script type="module" src="/main.js?v=aboutus"></script>
+    <script type="module" src="/lazy-image-load.js?v=faq"></script>
+    <script type="module" src="/navigation.js?v=faq"></script>
+    <script type="module" src="/main.js?v=faq"></script>
   </head>
   <body class="">
     <header class="w-full border-gray-200 lg:h-[80px] lg:border-b">
@@ -1686,8 +1686,9 @@
             data-src="/public/images/gallery/27.webp"
             alt="Dubai Lüks Safari Platinium Heritage"
             class="lazy-image h-full w-full rounded-xl object-cover"
-            style="filter: blur(10px); transition: filter 0.3s ease"
           />
+          <!-- style="filter: blur(10px); transition: filter 0.3s ease" -->
+
           <ul class="flex flex-col gap-y-8 text-sm font-medium">
             <li>
               MBD Travel, seyahati sadece bir ulaşım aracı değil, bir deneyim
@@ -1731,16 +1732,75 @@
       >
         <h2 class="text-2xl font-semibold">Sıkça Sorulan Sorular</h2>
         <div class="grid grid-cols-1 gap-8 gap-y-8 lg:grid-cols-2">
-          <!-- <ul -->
-          <!-- class="order-2 flex flex-col gap-y-8 text-sm font-medium lg:order-1" -->
-          <!-- ></ul> -->
-          <!-- <img
+          <ul
+            class="order-2 flex flex-col gap-y-8 text-sm font-medium lg:order-1"
+            id="accordion-container"
+          >
+            <li
+              class="accordion group border-b border-solid border-gray-200 pb-8"
+            >
+              <button
+                class="accordion-toggle inline-flex w-full items-center justify-between text-sm font-medium leading-8 text-gray-600 transition-colors duration-300 hover:text-primary-600"
+              >
+                <h5>MBD Travel hangi destinasyonlara turlar düzenliyor?</h5>
+                <img
+                  src="/public/images/icons/chevron-down.svg"
+                  alt="Arrow Down Icon"
+                  class="accordion-icon size-[24px] transition-transform duration-300 group-data-[state=open]:rotate-180"
+                />
+              </button>
+              <div
+                style="height: 0px"
+                class="accordion-content w-full overflow-hidden px-0 pr-4"
+              >
+                <div class="pt-4">
+                  <p class="text-sm font-normal text-gray-600">
+                    MBD Travel, Dubai başta olmak üzere birçok benzersiz
+                    destinasyona turlar düzenlemektedir. Dubai'nin lüks ve
+                    modern yapılarından, kültürel turlara, çöl safarilerinden
+                    helikopter turlarına kadar geniş bir yelpazede hizmet
+                    sunuyoruz. Ayrıca, Abu Dhabi, Limuzin Turları, Yat Kiralama,
+                    Gökyüzünde Yemek gibi özel turlarımız da bulunmaktadır.
+                  </p>
+                </div>
+              </div>
+            </li>
+
+            <li
+              class="accordion group border-b border-solid border-gray-200 pb-8"
+            >
+              <button
+                class="accordion-toggle inline-flex w-full items-center justify-between text-sm font-medium leading-8 text-gray-600 transition-colors duration-300 hover:text-primary-600"
+              >
+                <h5>Turlar için ödeme seçenekleri nelerdir?</h5>
+                <img
+                  src="/public/images/icons/chevron-down.svg"
+                  alt="Arrow Down Icon"
+                  class="accordion-icon size-[24px]"
+                />
+              </button>
+              <div
+                style="height: 0px"
+                class="accordion-content w-full overflow-hidden px-0 pr-4"
+              >
+                <div class="pt-4">
+                  <p class="text-sm font-normal text-gray-600">
+                    MBD Travel, kredi kartı, banka havalesi ve diğer güvenli
+                    ödeme yöntemlerini kabul etmektedir. Seyahatinizi güvenli
+                    bir şekilde rezerve edebilmeniz için çeşitli ödeme
+                    seçenekleri sunuyoruz.
+                  </p>
+                </div>
+              </div>
+            </li>
+          </ul>
+          <img
             src="/public/images/gallery/15-blur.webp"
             data-src="/public/images/gallery/27.jpg"
             alt="Dubai Lüks Safari Platinium Heritage"
-            class="lazy-image order-1 h-full w-full rounded-xl object-cover lg:order-2"
-            style="filter: blur(10px); transition: filter 0.3s ease"
-          /> -->
+            class="lazy-image order-1 h-[260px] w-full rounded-xl object-cover lg:order-2 lg:h-[400px]"
+          />
+          <!-- style="filter: blur(10px); transition: filter 0.3s ease" -->
         </div>
       </section>
     </main>
