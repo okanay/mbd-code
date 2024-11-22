@@ -48,16 +48,15 @@ app.post("/github-push-event", async (c) => {
     return c.json({ error: "Invalid signature" }, 401);
   }
 
-  // Hemen yanıt gönder
+  // Hemen response gönder
   c.status(200);
-  c.json({ message: "Received" });
 
-  // Build process'i ayrı bir işlemde başlat
-  setTimeout(() => {
+  // Sonraki işlemleri background'da çalıştır
+  setImmediate(() => {
     runBuildProcess();
-  }, 1000);
+  });
 
-  return;
+  return c.body(null);
 });
 
 function runBuildProcess(): void {
