@@ -40,4 +40,8 @@
     /*Chrome, Safari, Edge*/
     display: none;
   }
+
+  .slider-active-btn {
+    @apply !scale-[102%] !border-primary-700;
+  }
 }

@@ -257,3 +257,33 @@ function enhanceCarouselPerformance(carouselElement: HTMLElement) {
     carouselElement.style.scrollSnapType = "none";
   });
 }
+
+// Güvenli element seçimi ve null kontrolü için yardımcı fonksiyon
+function getByID<T extends HTMLElement>(selector: string): T | null {
+  return document.getElementById(selector) as T | null;
+}
+
+// Güvenli carousel kurulum fonksiyonu
+export function setupCarousel(
+  listId: string,
+  prevBtnId: string,
+  nextBtnId: string,
+) {
+  const list = getByID<HTMLElement>(listId);
+  const prevBtn = getByID<HTMLButtonElement>(prevBtnId);
+  const nextBtn = getByID<HTMLButtonElement>(nextBtnId);
+
+  if (!list || !prevBtn || !nextBtn) {
+    console.warn(`Carousel setup failed for ${listId}. Missing elements.`);
+    return null;
+  }
+
+  const carousel = createCarousel(list, {
+    snapAlign: "center",
+    itemSpacing: 16,
+  });
+
+  carousel.setupNavigationButtons(prevBtn, nextBtn);
+
+  return carousel;
+}

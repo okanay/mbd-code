@@ -59,11 +59,11 @@
       as="image"
     />
 
-    <link rel="stylesheet" href="/globals.css?v=20" />
+    <link rel="stylesheet" href="/globals.css?v=22" />
 
-    <script type="module" src="/lazy-image-load.js?v=20"></script>
-    <script type="module" src="/navigation.js?v=20"></script>
-    <script type="module" src="/main.js?v=20"></script>
+    <script type="module" src="/lazy-image-load.js?v=22"></script>
+    <script type="module" src="/navigation.js?v=22"></script>
+    <script type="module" src="/main.js?v=22"></script>
   </head>
   <body class="">
     <header class="h-[80px] w-full border-gray-200 lg:border-b">
@@ -518,35 +518,159 @@
         class="mx-auto mt-[24px] flex w-full max-w-7xl flex-col gap-8 lg:mt-[32px]"
       >
         <div class="grid grid-cols-6 grid-rows-4 gap-x-6 gap-y-8 lg:px-6">
-          <!-- Main Hero Section -->
+          <!-- Slider Contents -->
           <div
-            class="relative col-span-full row-span-4 flex h-[320px] flex-col items-start justify-center overflow-hidden border border-gray-200 bg-white px-2 py-8 sm:h-[380px] sm:px-8 sm:py-8 lg:col-span-4 lg:rounded-2xl"
+            id="hero-slider-container"
+            class="relative col-span-full row-span-4 items-start justify-center overflow-hidden border border-gray-200 lg:col-span-4 lg:rounded-2xl"
           >
-            <!-- Placeholder for Background Image -->
-            <div
-              class="absolute left-0 top-0 z-10 h-full w-[160%] justify-end bg-gray-100 sm:flex sm:h-[150%] sm:w-[150%]"
+            <ul
+              id="slider"
+              class="relative h-full min-h-[320px] w-full bg-red-400 lg:min-h-[380px]"
             >
-              <img
-                src="/public/images/gallery/1-blur.webp"
-                data-src="/public/images/gallery/1.webp"
-                alt="Dubai'de Balayı Tatili"
-                class="lazy-image h-full w-full translate-x-[-8%] object-cover sm:translate-x-[-10%] sm:translate-y-[-30%]"
-                style="filter: blur(10px); transition: filter 0.3s ease"
-              />
-            </div>
+              <!--  Slider - 0 -->
+              <li
+                data-index="0"
+                class="hero-slide absolute inset-0 z-10 px-4 py-6"
+              >
+                <!-- Image -->
+                <div
+                  class="absolute left-0 top-0 z-10 h-full w-full justify-end bg-gray-100"
+                >
+                  <img
+                    src="/public/images/gallery/1-blur.webp"
+                    data-src="/public/images/gallery/1.webp"
+                    alt="Dubai'de Balayı Tatili"
+                    class="lazy-image h-full w-full object-cover"
+                    style="filter: blur(10px); transition: filter 0.3s ease"
+                  />
+                </div>
 
-            <div
-              class="relative z-20 flex h-full max-w-[300px] flex-col gap-6 rounded-bl-xl rounded-br-3xl rounded-tl-3xl rounded-tr-xl border border-gray-200 bg-white p-6 sm:max-w-[360px]"
-            >
-              <h1 class="text-2xl font-semibold sm:text-4xl sm:leading-10">
-                Dubai’de Rüya gibi Balayı Tatili %20 İndirimli!
-              </h1>
-              <p class="text-pretty text-xs sm:text-sm">
-                Dubai tatilinizi MBD Travel ile planlayın, size özel sunulan %20
-                indiriminizi <br />
-                yakalayın.
-              </p>
-            </div>
+                <div
+                  class="relative z-20 flex h-full max-w-[300px] flex-col gap-6 rounded-bl-xl rounded-br-3xl rounded-tl-3xl rounded-tr-xl border border-gray-200 bg-white p-6 sm:max-w-[360px]"
+                >
+                  <h1 class="text-2xl font-semibold sm:text-4xl sm:leading-10">
+                    Dubai’de Rüya gibi Balayı Tatili %20 İndirimli!
+                  </h1>
+                  <p class="text-pretty text-start text-xs sm:text-sm">
+                    Dubai tatilinizi MBD Travel ile planlayın, size özel sunulan
+                    %20 indiriminizi <br />
+                    yakalayın.
+                  </p>
+                </div>
+              </li>
+              <!--  Slider - 1 -->
+              <li data-index="1" class="hero-slide absolute inset-0 px-4 py-6">
+                <!-- Image -->
+                <div
+                  class="absolute left-0 top-0 z-10 h-full w-full justify-end bg-gray-100 sm:flex"
+                >
+                  <img
+                    src="/public/images/gallery/5-blur.webp"
+                    data-src="/public/images/gallery/5.webp"
+                    alt="Dubai'de Balayı Tatili"
+                    class="lazy-image h-full w-full object-cover"
+                    style="filter: blur(10px); transition: filter 0.3s ease"
+                  />
+                </div>
+
+                <div
+                  class="relative z-20 flex h-full max-w-[300px] flex-col gap-6 rounded-bl-xl rounded-br-3xl rounded-tl-3xl rounded-tr-xl border border-gray-200 bg-white p-6 sm:max-w-[360px]"
+                >
+                  <h1 class="text-2xl font-semibold sm:text-4xl sm:leading-10">
+                    Dubai’de Rüya gibi Balayı Tatili %20 İndirimli!
+                  </h1>
+                  <p class="text-pretty text-xs sm:text-sm">
+                    Dubai tatilinizi MBD Travel ile planlayın, size özel sunulan
+                    %20 indiriminizi <br />
+                    yakalayın.
+                  </p>
+                </div>
+              </li>
+              <!--  Slider - 2 -->
+              <li data-index="2" class="hero-slide absolute inset-0 px-4 py-6">
+                <!-- Image -->
+                <div
+                  class="absolute left-0 top-0 z-10 h-full w-full justify-end bg-gray-100 sm:flex"
+                >
+                  <img
+                    src="/public/images/gallery/6-blur.webp"
+                    data-src="/public/images/gallery/6.webp"
+                    alt="Dubai'de Balayı Tatili"
+                    class="lazy-image h-full w-full object-cover"
+                    style="filter: blur(10px); transition: filter 0.3s ease"
+                  />
+                </div>
+
+                <div
+                  class="relative z-20 flex h-full max-w-[300px] flex-col gap-6 rounded-bl-xl rounded-br-3xl rounded-tl-3xl rounded-tr-xl border border-gray-200 bg-white p-6 sm:max-w-[360px]"
+                >
+                  <h1 class="text-2xl font-semibold sm:text-4xl sm:leading-10">
+                    Dubai’de Rüya gibi Balayı Tatili %20 İndirimli!
+                  </h1>
+                  <p class="text-pretty text-xs sm:text-sm">
+                    Dubai tatilinizi MBD Travel ile planlayın, size özel sunulan
+                    %20 indiriminizi <br />
+                    yakalayın.
+                  </p>
+                </div>
+              </li>
+              <!--  Slider - 3 -->
+              <li data-index="3" class="hero-slide absolute inset-0 px-4 py-6">
+                <!-- Image -->
+                <div
+                  class="absolute left-0 top-0 z-10 h-full w-full justify-end bg-gray-100 sm:flex"
+                >
+                  <img
+                    src="/public/images/gallery/4-blur.webp"
+                    data-src="/public/images/gallery/4.webp"
+                    alt="Dubai'de Balayı Tatili"
+                    class="lazy-image h-full w-full object-cover"
+                    style="filter: blur(10px); transition: filter 0.3s ease"
+                  />
+                </div>
+
+                <div
+                  class="relative z-20 flex h-full max-w-[300px] flex-col gap-6 rounded-bl-xl rounded-br-3xl rounded-tl-3xl rounded-tr-xl border border-gray-200 bg-white p-6 sm:max-w-[360px]"
+                >
+                  <h1 class="text-2xl font-semibold sm:text-4xl sm:leading-10">
+                    Dubai’de Rüya gibi Balayı Tatili %20 İndirimli!
+                  </h1>
+                  <p class="text-pretty text-xs sm:text-sm">
+                    Dubai tatilinizi MBD Travel ile planlayın, size özel sunulan
+                    %20 indiriminizi <br />
+                    yakalayın.
+                  </p>
+                </div>
+              </li>
+              <!--  Slider - 4 -->
+              <li data-index="4" class="hero-slide absolute inset-0 px-4 py-6">
+                <!-- Image -->
+                <div
+                  class="absolute left-0 top-0 z-10 h-full w-full justify-end bg-gray-100 sm:flex"
+                >
+                  <img
+                    src="/public/images/gallery/8-blur.webp"
+                    data-src="/public/images/gallery/8.webp"
+                    alt="Dubai'de Balayı Tatili"
+                    class="lazy-image h-full w-full object-cover"
+                    style="filter: blur(10px); transition: filter 0.3s ease"
+                  />
+                </div>
+
+                <div
+                  class="relative z-20 flex h-full max-w-[300px] flex-col gap-6 rounded-bl-xl rounded-br-3xl rounded-tl-3xl rounded-tr-xl border border-gray-200 bg-white p-6 sm:max-w-[360px]"
+                >
+                  <h1 class="text-2xl font-semibold sm:text-4xl sm:leading-10">
+                    Dubai’de Rüya gibi Balayı Tatili %20 İndirimli!
+                  </h1>
+                  <p class="text-pretty text-xs sm:text-sm">
+                    Dubai tatilinizi MBD Travel ile planlayın, size özel sunulan
+                    %20 indiriminizi <br />
+                    yakalayın.
+                  </p>
+                </div>
+              </li>
+            </ul>
           </div>
           <!-- Secondary Section 1 -->
           <div
@@ -615,15 +739,16 @@
         </div>
       </section>
 
-      <!-- Slider Section -->
+      <!-- Hero Sliders Buttons -->
       <section
         class="relative mx-auto flex max-w-7xl justify-center overflow-hidden"
       >
+        <!-- Carousel Buttons -->
         <div
           class="pointer-events-none absolute top-0 z-[99] flex h-full w-full max-w-[100vw] items-center justify-between px-1.5"
         >
           <button
-            id="prev-btn"
+            id="prev-hero-slider-btn"
             class="pointer-events-auto rounded-full border border-gray-200 bg-white p-1.5 hover:bg-gray-300 focus:outline-none disabled:cursor-not-allowed disabled:hover:bg-gray-200"
           >
             <img
@@ -633,7 +758,7 @@
             />
           </button>
           <button
-            id="next-btn"
+            id="next-hero-slider-btn"
             class="pointer-events-auto rounded-full border border-gray-200 bg-white p-1.5 hover:bg-gray-300 focus:outline-none disabled:cursor-not-allowed disabled:hover:bg-gray-200"
           >
             <img
@@ -643,19 +768,19 @@
             />
           </button>
         </div>
+
+        <!-- Slider Buttons -->
         <nav
-          id="activity-list"
+          id="hero-slider-btn-list"
           class="hide-scrollbar pointer-events-auto flex w-full touch-pan-x justify-between space-x-2 overflow-x-auto px-4"
           aria-label="Dubai Aktiviteleri"
         >
-          <a
-            href="#"
-            class="group relative z-40 w-[220px] flex-shrink-0 py-2 transition-all duration-300 active:scale-[98%]"
-            itemscope
-            itemtype="http://schema.org/Event"
+          <button
+            data-target="0"
+            class="hero-slider-btn group relative z-40 w-[220px] flex-shrink-0 py-2 transition-all duration-300 active:scale-[98%]"
           >
             <div
-              class="flex gap-2 rounded-lg border border-gray-200 bg-white p-2 transition-colors duration-300 group-hover:border-primary-700"
+              class="hero-slider-btn-item flex gap-2 rounded-lg border border-gray-200 bg-white p-2 transition-colors duration-300 group-hover:border-primary-700"
             >
               <!-- Image -->
               <div
@@ -671,21 +796,19 @@
                 />
               </div>
               <div class="flex flex-col justify-center">
-                <h3 class="text-pretty text-xs font-medium" itemprop="name">
+                <h3 class="text-pretty text-start text-xs font-medium">
                   Dubai Gökyüzünde Akşam Yemeği
                 </h3>
               </div>
             </div>
-          </a>
+          </button>
 
-          <a
-            href="#"
-            class="group relative z-40 w-[220px] flex-shrink-0 py-2 transition-all duration-300 active:scale-[98%]"
-            itemscope
-            itemtype="http://schema.org/Event"
+          <button
+            data-target="1"
+            class="hero-slider-btn group relative z-40 w-[220px] flex-shrink-0 py-2 transition-all duration-300 active:scale-[98%]"
           >
             <div
-              class="flex gap-2 rounded-lg border border-gray-200 bg-white p-2 transition-colors duration-300 group-hover:border-primary-700"
+              class="hero-slider-btn-item flex gap-2 rounded-lg border border-gray-200 bg-white p-2 transition-colors duration-300 group-hover:border-primary-700"
             >
               <!-- Image -->
               <div
@@ -701,21 +824,19 @@
                 />
               </div>
               <div class="flex flex-col justify-center">
-                <h3 class="text-pretty text-xs font-medium" itemprop="name">
+                <h3 class="text-pretty text-start text-xs font-medium">
                   Deep Dive Dubai
                 </h3>
               </div>
             </div>
-          </a>
+          </button>
 
-          <a
-            href="#"
-            class="group relative z-40 w-[220px] flex-shrink-0 py-2 transition-all duration-300 active:scale-[98%]"
-            itemscope
-            itemtype="http://schema.org/Event"
+          <button
+            class="hero-slider-btn group relative z-40 w-[220px] flex-shrink-0 py-2 transition-all duration-300 active:scale-[98%]"
+            data-target="2"
           >
             <div
-              class="flex gap-2 rounded-lg border border-gray-200 bg-white p-2 transition-colors duration-300 group-hover:border-primary-700"
+              class="hero-slider-btn-item flex gap-2 rounded-lg border border-gray-200 bg-white p-2 transition-colors duration-300 group-hover:border-primary-700"
             >
               <!-- Image -->
               <div
@@ -731,21 +852,19 @@
                 />
               </div>
               <div class="flex flex-col justify-center">
-                <h3 class="text-pretty text-xs font-medium" itemprop="name">
+                <h3 class="text-pretty text-start text-xs font-medium">
                   Evlilik Teklifinize Özel %20 İndirim
                 </h3>
               </div>
             </div>
-          </a>
+          </button>
 
-          <a
-            href="#"
-            class="group relative z-40 w-[220px] flex-shrink-0 py-2 transition-all duration-300 active:scale-[98%]"
-            itemscope
-            itemtype="http://schema.org/Event"
+          <button
+            class="hero-slider-btn group relative z-40 w-[220px] flex-shrink-0 py-2 transition-all duration-300 active:scale-[98%]"
+            data-target="3"
           >
             <div
-              class="flex gap-2 rounded-lg border border-gray-200 bg-white p-2 transition-colors duration-300 group-hover:border-primary-700"
+              class="hero-slider-btn-item flex gap-2 rounded-lg border border-gray-200 bg-white p-2 transition-colors duration-300 group-hover:border-primary-700"
             >
               <!-- Image -->
               <div
@@ -761,21 +880,19 @@
                 />
               </div>
               <div class="flex flex-col justify-center">
-                <h3 class="text-pretty text-xs font-medium" itemprop="name">
+                <h3 class="text-pretty text-start text-xs font-medium">
                   Dubai Sonsuzluk Havuzu
                 </h3>
               </div>
             </div>
-          </a>
+          </button>
 
-          <a
-            href="#"
-            class="group relative z-40 w-[220px] flex-shrink-0 py-2 transition-all duration-300 active:scale-[98%]"
-            itemscope
-            itemtype="http://schema.org/Event"
+          <button
+            class="hero-slider-btn group relative z-40 w-[220px] flex-shrink-0 py-2 transition-all duration-300 active:scale-[98%]"
+            data-target="4"
           >
             <div
-              class="flex gap-2 rounded-lg border border-gray-200 bg-white p-2 transition-colors duration-300 group-hover:border-primary-700"
+              class="hero-slider-btn-item flex gap-2 rounded-lg border border-gray-200 bg-white p-2 transition-colors duration-300 group-hover:border-primary-700"
             >
               <!-- Image -->
               <div
@@ -791,12 +908,12 @@
                 />
               </div>
               <div class="flex flex-col justify-center">
-                <h3 class="text-pretty text-xs font-medium" itemprop="name">
+                <h3 class="text-pretty text-start text-xs font-medium">
                   Dubai Jetcar Su Aktivitesi
                 </h3>
               </div>
             </div>
-          </a>
+          </button>
         </nav>
       </section>
 
@@ -1065,7 +1182,7 @@
                   />
                 </div>
                 <div class="flex flex-col justify-center text-xs">
-                  <h4 class="text-pretty font-semibold" itemprop="name">
+                  <h4 class="text-pretty text-start font-semibold">
                     Dubai Araç Kiralama
                   </h4>
                   <p>Araç Kataloğu ve Fiyatlar</p>
@@ -1096,7 +1213,7 @@
                   />
                 </div>
                 <div class="flex flex-col justify-center text-xs">
-                  <h4 class="text-pretty font-semibold" itemprop="name">
+                  <h4 class="text-pretty text-start font-semibold">
                     Dubai Vizesi
                   </h4>
                   <p>Başvuru Süreci</p>
@@ -1127,7 +1244,7 @@
                   />
                 </div>
                 <div class="flex flex-col justify-center text-xs">
-                  <h4 class="text-pretty font-semibold" itemprop="name">
+                  <h4 class="text-pretty text-start font-semibold">
                     Dubai Helikopter Turu
                   </h4>
                   <p>Paket Seçimi</p>
@@ -1158,7 +1275,7 @@
                   />
                 </div>
                 <div class="flex flex-col justify-center text-xs">
-                  <h4 class="text-pretty font-semibold" itemprop="name">
+                  <h4 class="text-pretty text-start font-semibold">
                     Ekonomik Safari
                   </h4>
                   <p>En Çok Tercih Edilen</p>
@@ -1189,7 +1306,7 @@
                   />
                 </div>
                 <div class="flex flex-col justify-center text-xs">
-                  <h4 class="text-pretty font-semibold" itemprop="name">
+                  <h4 class="text-pretty text-start font-semibold">
                     Abu Dhabi Turu
                   </h4>
                   <p>En Çok Tercih Edilen</p>
