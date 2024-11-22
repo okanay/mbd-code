@@ -18,7 +18,7 @@ app.use(
         if (path === "dist/index.html" || path === "dist/") {
           return null;
         }
-        console.error(`Error reading file at ${path}:`);
+        console.error(`Error reading file att ${path}:`);
         return null;
       }
     },
