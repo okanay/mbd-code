@@ -62,7 +62,7 @@ app.post("/github-push-event", async (c) => {
 
 function runBuildProcess(): void {
   exec(
-    "sudo systemctl restart mdb-menuarts.service",
+    "git pull && rm -rf dist && sudo systemctl restart mdb-menuarts.service",
     { cwd: "/root/mdb-code" },
     (error: Error | null, stdout: string, stderr: string) => {
       if (error) {
