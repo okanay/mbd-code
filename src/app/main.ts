@@ -53,7 +53,7 @@ document.addEventListener("DOMContentLoaded", () => {
     toggleButtonSelector: ".accordion-toggle",
     contentSelector: ".accordion-content",
     iconSelector: ".accordion-icon",
-    defaultOpenIndex: 1,
+    defaultOpenIndex: 0,
     closeOthersOnOpen: true,
     animation: {
       enabled: true,
