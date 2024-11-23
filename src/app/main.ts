@@ -142,7 +142,7 @@ document.addEventListener("DOMContentLoaded", () => {
     },
   });
 
-  const mobileFAQ1 = new AccordionController({
+  const mobileFAQShowMore = new AccordionController({
     container: "#faq-container-2",
     accordionSelector: ".faq-2",
     toggleButtonSelector: ".faq-toggle-2",
@@ -184,9 +184,9 @@ document.addEventListener("DOMContentLoaded", () => {
       activeClass: "faq-active",
       inactiveClass: "faq-inactive",
     },
-    onToggle: (index: number, isOpen: boolean) => {
+    onToggle: () => {
       setTimeout(() => {
-        mobileFAQ1.recalculate();
+        mobileFAQShowMore.recalculate();
       }, 150);
     },
   });
