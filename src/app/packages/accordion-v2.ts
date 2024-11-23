@@ -5,7 +5,7 @@ interface AccordionConfig {
   contentSelector?: string;
   iconSelector?: string;
   defaultOpenIndex?: number;
-  closeOthersOnOpen?: boolean; // Yeni eklenen opsiyon
+  closeOthersOnOpen?: boolean;
   animation?: {
     duration: number;
     timingFunction: string;
@@ -26,6 +26,7 @@ interface AccordionConfig {
 class AccordionController {
   private accordions: NodeListOf<Element>;
   private config: Required<AccordionConfig>;
+  private resizeTimeout: number | null = null;
 
   constructor(config: AccordionConfig) {
     this.config = {
@@ -35,7 +36,7 @@ class AccordionController {
       contentSelector: config.contentSelector || ".accordion-content",
       iconSelector: config.iconSelector || ".accordion-icon",
       defaultOpenIndex: config.defaultOpenIndex ?? 0,
-      closeOthersOnOpen: config.closeOthersOnOpen ?? true, // Default olarak true
+      closeOthersOnOpen: config.closeOthersOnOpen ?? true,
       animation: {
         duration: config.animation?.duration ?? 300,
         timingFunction: config.animation?.timingFunction ?? "ease",
@@ -59,7 +60,56 @@ class AccordionController {
       throw new Error(`Container ${this.config.container} not found`);
 
     this.accordions = container.querySelectorAll(this.config.accordionSelector);
+
+    // Window resize event listener ekle
+    window.addEventListener("resize", this.handleWindowResize.bind(this));
+
     this.init();
+  }
+
+  private handleWindowResize(): void {
+    // Performans için debounce uygula
+    if (this.resizeTimeout) {
+      window.clearTimeout(this.resizeTimeout);
+    }
+
+    this.resizeTimeout = window.setTimeout(() => {
+      this.recalculateHeights();
+    }, 150);
+  }
+
+  // Dışarıdan erişilebilir recalculate metodu
+  public recalculate(): void {
+    this.recalculateHeights();
+  }
+
+  private recalculateHeights(): void {
+    this.accordions.forEach((accordion) => {
+      const content = accordion.querySelector(
+        this.config.contentSelector,
+      ) as HTMLElement;
+
+      if (!content) return;
+
+      const isOpen =
+        accordion.getAttribute(this.config.attributes.stateAttribute!) ===
+        "open";
+
+      if (isOpen) {
+        // Geçici height hesaplaması için klon oluştur
+        const clone = content.cloneNode(true) as HTMLElement;
+        clone.style.height = "auto";
+        clone.style.position = "fixed";
+        clone.style.visibility = "hidden";
+        document.body.appendChild(clone);
+
+        const newHeight = clone.scrollHeight;
+        document.body.removeChild(clone);
+
+        // Animasyonlu şekilde yeni height'a geç
+        content.style.height = `${newHeight}px`;
+      }
+    });
   }
 
   private init(): void {
@@ -258,6 +308,15 @@ class AccordionController {
         }
       }
     });
+  }
+
+  public destroy(): void {
+    // Event listener'ı temizle
+    window.removeEventListener("resize", this.handleWindowResize.bind(this));
+
+    if (this.resizeTimeout) {
+      window.clearTimeout(this.resizeTimeout);
+    }
   }
 }
 

@@ -141,4 +141,53 @@ document.addEventListener("DOMContentLoaded", () => {
       inactiveClass: "faq-inactive",
     },
   });
+
+  const mobileFAQ1 = new AccordionController({
+    container: "#faq-container-2",
+    accordionSelector: ".faq-2",
+    toggleButtonSelector: ".faq-toggle-2",
+    contentSelector: ".faq-content-2",
+    iconSelector: ".faq-icon-2",
+    defaultOpenIndex: 0,
+    closeOthersOnOpen: true,
+    animation: {
+      enabled: true,
+      duration: 300,
+      timingFunction: "ease",
+    },
+    attributes: {
+      stateAttribute: "data-state",
+    },
+    classes: {
+      activeClass: "faq-active",
+      inactiveClass: "faq-inactive",
+    },
+  });
+
+  new AccordionController({
+    container: "#faq-container-3",
+    accordionSelector: ".faq-3",
+    toggleButtonSelector: ".faq-toggle-3",
+    contentSelector: ".faq-content-3",
+    iconSelector: ".faq-icon-3",
+    defaultOpenIndex: -1,
+    closeOthersOnOpen: false,
+    animation: {
+      enabled: true,
+      duration: 300,
+      timingFunction: "ease",
+    },
+    attributes: {
+      stateAttribute: "data-state",
+    },
+    classes: {
+      activeClass: "faq-active",
+      inactiveClass: "faq-inactive",
+    },
+    onToggle: (index: number, isOpen: boolean) => {
+      setTimeout(() => {
+        mobileFAQ1.recalculate();
+      }, 150);
+    },
+  });
 });

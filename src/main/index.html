@@ -1018,7 +1018,7 @@
             </div>
             <div class="h-fit p-4">
               <button
-                class="flex h-[48px] w-full items-center justify-center rounded bg-primary-500 font-semibold text-white transition-opacity hover:opacity-80"
+                class="flex h-[48px] w-full items-center justify-center rounded-lg bg-primary-500 font-semibold text-white transition-opacity hover:opacity-80"
               >
                 Daha Fazla Bilgi
                 <img
@@ -1079,7 +1079,7 @@
             </div>
             <div class="h-fit p-4">
               <button
-                class="flex h-[48px] w-full items-center justify-center rounded bg-primary-500 font-semibold text-white transition-opacity hover:opacity-80"
+                class="flex h-[48px] w-full items-center justify-center rounded-lg bg-primary-500 font-semibold text-white transition-opacity hover:opacity-80"
               >
                 Daha Fazla Bilgi
                 <img
@@ -1141,7 +1141,7 @@
             </div>
             <div class="h-fit p-4">
               <button
-                class="flex h-[48px] w-full items-center justify-center rounded bg-primary-500 font-semibold text-white transition-opacity hover:opacity-80"
+                class="flex h-[48px] w-full items-center justify-center rounded-lg bg-primary-500 font-semibold text-white transition-opacity hover:opacity-80"
               >
                 Daha Fazla Bilgi
                 <img
@@ -1203,7 +1203,7 @@
             </div>
             <div class="h-fit p-4">
               <button
-                class="flex h-[48px] w-full items-center justify-center rounded bg-primary-500 font-semibold text-white transition-opacity hover:opacity-80"
+                class="flex h-[48px] w-full items-center justify-center rounded-lg bg-primary-500 font-semibold text-white transition-opacity hover:opacity-80"
               >
                 Daha Fazla Bilgi
                 <img
@@ -1413,7 +1413,7 @@
       </section>
 
       <!-- Popular Holiday Options -->
-      <section class="relative mx-auto max-w-7xl space-y-6">
+      <section class="relative mx-auto max-w-7xl space-y-6 overflow-hidden">
         <h2 class="px-4 text-2xl font-semibold">Popüler Tatil Seçenekleri</h2>
         <!-- Carousel Section -->
         <div
@@ -1732,7 +1732,7 @@
           />
           <!-- style="filter: blur(10px); transition: filter 0.3s ease" -->
 
-          <ul class="flex flex-col gap-y-8 text-sm font-medium">
+          <ul class="flex flex-col gap-y-8 text-sm text-gray-600 lg:text-base">
             <li>
               MBD Travel, seyahati sadece bir ulaşım aracı değil, bir deneyim
               olarak gören ve bu anlayışla her yolculuğu unutulmaz kılmayı
@@ -1774,16 +1774,130 @@
         class="relative mx-auto flex w-full max-w-7xl flex-col space-y-6 overflow-hidden px-4"
       >
         <h2 class="text-2xl font-semibold">Sıkça Sorulan Sorular</h2>
-        <div class="grid grid-cols-1 gap-8 gap-y-8 lg:grid-cols-2">
+        <div
+          class="grid grid-cols-1 grid-rows-1 gap-4 lg:grid-cols-2 lg:grid-rows-2"
+        >
+          <!-- Desktop FAQ -->
           <ul
-            class="order-2 flex flex-col gap-y-8 text-sm font-medium lg:order-1"
+            class="order-2 row-span-2 hidden list-decimal flex-col gap-y-4 text-base font-medium lg:flex"
+          >
+            <li class="flex flex-col gap-4">
+              <h5 class="font-semibold text-gray-950">
+                1. MBD Travel hangi destinasyonlara turlar düzenliyor?
+              </h5>
+              <p class="text-gray-600">
+                MBD Travel, Dubai başta olmak üzere birçok benzersiz
+                destinasyona turlar düzenlemektedir. Dubai’nin lüks ve modern
+                yapılarından, kültürel turlara, çöl safarilerinden helikopter
+                turlarına kadar geniş bir yelpazede hizmet sunuyoruz. Ayrıca,
+                Abu Dhabi, Limuzin Turları, Yat Kiralama, Gökyüzünde Yemek gibi
+                özel turlarımız da bulunmaktadır.
+              </p>
+            </li>
+            <li class="flex flex-col gap-4">
+              <h5 class="font-semibold text-gray-950">
+                2. MBD Travel turları kişiye özel mi düzenleniyor?
+              </h5>
+              <p class="text-gray-600">
+                Evet, MBD Travel olarak her misafirimizin ihtiyaçlarına göre
+                kişiselleştirilmiş turlar düzenliyoruz. Seyahatinizin
+                başlangıcından bitişine kadar, ilgi alanlarınıza ve
+                taleplerinize uygun olarak özel turlar ve aktiviteler
+                hazırlıyoruz.
+              </p>
+            </li>
+            <li class="flex flex-col gap-4">
+              <h5 class="font-semibold text-gray-950">
+                3. MBD Travel, vize işlemleri konusunda yardımcı oluyor mu?
+              </h5>
+              <p class="text-gray-600">
+                Evet, MBD Travel, Dubai'ye seyahat etmek isteyen misafirlerimiz
+                için vize başvuru işlemleri konusunda yardımcı olmaktadır. Vize
+                başvurunuzun kolay ve hızlı bir şekilde işleme alınmasını
+                sağlıyoruz. Detaylar için bizimle iletişime geçebilirsiniz.
+              </p>
+            </li>
+            <li class="flex flex-col gap-4">
+              <h5 class="font-semibold text-gray-950">
+                4. MBD Travel turlarında rehberlik hizmeti var mı?
+              </h5>
+              <p class="text-gray-600">
+                Tüm turlarımızda deneyimli ve profesyonel rehberlerimiz
+                misafirlerimize eşlik eder. Rehberlerimiz, gittiğiniz yerler
+                hakkında yerel tarih, kültür ve gezi noktaları hakkında bilgiler
+                sunar.
+              </p>
+            </li>
+            <li class="flex flex-col gap-4">
+              <h5 class="font-semibold text-gray-950">
+                5. Seyahat sigortası hizmeti sunuyor musunuz?
+              </h5>
+              <p class="text-gray-600">
+                MBD Travel, seyahatiniz için seyahat sigortası hizmeti
+                sunmaktadır. Seyahatiniz sırasında meydana gelebilecek olumsuz
+                durumlara karşı güvence sağlayan sigorta seçenekleri hakkında
+                bilgi almak için bizimle iletişime geçebilirsiniz.
+              </p>
+            </li>
+            <li class="flex flex-col gap-4">
+              <h5 class="font-semibold text-gray-950">
+                6. MBD Travel, transfer hizmeti sunuyor mu?
+              </h5>
+              <p class="text-gray-600">
+                MBD Travel, Dubai'deki otellerden havaalanına veya turlarımız
+                arasında VIP transfer hizmetleri sunmaktadır. Hem grup hem de
+                özel transfer seçenekleriyle seyahatinizde rahat bir deneyim
+                yaşamanızı sağlıyoruz.
+              </p>
+            </li>
+            <li class="flex flex-col gap-4">
+              <h5 class="font-semibold text-gray-950">
+                7. Turlar için ödeme seçenekleri nelerdir?
+              </h5>
+              <p class="text-gray-600">
+                MBD Travel, kredi kartı, banka havalesi ve diğer güvenli ödeme
+                yöntemlerini kabul etmektedir. Seyahatinizi güvenli bir şekilde
+                rezerve edebilmeniz için çeşitli ödeme seçenekleri sunuyoruz.
+              </p>
+            </li>
+            <li class="flex flex-col gap-4">
+              <h5 class="font-semibold text-gray-950">
+                8. MBD Travel turlarında çocuklar için özel hizmetler var mı?
+              </h5>
+              <p class="text-gray-600">
+                Çocuklar için aile dostu turlar ve aktiviteler düzenliyoruz.
+                Ailelerin rahatça katılabileceği turlarımızda çocuklar için özel
+                etkinlikler, çocuk dostu oteller ve aktiviteler sağlıyoruz.
+              </p>
+            </li>
+            <li class="flex flex-col gap-4">
+              <h5 class="font-semibold text-gray-950">
+                9. Hamileler için turlarınız mevcut mu?
+              </h5>
+              <p class="text-gray-600">
+                MBD Travel, hamile misafirlerimiz için güvenli ve konforlu
+                seyahat deneyimleri sunmayı önemsemektedir. Ancak, her hamilelik
+                farklıdır, bu nedenle seyahate çıkmadan önce doktorunuza
+                danışmanız önemlidir. Hamilelik sürecinizde rahat edeceğiniz
+                turlar ve aktiviteler önererek, sağlıklı bir seyahat deneyimi
+                yaşamanızı sağlıyoruz. Ayrıca, seyahat esnasında ekstra bakım ve
+                rahatlık sağlayacak özel düzenlemeler yap
+              </p>
+            </li>
+          </ul>
+
+          <!-- Mobile FAQ - 1 -->
+          <ul
+            class="order-2 flex flex-col gap-y-4 text-sm font-medium lg:hidden"
             id="faq-container-1"
           >
-            <li class="faq group border-b border-solid border-gray-200 pb-8">
+            <li class="faq group border-b border-solid border-gray-200 pb-2">
               <button
-                class="faq-toggle inline-flex w-full items-center justify-between text-sm font-medium leading-8 text-gray-600 transition-colors duration-300 hover:text-primary-600"
+                class="faq-toggle inline-flex w-full items-center justify-between gap-2 text-sm font-medium leading-8 text-gray-600 transition-colors duration-300 hover:text-primary-600"
               >
-                <h5>MBD Travel hangi destinasyonlara turlar düzenliyor?</h5>
+                <h5 class="text-gray-950">
+                  MBD Travel hangi destinasyonlara turlar düzenliyor?
+                </h5>
                 <img
                   src="/public/images/icons/chevron-down.svg"
                   alt="Arrow Down Icon"
@@ -1794,10 +1908,10 @@
                 style="height: 0px"
                 class="faq-content w-full overflow-hidden px-0 pr-4"
               >
-                <div class="pt-4">
+                <div class="pt-2">
                   <p class="text-sm font-normal text-gray-600">
                     MBD Travel, Dubai başta olmak üzere birçok benzersiz
-                    destinasyona turlar düzenlemektedir. Dubai'nin lüks ve
+                    destinasyona turlar düzenlemektedir. Dubai’nin lüks ve
                     modern yapılarından, kültürel turlara, çöl safarilerinden
                     helikopter turlarına kadar geniş bir yelpazede hizmet
                     sunuyoruz. Ayrıca, Abu Dhabi, Limuzin Turları, Yat Kiralama,
@@ -1807,40 +1921,241 @@
               </div>
             </li>
 
-            <li class="faq group border-b border-solid border-gray-200 pb-8">
+            <li class="faq group border-b border-solid border-gray-200 pb-2">
               <button
-                class="faq-toggle inline-flex w-full items-center justify-between text-sm font-medium leading-8 text-gray-600 transition-colors duration-300 hover:text-primary-600"
+                class="faq-toggle inline-flex w-full items-center justify-between gap-2 text-sm font-medium leading-8 text-gray-600 transition-colors duration-300 hover:text-primary-600"
               >
-                <h5>Turlar için ödeme seçenekleri nelerdir?</h5>
+                <h5 class="text-gray-950">
+                  MBD Travel turları kişiye özel mi düzenliyor?
+                </h5>
                 <img
                   src="/public/images/icons/chevron-down.svg"
                   alt="Arrow Down Icon"
-                  class="faq-icon size-[24px]"
+                  class="faq-icon size-[24px] transition-transform duration-300 group-data-[state=open]:rotate-180"
                 />
               </button>
               <div
                 style="height: 0px"
                 class="faq-content w-full overflow-hidden px-0 pr-4"
               >
-                <div class="pt-4">
-                  <p class="text-sm font-normal text-gray-600">
-                    MBD Travel, kredi kartı, banka havalesi ve diğer güvenli
-                    ödeme yöntemlerini kabul etmektedir. Seyahatinizi güvenli
-                    bir şekilde rezerve edebilmeniz için çeşitli ödeme
-                    seçenekleri sunuyoruz.
-                  </p>
+                <div class="pt-2">
+                  <p class="text-sm font-normal text-gray-600">Açıklama</p>
+                </div>
+              </div>
+            </li>
+
+            <li class="faq group border-b border-solid border-gray-200 pb-2">
+              <button
+                class="faq-toggle inline-flex w-full items-center justify-between gap-2 text-sm font-medium leading-8 text-gray-600 transition-colors duration-300 hover:text-primary-600"
+              >
+                <h5 class="text-gray-950">
+                  MBD Travel, vize işlemleri konusunda yardımcı oluyor mu?
+                </h5>
+                <img
+                  src="/public/images/icons/chevron-down.svg"
+                  alt="Arrow Down Icon"
+                  class="faq-icon size-[24px] transition-transform duration-300 group-data-[state=open]:rotate-180"
+                />
+              </button>
+              <div
+                style="height: 0px"
+                class="faq-content w-full overflow-hidden px-0 pr-4"
+              >
+                <div class="pt-2">
+                  <p class="text-sm font-normal text-gray-600">Açıklama</p>
                 </div>
               </div>
             </li>
           </ul>
+
+          <!-- Image - 1 -->
           <img
-            src="/public/images/gallery/15-blur.webp"
-            data-src="/public/images/gallery/27.webp"
-            alt="Dubai Lüks Safari Platinium Heritage"
-            class="lazy-image order-1 h-[180px] w-full rounded-xl object-cover lg:order-2 lg:h-[400px]"
+            src="/public/images/gallery/28-blur.webp"
+            data-src="/public/images/gallery/28.webp"
+            alt="Burj Khalifa"
+            class="lazy-image order-1 h-[180px] w-full rounded-xl object-cover lg:order-2 lg:h-full"
           />
 
-          <!-- style="filter: blur(10px); transition: filter 0.3s ease" -->
+          <ul
+            class="order-3 flex flex-col gap-4 lg:order-4 lg:h-full"
+            id="faq-container-2"
+          >
+            <li class="faq-2 flex flex-col gap-4 lg:h-full">
+              <button
+                class="faq-toggle-2 inline-flex items-center justify-start gap-2 text-2xl font-semibold text-gray-600 lg:hidden"
+              >
+                <h5>Daha Fazla</h5>
+                <img
+                  src="/public/images/icons/chevron-down.svg"
+                  alt="Arrow Down Icon"
+                  class="faq-icon-2 size-[24px] transition-transform duration-300 group-data-[state=open]:rotate-180"
+                />
+              </button>
+              <!-- Image - 2 -->
+              <img
+                src="/public/images/gallery/29-blur.webp"
+                data-src="/public/images/gallery/29.webp"
+                alt="Dubai"
+                class="lazy-image h-[180px] w-full rounded-xl object-cover lg:h-full"
+              />
+              <!-- Mobile FAQ - 2 -->
+              <ul
+                style="height: 0px"
+                class="faq-content-2 flex flex-col gap-y-4 text-sm font-medium lg:hidden"
+                id="faq-container-3"
+              >
+                <li
+                  class="faq-3 group border-b border-solid border-gray-200 pb-2"
+                >
+                  <button
+                    class="faq-toggle-3 inline-flex w-full items-center justify-between gap-2 text-sm font-medium leading-8 text-gray-600 transition-colors duration-300 hover:text-primary-600"
+                  >
+                    <h5 class="text-gray-950">İşlemler</h5>
+                    <img
+                      src="/public/images/icons/chevron-down.svg"
+                      alt="Arrow Down Icon"
+                      class="faq-icon-3 size-[24px] transition-transform duration-300 group-data-[state=open]:rotate-180"
+                    />
+                  </button>
+                  <div
+                    style="height: 0px"
+                    class="faq-content-3 w-full overflow-hidden px-0 pr-4"
+                  >
+                    <div class="pt-2">
+                      <p class="text-sm font-normal text-gray-600">
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                      </p>
+                    </div>
+                  </div>
+                </li>
+
+                <li
+                  class="faq-3 group border-b border-solid border-gray-200 pb-2"
+                >
+                  <button
+                    class="faq-toggle-3 inline-flex w-full items-center justify-between gap-2 text-sm font-medium leading-8 text-gray-600 transition-colors duration-300 hover:text-primary-600"
+                  >
+                    <h5 class="text-gray-950">Keşfet</h5>
+                    <img
+                      src="/public/images/icons/chevron-down.svg"
+                      alt="Arrow Down Icon"
+                      class="faq-icon-3 size-[24px] transition-transform duration-300 group-data-[state=open]:rotate-180"
+                    />
+                  </button>
+                  <div
+                    style="height: 0px"
+                    class="faq-content-3 w-full overflow-hidden px-0 pr-4"
+                  >
+                    <div class="pt-2">
+                      <p class="text-sm font-normal text-gray-600">Açıklama</p>
+                    </div>
+                  </div>
+                </li>
+
+                <li
+                  class="faq-3 group border-b border-solid border-gray-200 pb-2"
+                >
+                  <button
+                    class="faq-toggle-3 inline-flex w-full items-center justify-between gap-2 text-sm font-medium leading-8 text-gray-600 transition-colors duration-300 hover:text-primary-600"
+                  >
+                    <h5 class="text-gray-950">
+                      Dubai Popüler Aktiviteler, Turlar
+                    </h5>
+                    <img
+                      src="/public/images/icons/chevron-down.svg"
+                      alt="Arrow Down Icon"
+                      class="faq-icon-3 size-[24px] transition-transform duration-300 group-data-[state=open]:rotate-180"
+                    />
+                  </button>
+                  <div
+                    style="height: 0px"
+                    class="faq-content-3 w-full overflow-hidden px-0 pr-4"
+                  >
+                    <div class="pt-2">
+                      <p class="text-sm font-normal text-gray-600">Açıklama</p>
+                    </div>
+                  </div>
+                </li>
+
+                <li
+                  class="faq-3 group border-b border-solid border-gray-200 pb-2"
+                >
+                  <button
+                    class="faq-toggle-3 inline-flex w-full items-center justify-between gap-2 text-sm font-medium leading-8 text-gray-600 transition-colors duration-300 hover:text-primary-600"
+                  >
+                    <h5 class="text-gray-950">
+                      Dubai Anakara, Mainland Şirket Kuruluşu
+                    </h5>
+                    <img
+                      src="/public/images/icons/chevron-down.svg"
+                      alt="Arrow Down Icon"
+                      class="faq-icon-3 size-[24px] transition-transform duration-300 group-data-[state=open]:rotate-180"
+                    />
+                  </button>
+                  <div
+                    style="height: 0px"
+                    class="faq-content-3 w-full overflow-hidden px-0 pr-4"
+                  >
+                    <div class="pt-2">
+                      <p class="text-sm font-normal text-gray-600">Açıklama</p>
+                    </div>
+                  </div>
+                </li>
+
+                <li
+                  class="faq-3 group border-b border-solid border-gray-200 pb-2"
+                >
+                  <button
+                    class="faq-toggle-3 inline-flex w-full items-center justify-between gap-2 text-sm font-medium leading-8 text-gray-600 transition-colors duration-300 hover:text-primary-600"
+                  >
+                    <h5 class="text-gray-950">
+                      Sözleşmeler ve Politikalarımız
+                    </h5>
+                    <img
+                      src="/public/images/icons/chevron-down.svg"
+                      alt="Arrow Down Icon"
+                      class="faq-icon-3 size-[24px] transition-transform duration-300 group-data-[state=open]:rotate-180"
+                    />
+                  </button>
+                  <div
+                    style="height: 0px"
+                    class="faq-content-3 w-full overflow-hidden px-0 pr-4"
+                  >
+                    <div class="pt-2">
+                      <p class="text-sm font-normal text-gray-600">Açıklama</p>
+                    </div>
+                  </div>
+                </li>
+
+                <li
+                  class="faq-3 group border-b border-solid border-gray-200 pb-2"
+                >
+                  <button
+                    class="faq-toggle-3 inline-flex w-full items-center justify-between gap-2 text-sm font-medium leading-8 text-gray-600 transition-colors duration-300 hover:text-primary-600"
+                  >
+                    <h5 class="text-gray-950">Anlaşmalı Oteller</h5>
+                    <img
+                      src="/public/images/icons/chevron-down.svg"
+                      alt="Arrow Down Icon"
+                      class="faq-icon-3 size-[24px] transition-transform duration-300 group-data-[state=open]:rotate-180"
+                    />
+                  </button>
+                  <div
+                    style="height: 0px"
+                    class="faq-content-3 w-full overflow-hidden px-0 pr-4"
+                  >
+                    <div class="pt-2">
+                      <p class="text-sm font-normal text-gray-600">Açıklama</p>
+                    </div>
+                  </div>
+                </li>
+              </ul>
+            </li>
+          </ul>
         </div>
       </section>
     </main>
