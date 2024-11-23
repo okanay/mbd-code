@@ -18,7 +18,7 @@ interface ModalConfig {
 
 interface ModalDefinition {
   id: string;
-  triggerElements: string[];
+  toggleElements: string[];
   contentElement: string;
   closeElements: string[];
   containers: string[];
@@ -81,7 +81,7 @@ class ModalController {
         return;
       }
 
-      const triggers = menu.triggerElements
+      const triggers = menu.toggleElements
         .map((selector) => document.querySelector(selector))
         .filter((el): el is HTMLElement => el !== null);
 

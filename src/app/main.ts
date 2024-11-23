@@ -24,6 +24,7 @@ document.addEventListener("DOMContentLoaded", () => {
     {
       snapAlign: "center",
       itemSpacing: 16,
+      btnsDisableThreshold: 32,
       screenSizes: [
         { width: 1024, jumpVal: 3 },
         { width: 768, jumpVal: 2 },
@@ -39,15 +40,8 @@ document.addEventListener("DOMContentLoaded", () => {
   new ModalController(
     [
       {
-        id: "mobile-menu",
-        triggerElements: ["#mobile-menu-button"],
-        contentElement: "#mobile-navigation",
-        closeElements: [],
-        containers: ["#mobile-navigation-content"],
-      },
-      {
         id: "language-menu",
-        triggerElements: [
+        toggleElements: [
           "#language-currency-selector-button",
           "#language-currency-selector-button-mobile",
         ],
@@ -55,11 +49,17 @@ document.addEventListener("DOMContentLoaded", () => {
         closeElements: ["#language-selector-closed-button"],
         containers: ["#language-currency-selector-options-content"],
       },
+      {
+        id: "mobile-menu",
+        toggleElements: ["#mobile-menu-button"],
+        contentElement: "#mobile-navigation",
+        closeElements: [],
+        containers: ["#mobile-navigation-content"],
+      },
     ],
     {
       outsideClickClose: true,
       escapeClose: true,
-      closeOthersOnOpen: true,
       preserveModalHistory: true,
       scrollLock: {
         enabled: true,
