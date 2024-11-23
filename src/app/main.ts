@@ -1,8 +1,8 @@
-import { setupCarousel } from "./packages/carousel.js";
-import { Slider } from "./packages/slider.js";
-import { AccordionController } from "./packages/accordion.js";
-import { ModalController } from "./packages/modal.js";
-import { LazyImageLoadController } from "./packages/lazy-load-controller.js";
+import { SetupCarousel } from "./packages/carousel-v2.js";
+import { Slider } from "./packages/slider-v2.js";
+import { AccordionController } from "./packages/accordion-v2.js";
+import { ModalController } from "./packages/modal-v2.js";
+import { LazyImageLoadController } from "./packages/lazy-load-controller-v2.js";
 
 // Slider'ı başlat
 document.addEventListener("DOMContentLoaded", () => {
@@ -17,7 +17,7 @@ document.addEventListener("DOMContentLoaded", () => {
     },
   });
 
-  const heroSliderCarousel = setupCarousel(
+  const heroSliderCarousel = SetupCarousel(
     "hero-slider-btn-list",
     "prev-hero-slider-btn",
     "next-hero-slider-btn",
@@ -27,17 +27,17 @@ document.addEventListener("DOMContentLoaded", () => {
     },
   );
 
-  setupCarousel("most-popular", "prev-most-popular", "next-most-popular", {
+  SetupCarousel("most-popular", "prev-most-popular", "next-most-popular", {
     snapAlign: "start",
     itemSpacing: 12,
   });
 
-  setupCarousel("popular-list", "prev-popular-list", "next-popular-list", {
+  SetupCarousel("popular-list", "prev-popular-list", "next-popular-list", {
     snapAlign: "center",
     itemSpacing: 16,
   });
 
-  setupCarousel("holiday-list", "prev-holiday-list", "next-holiday-list", {
+  SetupCarousel("holiday-list", "prev-holiday-list", "next-holiday-list", {
     snapAlign: "end",
     itemSpacing: 20,
   });
