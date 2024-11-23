@@ -23,6 +23,23 @@ app.use(
         return null;
       }
     },
+    // Yanıt başlıklarını eklemek için onFound kullanın
+    onFound: (path, c) => {
+      if (path.endsWith(".js") || path.endsWith(".css")) {
+        // JavaScript ve CSS için uzun süreli önbellek
+        c.header("Cache-Control", "public, max-age=31536000, immutable");
+      } else if (path.endsWith(".html")) {
+        // HTML dosyaları için önbelleği devre dışı bırak
+        c.header(
+          "Cache-Control",
+          "no-store, no-cache, must-revalidate, max-age=0",
+        );
+        c.header("Pragma", "no-cache");
+      } else {
+        // Diğer dosyalar için genel ayar
+        c.header("Cache-Control", "public, max-age=3600");
+      }
+    },
   }),
 );
 
