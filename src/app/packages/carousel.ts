@@ -6,7 +6,7 @@ interface CarouselOptions {
   onScrollCallback?: (currentIndex: number, totalItems: number) => void;
 }
 
-export function createCarousel(
+function CreateCarousel(
   carouselList: HTMLElement,
   options: CarouselOptions = {},
 ) {
@@ -184,7 +184,7 @@ export function createCarousel(
   };
 }
 
-export function SetupCarousel(
+function SetupCarousel(
   listId: string,
   prevBtnId: string,
   nextBtnId: string,
@@ -210,8 +210,10 @@ export function SetupCarousel(
   }
 
   // Carousel oluştur ve butonları bağla
-  const carousel = createCarousel(carouselElement, options);
+  const carousel = CreateCarousel(carouselElement, options);
   carousel.setupNavigationButtons(prevButton, nextButton);
 
   return carousel;
 }
+
+export { SetupCarousel, CreateCarousel };
