@@ -1,18 +1,46 @@
-import { setupCarousel } from "./packages/carousel.js";
+import { SetupCarousel } from "./packages/carousel.js";
 import { Slider } from "./packages/slider.js";
 import { AccordionController } from "./packages/accordion.js";
 import { ModalController } from "./packages/modal.js";
+import { LazyImageLoadController } from "./packages/lazy-load-controller.js";
 
 // Slider'ı başlat
 document.addEventListener("DOMContentLoaded", () => {
-  const heroSliderCarousel = setupCarousel(
+  new LazyImageLoadController({
+    imageSelector: ".lazy-image",
+    dataAttribute: "data-src",
+    rootMargin: "100px 0px",
+    threshold: 0.2,
+    filterStyle: "blur(5px)",
+    onLoadCallback: (img) => {
+      console.log(`Görsel yüklendi: ${img.src}`);
+    },
+  });
+
+  const heroSliderCarousel = SetupCarousel(
     "hero-slider-btn-list",
     "prev-hero-slider-btn",
     "next-hero-slider-btn",
+    {
+      snapAlign: "center",
+      itemSpacing: 16,
+    },
   );
-  setupCarousel("most-popular", "prev-most-popular", "next-most-popular");
-  setupCarousel("popular-list", "prev-popular-list", "next-popular-list");
-  setupCarousel("holiday-list", "prev-holiday-list", "next-holiday-list");
+
+  SetupCarousel("most-popular", "prev-most-popular", "next-most-popular", {
+    snapAlign: "start",
+    itemSpacing: 12,
+  });
+
+  SetupCarousel("popular-list", "prev-popular-list", "next-popular-list", {
+    snapAlign: "center",
+    itemSpacing: 16,
+  });
+
+  SetupCarousel("holiday-list", "prev-holiday-list", "next-holiday-list", {
+    snapAlign: "end",
+    itemSpacing: 20,
+  });
 
   new ModalController(
     [
@@ -85,7 +113,7 @@ document.addEventListener("DOMContentLoaded", () => {
     },
     onIndexChange: (index) => {
       if (!index && index !== 0) return;
-      heroSliderCarousel?.scrollTo(index);
+      heroSliderCarousel?.scrollToIndex(index);
     },
   });
 

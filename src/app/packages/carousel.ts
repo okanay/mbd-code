@@ -1,10 +1,14 @@
+interface CarouselOptions {
+  snapAlign?: "start" | "center" | "end";
+  itemSpacing?: number;
+  screenSizes?: { width: number; jumpVal: number }[];
+  momentumScroll?: boolean;
+  onScrollCallback?: (currentIndex: number, totalItems: number) => void;
+}
+
 export function createCarousel(
   carouselList: HTMLElement,
-  options: {
-    snapAlign?: "start" | "center" | "end";
-    itemSpacing?: number;
-    screenSizes?: { width: number; jumpVal: number }[];
-  } = {},
+  options: CarouselOptions = {},
 ) {
   const {
     snapAlign = "start",
@@ -14,86 +18,51 @@ export function createCarousel(
       { width: 768, jumpVal: 2 },
       { width: 512, jumpVal: 1 },
     ],
+    momentumScroll = true,
+    onScrollCallback,
   } = options;
 
-  // Carousel elemanlarını al
   const items = Array.from(carouselList.children) as HTMLElement[];
-
-  // Scroll state'i
   const state = {
     currentIndex: 0,
     isScrolling: false,
   };
 
-  // Ekran genişliğine göre item sayısını belirle
-  function getItemsPerPage() {
+  // Ekran genişliğine göre kaç item ilerleyeceğini hesapla
+  function getItemsPerPage(): number {
     const width = window.innerWidth;
-
-    // Genişlik sıralamasını yap (Büyükten küçüğe doğru)
     const sortedSizes = [...screenSizes].sort((a, b) => b.width - a.width);
 
-    // Genişlik sırasına göre eşleşme kontrolü
-    for (let i = 0; i < sortedSizes.length; i++) {
-      if (width >= sortedSizes[i].width) {
-        return sortedSizes[i].jumpVal;
-      }
+    for (const size of sortedSizes) {
+      if (width >= size.width) return size.jumpVal;
     }
 
-    // Eğer ekran genişliği en küçük değerden de küçükse
     return sortedSizes[sortedSizes.length - 1].jumpVal;
   }
 
-  // Ekran genişliğini ve item boyutlarını hesapla
-  function calculateMetrics() {
-    const containerWidth = carouselList.clientWidth;
-    const firstItem = items[0];
-
-    const itemWidths = items.map((item) => {
-      const rect = item.getBoundingClientRect();
-      return rect.width;
-    });
-
-    const averageItemWidth =
-      itemWidths.reduce((a, b) => a + b, 0) / itemWidths.length;
-
-    return {
-      containerWidth,
-      itemWidths,
-      averageItemWidth,
-      totalWidth: items.reduce((total, item) => {
-        const rect = item.getBoundingClientRect();
-        return total + rect.width + itemSpacing;
-      }, 0),
-    };
-  }
-
-  // Hassas scroll hesaplama
-  function calculatePreciseScroll(targetIndex: number) {
-    const metrics = calculateMetrics();
+  // Scroll pozisyonunu hassas şekilde hesapla
+  function calculatePreciseScroll(targetIndex: number): number {
     let scrollPosition = 0;
 
-    // Farklı snap alignment senaryoları
     for (let i = 0; i < targetIndex; i++) {
       scrollPosition += items[i].getBoundingClientRect().width + itemSpacing;
     }
 
-    // Align ayarlamaları
-    switch (snapAlign) {
-      case "center":
-        scrollPosition -=
-          metrics.containerWidth / 2 - metrics.itemWidths[targetIndex] / 2;
-        break;
-      case "end":
-        scrollPosition -=
-          metrics.containerWidth - metrics.itemWidths[targetIndex];
-        break;
+    const containerWidth = carouselList.clientWidth;
+    const targetItemWidth =
+      items[targetIndex]?.getBoundingClientRect().width || 0;
+
+    if (snapAlign === "center") {
+      scrollPosition -= containerWidth / 2 - targetItemWidth / 2;
+    } else if (snapAlign === "end") {
+      scrollPosition -= containerWidth - targetItemWidth;
     }
 
     return scrollPosition;
   }
 
-  // Scroll fonksiyonu
-  function scrollToPrecise(index: number) {
+  // Belirtilen index'e scroll yap
+  function scrollToIndex(index: number): void {
     if (state.isScrolling || index < 0 || index >= items.length) return;
 
     state.isScrolling = true;
@@ -106,105 +75,69 @@ export function createCarousel(
       behavior: "smooth",
     });
 
-    // Scroll tamamlandığında state'i sıfırla
     setTimeout(() => {
       state.isScrolling = false;
+      if (onScrollCallback) onScrollCallback(state.currentIndex, items.length);
     }, 300);
   }
 
-  // Dokunmatik etkileşim yönetimi
-  function setupTouchInteraction() {
+  // Dokunmatik etkileşimleri yönet
+  function setupTouchInteraction(): void {
     let startX = 0;
     let isDragging = false;
 
-    function handleTouchStart(e: TouchEvent) {
+    carouselList.addEventListener("touchstart", (e) => {
       startX = e.touches[0].clientX;
       isDragging = true;
-    }
+    });
 
-    function handleTouchMove(e: TouchEvent) {
+    carouselList.addEventListener("touchmove", (e) => {
       if (!isDragging) return;
-      e.preventDefault(); // Varsayılan kaydırmayı engelle
-    }
+      e.preventDefault(); // Dikey kaydırmayı engelle
+    });
 
-    function handleTouchEnd(e: TouchEvent) {
+    carouselList.addEventListener("touchend", (e) => {
       if (!isDragging) return;
-
       const endX = e.changedTouches[0].clientX;
       const diffX = startX - endX;
 
-      const metrics = calculateMetrics();
-      const swipeThreshold = metrics.averageItemWidth / 4;
+      const swipeThreshold = calculateSwipeThreshold();
+      const newIndex =
+        diffX > swipeThreshold
+          ? Math.min(state.currentIndex + getItemsPerPage(), items.length - 1)
+          : diffX < -swipeThreshold
+            ? Math.max(state.currentIndex - getItemsPerPage(), 0)
+            : state.currentIndex;
 
-      if (Math.abs(diffX) > swipeThreshold) {
-        const newIndex =
-          diffX > 0
-            ? Math.min(state.currentIndex + getItemsPerPage(), items.length - 1)
-            : Math.max(state.currentIndex - getItemsPerPage(), 0);
-
-        scrollToPrecise(newIndex);
-      }
-
+      scrollToIndex(newIndex);
       isDragging = false;
-    }
-
-    carouselList.addEventListener("touchstart", handleTouchStart);
-    carouselList.addEventListener("touchmove", handleTouchMove);
-    carouselList.addEventListener("touchend", handleTouchEnd);
-  }
-
-  // Navigation butonları için destek
-  function setupNavigationButtons(
-    prevButton: HTMLButtonElement,
-    nextButton: HTMLButtonElement,
-  ) {
-    prevButton.addEventListener("click", () => {
-      scrollToPrecise(Math.max(state.currentIndex - getItemsPerPage(), 0));
-    });
-
-    nextButton.addEventListener("click", () => {
-      scrollToPrecise(
-        Math.min(state.currentIndex + getItemsPerPage(), items.length - 1),
-      );
     });
   }
 
-  // Hesaplama metodları ve state'i dışarı ver
-  function getCurrentState() {
-    return {
-      currentIndex: state.currentIndex,
-      totalItems: items.length,
-      ...calculateMetrics(),
-    };
-  }
-
-  // Hassas scroll modu için optimizasyon
-  function setupMomentumScroll(carouselList: HTMLElement) {
+  // Momentum scroll özelliği
+  function setupMomentumScroll(): void {
     let startX = 0;
-    let startTime = 0;
     let velocityX = 0;
+    let lastTime = 0;
 
     carouselList.addEventListener("touchstart", (e) => {
       startX = e.touches[0].clientX;
-      startTime = Date.now();
       velocityX = 0;
+      lastTime = Date.now();
     });
 
     carouselList.addEventListener("touchmove", (e) => {
       const currentX = e.touches[0].clientX;
       const currentTime = Date.now();
-
-      // Calculate velocity
-      velocityX = (currentX - startX) / (currentTime - startTime);
+      velocityX = (currentX - startX) / (currentTime - lastTime);
 
       startX = currentX;
-      startTime = currentTime;
+      lastTime = currentTime;
     });
 
     carouselList.addEventListener("touchend", () => {
-      // Apply momentum scroll
-      if (Math.abs(velocityX) > 0.1) {
-        const momentumDistance = velocityX * 100; // Adjust multiplier for desired effect
+      if (momentumScroll && Math.abs(velocityX) > 0.1) {
+        const momentumDistance = velocityX * 200; // Momentum katsayısı
         carouselList.scrollBy({
           left: momentumDistance,
           behavior: "smooth",
@@ -213,77 +146,72 @@ export function createCarousel(
     });
   }
 
-  // Touch etkileşimini başlat
-  // enhanceCarouselPerformance(carouselList);
-  setupMomentumScroll(carouselList);
+  // Swipe hassasiyetini hesapla
+  function calculateSwipeThreshold(): number {
+    const averageWidth =
+      items.reduce((sum, item) => sum + item.getBoundingClientRect().width, 0) /
+      items.length;
+    return averageWidth / 4;
+  }
+
+  // Navigation butonlarını bağla
+  function setupNavigationButtons(
+    prevButton: HTMLButtonElement,
+    nextButton: HTMLButtonElement,
+  ): void {
+    prevButton.addEventListener("click", () => {
+      scrollToIndex(Math.max(state.currentIndex - getItemsPerPage(), 0));
+    });
+
+    nextButton.addEventListener("click", () => {
+      scrollToIndex(
+        Math.min(state.currentIndex + getItemsPerPage(), items.length - 1),
+      );
+    });
+  }
+
+  // Başlatıcı fonksiyonlar
   setupTouchInteraction();
+  if (momentumScroll) setupMomentumScroll();
 
   return {
-    scrollTo: scrollToPrecise,
-    getCurrentState,
+    scrollToIndex,
     setupNavigationButtons,
+    getCurrentState: () => ({
+      currentIndex: state.currentIndex,
+      totalItems: items.length,
+    }),
   };
 }
 
-function enhanceCarouselPerformance(carouselElement: HTMLElement) {
-  // Mobil cihazlar için touch event optimizasyonu
-  let startX = 0;
-  let isDragging = false;
-
-  carouselElement.addEventListener("touchstart", (e) => {
-    startX = e.touches[0].clientX;
-    isDragging = true;
-    // Momentum scrolling için gerekli hazırlık
-    carouselElement.style.scrollSnapType = "x mandatory";
-  });
-
-  carouselElement.addEventListener("touchmove", (e) => {
-    if (!isDragging) return;
-
-    // Dikey kaydırmayı engelle
-    e.preventDefault();
-
-    const currentX = e.touches[0].clientX;
-    const diffX = startX - currentX;
-
-    // Hassas scroll kontrolü
-    carouselElement.scrollLeft += diffX;
-    startX = currentX;
-  });
-
-  carouselElement.addEventListener("touchend", () => {
-    isDragging = false;
-    // Scroll snap ayarını geri al
-    carouselElement.style.scrollSnapType = "none";
-  });
-}
-
-// Güvenli element seçimi ve null kontrolü için yardımcı fonksiyon
-function getByID<T extends HTMLElement>(selector: string): T | null {
-  return document.getElementById(selector) as T | null;
-}
-
-// Güvenli carousel kurulum fonksiyonu
-export function setupCarousel(
+export function SetupCarousel(
   listId: string,
   prevBtnId: string,
   nextBtnId: string,
+  options: {
+    snapAlign?: "start" | "center" | "end";
+    itemSpacing?: number;
+    screenSizes?: { width: number; jumpVal: number }[];
+  } = {},
 ) {
-  const list = getByID<HTMLElement>(listId);
-  const prevBtn = getByID<HTMLButtonElement>(prevBtnId);
-  const nextBtn = getByID<HTMLButtonElement>(nextBtnId);
+  const carouselElement = document.getElementById(listId) as HTMLElement | null;
+  const prevButton = document.getElementById(
+    prevBtnId,
+  ) as HTMLButtonElement | null;
+  const nextButton = document.getElementById(
+    nextBtnId,
+  ) as HTMLButtonElement | null;
 
-  if (!list || !prevBtn || !nextBtn) {
-    console.warn(`Carousel setup failed for ${listId}. Missing elements.`);
+  if (!carouselElement || !prevButton || !nextButton) {
+    console.warn(
+      `Carousel setup failed: Missing element(s) for ${listId}, ${prevBtnId}, or ${nextBtnId}.`,
+    );
     return null;
   }
 
-  const carousel = createCarousel(list, {
-    snapAlign: "center",
-    itemSpacing: 16,
-  });
-
-  carousel.setupNavigationButtons(prevBtn, nextBtn);
+  // Carousel oluştur ve butonları bağla
+  const carousel = createCarousel(carouselElement, options);
+  carousel.setupNavigationButtons(prevButton, nextButton);
 
   return carousel;
 }
