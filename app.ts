@@ -27,6 +27,7 @@ app.use(
 );
 
 app.get("/", (c) => {
+  c.header("Cache-Control", "no-store, no-cache");
   const html = Bun.file("./dist/main/index.html");
   return c.html(html.text());
 });
