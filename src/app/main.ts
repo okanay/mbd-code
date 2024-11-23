@@ -12,12 +12,16 @@ document.addEventListener("DOMContentLoaded", () => {
     rootMargin: "100px 0px",
     threshold: 0.2,
     filterStyle: "blur(5px)",
-    maxConcurrentLoads: 2,
+    maxConcurrentLoads: 3,
     onLoadCallback: (img) => {
       console.log(`Görsel yüklendii: ${img.src}`);
     },
   });
-  const heroSliderCarousel = new Carousel(
+
+  new Carousel("most-popular", "prev-most-popular", "next-most-popular");
+  new Carousel("popular-list", "prev-popular-list", "next-popular-list");
+  new Carousel("holiday-list", "prev-holiday-list", "next-holiday-list");
+  const sliderControlButtons = new Carousel(
     "hero-slider-btn-list",
     "prev-hero-slider-btn",
     "next-hero-slider-btn",
@@ -32,10 +36,6 @@ document.addEventListener("DOMContentLoaded", () => {
       ],
     },
   );
-
-  new Carousel("most-popular", "prev-most-popular", "next-most-popular");
-  new Carousel("popular-list", "prev-popular-list", "next-popular-list");
-  new Carousel("holiday-list", "prev-holiday-list", "next-holiday-list");
 
   new Slider({
     container: "#hero-slider-container",
@@ -66,7 +66,7 @@ document.addEventListener("DOMContentLoaded", () => {
     },
     onIndexChange: (index) => {
       if (!index && index !== 0) return;
-      heroSliderCarousel?.scrollTo(index);
+      sliderControlButtons?.scrollTo(index);
     },
   });
 
