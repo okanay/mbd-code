@@ -1,18 +1,10 @@
 import { Hono } from "hono";
 import { serveStatic } from "hono/serve-static";
-import { cache } from "hono/cache";
 import fs from "fs";
 import crypto from "crypto";
 import { exec } from "child_process";
 
 const app = new Hono();
-app.get(
-  "*",
-  cache({
-    cacheName: "cache",
-    cacheControl: "max-age=60",
-  }),
-);
 
 app.use(
   "/*",
