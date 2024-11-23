@@ -60,6 +60,7 @@ document.addEventListener("DOMContentLoaded", () => {
       outsideClickClose: true,
       escapeClose: true,
       closeOthersOnOpen: true,
+      preserveModalHistory: true,
       scrollLock: {
         enabled: true,
         styles: {

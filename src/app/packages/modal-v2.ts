@@ -9,6 +9,7 @@ interface ModalConfig {
   outsideClickClose?: boolean;
   escapeClose?: boolean;
   closeOthersOnOpen?: boolean;
+  preserveModalHistory?: boolean; // Yeni eklenen özellik
   onToggle?: (menuId: string, isOpen: boolean) => void;
   attributes?: {
     stateAttribute?: string;
@@ -35,6 +36,7 @@ class ModalController {
   > = new Map();
 
   private activeModalId: string | null = null;
+  private modalHistory: string[] = []; // Modal geçmişini tutmak için yeni eklenen array
   private config: Required<ModalConfig>;
 
   constructor(menuDefinitions: ModalDefinition[], config: ModalConfig = {}) {
@@ -60,6 +62,7 @@ class ModalController {
       outsideClickClose: config.outsideClickClose ?? true,
       escapeClose: config.escapeClose ?? true,
       closeOthersOnOpen: config.closeOthersOnOpen ?? true,
+      preserveModalHistory: config.preserveModalHistory ?? false, // Yeni eklenen özellik
       onToggle: config.onToggle || (() => {}),
       attributes: {
         stateAttribute: config.attributes?.stateAttribute ?? "data-state",
@@ -97,7 +100,6 @@ class ModalController {
         containers: container,
       });
 
-      // Her menü için event listener'ları ekle
       triggers.forEach((trigger) => {
         trigger.addEventListener("click", (e) => {
           e.stopPropagation();
@@ -162,16 +164,28 @@ class ModalController {
   }
 
   private openModal(menuId: string): void {
-    if (
+    const menu = this.menus.get(menuId);
+    if (!menu) return;
+
+    if (this.config.preserveModalHistory) {
+      // Eğer modal history özelliği aktifse ve başka bir modal açıksa
+      if (this.activeModalId && this.activeModalId !== menuId) {
+        // Aktif modalı history'ye ekle ve görünürlüğünü gizle
+        this.modalHistory.push(this.activeModalId);
+        const activeMenu = this.menus.get(this.activeModalId);
+        activeMenu?.content?.setAttribute(
+          this.config.attributes.stateAttribute!,
+          "hidden",
+        );
+      }
+    } else if (
       this.config.closeOthersOnOpen &&
       this.activeModalId &&
       this.activeModalId !== menuId
     ) {
+      // Modal history özelliği aktif değilse eski davranışı uygula
       this.closeModal(this.activeModalId);
     }
-
-    const menu = this.menus.get(menuId);
-    if (!menu) return;
 
     menu.content?.setAttribute(this.config.attributes.stateAttribute!, "open");
     this.activeModalId = menuId;
@@ -190,14 +204,31 @@ class ModalController {
       this.config.attributes.stateAttribute!,
       "closed",
     );
-    if (this.activeModalId === menuId) {
-      this.activeModalId = null;
-    }
-    this.config.onToggle(menuId, false);
 
-    if (this.config.scrollLock.enabled) {
-      this.applyStyles(document.body, this.config.scrollLock.styles!.visible);
+    if (this.activeModalId === menuId) {
+      if (this.config.preserveModalHistory && this.modalHistory.length > 0) {
+        // Modal history'den son modalı al ve onu aç
+        const previousModalId = this.modalHistory.pop()!;
+        const previousMenu = this.menus.get(previousModalId);
+        if (previousMenu) {
+          previousMenu.content?.setAttribute(
+            this.config.attributes.stateAttribute!,
+            "open",
+          );
+          this.activeModalId = previousModalId;
+          this.config.onToggle(previousModalId, true);
+          return;
+        }
+      }
+
+      // Eğer history boşsa veya özellik kapalıysa normal kapatma işlemi yap
+      this.activeModalId = null;
+      if (this.config.scrollLock.enabled) {
+        this.applyStyles(document.body, this.config.scrollLock.styles!.visible);
+      }
     }
+
+    this.config.onToggle(menuId, false);
   }
 
   private applyStyles(
@@ -220,7 +251,12 @@ class ModalController {
     return this.activeModalId;
   }
 
+  public getModalHistory(): string[] {
+    return [...this.modalHistory]; // Kopya döndür
+  }
+
   public closeAllModals(): void {
+    this.modalHistory = []; // Modal geçmişini temizle
     this.menus.forEach((_, menuId) => this.closeModal(menuId));
   }
 }

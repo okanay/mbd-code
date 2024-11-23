@@ -2,6 +2,7 @@ interface CarouselOptions {
   snapAlign?: "start" | "center" | "end";
   itemSpacing?: number;
   screenSizes?: { width: number; jumpVal: number }[];
+  btnsDisableThreshold?: number;
 }
 
 export class Carousel {
@@ -14,6 +15,7 @@ export class Carousel {
   };
   private prevButton: HTMLButtonElement;
   private nextButton: HTMLButtonElement;
+  private resizeTimeout: number | null = null;
 
   constructor(
     listId: string,
@@ -38,6 +40,7 @@ export class Carousel {
     this.options = {
       snapAlign: options.snapAlign ?? "center",
       itemSpacing: options.itemSpacing ?? 16,
+      btnsDisableThreshold: 32,
       screenSizes: options.screenSizes ?? [
         { width: 1024, jumpVal: 3 },
         { width: 768, jumpVal: 2 },
@@ -58,6 +61,59 @@ export class Carousel {
     this.setupNavigationButtons();
     this.setupMomentumScroll();
     this.setupTouchInteraction();
+    this.setupResizeHandler();
+
+    // Initial button state update
+    this.updateButtonStates();
+
+    // Add scroll event listener for button states
+    this.carouselList.addEventListener("scroll", () => {
+      this.updateButtonStates();
+    });
+  }
+
+  private setupResizeHandler(): void {
+    window.addEventListener("resize", () => {
+      // Debounce the resize handler
+      if (this.resizeTimeout) {
+        window.clearTimeout(this.resizeTimeout);
+      }
+
+      this.resizeTimeout = window.setTimeout(() => {
+        // Recalculate metrics and update button states
+        this.updateButtonStates();
+
+        // Ensure current scroll position is valid
+        const metrics = this.calculateMetrics();
+        const maxScroll = metrics.totalWidth - metrics.containerWidth;
+
+        // If current scroll position is beyond the new maxScroll, adjust it
+        if (this.carouselList.scrollLeft > maxScroll) {
+          this.carouselList.scrollTo({
+            left: maxScroll,
+            behavior: "smooth",
+          });
+        }
+
+        this.resizeTimeout = null;
+      }, 150); // Wait for 150ms after last resize event
+    });
+  }
+
+  private updateButtonStates(): void {
+    const metrics = this.calculateMetrics();
+    const currentScroll = this.carouselList.scrollLeft;
+    const maxScroll = metrics.totalWidth - metrics.containerWidth;
+
+    // Use a threshold for edge detection
+    const threshold = this.options.btnsDisableThreshold;
+
+    // Update prev button
+    this.prevButton.disabled = currentScroll <= threshold;
+
+    // Update next button
+    const isAtEnd = maxScroll - currentScroll <= threshold;
+    this.nextButton.disabled = isAtEnd;
   }
 
   private getItemsPerPage(): number {
@@ -77,7 +133,6 @@ export class Carousel {
 
   private calculateMetrics() {
     const containerWidth = this.carouselList.clientWidth;
-
     const itemWidths = this.items.map((item) => {
       const rect = item.getBoundingClientRect();
       return rect.width;
@@ -86,14 +141,19 @@ export class Carousel {
     const averageItemWidth =
       itemWidths.reduce((a, b) => a + b, 0) / itemWidths.length;
 
+    // Calculate total width without spacing after last item
+    const totalWidth = this.items.reduce((total, item, index) => {
+      const rect = item.getBoundingClientRect();
+      const spacing =
+        index === this.items.length - 1 ? 0 : this.options.itemSpacing;
+      return total + rect.width + spacing;
+    }, 0);
+
     return {
       containerWidth,
       itemWidths,
       averageItemWidth,
-      totalWidth: this.items.reduce((total, item) => {
-        const rect = item.getBoundingClientRect();
-        return total + rect.width + this.options.itemSpacing;
-      }, 0),
+      totalWidth,
     };
   }
 
@@ -136,6 +196,7 @@ export class Carousel {
 
     setTimeout(() => {
       this.state.isScrolling = false;
+      this.updateButtonStates(); // Update button states after scroll animation
     }, 300);
   }
 
@@ -184,18 +245,22 @@ export class Carousel {
 
   private setupNavigationButtons(): void {
     this.prevButton.addEventListener("click", () => {
-      this.scrollToPrecise(
-        Math.max(this.state.currentIndex - this.getItemsPerPage(), 0),
-      );
+      if (!this.prevButton.disabled) {
+        this.scrollToPrecise(
+          Math.max(this.state.currentIndex - this.getItemsPerPage(), 0),
+        );
+      }
     });
 
     this.nextButton.addEventListener("click", () => {
-      this.scrollToPrecise(
-        Math.min(
-          this.state.currentIndex + this.getItemsPerPage(),
-          this.items.length - 1,
-        ),
-      );
+      if (!this.nextButton.disabled) {
+        this.scrollToPrecise(
+          Math.min(
+            this.state.currentIndex + this.getItemsPerPage(),
+            this.items.length - 1,
+          ),
+        );
+      }
     });
   }
 
@@ -234,6 +299,16 @@ export class Carousel {
   // Public methods
   public scrollTo(index: number): void {
     this.scrollToPrecise(index);
+  }
+
+  public destroy(): void {
+    // Remove resize listener
+    window.removeEventListener("resize", this.setupResizeHandler);
+
+    // Clear any existing timeout
+    if (this.resizeTimeout) {
+      window.clearTimeout(this.resizeTimeout);
+    }
   }
 
   public getCurrentState() {
