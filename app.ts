@@ -27,7 +27,10 @@ app.use(
     onFound: (path, c) => {
       if (path.endsWith(".js") || path.endsWith(".css")) {
         // JavaScript ve CSS için uzun süreli önbellek
-        c.header("Cache-Control", "public, max-age=31536000, immutable");
+        c.header(
+          "Cache-Control",
+          "no-store, no-cache, must-revalidate, max-age=0",
+        );
       } else if (path.endsWith(".html")) {
         // HTML dosyaları için önbelleği devre dışı bırak
         c.header(
