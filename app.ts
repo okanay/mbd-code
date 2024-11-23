@@ -29,14 +29,6 @@ app.use(
           "Cache-Control",
           "no-store, no-cache, must-revalidate, max-age=0",
         );
-      } else if (path.endsWith(".html")) {
-        c.header(
-          "Cache-Control",
-          "no-store, no-cache, must-revalidate, max-age=0",
-        );
-        c.header("Pragma", "no-cache");
-      } else {
-        c.header("Cache-Control", "public, max-age=3600");
       }
     },
   }),
