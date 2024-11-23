@@ -1,4 +1,4 @@
-import { SetupCarousel } from "./packages/carousel-v2.js";
+import { Carousel } from "./packages/carousel-v2.js";
 import { Slider } from "./packages/slider-v2.js";
 import { AccordionController } from "./packages/accordion-v2.js";
 import { ModalController } from "./packages/modal-v2.js";
@@ -17,30 +17,24 @@ document.addEventListener("DOMContentLoaded", () => {
     },
   });
 
-  const heroSliderCarousel = SetupCarousel(
+  const heroSliderCarousel = new Carousel(
     "hero-slider-btn-list",
     "prev-hero-slider-btn",
     "next-hero-slider-btn",
     {
       snapAlign: "center",
       itemSpacing: 16,
+      screenSizes: [
+        { width: 1024, jumpVal: 3 },
+        { width: 768, jumpVal: 2 },
+        { width: 512, jumpVal: 1 },
+      ],
     },
   );
 
-  SetupCarousel("most-popular", "prev-most-popular", "next-most-popular", {
-    snapAlign: "start",
-    itemSpacing: 12,
-  });
-
-  SetupCarousel("popular-list", "prev-popular-list", "next-popular-list", {
-    snapAlign: "center",
-    itemSpacing: 16,
-  });
-
-  SetupCarousel("holiday-list", "prev-holiday-list", "next-holiday-list", {
-    snapAlign: "end",
-    itemSpacing: 20,
-  });
+  new Carousel("most-popular", "prev-most-popular", "next-most-popular");
+  new Carousel("popular-list", "prev-popular-list", "next-popular-list");
+  new Carousel("holiday-list", "prev-holiday-list", "next-holiday-list");
 
   new ModalController(
     [
@@ -113,7 +107,7 @@ document.addEventListener("DOMContentLoaded", () => {
     },
     onIndexChange: (index) => {
       if (!index && index !== 0) return;
-      heroSliderCarousel?.scrollToIndex(index);
+      heroSliderCarousel?.scrollTo(index);
     },
   });
 
