@@ -9,8 +9,8 @@ const app = new Hono();
 app.get(
   "*",
   cache({
-    cacheName: "cache2",
-    cacheControl: "max-age=-1",
+    cacheName: "cache",
+    cacheControl: "max-age=60",
   }),
 );
 
