@@ -12,6 +12,11 @@ interface ModalConfig {
   onToggle?: (menuId: string, isOpen: boolean) => void;
   attributes?: {
     stateAttribute?: string;
+    values: {
+      open: string;
+      hidden: string;
+      preserved: string;
+    };
   };
 }
 
@@ -64,6 +69,11 @@ class ModalController {
       onToggle: config.onToggle || (() => {}),
       attributes: {
         stateAttribute: config.attributes?.stateAttribute ?? "data-state",
+        values: {
+          open: config.attributes?.values?.open ?? "open",
+          hidden: config.attributes?.values?.hidden ?? "closed",
+          preserved: config.attributes?.values?.preserved ?? "open",
+        },
       },
     };
 
@@ -152,7 +162,7 @@ class ModalController {
 
     const isOpen =
       menu.content?.getAttribute(this.config.attributes.stateAttribute!) ===
-      "open";
+      this.config.attributes.values.open;
 
     if (isOpen) {
       this.closeModal(menuId);
@@ -173,7 +183,7 @@ class ModalController {
         const activeMenu = this.menus.get(this.activeModalId);
         activeMenu?.content?.setAttribute(
           this.config.attributes.stateAttribute!,
-          "hidden",
+          this.config.attributes.values.preserved,
         );
       }
     } else if (this.activeModalId && this.activeModalId !== menuId) {
@@ -196,7 +206,7 @@ class ModalController {
 
     menu.content?.setAttribute(
       this.config.attributes.stateAttribute!,
-      "closed",
+      this.config.attributes.values.hidden,
     );
 
     if (this.activeModalId === menuId) {
@@ -237,7 +247,7 @@ class ModalController {
     const menu = this.menus.get(menuId);
     return (
       menu?.content?.getAttribute(this.config.attributes.stateAttribute!) ===
-        "open" || false
+        this.config.attributes.values.open || false
     );
   }
 

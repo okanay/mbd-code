@@ -61,6 +61,14 @@ document.addEventListener("DOMContentLoaded", () => {
       outsideClickClose: true,
       escapeClose: true,
       preserveModalHistory: true,
+      attributes: {
+        stateAttribute: "data-state",
+        values: {
+          open: "open",
+          preserved: "open",
+          hidden: "closed",
+        },
+      },
       scrollLock: {
         enabled: true,
         styles: {
