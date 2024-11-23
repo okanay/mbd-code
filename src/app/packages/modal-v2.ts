@@ -8,8 +8,7 @@ interface ModalConfig {
   };
   outsideClickClose?: boolean;
   escapeClose?: boolean;
-  closeOthersOnOpen?: boolean;
-  preserveModalHistory?: boolean; // Yeni eklenen özellik
+  preserveModalHistory?: boolean;
   onToggle?: (menuId: string, isOpen: boolean) => void;
   attributes?: {
     stateAttribute?: string;
@@ -20,8 +19,8 @@ interface ModalDefinition {
   id: string;
   toggleElements: string[];
   contentElement: string;
-  closeElements: string[];
   containers: string[];
+  closeElements?: string[];
 }
 
 class ModalController {
@@ -36,7 +35,7 @@ class ModalController {
   > = new Map();
 
   private activeModalId: string | null = null;
-  private modalHistory: string[] = []; // Modal geçmişini tutmak için yeni eklenen array
+  private modalHistory: string[] = [];
   private config: Required<ModalConfig>;
 
   constructor(menuDefinitions: ModalDefinition[], config: ModalConfig = {}) {
@@ -61,7 +60,6 @@ class ModalController {
       },
       outsideClickClose: config.outsideClickClose ?? true,
       escapeClose: config.escapeClose ?? true,
-      closeOthersOnOpen: config.closeOthersOnOpen ?? true,
       preserveModalHistory: config.preserveModalHistory ?? false, // Yeni eklenen özellik
       onToggle: config.onToggle || (() => {}),
       attributes: {
@@ -178,11 +176,7 @@ class ModalController {
           "hidden",
         );
       }
-    } else if (
-      this.config.closeOthersOnOpen &&
-      this.activeModalId &&
-      this.activeModalId !== menuId
-    ) {
+    } else if (this.activeModalId && this.activeModalId !== menuId) {
       // Modal history özelliği aktif değilse eski davranışı uygula
       this.closeModal(this.activeModalId);
     }
