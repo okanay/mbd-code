@@ -13,7 +13,7 @@ document.addEventListener("DOMContentLoaded", () => {
     threshold: 0.2,
     filterStyle: "blur(5px)",
     onLoadCallback: (img) => {
-      console.log(`Görsel yüklendi: ${img.src}`);
+      console.log(`Görsel yüklendii: ${img.src}`);
     },
   });
 
