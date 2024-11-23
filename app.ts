@@ -26,8 +26,12 @@ app.use(
   }),
 );
 
-app.get("/", (c) => {
+app.use("*", async (c, next) => {
   c.header("Cache-Control", "no-store, no-cache");
+  await next();
+});
+
+app.get("/", (c) => {
   const html = Bun.file("./dist/main/index.html");
   return c.html(html.text());
 });
