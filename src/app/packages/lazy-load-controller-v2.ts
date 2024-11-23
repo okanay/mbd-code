@@ -1,10 +1,11 @@
 interface LazyLoadOptions {
-  imageSelector: string; // Görsellerin seçici ifadesi
-  rootMargin?: string; // IntersectionObserver için rootMargin
-  threshold?: number; // IntersectionObserver için threshold
-  dataAttribute?: string; // Kullanıcı tarafından özelleştirilebilir veri attribute'u (ör. data-src, data-highquality)
-  onLoadCallback?: (img: HTMLImageElement) => void; // Her görsel yüklendiğinde çağrılacak geri çağırım
-  filterStyle?: string; // Yükleme öncesi uygulanan CSS filtre efekti
+  imageSelector: string;
+  rootMargin?: string;
+  threshold?: number;
+  dataAttribute?: string;
+  onLoadCallback?: (img: HTMLImageElement) => void;
+  filterStyle?: string;
+  maxConcurrentLoads?: number; // Aynı anda yüklenebilecek maksimum görsel sayısı
 }
 
 class LazyImageLoadController {
@@ -14,6 +15,13 @@ class LazyImageLoadController {
   private dataAttribute: string;
   private onLoadCallback?: (img: HTMLImageElement) => void;
   private filterStyle: string;
+  private maxConcurrentLoads: number;
+
+  // Yeni eklenen özellikler
+  private observer: IntersectionObserver;
+  private observedImages: Set<HTMLImageElement> = new Set();
+  private loadingImages: Set<HTMLImageElement> = new Set();
+  private imageQueue: HTMLImageElement[] = [];
 
   constructor(options: LazyLoadOptions) {
     const {
@@ -23,6 +31,7 @@ class LazyImageLoadController {
       dataAttribute = "data-src",
       onLoadCallback,
       filterStyle = "blur(10px)",
+      maxConcurrentLoads = 3,
     } = options;
 
     this.imageSelector = imageSelector;
@@ -31,6 +40,16 @@ class LazyImageLoadController {
     this.dataAttribute = dataAttribute;
     this.onLoadCallback = onLoadCallback;
     this.filterStyle = filterStyle;
+    this.maxConcurrentLoads = maxConcurrentLoads;
+
+    // Observer'ı constructor'da bir kere oluştur
+    this.observer = new IntersectionObserver(
+      this.handleIntersection.bind(this),
+      {
+        rootMargin: this.rootMargin,
+        threshold: this.threshold,
+      },
+    );
 
     this.init();
   }
@@ -39,48 +58,97 @@ class LazyImageLoadController {
     const images = document.querySelectorAll<HTMLImageElement>(
       this.imageSelector,
     );
+    this.observe(images);
+  }
 
-    // Sadece dataAttribute'u olan ve henüz yüklenmemiş görselleri filtrele
+  private handleIntersection(entries: IntersectionObserverEntry[]): void {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) {
+        const img = entry.target as HTMLImageElement;
+        this.queueImageLoad(img);
+      }
+    });
+  }
+
+  private queueImageLoad(img: HTMLImageElement): void {
+    if (this.loadingImages.size < this.maxConcurrentLoads) {
+      this.loadImage(img);
+    } else {
+      this.imageQueue.push(img);
+    }
+  }
+
+  private loadImage(img: HTMLImageElement): void {
+    const highResSrc = img.getAttribute(this.dataAttribute);
+    if (!highResSrc || this.loadingImages.has(img)) return;
+
+    this.loadingImages.add(img);
+
+    // Önbelleğe alma işlemi
+    const tempImage = new Image();
+
+    tempImage.onload = () => {
+      img.style.filter = this.filterStyle;
+      img.src = highResSrc;
+      this.handleImageLoad(img);
+
+      // Sıradaki görseli yükle
+      if (this.imageQueue.length > 0) {
+        const nextImage = this.imageQueue.shift();
+        if (nextImage) this.loadImage(nextImage);
+      }
+    };
+
+    tempImage.onerror = () => {
+      this.loadingImages.delete(img);
+      console.error(`Error loading image: ${highResSrc}`);
+
+      // Hata durumunda da sıradaki görseli yükle
+      if (this.imageQueue.length > 0) {
+        const nextImage = this.imageQueue.shift();
+        if (nextImage) this.loadImage(nextImage);
+      }
+    };
+
+    tempImage.src = highResSrc;
+  }
+
+  private handleImageLoad(img: HTMLImageElement): void {
+    img.style.filter = "none";
+    img.removeAttribute(this.dataAttribute);
+    this.observer.unobserve(img);
+    this.observedImages.delete(img);
+    this.loadingImages.delete(img);
+
+    if (this.onLoadCallback) {
+      this.onLoadCallback(img);
+    }
+  }
+
+  public observe(
+    images: NodeListOf<HTMLImageElement> | HTMLImageElement[],
+  ): void {
     const notLoadedImages = Array.from(images).filter((img) => {
       const highResSrc = img.getAttribute(this.dataAttribute);
-      return highResSrc && img.src !== highResSrc;
+      return (
+        highResSrc &&
+        img.src !== highResSrc &&
+        !this.observedImages.has(img) &&
+        !this.loadingImages.has(img)
+      );
     });
 
-    if (notLoadedImages.length === 0) return;
+    notLoadedImages.forEach((img) => {
+      this.observer.observe(img);
+      this.observedImages.add(img);
+    });
+  }
 
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            const img = entry.target as HTMLImageElement;
-            const highResSrc = img.getAttribute(this.dataAttribute);
-
-            if (highResSrc) {
-              img.style.filter = this.filterStyle; // Yüklenmeden önce filtre uygula
-              img.src = highResSrc;
-
-              img.onload = () => {
-                img.style.filter = "none"; // Yükleme sonrası filtreyi kaldır
-                img.removeAttribute(this.dataAttribute);
-
-                if (this.onLoadCallback) {
-                  this.onLoadCallback(img); // Kullanıcı tanımlı geri çağırımı çalıştır
-                }
-              };
-
-              observer.unobserve(img);
-            }
-          }
-        });
-      },
-      {
-        rootMargin: this.rootMargin,
-        threshold: this.threshold,
-      },
-    );
-
-    // Sadece yüklenmemiş görselleri observe et
-    notLoadedImages.forEach((img) => observer.observe(img));
+  public disconnect(): void {
+    this.observer.disconnect();
+    this.observedImages.clear();
+    this.loadingImages.clear();
+    this.imageQueue = [];
   }
 }
 
