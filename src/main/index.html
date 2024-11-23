@@ -518,7 +518,7 @@
       </div>
     </header>
 
-    <main class="space-y-8 pb-8">
+    <main class="space-y-6 pb-0">
       <!-- Slider Cards -->
       <section
         class="mx-auto flex w-full max-w-7xl flex-col gap-8 lg:mt-[32px]"
@@ -1229,7 +1229,7 @@
       </section>
 
       <!-- Most Popular Search -->
-      <section class="mx-auto max-w-7xl space-y-4">
+      <section class="mx-auto max-w-7xl space-y-6">
         <h2 class="px-4 text-2xl font-semibold">En Çok Arananlar</h2>
         <!-- Carousel Section -->
         <div
@@ -1458,7 +1458,7 @@
         </div>
 
         <div
-          class="relative mx-auto w-full max-w-[calc(100vw-30px)] overflow-hidden rounded-xl lg:max-w-[calc(100vw-0px)] lg:px-4"
+          class="relative mx-auto w-full max-w-[calc(100vw-44px)] overflow-hidden rounded-xl lg:max-w-[calc(100vw-0px)] lg:px-4"
         >
           <nav
             id="popular-list"
@@ -1587,7 +1587,7 @@
 
       <!-- Discover Holidays -->
       <section
-        class="relative mx-auto flex h-[400px] w-full max-w-7xl flex-col items-start justify-end overflow-hidden pt-2 md:h-[560px] md:rounded-xl"
+        class="relative mx-auto flex h-[400px] w-full max-w-7xl flex-col items-start justify-end overflow-hidden md:h-[560px] md:rounded-xl"
       >
         <div class="relative h-full w-full overflow-hidden md:px-4 lg:px-4">
           <!-- Başlık -->
@@ -1611,7 +1611,7 @@
 
         <!-- Kartlar -->
         <div
-          class="absolute bottom-6 left-0 w-full overflow-hidden px-2 md:px-12"
+          class="absolute bottom-6 left-0 w-full overflow-hidden px-0 md:px-12"
         >
           <div
             class="pointer-events-none absolute left-0 top-0 z-[99] flex h-full w-full max-w-[calc(100%-0px)] items-center justify-between md:px-2"
@@ -1639,7 +1639,7 @@
           </div>
 
           <div
-            class="relative w-full overflow-hidden rounded-xl border border-gray-200 bg-white p-2"
+            class="relative w-full overflow-hidden border border-gray-200 bg-white p-2 md:rounded-xl"
           >
             <nav
               id="holiday-list"
@@ -1745,21 +1745,22 @@
 
       <!-- About Us -->
       <section
-        class="relative mx-auto flex w-full max-w-7xl flex-col space-y-6 overflow-hidden px-4"
+        class="relative mx-auto flex w-full max-w-7xl flex-col overflow-hidden"
       >
-        <h2 class="text-2xl font-semibold">Hakkımızda</h2>
-        <div class="grid grid-cols-1 gap-8 gap-y-8 lg:grid-cols-2">
+        <h2 class="mb-6 px-4 text-2xl font-semibold lg:px-4">Hakkımızda</h2>
+        <div class="grid grid-cols-1 gap-y-6 lg:grid-cols-2 lg:px-4">
           <img
             src="https://images.project-test.info/27-blur.webp"
             data-src="https://images.project-test.info/27.webp"
             loading="lazy"
             alt="Dubai Lüks Safari Platinium Heritage"
-            class="lazy-image h-[180px] w-full rounded-xl object-cover lg:h-full"
+            class="lazy-image h-[180px] w-full object-cover lg:h-full lg:rounded-xl"
             style="filter: blur(10px); transition: filter 0.3s ease"
           />
-          <!-- style="filter: blur(10px); transition: filter 0.3s ease" -->
 
-          <ul class="flex flex-col gap-y-8 text-sm text-gray-600 lg:text-base">
+          <ul
+            class="flex flex-col gap-y-8 px-4 text-sm text-gray-600 lg:text-base"
+          >
             <li>
               MBD Travel, seyahati sadece bir ulaşım aracı değil, bir deneyim
               olarak gören ve bu anlayışla her yolculuğu unutulmaz kılmayı
@@ -1798,11 +1799,13 @@
 
       <!-- Frequently Asked Questions -->
       <section
-        class="relative mx-auto flex w-full max-w-7xl flex-col space-y-6 overflow-hidden px-4"
+        class="relative mx-auto flex w-full max-w-7xl flex-col overflow-hidden lg:px-4"
       >
-        <h2 class="text-2xl font-semibold">Sıkça Sorulan Sorular</h2>
+        <h2 class="mb-6 px-4 text-2xl font-semibold lg:px-0">
+          Sıkça Sorulan Sorular
+        </h2>
         <div
-          class="grid grid-cols-1 grid-rows-1 gap-4 lg:grid-cols-2 lg:grid-rows-2"
+          class="grid grid-cols-1 grid-rows-1 lg:grid-cols-2 lg:grid-rows-2 lg:gap-6"
         >
           <!-- Desktop FAQ -->
           <ul
@@ -1915,7 +1918,7 @@
 
           <!-- Mobile FAQ - 1 -->
           <ul
-            class="order-2 flex flex-col gap-y-4 text-sm font-medium lg:hidden"
+            class="order-2 my-6 flex flex-col gap-y-6 px-4 text-sm font-medium lg:hidden"
             id="faq-container-1"
           >
             <li class="faq group border-b border-solid border-gray-200 pb-2">
@@ -2001,7 +2004,7 @@
             data-src="https://images.project-test.info/28.webp"
             loading="lazy"
             alt="Burj Khalifa"
-            class="lazy-image order-1 h-[180px] w-full rounded-xl object-cover lg:order-2 lg:h-full"
+            class="lazy-image order-1 h-[180px] w-full object-cover lg:order-2 lg:h-full lg:rounded-xl"
             style="filter: blur(10px); transition: filter 0.3s ease"
           />
 
@@ -2012,7 +2015,7 @@
           >
             <li class="faq-2 flex flex-col gap-4 lg:h-full">
               <button
-                class="faq-toggle-2 inline-flex items-center justify-start gap-2 text-2xl font-semibold text-gray-600 lg:hidden"
+                class="faq-toggle-2 mb-6 inline-flex items-center justify-start gap-2 px-4 text-2xl font-semibold text-gray-600 lg:hidden"
               >
                 <h5>Daha Fazla</h5>
                 <img
@@ -2027,13 +2030,13 @@
                 data-src="https://images.project-test.info/29.webp"
                 loading="lazy"
                 alt="Dubai"
-                class="lazy-image h-[180px] w-full rounded-xl object-cover lg:h-full"
+                class="lazy-image h-[180px] w-full object-cover lg:h-full lg:rounded-xl"
                 style="filter: blur(10px); transition: filter 0.3s ease"
               />
               <!-- Mobile FAQ - 2 -->
               <ul
                 style="height: 0px"
-                class="faq-content-2 flex flex-col gap-y-4 text-sm font-medium lg:hidden"
+                class="faq-content-2 flex flex-col gap-y-6 px-4 text-sm font-medium lg:hidden"
                 id="faq-container-3"
               >
                 <li
