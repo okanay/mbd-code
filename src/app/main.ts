@@ -1,4 +1,4 @@
-import { SetupCarousel } from "./packages/carousel.js";
+import { setupCarousel } from "./packages/carousel.js";
 import { Slider } from "./packages/slider.js";
 import { AccordionController } from "./packages/accordion.js";
 import { ModalController } from "./packages/modal.js";
@@ -17,7 +17,7 @@ document.addEventListener("DOMContentLoaded", () => {
     },
   });
 
-  const heroSliderCarousel = SetupCarousel(
+  const heroSliderCarousel = setupCarousel(
     "hero-slider-btn-list",
     "prev-hero-slider-btn",
     "next-hero-slider-btn",
@@ -27,17 +27,17 @@ document.addEventListener("DOMContentLoaded", () => {
     },
   );
 
-  SetupCarousel("most-popular", "prev-most-popular", "next-most-popular", {
+  setupCarousel("most-popular", "prev-most-popular", "next-most-popular", {
     snapAlign: "start",
     itemSpacing: 12,
   });
 
-  SetupCarousel("popular-list", "prev-popular-list", "next-popular-list", {
+  setupCarousel("popular-list", "prev-popular-list", "next-popular-list", {
     snapAlign: "center",
     itemSpacing: 16,
   });
 
-  SetupCarousel("holiday-list", "prev-holiday-list", "next-holiday-list", {
+  setupCarousel("holiday-list", "prev-holiday-list", "next-holiday-list", {
     snapAlign: "end",
     itemSpacing: 20,
   });

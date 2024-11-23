@@ -184,7 +184,7 @@ function CreateCarousel(
   };
 }
 
-function SetupCarousel(
+function setupCarousel(
   listId: string,
   prevBtnId: string,
   nextBtnId: string,
@@ -216,4 +216,4 @@ function SetupCarousel(
   return carousel;
 }
 
-export { SetupCarousel, CreateCarousel };
+export { setupCarousel, CreateCarousel };
