@@ -12,7 +12,7 @@ document.addEventListener("DOMContentLoaded", () => {
     rootMargin: "100px 0px",
     threshold: 0.2,
     filterStyle: "blur(5px)",
-    maxConcurrentLoads: 5,
+    maxConcurrentLoads: 6,
     onLoadCallback: (img) => {
       console.log(`Görsel yüklendii: ${img.src}`);
     },
