@@ -6,17 +6,17 @@ import { LazyImageLoadController } from "./packages/lazy-load-controller-v2.js";
 
 // Slider'ı başlat
 document.addEventListener("DOMContentLoaded", () => {
-  // new LazyImageLoadController({
-  //   imageSelector: ".lazy-image",
-  //   dataAttribute: "data-src",
-  //   rootMargin: "100px 0px",
-  //   threshold: 0.2,
-  //   filterStyle: "blur(5px)",
-  //   maxConcurrentLoads: 2,
-  //   onLoadCallback: (img) => {
-  //     console.log(`Görsel yüklendii: ${img.src}`);
-  //   },
-  // });
+  new LazyImageLoadController({
+    imageSelector: ".lazy-image",
+    dataAttribute: "data-src",
+    rootMargin: "100px 0px",
+    threshold: 0.2,
+    filterStyle: "blur(5px)",
+    maxConcurrentLoads: 2,
+    onLoadCallback: (img) => {
+      console.log(`Görsel yüklendii: ${img.src}`);
+    },
+  });
   // const heroSliderCarousel = new Carousel(
   //   "hero-slider-btn-list",
   //   "prev-hero-slider-btn",
