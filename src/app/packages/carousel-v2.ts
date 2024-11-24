@@ -16,6 +16,7 @@ export class Carousel {
   private prevButton: HTMLButtonElement;
   private nextButton: HTMLButtonElement;
   private resizeTimeout: number | null = null;
+  private isHorizontalSwipe: boolean = false;
 
   constructor(
     listId: string,
@@ -56,6 +57,10 @@ export class Carousel {
 
     // Get carousel items
     this.items = Array.from(this.carouselList.children) as HTMLElement[];
+
+    // Sadece yatay kaydırmayı engelle, dikey scroll'a izin ver
+    this.carouselList.style.touchAction = "pan-y";
+    this.carouselList.style.userSelect = "none";
 
     // Setup event listeners
     this.setupNavigationButtons();
@@ -202,16 +207,35 @@ export class Carousel {
 
   private setupTouchInteraction(): void {
     let startX = 0;
+    let startY = 0;
     let isDragging = false;
 
     const handleTouchStart = (e: TouchEvent) => {
       startX = e.touches[0].clientX;
+      startY = e.touches[0].clientY;
       isDragging = true;
+      this.isHorizontalSwipe = false;
     };
 
     const handleTouchMove = (e: TouchEvent) => {
       if (!isDragging) return;
-      e.preventDefault();
+
+      const currentX = e.touches[0].clientX;
+      const currentY = e.touches[0].clientY;
+      const deltaX = startX - currentX;
+      const deltaY = startY - currentY;
+
+      // Hareketin yönünü belirle
+      if (!this.isHorizontalSwipe) {
+        if (Math.abs(deltaX) > Math.abs(deltaY)) {
+          this.isHorizontalSwipe = true;
+        }
+      }
+
+      // Sadece yatay kaydırma ise eventi engelle
+      if (this.isHorizontalSwipe) {
+        e.preventDefault();
+      }
     };
 
     const handleTouchEnd = (e: TouchEvent) => {
@@ -220,27 +244,36 @@ export class Carousel {
       const endX = e.changedTouches[0].clientX;
       const diffX = startX - endX;
 
-      const metrics = this.calculateMetrics();
-      const swipeThreshold = metrics.averageItemWidth / 4;
+      // Sadece yatay kaydırma tespit edildiyse işlem yap
+      if (this.isHorizontalSwipe) {
+        const metrics = this.calculateMetrics();
+        const swipeThreshold = metrics.averageItemWidth / 4;
 
-      if (Math.abs(diffX) > swipeThreshold) {
-        const newIndex =
-          diffX > 0
-            ? Math.min(
-                this.state.currentIndex + this.getItemsPerPage(),
-                this.items.length - 1,
-              )
-            : Math.max(this.state.currentIndex - this.getItemsPerPage(), 0);
+        if (Math.abs(diffX) > swipeThreshold) {
+          const newIndex =
+            diffX > 0
+              ? Math.min(
+                  this.state.currentIndex + this.getItemsPerPage(),
+                  this.items.length - 1,
+                )
+              : Math.max(this.state.currentIndex - this.getItemsPerPage(), 0);
 
-        this.scrollToPrecise(newIndex);
+          this.scrollToPrecise(newIndex);
+        }
       }
 
       isDragging = false;
     };
 
-    this.carouselList.addEventListener("touchstart", handleTouchStart);
-    this.carouselList.addEventListener("touchmove", handleTouchMove);
-    this.carouselList.addEventListener("touchend", handleTouchEnd);
+    this.carouselList.addEventListener("touchstart", handleTouchStart, {
+      passive: true,
+    });
+    this.carouselList.addEventListener("touchmove", handleTouchMove, {
+      passive: false,
+    });
+    this.carouselList.addEventListener("touchend", handleTouchEnd, {
+      passive: true,
+    });
   }
 
   private setupNavigationButtons(): void {
@@ -269,31 +302,47 @@ export class Carousel {
     let startTime = 0;
     let velocityX = 0;
 
-    this.carouselList.addEventListener("touchstart", (e) => {
-      startX = e.touches[0].clientX;
-      startTime = Date.now();
-      velocityX = 0;
-    });
+    this.carouselList.addEventListener(
+      "touchstart",
+      (e) => {
+        startX = e.touches[0].clientX;
+        startTime = Date.now();
+        velocityX = 0;
+      },
+      { passive: true },
+    );
 
-    this.carouselList.addEventListener("touchmove", (e) => {
-      const currentX = e.touches[0].clientX;
-      const currentTime = Date.now();
+    this.carouselList.addEventListener(
+      "touchmove",
+      (e) => {
+        if (!this.isHorizontalSwipe) return;
 
-      velocityX = (currentX - startX) / (currentTime - startTime);
+        const currentX = e.touches[0].clientX;
+        const currentTime = Date.now();
 
-      startX = currentX;
-      startTime = currentTime;
-    });
+        velocityX = (currentX - startX) / (currentTime - startTime);
 
-    this.carouselList.addEventListener("touchend", () => {
-      if (Math.abs(velocityX) > 0.1) {
-        const momentumDistance = velocityX * 100;
-        this.carouselList.scrollBy({
-          left: momentumDistance,
-          behavior: "smooth",
-        });
-      }
-    });
+        startX = currentX;
+        startTime = currentTime;
+      },
+      { passive: true },
+    );
+
+    this.carouselList.addEventListener(
+      "touchend",
+      () => {
+        if (!this.isHorizontalSwipe) return;
+
+        if (Math.abs(velocityX) > 0.1) {
+          const momentumDistance = velocityX * 100;
+          this.carouselList.scrollBy({
+            left: momentumDistance,
+            behavior: "smooth",
+          });
+        }
+      },
+      { passive: true },
+    );
   }
 
   // Public methods
