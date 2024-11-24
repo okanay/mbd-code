@@ -71,8 +71,8 @@ document.addEventListener("DOMContentLoaded", () => {
     toggleButtonSelector: ".footer-toggle",
     contentSelector: ".footer-content",
     iconSelector: ".footer-icon",
-    defaultOpenIndex: -1,
-    closeOthersOnOpen: true,
+    defaultOpenIndex: 4,
+    closeOthersOnOpen: false,
     animation: {
       enabled: true,
       duration: 300,
