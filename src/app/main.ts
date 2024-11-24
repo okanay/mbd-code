@@ -20,6 +20,12 @@ document.addEventListener("DOMContentLoaded", () => {
 
   new Carousel("most-popular", "prev-most-popular", "next-most-popular");
   new Carousel("popular-list", "prev-popular-list", "next-popular-list");
+  new Carousel(
+    "opportunity-list",
+    "prev-opportunity-list",
+    "next-opportunity-list",
+  );
+
   new Carousel("holiday-list", "prev-holiday-list", "next-holiday-list");
   const sliderControlButtons = new Carousel(
     "hero-slider-btn-list",
