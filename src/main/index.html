@@ -59,8 +59,8 @@
       as="image"
     />
 
-    <link rel="stylesheet" href="/globals.css?v=cache-me-if-you-can-v20" />
-    <script type="module" src="/main.js?v=cache-me-if-you-can-v20"></script>
+    <link rel="stylesheet" href="/globals.css?v=cache-me-if-you-can-v22" />
+    <script type="module" src="/main.js?v=cache-me-if-you-can-v22"></script>
   </head>
   <body class="bg-gray-50">
     <header class="w-full border-gray-200 lg:h-[80px] lg:border-b">
@@ -974,7 +974,9 @@
 
       <!-- Dubai Activities -->
       <section class="mx-auto max-w-7xl space-y-6 px-3.5">
-        <h2 class="px-0.5 text-2xl font-semibold">Dubai Etkinlikleri</h2>
+        <h2 class="px-0.5 text-2xl font-semibold text-gray-800">
+          Dubai Etkinlikleri
+        </h2>
         <nav class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
           <div
             class="group flex h-fit w-full flex-col justify-start overflow-hidden rounded-lg border border-gray-200 bg-white transition-all duration-300 hover:border-primary-500"
@@ -1230,7 +1232,9 @@
 
       <!-- Most Popular Search -->
       <section class="mx-auto max-w-7xl space-y-6">
-        <h2 class="px-3.5 text-2xl font-semibold">En Çok Arananlar</h2>
+        <h2 class="px-3.5 text-2xl font-semibold text-gray-800">
+          En Çok Arananlar
+        </h2>
         <!-- Carousel Section -->
         <div
           class="relative mx-auto flex max-w-7xl justify-center overflow-hidden"
@@ -1430,7 +1434,9 @@
 
       <!-- Popular Holiday Options -->
       <section class="relative mx-auto max-w-7xl space-y-6 overflow-hidden">
-        <h2 class="px-3.5 text-2xl font-semibold">Popüler Tatil Seçenekleri</h2>
+        <h2 class="px-3.5 text-2xl font-semibold text-gray-800">
+          Popüler Tatil Seçenekleri
+        </h2>
         <!-- Carousel Section -->
         <div
           class="pointer-events-none absolute top-0 z-[99] flex h-full w-full max-w-[100vw] items-center justify-between px-4"
@@ -1592,7 +1598,7 @@
         <div class="relative h-full w-full overflow-hidden xl:px-3.5">
           <!-- Başlık -->
           <h1
-            class="absolute left-0 top-0 z-20 h-full w-full px-3.5 py-6 text-2xl font-semibold text-white xl:px-9"
+            class="absolute left-0 top-0 z-20 h-full w-full px-3.5 py-6 text-2xl font-semibold text-gray-800 text-white xl:px-9"
           >
             Size En Uygun Tatili Keşfedin
           </h1>
@@ -1747,7 +1753,9 @@
       <section
         class="relative mx-auto flex w-full max-w-7xl flex-col overflow-hidden"
       >
-        <h2 class="mb-6 px-3.5 text-2xl font-semibold lg:px-3.5">Hakkımızda</h2>
+        <h2 class="mb-6 px-3.5 text-2xl font-semibold text-gray-800 lg:px-3.5">
+          Hakkımızda
+        </h2>
         <div class="grid grid-cols-1 gap-6 lg:grid-cols-2 lg:px-3.5">
           <img
             src="https://images.project-test.info/27-blur.webp"
@@ -1801,7 +1809,7 @@
       <section
         class="relative mx-auto flex w-full max-w-7xl flex-col overflow-hidden lg:px-3.5"
       >
-        <h2 class="mb-6 px-3.5 text-2xl font-semibold lg:px-0">
+        <h2 class="mb-6 px-3.5 text-2xl font-semibold text-gray-800 lg:px-0">
           Sıkça Sorulan Sorular
         </h2>
         <div
@@ -2015,7 +2023,7 @@
           >
             <li class="faq-2 flex flex-col space-y-6 lg:h-full">
               <button
-                class="faq-toggle-2 inline-flex items-center justify-start gap-2.5 px-3.5 text-2xl font-semibold text-gray-600 lg:hidden"
+                class="faq-toggle-2 inline-flex items-center justify-start gap-2.5 px-3.5 text-2xl font-semibold text-gray-800 lg:hidden"
               >
                 <span>Daha Fazla</span>
                 <img
@@ -2194,5 +2202,144 @@
         </div>
       </section>
     </main>
+
+    <footer class="w-full bg-white">
+      <div class="mx-auto max-w-7xl px-3.5 sm:px-5 lg:px-8">
+        <!-- Main Content: Flex for desktop -->
+        <div
+          class="flex flex-col gap-8 py-4 lg:flex-row lg:items-end lg:justify-between"
+        >
+          <!-- QR Code Section -->
+          <div class="order-1 flex justify-center lg:order-1">
+            <div class="h-40 w-40 translate-y-[5%]">
+              <img
+                src="/public/images/gallery/footer-qr.png"
+                alt="Site QR kodu, hızlı erişim için tarayın"
+                class="h-full w-full object-contain"
+              />
+            </div>
+          </div>
+
+          <!-- Help Section -->
+          <div class="order-3 items-center text-center lg:order-2">
+            <h2 class="text-balance text-3xl font-bold text-red-500">
+              Yardıma <br />
+              İhtiyacınız var mı?
+            </h2>
+            <p class="mt-2 text-xs text-gray-600 lg:text-sm">Hemen Ara</p>
+            <div class="mt-4 flex justify-center gap-4 lg:justify-center">
+              <a
+                href="tel:+97152521419"
+                aria-label="Telefon ile ara"
+                class="h-10 w-10"
+              >
+                <img
+                  src="/public/images/icons/phone-call.svg"
+                  alt="Telefon arama ikonu"
+                  class="h-full w-full"
+                />
+              </a>
+              <a
+                href="https://wa.me/97152521419"
+                aria-label="WhatsApp ile mesaj gönder"
+                class="h-10 w-10"
+              >
+                <img
+                  src="/public/images/icons/whatsapp.svg"
+                  alt="WhatsApp ikonu"
+                  class="h-full w-full"
+                />
+              </a>
+            </div>
+            <a
+              href="tel:+97152521419"
+              class="mt-4 inline-block text-2xl font-medium tracking-wide text-gray-800"
+            >
+              +971 52 521 4198
+            </a>
+          </div>
+
+          <!-- Social Media Icons -->
+          <div class="order-2 flex justify-center gap-6 lg:order-3">
+            <a
+              href="#"
+              aria-label="Instagram"
+              class="flex h-10 w-10 items-center justify-center rounded-full border border-gray-300 hover:bg-gray-100"
+            >
+              <img
+                src="/public/images/icons/instagram.svg"
+                alt="Instagram ikon"
+                class="h-6 w-6 rounded-lg bg-blue-950"
+              />
+            </a>
+            <a
+              href="#"
+              aria-label="Facebook"
+              class="flex h-10 w-10 items-center justify-center rounded-full border border-gray-300 hover:bg-gray-100"
+            >
+              <img
+                src="/public/images/icons/facebook.svg"
+                alt="Facebook ikon"
+                class="h-6 w-6"
+              />
+            </a>
+            <a
+              href="#"
+              aria-label="YouTube"
+              class="flex h-10 w-10 items-center justify-center rounded-full border border-gray-300 hover:bg-gray-100"
+            >
+              <img
+                src="/public/images/icons/youtube.svg"
+                alt="YouTube ikon"
+                class="size-12"
+              />
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Logo Section with Background -->
+      <div class="relative w-full bg-blue-950 py-12">
+        <!-- Background Image -->
+        <div class="absolute inset-0 opacity-20">
+          <img
+            src="/public/images/gallery/footer-bg.png"
+            alt="Arka plan tasarımı"
+            class="h-full w-full object-cover object-center opacity-50"
+          />
+        </div>
+
+        <!-- Logo Grid -->
+        <div class="relative mx-auto max-w-7xl px-3.5">
+          <div class="grid grid-cols-4 items-center justify-items-center gap-8">
+            <img
+              src="/public/images/brand-images/logo.webp"
+              alt="HOI Health logosu"
+              class="h-12 w-auto object-scale-down brightness-0 invert"
+            />
+            <img
+              src="/public/images/brand-images/logo.webp"
+              alt="Hair of Istanbul logosu"
+              class="h-12 w-auto object-scale-down brightness-0 invert"
+            />
+            <img
+              src="/public/images/brand-images/logo.webp"
+              alt="MBD Travel logosu"
+              class="h-12 w-auto object-scale-down brightness-0 invert"
+            />
+            <img
+              src="/public/images/brand-images/logo.webp"
+              alt="Guide of Dubai logosu"
+              class="h-12 w-auto object-scale-down brightness-0 invert"
+            />
+          </div>
+
+          <!-- Copyright -->
+          <div class="mt-8 text-center text-xs text-gray-300 lg:text-base">
+            <p>© 2024 MBD Travel. Her hakkı saklıdır.</p>
+          </div>
+        </div>
+      </div>
+    </footer>
   </body>
 </html>
