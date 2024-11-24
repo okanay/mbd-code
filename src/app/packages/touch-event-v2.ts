@@ -4,6 +4,7 @@ export class TouchDirectionDetector {
   private startY: number = 0;
   private threshold: number;
   private onSwipeCallback?: (direction: "left" | "right") => void;
+  private isHorizontalSwipe: boolean = false;
 
   constructor(elementId: string, options: { threshold?: number } = {}) {
     const element = document.getElementById(elementId);
@@ -14,15 +15,15 @@ export class TouchDirectionDetector {
     this.threshold = options.threshold || 50;
     this.setupTouchListeners();
 
-    // Zoom ve scroll'u engellemek için touch-action özelliğini ayarla
-    this.element.style.touchAction = "none";
+    // Sadece yatay kaydırmayı engelle, dikey scroll'a izin ver
+    this.element.style.touchAction = "pan-y";
   }
 
   private setupTouchListeners(): void {
     this.element.addEventListener(
       "touchstart",
       this.handleTouchStart.bind(this),
-      { passive: false },
+      { passive: true },
     );
     this.element.addEventListener(
       "touchmove",
@@ -30,33 +31,47 @@ export class TouchDirectionDetector {
       { passive: false },
     );
     this.element.addEventListener("touchend", this.handleTouchEnd.bind(this), {
-      passive: false,
+      passive: true,
     });
   }
 
   private handleTouchStart(event: TouchEvent): void {
-    event.preventDefault();
     const touch = event.touches[0];
     this.startX = touch.clientX;
     this.startY = touch.clientY;
+    this.isHorizontalSwipe = false;
   }
 
   private handleTouchMove(event: TouchEvent): void {
-    event.preventDefault();
-  }
+    if (!event.touches[0]) return;
 
-  private handleTouchEnd(event: TouchEvent): void {
-    event.preventDefault();
-    if (!event.changedTouches[0]) return;
-    const touch = event.changedTouches[0];
+    const touch = event.touches[0];
     const deltaX = touch.clientX - this.startX;
     const deltaY = touch.clientY - this.startY;
 
-    if (Math.abs(deltaX) > Math.abs(deltaY)) {
-      if (Math.abs(deltaX) >= this.threshold) {
-        if (this.onSwipeCallback) {
-          this.onSwipeCallback(deltaX > 0 ? "right" : "left");
-        }
+    // Hareketin yönünü belirle
+    if (!this.isHorizontalSwipe) {
+      if (Math.abs(deltaX) > Math.abs(deltaY)) {
+        this.isHorizontalSwipe = true;
+      }
+    }
+
+    // Sadece yatay kaydırma ise eventi engelle
+    if (this.isHorizontalSwipe) {
+      event.preventDefault();
+    }
+  }
+
+  private handleTouchEnd(event: TouchEvent): void {
+    if (!event.changedTouches[0]) return;
+
+    // Eğer yatay kaydırma tespit edildiyse
+    if (this.isHorizontalSwipe) {
+      const touch = event.changedTouches[0];
+      const deltaX = touch.clientX - this.startX;
+
+      if (Math.abs(deltaX) >= this.threshold && this.onSwipeCallback) {
+        this.onSwipeCallback(deltaX > 0 ? "right" : "left");
       }
     }
   }
