@@ -59,7 +59,7 @@ class AccordionController {
     if (!container)
       throw new Error(`Container ${this.config.container} not found`);
 
-    this.accordions = container.querySelectorAll(this.config.accordionSelector);
+    this.accordions = document.querySelectorAll(this.config.accordionSelector);
 
     // Window resize event listener ekle
     window.addEventListener("resize", this.handleWindowResize.bind(this));

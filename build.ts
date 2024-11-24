@@ -14,13 +14,7 @@ const distDir = "./dist";
 const packagesDir = path.join(srcDir, "app", "packages");
 
 // Sayfa listesini burada tanımla
-const scripts = [
-  "main",
-  "product",
-  "navigation",
-  "carousel",
-  "lazy-image-load",
-]; // Sayfa listesini genişletebilirsiniz
+const scripts = ["main", "product", "layout"]; // Sayfa listesini genişletebilirsiniz
 
 // Eski versiyondaki izleme fonksiyonunu geri ekledim
 function copyFileRecursive(src: string, dest: string) {
