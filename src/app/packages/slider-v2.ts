@@ -257,6 +257,7 @@ class Slider {
   ): Promise<void> {
     if (this.isAnimating || targetIndex === this.activeIndex) return;
     if (targetIndex < 0 || targetIndex >= this.slides.length) return;
+    this.onIndexChange && this.onIndexChange(targetIndex);
 
     const slideDirection =
       direction ||
@@ -295,7 +296,6 @@ class Slider {
 
     this.activeIndex = targetIndex;
     this.isAnimating = false;
-    this.onIndexChange && this.onIndexChange(targetIndex);
   }
 
   public updateAnimationConfig(config: SliderAnimationConfig): void {

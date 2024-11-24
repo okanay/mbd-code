@@ -101,7 +101,7 @@ export class Carousel {
         }
 
         this.resizeTimeout = null;
-      }, 150); // Wait for 150ms after last resize event
+      }, 50); // Wait for 150ms after last resize event
     });
   }
 
