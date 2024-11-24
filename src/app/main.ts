@@ -69,11 +69,14 @@ document.addEventListener("DOMContentLoaded", () => {
     },
   });
 
-  const touchDetector = new TouchDirectionDetector("hero-slider-container", {
-    threshold: 50,
-  });
+  const sliderTouchDetector = new TouchDirectionDetector(
+    "hero-slider-container",
+    {
+      threshold: 50,
+    },
+  );
 
-  touchDetector.onSwipe((direction) => {
+  sliderTouchDetector.onSwipe((direction) => {
     if (direction === "right") {
       return slider.prev();
     }
@@ -83,8 +86,8 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 
-  const mobileFAQShowMore = new AccordionController({
-    container: "#faq-container-2",
+  const hiddenFAQ = new AccordionController({
+    container: "#faq-hidden-container",
     accordionSelector: ".faq-2",
     toggleButtonSelector: ".faq-toggle-2",
     contentSelector: ".faq-content-2",
@@ -126,9 +129,7 @@ document.addEventListener("DOMContentLoaded", () => {
       inactiveClass: "faq-inactive",
     },
     onToggle: () => {
-      setTimeout(() => {
-        mobileFAQShowMore.recalculate();
-      }, 100);
+      hiddenFAQ.recalculate();
     },
   });
 });
