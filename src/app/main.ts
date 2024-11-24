@@ -1,11 +1,10 @@
-import { Carousel } from "./packages/carousel-v2.js";
-import { Slider } from "./packages/slider-v2.js";
-import { AccordionController } from "./packages/accordion-v2.js";
-import { ModalController } from "./packages/modal-v2.js";
-import { LazyImageLoadController } from "./packages/lazy-load-controller-v2.js";
-import { TouchDirectionDetector } from "./packages/touch-event-v2.js";
+import { Carousel } from "./packages/carousel.js";
+import { Slider } from "./packages/slider.js";
+import { AccordionController } from "./packages/accordion.js";
+import { ModalController } from "./packages/modal.js";
+import { LazyImageLoadController } from "./packages/lazy-load-controller.js";
+import { TouchDirectionDetector } from "./packages/touch-event.js";
 
-// Slider'ı başlat
 document.addEventListener("DOMContentLoaded", () => {
   new LazyImageLoadController({
     imageSelector: ".lazy-image",
@@ -89,19 +88,12 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   touchDetector.onSwipe((direction) => {
+    if (direction === "right") {
+      return slider.prev();
+    }
+
     if (direction === "left") {
-      // Sola kaydırma - next slide
-      slider.goToSlide(
-        (slider.getCurrentIndex() + 1) % slider.getSlidesCount(),
-        "right",
-      );
-    } else {
-      // Sağa kaydırma - previous slide
-      slider.goToSlide(
-        (slider.getCurrentIndex() - 1 + slider.getSlidesCount()) %
-          slider.getSlidesCount(),
-        "left",
-      );
+      return slider.next();
     }
   });
 
