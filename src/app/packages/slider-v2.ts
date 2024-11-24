@@ -1,8 +1,16 @@
 interface SliderAnimationConfig {
   duration?: number;
   timingFunction?: string;
-  transformNotSelectedExitPos?: string;
-  transformSelectedInitialPos?: string;
+  transforms?: {
+    fromLeft?: {
+      enter: string;
+      exit: string;
+    };
+    fromRight?: {
+      enter: string;
+      exit: string;
+    };
+  };
   opacitySelected?: number;
   opacityNotSelected?: number;
   scaleSelected?: number;
@@ -42,6 +50,7 @@ class Slider {
   private autoInterval: number;
   private autoTimer: NodeJS.Timeout | null;
   private onIndexChange?: (index?: number) => void;
+  private lastDirection: "left" | "right" = "right";
   private options: {
     zIndex: {
       clone: number;
@@ -52,7 +61,6 @@ class Slider {
   private animationConfig: SliderAnimationConfig;
 
   constructor(config: SliderConfig) {
-    // Container elementini al
     this.container =
       typeof config.container === "string"
         ? (document.querySelector(config.container) as HTMLElement)
@@ -62,13 +70,11 @@ class Slider {
       throw new Error("Container element not found");
     }
 
-    // Slider elementini bul
     this.slider = this.container.querySelector("ul") as HTMLElement;
     if (!this.slider) {
       throw new Error("Slider element not found");
     }
 
-    // Slide ve butonları seç
     this.slides = this.container.querySelectorAll(config.slideSelector);
     this.buttons = document.querySelectorAll(config.buttonSelector);
 
@@ -76,22 +82,33 @@ class Slider {
       throw new Error("Slides or buttons not found");
     }
 
-    // Default animation configuration
     this.animationConfig = {
       duration: config.animationConfig?.duration || 500,
       timingFunction: config.animationConfig?.timingFunction || "ease-in-out",
-      transformNotSelectedExitPos:
-        config.animationConfig?.transformNotSelectedExitPos || "translateX(0%)",
-      transformSelectedInitialPos:
-        config.animationConfig?.transformSelectedInitialPos ||
-        "translateX(-100%)",
+      transforms: {
+        fromLeft: {
+          enter:
+            config.animationConfig?.transforms?.fromLeft?.enter ||
+            "translate(-120%, 0%)",
+          exit:
+            config.animationConfig?.transforms?.fromLeft?.exit ||
+            "translate(20%, 0%)",
+        },
+        fromRight: {
+          enter:
+            config.animationConfig?.transforms?.fromRight?.enter ||
+            "translate(120%, 0%)",
+          exit:
+            config.animationConfig?.transforms?.fromRight?.exit ||
+            "translate(-20%, 0%)",
+        },
+      },
       opacitySelected: config.animationConfig?.opacitySelected || 1,
       opacityNotSelected: config.animationConfig?.opacityNotSelected || 0.85,
       scaleSelected: config.animationConfig?.scaleSelected || 1,
       scaleNotSelected: config.animationConfig?.scaleNotSelected || 0.85,
     };
 
-    // Configden gelen değerleri ata
     this.activeIndex = config.defaultActiveIndex || 0;
     this.isAnimating = false;
     this.activeButtonClass = config.activeButtonClass || "slider-active-btn";
@@ -128,14 +145,14 @@ class Slider {
     }
 
     this.buttons.forEach((button: HTMLButtonElement) => {
-      button.addEventListener("click", (e: Event) => {
+      button.addEventListener("click", () => {
         const target = button.getAttribute("data-target");
         const targetIndex = parseInt(target as string, 10);
-        this.goToSlide(targetIndex);
+        const direction = targetIndex > this.activeIndex ? "right" : "left";
+        this.goToSlide(targetIndex, direction);
       });
     });
 
-    // Mouse over/out olaylarını dinle
     if (this.autoEnabled) {
       this.container.addEventListener("mouseenter", () => this.pauseAutoPlay());
       this.container.addEventListener("mouseleave", () =>
@@ -145,10 +162,19 @@ class Slider {
     }
   }
 
-  private createCloneElement(sourceElement: HTMLElement): HTMLElement {
+  private createCloneElement(
+    sourceElement: HTMLElement,
+    direction: "left" | "right",
+  ): HTMLElement {
     const clone = sourceElement.cloneNode(true) as HTMLElement;
     clone.dataset.clone = "true";
-    clone.style.transform = `${this.animationConfig.transformSelectedInitialPos}`;
+
+    const initialTransform =
+      direction === "left"
+        ? this.animationConfig.transforms?.fromLeft?.enter
+        : this.animationConfig.transforms?.fromRight?.enter;
+
+    clone.style.transform = initialTransform!;
     clone.style.transition = "none";
     clone.style.opacity = `${this.animationConfig.opacityNotSelected}`;
     clone.style.scale = `${this.animationConfig.scaleNotSelected}`;
@@ -187,8 +213,8 @@ class Slider {
   }
 
   private resumeAutoPlay(): void {
-    this.pauseAutoPlay(); // Önceki timer'ı temizle
-    this.startAutoPlay(); // Yeni timer başlat
+    this.pauseAutoPlay();
+    this.startAutoPlay();
   }
 
   private resetAutoPlayTimer(): void {
@@ -198,47 +224,68 @@ class Slider {
     }
   }
 
-  public async goToSlide(targetIndex: number): Promise<void> {
+  private async animateSlide(
+    currentSlide: HTMLElement,
+    clone: HTMLElement,
+    direction: "left" | "right",
+  ): Promise<void> {
+    const exitTransform =
+      direction === "left"
+        ? this.animationConfig.transforms?.fromLeft?.exit
+        : this.animationConfig.transforms?.fromRight?.exit;
+
+    requestAnimationFrame(() => {
+      clone.style.transition = `${this.animationConfig.duration}ms ${this.animationConfig.timingFunction}`;
+      clone.style.transform = "translate(0%, 0%)";
+      clone.style.opacity = `${this.animationConfig.opacitySelected}`;
+      clone.style.scale = `${this.animationConfig.scaleSelected}`;
+
+      currentSlide.style.transition = `${this.animationConfig.duration}ms ${this.animationConfig.timingFunction}`;
+      currentSlide.style.transform = exitTransform!;
+      currentSlide.style.opacity = `${this.animationConfig.opacityNotSelected}`;
+      currentSlide.style.scale = `${this.animationConfig.scaleNotSelected}`;
+    });
+
+    return new Promise((resolve) =>
+      setTimeout(resolve, this.animationConfig.duration),
+    );
+  }
+
+  public async goToSlide(
+    targetIndex: number,
+    direction?: "left" | "right",
+  ): Promise<void> {
     if (this.isAnimating || targetIndex === this.activeIndex) return;
     if (targetIndex < 0 || targetIndex >= this.slides.length) return;
 
-    // Manuel geçiş yapıldığında timer'ı sıfırla
-    this.resetAutoPlayTimer();
+    const slideDirection =
+      direction ||
+      (targetIndex > this.activeIndex
+        ? "right"
+        : targetIndex < this.activeIndex
+          ? "left"
+          : this.lastDirection);
+    this.lastDirection = slideDirection;
 
+    this.resetAutoPlayTimer();
     this.isAnimating = true;
+
     const currentSlide = this.slides[this.activeIndex];
     const targetSlide = this.slides[targetIndex];
 
     this.updateActiveButton(targetIndex);
 
-    const clone = this.createCloneElement(targetSlide);
+    const clone = this.createCloneElement(targetSlide, slideDirection);
     this.slider.appendChild(clone);
 
-    clone.offsetHeight;
-
-    requestAnimationFrame(() => {
-      clone.style.transition = `${this.animationConfig.duration}ms ${this.animationConfig.timingFunction}`;
-      clone.style.transform = `translateX(0%)`;
-      clone.style.opacity = `${this.animationConfig.opacitySelected}`;
-      clone.style.scale = `${this.animationConfig.scaleSelected}`;
-
-      currentSlide.style.transition = `${this.animationConfig.duration}ms ${this.animationConfig.timingFunction}`;
-      currentSlide.style.transform = `${this.animationConfig.transformNotSelectedExitPos}`;
-      currentSlide.style.opacity = `${this.animationConfig.opacityNotSelected}`;
-      currentSlide.style.scale = `${this.animationConfig.scaleNotSelected}`;
-    });
-
-    this.onIndexChange && this.onIndexChange(targetIndex);
-    await new Promise((resolve) =>
-      setTimeout(resolve, this.animationConfig.duration),
-    );
+    await this.animateSlide(currentSlide, clone, slideDirection);
 
     this.slides.forEach((slide: HTMLElement) => {
       slide.style.zIndex = this.options.zIndex.notSelected.toString();
-      slide.style.transform = "translateX(0%)";
+      slide.style.transform = "translate(0%, 0%)";
       slide.style.transition = "none";
-      slide.style.opacity = `${this.animationConfig.opacitySelected}`;
-      slide.style.scale = `${this.animationConfig.scaleSelected}`;
+      slide.style.opacity = `${this.animationConfig.opacityNotSelected}`;
+      slide.style.scale = `${this.animationConfig.scaleNotSelected}`;
     });
 
     targetSlide.style.zIndex = this.options.zIndex.selected.toString();
@@ -248,9 +295,9 @@ class Slider {
 
     this.activeIndex = targetIndex;
     this.isAnimating = false;
+    this.onIndexChange && this.onIndexChange(targetIndex);
   }
 
-  // Method to update animation configuration dynamically
   public updateAnimationConfig(config: SliderAnimationConfig): void {
     this.animationConfig = {
       ...this.animationConfig,
@@ -258,7 +305,6 @@ class Slider {
     };
   }
 
-  // Public methods
   public getCurrentIndex(): number {
     return this.activeIndex;
   }
@@ -269,16 +315,15 @@ class Slider {
 
   public next(): void {
     const nextIndex = (this.activeIndex + 1) % this.slides.length;
-    this.goToSlide(nextIndex);
+    this.goToSlide(nextIndex, "right");
   }
 
   public prev(): void {
     const prevIndex =
       (this.activeIndex - 1 + this.slides.length) % this.slides.length;
-    this.goToSlide(prevIndex);
+    this.goToSlide(prevIndex, "left");
   }
 
-  // Auto play kontrolü için public metodlar
   public enableAutoPlay(): void {
     this.autoEnabled = true;
     this.startAutoPlay();
@@ -289,10 +334,8 @@ class Slider {
     this.pauseAutoPlay();
   }
 
-  // Slider'ı temizlemek için
   public destroy(): void {
     this.pauseAutoPlay();
-    // Event listener'ları temizle
     this.container.removeEventListener("mouseenter", () =>
       this.pauseAutoPlay(),
     );

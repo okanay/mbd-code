@@ -3,6 +3,7 @@ import { Slider } from "./packages/slider-v2.js";
 import { AccordionController } from "./packages/accordion-v2.js";
 import { ModalController } from "./packages/modal-v2.js";
 import { LazyImageLoadController } from "./packages/lazy-load-controller-v2.js";
+import { TouchDirectionDetector } from "./packages/touch-event-v2.js";
 
 // Slider'ı başlat
 document.addEventListener("DOMContentLoaded", () => {
@@ -43,7 +44,7 @@ document.addEventListener("DOMContentLoaded", () => {
     },
   );
 
-  new Slider({
+  const slider = new Slider({
     container: "#hero-slider-container",
     slideSelector: ".hero-slide",
     buttonSelector: ".hero-slider-btn",
@@ -53,11 +54,18 @@ document.addEventListener("DOMContentLoaded", () => {
     auto: true,
     autoInterval: 6000,
     animationConfig: {
-      // TODO:: Direkt olan style degeri verilebilir mi yani init degeri exit degeri anim degeri gibi.
       duration: 1000,
       timingFunction: "cubic-bezier(0.4, 0, 0.2, 1)",
-      transformSelectedInitialPos: "translate(120%, 0%)",
-      transformNotSelectedExitPos: "translate(-20%, 0%)",
+      transforms: {
+        fromLeft: {
+          enter: "translate(-120%, 0%)",
+          exit: "translate(20%, 0%)",
+        },
+        fromRight: {
+          enter: "translate(120%, 0%)",
+          exit: "translate(-20%, 0%)",
+        },
+      },
       opacitySelected: 1,
       opacityNotSelected: 0.75,
       scaleSelected: 1,
@@ -74,6 +82,27 @@ document.addEventListener("DOMContentLoaded", () => {
       if (!index && index !== 0) return;
       sliderControlButtons?.scrollTo(index);
     },
+  });
+
+  const touchDetector = new TouchDirectionDetector("hero-slider-container", {
+    threshold: 50,
+  });
+
+  touchDetector.onSwipe((direction) => {
+    if (direction === "left") {
+      // Sola kaydırma - next slide
+      slider.goToSlide(
+        (slider.getCurrentIndex() + 1) % slider.getSlidesCount(),
+        "right",
+      );
+    } else {
+      // Sağa kaydırma - previous slide
+      slider.goToSlide(
+        (slider.getCurrentIndex() - 1 + slider.getSlidesCount()) %
+          slider.getSlidesCount(),
+        "left",
+      );
+    }
   });
 
   new ModalController(
