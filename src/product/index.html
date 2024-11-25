@@ -714,50 +714,41 @@
         </div>
       </section>
 
-      <!-- Input fields -->
-      <input
-        type="text"
-        class="date-input w-full rounded-md border px-3 py-2"
-        id="start-date"
-        readonly
-      />
-      <input
-        type="text"
-        class="date-input w-full rounded-md border px-3 py-2"
-        id="end-date"
-        readonly
-      />
-
-      <!-- Shared DatePicker -->
-      <div
-        id="date-picker-container"
-        data-language="tr"
-        class="absolute hidden w-[240px] rounded-md border bg-gray-50 px-3 py-2"
-      >
-        <div class="relative flex w-full justify-between">
-          <button
-            id="prev-month-btn"
-            class="flex size-5 items-center justify-center rounded-md bg-gray-200"
-          >
-            &lt;
-          </button>
-          <div id="date-picker-months" class=""></div>
-          <button
-            id="next-month-btn"
-            class="flex size-5 items-center justify-center rounded-md bg-gray-200"
-          >
-            &gt;
-          </button>
-        </div>
-        <div id="date-picker-days" class=""></div>
-        <!-- Optional Reset Button -->
-        <div class="mt-2 flex justify-center">
-          <button
-            id="reset-to-today-btn"
-            class="rounded-md bg-blue-500 px-3 py-1 text-sm text-white hover:bg-blue-600"
-          >
-            Bugüne Dön
-          </button>
+      <div class="date-picker-wrapper">
+        <!-- Input fields -->
+        <div class="flex gap-4">
+          <div>
+            <label for="departure-date">Gidiş Tarihi</label>
+            <div class="relative">
+              <input
+                type="text"
+                class="date-input w-full rounded-md border px-3 py-2 pr-10"
+                id="departure-date"
+                readonly
+              />
+              <img
+                src="/assets/images/icons/calendar.svg"
+                alt="Calendar Icon"
+                class="absolute right-3 top-1/2 h-5 w-5 -translate-y-1/2 text-gray-400"
+              />
+            </div>
+          </div>
+          <div>
+            <label for="return-date">Dönüş Tarihi</label>
+            <div class="relative">
+              <input
+                type="text"
+                class="date-input w-full rounded-md border px-3 py-2 pr-10"
+                id="return-date"
+                readonly
+              />
+              <img
+                src="/assets/images/icons/calendar.svg"
+                alt="Calendar Icon"
+                class="absolute right-3 top-1/2 h-5 w-5 -translate-y-1/2 text-gray-400"
+              />
+            </div>
+          </div>
         </div>
       </div>
 
@@ -1342,6 +1333,73 @@
             <img src="#" alt="Thumbnail 1" class="thumbnail" />
           </div>
         </div>
+      </div>
+    </div>
+
+    <!-- Shared DatePicker -->
+    <div
+      id="date-picker-container"
+      data-language="tr"
+      class="absolute w-[280px] rounded-md border bg-white px-4 py-3 shadow-lg"
+    >
+      <div class="mb-4 flex items-center justify-between">
+        <button
+          id="prev-month-btn"
+          class="flex h-8 w-8 items-center justify-center rounded-full text-gray-600 hover:bg-gray-100"
+        >
+          <svg
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M15 19L8 12L15 5"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            />
+          </svg>
+        </button>
+        <div id="date-picker-months"><span>Month</span></div>
+        <button
+          id="next-month-btn"
+          class="flex h-8 w-8 items-center justify-center rounded-full text-gray-600 hover:bg-gray-100"
+        >
+          <svg
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M9 5L16 12L9 19"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            />
+          </svg>
+        </button>
+      </div>
+      <div id="date-picker-days" class=""></div>
+      <!-- Optional Reset Button -->
+      <div class="mt-3 flex justify-center gap-2">
+        <button
+          id="reset-to-today-btn"
+          class="w-1/2 rounded-md bg-primary-500 px-3 py-2 text-sm font-medium text-white hover:bg-primary-600"
+        >
+          Bugüne Dön
+        </button>
+        <button
+          id="reset-all-btn"
+          class="w-1/2 rounded-md bg-gray-200 px-3 py-2 text-sm font-medium text-gray-700 hover:bg-gray-300"
+        >
+          Sıfırla
+        </button>
       </div>
     </div>
   </body>

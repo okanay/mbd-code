@@ -162,12 +162,16 @@
       @apply flex cursor-pointer items-center justify-center rounded-md p-2 text-center hover:bg-gray-100;
     }
 
+    .date-input {
+      @apply w-full rounded-md border border-gray-300 px-3 py-2 pr-10 text-sm transition-colors focus:border-primary-500 focus:outline-none focus:ring-1 focus:ring-primary-500;
+    }
+
     .day-disabled {
-      @apply cursor-not-allowed opacity-100;
+      @apply cursor-not-allowed opacity-50;
     }
 
     .day-selected {
-      @apply bg-blue-500 text-center text-white hover:bg-blue-600;
+      @apply bg-primary-500 text-center text-white hover:bg-primary-600;
     }
 
     .day-empty {
@@ -175,22 +179,25 @@
     }
 
     .month-container {
-      @apply mb-4 flex items-center justify-between;
     }
 
     .month-current {
       @apply text-lg font-semibold;
     }
 
-    .month-pointer-prev {
+    .prev-pointer {
       @apply cursor-pointer text-gray-600 hover:text-gray-800;
     }
 
-    .month-pointer-next {
+    .next-pointer {
       @apply cursor-pointer text-gray-600 hover:text-gray-800;
     }
 
-    .month-pointer-disabled {
+    .prev-disabled {
+      @apply cursor-not-allowed opacity-50;
+    }
+
+    .next-disabled {
       @apply cursor-not-allowed opacity-50;
     }
 
@@ -198,8 +205,12 @@
       @apply grid grid-cols-7 gap-1;
     }
 
-    .calendar-day-header {
+    .day-header {
       @apply mb-2 text-center text-sm font-medium text-gray-500;
+    }
+
+    .wrapper-hidden {
+      @apply invisible opacity-0;
     }
 
     .hidden {

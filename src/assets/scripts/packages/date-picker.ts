@@ -1,7 +1,102 @@
+const DEFAULT_CLASSES = {
+  calendar: {
+    grid: "calendar-grid",
+    dayHeader: "day-header",
+  },
+  wrapper: {
+    base: "wrapper",
+    hidden: "wrapper-hidden",
+  },
+  month: {
+    container: "month-container",
+    current: "month-current",
+    pointer: {
+      prev: {
+        base: "prev-pointer",
+        disabled: "prev-disabled",
+      },
+      next: {
+        base: "next-pointer",
+        disabled: "next-disabled",
+      },
+    },
+  },
+  day: {
+    base: "day",
+    disabled: "day-disabled",
+    selected: "day-selected",
+    empty: "day-empty",
+  },
+} as const;
+
 interface LanguageConfig {
   language: string;
   monthNames: string[];
   dayNames: string[];
+}
+
+type DatePickerInputType = "single" | "range";
+
+interface SingleDateInput {
+  id: string;
+}
+
+interface DateRangeInput {
+  start: {
+    id: string;
+  };
+  end: {
+    id: string;
+  };
+}
+
+interface DatePickerInputConfig {
+  type: DatePickerInputType;
+  config: SingleDateInput | DateRangeInput;
+}
+
+interface RegisteredInput {
+  element: HTMLInputElement;
+  type: "single" | "start" | "end";
+  linkedInputId?: string;
+}
+
+interface DayClasses {
+  base?: string;
+  disabled?: string;
+  selected?: string;
+  empty?: string;
+}
+
+interface MonthPointerClasses {
+  base?: string;
+  disabled?: string;
+}
+
+interface MonthClasses {
+  container?: string;
+  current?: string;
+  pointer?: {
+    prev?: MonthPointerClasses;
+    next?: MonthPointerClasses;
+  };
+}
+
+interface CalendarClasses {
+  grid?: string;
+  dayHeader?: string;
+}
+
+interface WrapperClasses {
+  base?: string;
+  hidden?: string;
+}
+
+interface DatePickerClasses {
+  day?: DayClasses;
+  month?: MonthClasses;
+  calendar?: CalendarClasses;
+  wrapper?: WrapperClasses;
 }
 
 interface DatePickerConfig {
@@ -14,37 +109,10 @@ interface DatePickerConfig {
       next: string;
     };
     reset?: string;
+    resetAll?: string;
   };
-  classes: {
-    day: {
-      base: string;
-      disabled: string;
-      selected: string;
-      empty: string;
-    };
-    month: {
-      container: string;
-      current: string;
-      pointer: {
-        prev: {
-          base: string;
-          disabled: string;
-        };
-        next: {
-          base: string;
-          disabled: string;
-        };
-      };
-    };
-    calendar: {
-      grid: string;
-      dayHeader: string;
-    };
-    wrapper: {
-      base: string;
-      hidden: string;
-    };
-  };
+  input: DatePickerInputConfig;
+  classes?: DatePickerClasses;
   language: LanguageConfig[];
   minDate?: Date;
   maxDate?: Date;
@@ -52,6 +120,7 @@ interface DatePickerConfig {
 
 class DatePicker {
   private config: DatePickerConfig;
+  private classes: Required<DatePickerClasses>;
   private currentDate: Date;
   private selectedDate: Date | null = null;
   private monthShortNamePointer: HTMLElement | null;
@@ -61,10 +130,13 @@ class DatePicker {
   private prevButton: HTMLElement | null = null;
   private nextButton: HTMLElement | null = null;
   private resetButton: HTMLElement | null = null;
-  private registeredInputs: Set<HTMLInputElement> = new Set();
+  private resetAllButton: HTMLElement | null = null;
+  private registeredInputs: Map<string, RegisteredInput> = new Map();
+  private dateValues: Map<string, Date> = new Map();
 
   constructor(config: DatePickerConfig) {
     this.config = config;
+    this.classes = this.mergeClasses(DEFAULT_CLASSES, config.classes || {});
     this.currentDate = new Date();
     this.selectedDate = new Date();
 
@@ -84,6 +156,10 @@ class DatePicker {
       this.resetButton = document.getElementById(config.containers.reset);
     }
 
+    if (config.containers.resetAll) {
+      this.resetAllButton = document.getElementById(config.containers.resetAll);
+    }
+
     if (
       !this.monthShortNamePointer ||
       !this.daysContainer ||
@@ -92,25 +168,109 @@ class DatePicker {
       console.warn("One or more container elements not found.");
     } else {
       this.initializeDatePicker();
+      this.initializeInputs();
       this.addEventListeners();
     }
 
-    // Hide date picker initially
     this.hideDatePicker();
   }
 
-  // Register input elements that will use this date picker
-  public registerInput(input: HTMLInputElement) {
-    if (!this.registeredInputs.has(input)) {
-      this.registeredInputs.add(input);
+  private mergeClasses(
+    defaults: DatePickerClasses,
+    custom: DatePickerClasses,
+  ): Required<DatePickerClasses> {
+    const merged = { ...defaults };
 
-      // Add click listener to the input
+    if (custom.day) {
+      merged.day = {
+        ...defaults.day,
+        ...custom.day,
+      };
+    }
+
+    if (custom.month) {
+      merged.month = {
+        ...defaults.month,
+        ...custom.month,
+        pointer: {
+          prev: {
+            ...defaults.month?.pointer?.prev,
+            ...custom.month?.pointer?.prev,
+          },
+          next: {
+            ...defaults.month?.pointer?.next,
+            ...custom.month?.pointer?.next,
+          },
+        },
+      };
+    }
+
+    if (custom.calendar) {
+      merged.calendar = {
+        ...defaults.calendar,
+        ...custom.calendar,
+      };
+    }
+
+    if (custom.wrapper) {
+      merged.wrapper = {
+        ...defaults.wrapper,
+        ...custom.wrapper,
+      };
+    }
+
+    return merged as Required<DatePickerClasses>;
+  }
+
+  private initializeInputs() {
+    const { input } = this.config;
+
+    if (input.type === "single") {
+      const singleConfig = input.config as SingleDateInput;
+      const dateInput = document.getElementById(
+        singleConfig.id,
+      ) as HTMLInputElement;
+      if (dateInput) {
+        this.registerInput(dateInput, { type: "single" });
+      }
+    } else if (input.type === "range") {
+      const rangeConfig = input.config as DateRangeInput;
+      const startInput = document.getElementById(
+        rangeConfig.start.id,
+      ) as HTMLInputElement;
+      const endInput = document.getElementById(
+        rangeConfig.end.id,
+      ) as HTMLInputElement;
+
+      if (startInput && endInput) {
+        this.registerInput(startInput, {
+          type: "start",
+          linkedInputId: rangeConfig.end.id,
+        });
+        this.registerInput(endInput, {
+          type: "end",
+          linkedInputId: rangeConfig.start.id,
+        });
+      }
+    }
+  }
+
+  private registerInput(
+    input: HTMLInputElement,
+    config: { type: "single" | "start" | "end"; linkedInputId?: string },
+  ) {
+    if (!this.registeredInputs.has(input.id)) {
+      this.registeredInputs.set(input.id, {
+        element: input,
+        type: config.type,
+        linkedInputId: config.linkedInputId,
+      });
+
       input.addEventListener("click", (e) => {
         e.stopPropagation();
         this.handleInputClick(input);
       });
 
-      // Add focus listener to the input
       input.addEventListener("focus", () => {
         this.handleInputClick(input);
       });
@@ -118,14 +278,12 @@ class DatePicker {
   }
 
   private handleInputClick(input: HTMLInputElement) {
-    // If clicking the same input that's already active, do nothing
     if (this.activeInput === input && this.isDatePickerVisible()) {
       return;
     }
 
     this.activeInput = input;
 
-    // Parse the current input value if it exists
     if (input.value) {
       const date = new Date(input.value);
       if (!isNaN(date.getTime())) {
@@ -133,9 +291,8 @@ class DatePicker {
         this.selectedDate = new Date(date);
       }
     } else {
-      // If no value, set to today
       this.currentDate = new Date();
-      this.selectedDate = new Date();
+      this.selectedDate = null;
     }
 
     this.renderCalendar();
@@ -145,20 +302,6 @@ class DatePicker {
     this.showDatePicker();
   }
 
-  private positionDatePickerUnderInput(input: HTMLInputElement) {
-    if (!this.containerElement) return;
-
-    const inputRect = input.getBoundingClientRect();
-    const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-    const scrollLeft =
-      window.pageXOffset || document.documentElement.scrollLeft;
-
-    this.containerElement.style.position = "absolute";
-    this.containerElement.style.top = `${inputRect.bottom + scrollTop}px`;
-    this.containerElement.style.left = `${inputRect.left + scrollLeft}px`;
-    this.containerElement.style.zIndex = "1000";
-  }
-
   private initializeDatePicker() {
     this.renderMonthShortNames();
     this.renderCalendar();
@@ -166,25 +309,34 @@ class DatePicker {
   }
 
   private showDatePicker() {
-    if (this.containerElement) {
-      this.containerElement.classList.remove(
-        this.config.classes.wrapper.hidden,
-      );
+    if (this.containerElement && this.classes.wrapper.hidden) {
+      this.containerElement.classList.remove(this.classes.wrapper.hidden);
     }
   }
 
   private hideDatePicker() {
-    if (this.containerElement) {
-      this.containerElement.classList.add(this.config.classes.wrapper.hidden);
+    if (this.containerElement && this.classes.wrapper.hidden) {
+      this.containerElement.classList.add(this.classes.wrapper.hidden);
     }
   }
 
   private isDatePickerVisible(): boolean {
-    return this.containerElement
-      ? !this.containerElement.classList.contains(
-          this.config.classes.wrapper.hidden,
-        )
+    return this.containerElement && this.classes.wrapper.hidden
+      ? !this.containerElement.classList.contains(this.classes.wrapper.hidden)
       : false;
+  }
+
+  private positionDatePickerUnderInput(input: HTMLInputElement) {
+    if (!this.containerElement) return;
+
+    const inputRect = input.getBoundingClientRect();
+    const scrollTop = window.scrollY || document.documentElement.scrollTop;
+    const scrollLeft = window.scrollX || document.documentElement.scrollLeft;
+
+    this.containerElement.style.position = "absolute";
+    this.containerElement.style.top = `${inputRect.bottom + scrollTop + 16}px`;
+    this.containerElement.style.left = `${inputRect.left + scrollLeft + 0}px`;
+    this.containerElement.style.zIndex = "1000";
   }
 
   private getSelectedLanguage(): LanguageConfig {
@@ -196,15 +348,24 @@ class DatePicker {
     );
   }
 
+  private areDatesEqual(date1: Date | null, date2: Date): boolean {
+    if (!date1) return false;
+    return (
+      date1.getDate() === date2.getDate() &&
+      date1.getMonth() === date2.getMonth() &&
+      date1.getFullYear() === date2.getFullYear()
+    );
+  }
+
   private renderMonthShortNames() {
     if (!this.monthShortNamePointer) return;
     const { monthNames } = this.getSelectedLanguage();
-    const { classes } = this.config;
+    const { month } = this.classes;
     const currentMonthIndex = this.currentDate.getMonth();
 
     this.monthShortNamePointer.innerHTML = `
-      <div class="${classes.month.container}">
-        <span class="${classes.month.current}">
+      <div class="${month.container}">
+        <span class="${month.current}">
           ${monthNames[currentMonthIndex]}
         </span>
       </div>`;
@@ -213,7 +374,7 @@ class DatePicker {
   private renderCalendar() {
     if (!this.daysContainer) return;
     const { dayNames } = this.getSelectedLanguage();
-    const { classes } = this.config;
+    const { day, calendar } = this.classes;
 
     const firstDayOfMonth = new Date(
       this.currentDate.getFullYear(),
@@ -227,14 +388,14 @@ class DatePicker {
     );
     const startingDay = firstDayOfMonth.getDay();
 
-    let calendarHTML = `<div class="${classes.calendar.grid}">`;
+    let calendarHTML = `<div class="${calendar.grid}">`;
 
-    dayNames.forEach((day) => {
-      calendarHTML += `<div class="${classes.calendar.dayHeader}">${day.substring(0, 2)}</div>`;
+    dayNames.forEach((dayName) => {
+      calendarHTML += `<div class="${calendar.dayHeader}">${dayName.substring(0, 2)}</div>`;
     });
 
     for (let i = 0; i < startingDay; i++) {
-      calendarHTML += `<div class="${classes.day.base} ${classes.day.empty}"></div>`;
+      calendarHTML += `<div class="${day.base} ${day.empty}"></div>`;
     }
 
     for (let i = 1; i <= lastDayOfMonth.getDate(); i++) {
@@ -244,12 +405,12 @@ class DatePicker {
         i,
       );
       const isValid = this.isDateValid(currentDate);
-      const isSelected = this.selectedDate?.getTime() === currentDate.getTime();
+      const isSelected = this.areDatesEqual(this.selectedDate, currentDate);
 
       const dayClasses = [
-        classes.day.base,
-        !isValid ? classes.day.disabled : "",
-        isSelected ? classes.day.selected : "",
+        day.base,
+        !isValid ? day.disabled : "",
+        isSelected ? day.selected : "",
       ]
         .filter(Boolean)
         .join(" ");
@@ -265,15 +426,33 @@ class DatePicker {
   }
 
   private addEventListeners() {
-    this.prevButton?.addEventListener("click", () => this.changeMonth("prev"));
-    this.nextButton?.addEventListener("click", () => this.changeMonth("next"));
-    this.resetButton?.addEventListener("click", () => this.resetToToday());
+    this.prevButton?.addEventListener("click", (e) => {
+      e.stopPropagation();
+      this.changeMonth("prev");
+    });
+
+    this.nextButton?.addEventListener("click", (e) => {
+      e.stopPropagation();
+      this.changeMonth("next");
+    });
+
+    this.resetButton?.addEventListener("click", (e) => {
+      e.stopPropagation();
+      this.resetToToday();
+    });
+
+    this.resetAllButton?.addEventListener("click", (e) => {
+      e.stopPropagation();
+      this.resetAllInputs();
+    });
 
     this.daysContainer?.addEventListener("click", (e) => {
+      e.stopPropagation();
       const target = e.target as HTMLElement;
       if (
-        target.classList.contains(this.config.classes.day.base) &&
-        !target.classList.contains(this.config.classes.day.empty)
+        target.classList.contains(this.classes.day?.base ?? "") &&
+        !target.classList.contains(this.classes.day?.empty ?? "") &&
+        !target.classList.contains(this.classes.day?.disabled ?? "")
       ) {
         const dateStr = target.getAttribute("data-date");
         if (dateStr) {
@@ -283,12 +462,20 @@ class DatePicker {
       }
     });
 
-    // Close date picker when clicking outside
+    this.containerElement?.addEventListener("click", (e) => {
+      e.stopPropagation();
+    });
+
     document.addEventListener("click", (e) => {
+      const target = e.target as HTMLElement;
+      const isDateInput = Array.from(this.registeredInputs.values()).some(
+        (input) => input.element === target,
+      );
+
       if (
+        !isDateInput &&
         this.containerElement &&
-        !this.containerElement.contains(e.target as Node) &&
-        !(e.target as HTMLElement).classList.contains("date-input")
+        !this.containerElement.contains(target)
       ) {
         this.hideDatePicker();
       }
@@ -304,19 +491,23 @@ class DatePicker {
 
     if (this.prevButton && minDate) {
       const isDisabled = currentMonth <= minDate;
-      this.prevButton.classList.toggle(
-        this.config.classes.month.pointer.prev.disabled,
-        isDisabled,
-      );
+      if (this.classes.month.pointer?.prev?.disabled) {
+        this.prevButton.classList.toggle(
+          this.classes.month.pointer.prev.disabled,
+          isDisabled,
+        );
+      }
       (this.prevButton as HTMLButtonElement).disabled = isDisabled;
     }
 
     if (this.nextButton && maxDate) {
       const isDisabled = currentMonth >= maxDate;
-      this.nextButton.classList.toggle(
-        this.config.classes.month.pointer.next.disabled,
-        isDisabled,
-      );
+      if (this.classes.month.pointer?.next?.disabled) {
+        this.nextButton.classList.toggle(
+          this.classes.month.pointer.next.disabled,
+          isDisabled,
+        );
+      }
       (this.nextButton as HTMLButtonElement).disabled = isDisabled;
     }
   }
@@ -325,6 +516,18 @@ class DatePicker {
     const { minDate, maxDate } = this.config;
     if (minDate && date < minDate) return false;
     if (maxDate && date > maxDate) return false;
+
+    if (this.activeInput) {
+      const inputConfig = this.registeredInputs.get(this.activeInput.id);
+      if (inputConfig?.type === "end" && inputConfig.linkedInputId) {
+        const startDate = this.dateValues.get(inputConfig.linkedInputId);
+        if (startDate && date < startDate) return false;
+      } else if (inputConfig?.type === "start" && inputConfig.linkedInputId) {
+        const endDate = this.dateValues.get(inputConfig.linkedInputId);
+        if (endDate && date > endDate) return false;
+      }
+    }
+
     return true;
   }
 
@@ -340,21 +543,52 @@ class DatePicker {
     this.updateNavigationState();
   }
 
-  public selectDate(date: Date) {
+  private selectDate(date: Date) {
     if (this.isDateValid(date)) {
       this.selectedDate = date;
       if (this.activeInput) {
         this.activeInput.value = date.toLocaleDateString();
-        this.hideDatePicker();
+        this.dateValues.set(this.activeInput.id, new Date(date));
+
+        const inputConfig = this.registeredInputs.get(this.activeInput.id);
+        if (inputConfig?.type === "start" && inputConfig.linkedInputId) {
+          const endInput = document.getElementById(
+            inputConfig.linkedInputId,
+          ) as HTMLInputElement;
+          const endDate = this.dateValues.get(inputConfig.linkedInputId);
+
+          if (endDate && endDate < date) {
+            endInput.value = "";
+            this.dateValues.delete(inputConfig.linkedInputId);
+          }
+        }
       }
       this.renderCalendar();
+      this.hideDatePicker();
     }
   }
 
   public resetToToday() {
     const today = new Date();
     this.currentDate = new Date(today);
-    this.selectDate(today);
+    this.selectedDate = today;
+    if (this.activeInput) {
+      this.activeInput.value = today.toLocaleDateString();
+      this.dateValues.set(this.activeInput.id, new Date(today));
+    }
+    this.renderMonthShortNames();
+    this.renderCalendar();
+    this.updateNavigationState();
+  }
+
+  public resetAllInputs() {
+    this.registeredInputs.forEach((config) => {
+      config.element.value = "";
+    });
+
+    this.dateValues.clear();
+    this.selectedDate = null;
+    this.currentDate = new Date();
     this.renderMonthShortNames();
     this.renderCalendar();
     this.updateNavigationState();
@@ -362,4 +596,4 @@ class DatePicker {
 }
 
 export { DatePicker };
-export type { LanguageConfig, DatePickerConfig };
+export type { DatePickerConfig, LanguageConfig };
