@@ -151,7 +151,7 @@
   }
 
   .product-slider-btn {
-    @apply size-3 cursor-pointer rounded-full border border-gray-50 bg-gray-50 transition-all duration-500;
+    @apply size-2.5 cursor-pointer rounded-full border border-gray-50 bg-gray-50 transition-all duration-500;
   }
   .product-slider-active-btn {
     @apply scale-[128%] border border-gray-950 border-primary-50 bg-gray-950;

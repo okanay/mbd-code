@@ -69,21 +69,17 @@ document.addEventListener("DOMContentLoaded", () => {
     },
   });
 
-  const sliderTouchDetector = new TouchDirectionDetector(
-    "hero-slider-container",
-    {
-      threshold: 50,
+  new TouchDirectionDetector("hero-slider-container", {
+    threshold: 50,
+    onSwipe: (direction) => {
+      if (direction === "right") {
+        return slider.prev();
+      }
+
+      if (direction === "left") {
+        return slider.next();
+      }
     },
-  );
-
-  sliderTouchDetector.onSwipe((direction) => {
-    if (direction === "right") {
-      return slider.prev();
-    }
-
-    if (direction === "left") {
-      return slider.next();
-    }
   });
 
   const hiddenFAQ = new AccordionController({

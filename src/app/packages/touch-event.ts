@@ -6,15 +6,26 @@ export class TouchDirectionDetector {
   private onSwipeCallback?: (direction: "left" | "right") => void;
   private isHorizontalSwipe: boolean = false;
 
-  constructor(elementId: string, options: { threshold?: number } = {}) {
+  constructor(
+    elementId: string,
+    options: {
+      threshold?: number;
+      onSwipe?: (direction: "left" | "right") => void;
+    } = {},
+  ) {
     const element = document.getElementById(elementId);
     if (!element) {
       throw new Error(`Element with id "${elementId}" not found.`);
     }
     this.element = element;
     this.threshold = options.threshold || 50;
-    this.setupTouchListeners();
 
+    // If onSwipe callback is provided in constructor, set it immediately
+    if (options.onSwipe) {
+      this.onSwipeCallback = options.onSwipe;
+    }
+
+    this.setupTouchListeners();
     // Sadece yatay kaydırmayı engelle, dikey scroll'a izin ver
     this.element.style.touchAction = "pan-y";
   }
@@ -44,7 +55,6 @@ export class TouchDirectionDetector {
 
   private handleTouchMove(event: TouchEvent): void {
     if (!event.touches[0]) return;
-
     const touch = event.touches[0];
     const deltaX = touch.clientX - this.startX;
     const deltaY = touch.clientY - this.startY;
@@ -69,7 +79,6 @@ export class TouchDirectionDetector {
     if (this.isHorizontalSwipe) {
       const touch = event.changedTouches[0];
       const deltaX = touch.clientX - this.startX;
-
       if (Math.abs(deltaX) >= this.threshold && this.onSwipeCallback) {
         this.onSwipeCallback(deltaX > 0 ? "right" : "left");
       }

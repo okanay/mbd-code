@@ -1,19 +1,33 @@
+// prettier-ignore
+import { ImageGalleryTracker, UpdateProductSliderDataItems, UpdateElementInnerHTMLById} from "./packages/image-gallery.js";
 import { Slider } from "./packages/slider.js";
-import {
-  ImageGalleryTracker,
-  UpdateProductSliderDataItems,
-} from "./packages/image-gallery.js";
 import { ModalController } from "./packages/modal.js";
 import { TouchDirectionDetector } from "./packages/touch-event.js";
 
 document.addEventListener("DOMContentLoaded", () => {
-  UpdateProductSliderDataItems("product-slider", {
-    min: 1,
-    max: 5,
-    dataItems: "auto-detected",
-  });
+  const gallery = new ImageGalleryTracker({
+    activeThumbnailClass: "thumbnail-active",
+    thumbnailClass: "thumbnail",
+    thumbnailsContainerId: "gallery-modal-thumbnails",
+    mainImageContainerId: "gallery-modal-main-image-container",
+    modalId: "gallery-modal",
+    sourceContainerId: "product-slider",
+    dataSrcAttribute: "data-src",
+    sourceImageSelector: ".product-slide img",
+    onImageCount: (count) => {
+      UpdateProductSliderDataItems("product-slider", {
+        min: 1,
+        max: 5,
+        childElements: count,
+        dataItems: "auto-detected",
+      });
 
-  const gallery = new ImageGalleryTracker();
+      UpdateElementInnerHTMLById(
+        "product-slider-image-count",
+        count.toString(),
+      );
+    },
+  });
 
   const slider = new Slider({
     container: "#product-slider-container",
@@ -56,21 +70,28 @@ document.addEventListener("DOMContentLoaded", () => {
     },
   });
 
-  const sliderTouchDetector = new TouchDirectionDetector(
-    "product-slider-container",
-    {
-      threshold: 50,
+  new TouchDirectionDetector("product-slider-container", {
+    threshold: 50,
+    onSwipe: (direction) => {
+      if (direction === "right") {
+        return slider.prev();
+      }
+      if (direction === "left") {
+        return slider.next();
+      }
     },
-  );
+  });
 
-  sliderTouchDetector.onSwipe((direction) => {
-    if (direction === "right") {
-      return slider.prev();
-    }
-
-    if (direction === "left") {
-      return slider.next();
-    }
+  new TouchDirectionDetector("gallery-modal-main-image-container", {
+    threshold: 50,
+    onSwipe: (direction) => {
+      if (direction === "right") {
+        return gallery.prevImage();
+      }
+      if (direction === "left") {
+        return gallery.nextImage();
+      }
+    },
   });
 
   new ModalController(

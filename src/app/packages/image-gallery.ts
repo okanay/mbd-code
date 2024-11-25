@@ -15,50 +15,43 @@ class ImageGalleryTracker {
   private activeThumbnailClass: string;
   private sourceImageSelector: string;
 
-  constructor(
-    modalId: string = "gallery-modal",
-    mainImageContainerId: string = "gallery-modal-main-image-container",
-    thumbnailsContainerId: string = "gallery-modal-thumbnails",
-    sourceContainerId: string = "product-slider",
-    dataSrcAttribute: string = "data-src",
-    thumbnailClass: string = "thumbnail",
-    activeThumbnailClass: string = "thumbnail-active",
-    sourceImageSelector: string = ".product-slide img",
-  ) {
-    // Initialize DOM elements
-    this.modal = document.getElementById(modalId)!;
-    this.mainImageContainer = document.getElementById(mainImageContainerId)!;
-    this.thumbnailsContainer = document.getElementById(thumbnailsContainerId)!;
-    this.sourceContainer = document.getElementById(sourceContainerId)!;
-    this.dataSrcAttribute = dataSrcAttribute;
-    this.thumbnailClass = thumbnailClass;
-    this.activeThumbnailClass = activeThumbnailClass;
-    this.sourceImageSelector = sourceImageSelector;
+  private onImageCountCallback?: (count: number) => void;
 
-    // Initial setup
+  constructor(
+    options: {
+      modalId?: string;
+      mainImageContainerId?: string;
+      thumbnailsContainerId?: string;
+      sourceContainerId?: string;
+      dataSrcAttribute?: string;
+      thumbnailClass?: string;
+      activeThumbnailClass?: string;
+      sourceImageSelector?: string;
+      onImageCount?: (count: number) => void;
+    } = {},
+  ) {
+    this.modal = document.getElementById(options.modalId || "gallery-modal")!;
+    this.mainImageContainer = document.getElementById(
+      options.mainImageContainerId || "gallery-modal-main-image-container",
+    )!;
+    this.thumbnailsContainer = document.getElementById(
+      options.thumbnailsContainerId || "gallery-modal-thumbnails",
+    )!;
+    this.sourceContainer = document.getElementById(
+      options.sourceContainerId || "product-slider",
+    )!;
+
+    this.dataSrcAttribute = options.dataSrcAttribute || "data-src";
+    this.thumbnailClass = options.thumbnailClass || "thumbnail";
+    this.activeThumbnailClass =
+      options.activeThumbnailClass || "thumbnail-active";
+    this.sourceImageSelector =
+      options.sourceImageSelector || ".product-slide img";
+
+    this.onImageCountCallback = options.onImageCount;
+
     this.initializeGallery();
     this.bindEvents();
-  }
-
-  private initializeGallery(): void {
-    // Get all images from source container
-    const sourceImages = this.sourceContainer.querySelectorAll(
-      this.sourceImageSelector,
-    );
-
-    // Store image data
-    this.images = Array.from(sourceImages).map((img, index) => {
-      const image = img as HTMLImageElement;
-      return {
-        src: image.getAttribute(this.dataSrcAttribute) || image.src,
-        dataSrc: image.getAttribute(this.dataSrcAttribute) || "",
-        alt: image.alt,
-        index: index,
-      };
-    });
-
-    // Initial render of thumbnails
-    this.renderThumbnails();
   }
 
   private bindEvents(): void {
@@ -101,7 +94,7 @@ class ImageGalleryTracker {
     this.updateMainImage(index);
   }
 
-  private updateMainImage(index: number): void {
+  public updateMainImage(index: number): void {
     this.currentIndex = index;
     const mainImage = this.mainImageContainer.querySelector("img");
     if (mainImage && this.images[index]) {
@@ -111,7 +104,7 @@ class ImageGalleryTracker {
     this.updateThumbnailStates();
   }
 
-  private renderThumbnails(): void {
+  public renderThumbnails(): void {
     this.thumbnailsContainer.innerHTML = this.images
       .map(
         (img, index) => `
@@ -127,7 +120,7 @@ class ImageGalleryTracker {
       .join("");
   }
 
-  private updateThumbnailStates(): void {
+  public updateThumbnailStates(): void {
     const thumbnails = this.thumbnailsContainer.querySelectorAll("img");
     thumbnails.forEach((thumb, index) => {
       if (index === this.currentIndex) {
@@ -136,6 +129,36 @@ class ImageGalleryTracker {
         thumb.classList.remove(this.activeThumbnailClass);
       }
     });
+  }
+
+  private initializeGallery(): void {
+    const sourceImages = this.sourceContainer.querySelectorAll(
+      this.sourceImageSelector,
+    );
+
+    this.images = Array.from(sourceImages).map((img, index) => {
+      const image = img as HTMLImageElement;
+      return {
+        src: image.getAttribute(this.dataSrcAttribute) || image.src,
+        dataSrc: image.getAttribute(this.dataSrcAttribute) || "",
+        alt: image.alt,
+        index: index,
+      };
+    });
+
+    if (this.onImageCountCallback) {
+      this.onImageCountCallback(this.images.length);
+    }
+
+    this.renderThumbnails();
+  }
+
+  public nextImage(): void {
+    this.navigateGallery("next");
+  }
+
+  public prevImage(): void {
+    this.navigateGallery("prev");
   }
 
   private navigateGallery(direction: "next" | "prev"): void {
@@ -151,7 +174,6 @@ class ImageGalleryTracker {
     this.updateMainImage(newIndex);
   }
 
-  // Public method to manually refresh gallery (useful for dynamic content)
   public refreshGallery(): void {
     this.initializeGallery();
   }
@@ -159,21 +181,36 @@ class ImageGalleryTracker {
 
 function UpdateProductSliderDataItems(
   sliderId: string,
-  options: { min: number; max: number; dataItems: string },
+  options: {
+    min: number;
+    max: number;
+    childElements: number;
+    dataItems: string;
+  },
 ) {
   const productSlider = document.getElementById(sliderId);
   if (productSlider) {
-    const childElements = productSlider.children.length;
     const dataItems = productSlider.getAttribute("data-items");
 
     if (dataItems === options.dataItems) {
       const newItemsValue = Math.max(
         options.min,
-        Math.min(childElements, options.max),
+        Math.min(options.childElements, options.max),
       );
       productSlider.setAttribute("data-items", newItemsValue.toString());
     }
   }
 }
 
-export { ImageGalleryTracker, UpdateProductSliderDataItems };
+function UpdateElementInnerHTMLById(elementId: string, newValue: string): void {
+  const element = document.getElementById(elementId);
+  if (element) {
+    element.innerHTML = newValue;
+  }
+}
+
+export {
+  ImageGalleryTracker,
+  UpdateProductSliderDataItems,
+  UpdateElementInnerHTMLById,
+};
