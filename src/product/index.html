@@ -716,38 +716,46 @@
 
       <div class="date-picker-wrapper">
         <!-- Input fields -->
-        <div class="flex gap-4">
-          <div>
-            <label for="departure-date">Gidiş Tarihi</label>
-            <div class="relative">
-              <input
-                type="text"
-                class="date-input w-full rounded-md border px-3 py-2 pr-10"
-                id="departure-date"
-                readonly
-              />
-              <img
-                src="/assets/images/icons/calendar.svg"
-                alt="Calendar Icon"
-                class="absolute right-3 top-1/2 h-5 w-5 -translate-y-1/2 text-gray-400"
-              />
-            </div>
+        <div class="my-4 flex gap-4">
+          <div class="relative">
+            <input
+              type="text"
+              id="departure-date"
+              placeholder=" "
+              class="focus:border-primary focus:ring-primary/20 peer w-full rounded-md border px-3 py-2 pr-10 outline-none transition-all duration-200 focus:ring-2"
+              readonly
+            />
+            <label
+              for="departure-date"
+              class="peer-focus:text-primary absolute -top-2 left-2 cursor-text bg-white px-1 text-xs text-gray-500 transition-all peer-placeholder-shown:top-2 peer-placeholder-shown:text-base peer-focus:-top-2 peer-focus:text-xs"
+            >
+              Gidiş Tarihi
+            </label>
+            <img
+              src="/assets/images/icons/calendar.svg"
+              alt="Calendar Icon"
+              class="absolute right-3 top-1/2 h-5 w-5 -translate-y-1/2 text-gray-400"
+            />
           </div>
-          <div>
-            <label for="return-date">Dönüş Tarihi</label>
-            <div class="relative">
-              <input
-                type="text"
-                class="date-input w-full rounded-md border px-3 py-2 pr-10"
-                id="return-date"
-                readonly
-              />
-              <img
-                src="/assets/images/icons/calendar.svg"
-                alt="Calendar Icon"
-                class="absolute right-3 top-1/2 h-5 w-5 -translate-y-1/2 text-gray-400"
-              />
-            </div>
+          <div class="relative">
+            <input
+              type="text"
+              id="return-date"
+              placeholder=" "
+              class="focus:border-primary focus:ring-primary/20 peer w-full rounded-md border px-3 py-2 pr-10 outline-none transition-all duration-200 focus:ring-2"
+              readonly
+            />
+            <label
+              for="return-date"
+              class="peer-focus:text-primary absolute -top-2 left-2 cursor-text bg-white px-1 text-xs text-gray-500 transition-all peer-placeholder-shown:top-2 peer-placeholder-shown:text-base peer-focus:-top-2 peer-focus:text-xs"
+            >
+              Dönüş Tarihi
+            </label>
+            <img
+              src="/assets/images/icons/calendar.svg"
+              alt="Calendar Icon"
+              class="absolute right-3 top-1/2 h-5 w-5 -translate-y-1/2 text-gray-400"
+            />
           </div>
         </div>
       </div>
@@ -1347,42 +1355,22 @@
           id="prev-month-btn"
           class="flex h-8 w-8 items-center justify-center rounded-full text-gray-600 hover:bg-gray-100"
         >
-          <svg
-            width="24"
-            height="24"
-            viewBox="0 0 24 24"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              d="M15 19L8 12L15 5"
-              stroke="currentColor"
-              stroke-width="2"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-            />
-          </svg>
+          <img
+            src="/assets/images/icons/chevron-left.svg"
+            alt=""
+            class="size-6"
+          />
         </button>
         <div id="date-picker-months"><span>Month</span></div>
         <button
           id="next-month-btn"
           class="flex h-8 w-8 items-center justify-center rounded-full text-gray-600 hover:bg-gray-100"
         >
-          <svg
-            width="24"
-            height="24"
-            viewBox="0 0 24 24"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              d="M9 5L16 12L9 19"
-              stroke="currentColor"
-              stroke-width="2"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-            />
-          </svg>
+          <img
+            src="/assets/images/icons/chevron-right.svg"
+            alt=""
+            class="size-6"
+          />
         </button>
       </div>
       <div id="date-picker-days" class=""></div>

@@ -137,8 +137,18 @@ class DatePicker {
   constructor(config: DatePickerConfig) {
     this.config = config;
     this.classes = this.mergeClasses(DEFAULT_CLASSES, config.classes || {});
-    this.currentDate = new Date();
-    this.selectedDate = new Date();
+
+    // Reset hours, minutes, seconds, and milliseconds for consistent date comparison
+    this.currentDate = this.stripTime(new Date());
+    this.selectedDate = this.stripTime(new Date());
+
+    // Also strip time from min and max dates
+    if (this.config.minDate) {
+      this.config.minDate = this.stripTime(this.config.minDate);
+    }
+    if (this.config.maxDate) {
+      this.config.maxDate = this.stripTime(this.config.maxDate);
+    }
 
     this.monthShortNamePointer = document.getElementById(
       config.containers.monthContainer,
@@ -348,15 +358,6 @@ class DatePicker {
     );
   }
 
-  private areDatesEqual(date1: Date | null, date2: Date): boolean {
-    if (!date1) return false;
-    return (
-      date1.getDate() === date2.getDate() &&
-      date1.getMonth() === date2.getMonth() &&
-      date1.getFullYear() === date2.getFullYear()
-    );
-  }
-
   private renderMonthShortNames() {
     if (!this.monthShortNamePointer) return;
     const { monthNames } = this.getSelectedLanguage();
@@ -512,19 +513,27 @@ class DatePicker {
     }
   }
 
+  private stripTime(date: Date): Date {
+    const newDate = new Date(date);
+    newDate.setHours(0, 0, 0, 0);
+    return newDate;
+  }
+
   private isDateValid(date: Date): boolean {
+    const strippedDate = this.stripTime(date);
     const { minDate, maxDate } = this.config;
-    if (minDate && date < minDate) return false;
-    if (maxDate && date > maxDate) return false;
+
+    if (minDate && strippedDate < minDate) return false;
+    if (maxDate && strippedDate > maxDate) return false;
 
     if (this.activeInput) {
       const inputConfig = this.registeredInputs.get(this.activeInput.id);
       if (inputConfig?.type === "end" && inputConfig.linkedInputId) {
         const startDate = this.dateValues.get(inputConfig.linkedInputId);
-        if (startDate && date < startDate) return false;
+        if (startDate && strippedDate < this.stripTime(startDate)) return false;
       } else if (inputConfig?.type === "start" && inputConfig.linkedInputId) {
         const endDate = this.dateValues.get(inputConfig.linkedInputId);
-        if (endDate && date > endDate) return false;
+        if (endDate && strippedDate > this.stripTime(endDate)) return false;
       }
     }
 
@@ -568,8 +577,15 @@ class DatePicker {
     }
   }
 
+  private areDatesEqual(date1: Date | null, date2: Date): boolean {
+    if (!date1) return false;
+    const d1 = this.stripTime(date1);
+    const d2 = this.stripTime(date2);
+    return d1.getTime() === d2.getTime();
+  }
+
   public resetToToday() {
-    const today = new Date();
+    const today = this.stripTime(new Date());
     this.currentDate = new Date(today);
     this.selectedDate = today;
     if (this.activeInput) {

@@ -40,10 +40,10 @@ const englishLanguage: LanguageConfig = {
 };
 
 document.addEventListener("DOMContentLoaded", () => {
-  const datePicker = new DatePicker({
+  new DatePicker({
     language: [turkishLanguage, englishLanguage],
     minDate: new Date(),
-    maxDate: new Date(2025, 11, 31),
+    maxDate: new Date(8640000000000000),
     containers: {
       container: "date-picker-container",
       monthContainer: "date-picker-months",
