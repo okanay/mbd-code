@@ -5,7 +5,7 @@ const DEFAULT_CLASSES = {
   },
   wrapper: {
     base: "wrapper",
-    hidden: "wrapper-hidden",
+    hidden: "date-hidden", // Changed default hidden class name
   },
   month: {
     container: "month-container",
@@ -182,6 +182,8 @@ class DatePicker {
       this.addEventListeners();
     }
 
+    window.addEventListener("resize", this.handleWindowResize);
+
     this.hideDatePicker();
   }
 
@@ -339,15 +341,69 @@ class DatePicker {
   private positionDatePickerUnderInput(input: HTMLInputElement) {
     if (!this.containerElement) return;
 
+    // Get input element dimensions and position
     const inputRect = input.getBoundingClientRect();
+
+    // Get window dimensions
+    const windowWidth = window.innerWidth;
+    const windowHeight = window.innerHeight;
+
+    // Get datepicker dimensions
+    const datePickerRect = this.containerElement.getBoundingClientRect();
+
+    // Get scroll positions
     const scrollTop = window.scrollY || document.documentElement.scrollTop;
     const scrollLeft = window.scrollX || document.documentElement.scrollLeft;
 
+    // Calculate initial positions
+    let top = inputRect.bottom + scrollTop + 16; // 16px padding
+    let left = inputRect.left + scrollLeft;
+
+    // Check if the datepicker would overflow the right edge of the window
+    if (left + datePickerRect.width > windowWidth) {
+      // Align to the right edge of the input instead
+      left = inputRect.right + scrollLeft - datePickerRect.width;
+
+      // If still overflowing, align with window right edge with some padding
+      if (left < 0) {
+        left = windowWidth - datePickerRect.width - 16; // 16px padding from right
+      }
+    }
+
+    // Check if the datepicker would overflow the bottom of the window
+    const bottomOverflow =
+      top + datePickerRect.height > windowHeight + scrollTop;
+    const hasSpaceAbove = inputRect.top - datePickerRect.height - 16 > 0;
+
+    if (bottomOverflow && hasSpaceAbove) {
+      // Position above the input if there's space
+      top = inputRect.top + scrollTop - datePickerRect.height - 16;
+    } else if (bottomOverflow) {
+      // If can't fit above, position it as high as possible while keeping it on screen
+      top = windowHeight + scrollTop - datePickerRect.height - 16;
+    }
+
+    // Ensure left position is never negative
+    left = Math.max(16, left); // Minimum 16px from left edge
+
+    // Apply the calculated positions
     this.containerElement.style.position = "absolute";
-    this.containerElement.style.top = `${inputRect.bottom + scrollTop + 16}px`;
-    this.containerElement.style.left = `${inputRect.left + scrollLeft + 0}px`;
+    this.containerElement.style.top = `${Math.round(top)}px`;
+    this.containerElement.style.left = `${Math.round(left)}px`;
     this.containerElement.style.zIndex = "1000";
+
+    // Add a data attribute indicating position (useful for animations/styling)
+    this.containerElement.setAttribute(
+      "data-position",
+      bottomOverflow && hasSpaceAbove ? "top" : "bottom",
+    );
   }
+
+  private handleWindowResize = () => {
+    if (this.activeInput && this.isDatePickerVisible()) {
+      this.positionDatePickerUnderInput(this.activeInput);
+    }
+  };
 
   private getSelectedLanguage(): LanguageConfig {
     const languageAttr =
@@ -608,6 +664,10 @@ class DatePicker {
     this.renderMonthShortNames();
     this.renderCalendar();
     this.updateNavigationState();
+  }
+
+  public destroy() {
+    window.removeEventListener("resize", this.handleWindowResize);
   }
 }
 
