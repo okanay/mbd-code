@@ -125,9 +125,39 @@ class ImageGalleryTracker {
     thumbnails.forEach((thumb, index) => {
       if (index === this.currentIndex) {
         thumb.classList.add(this.activeThumbnailClass);
+
+        // Scroll to the active thumbnail
+        this.scrollToActiveThumbnail(thumb);
       } else {
         thumb.classList.remove(this.activeThumbnailClass);
       }
+    });
+  }
+
+  private scrollToActiveThumbnail(activeThumbnail: Element): void {
+    // Ensure the thumbnail is fully visible in the container
+    const container = this.thumbnailsContainer;
+
+    // Calculate thumbnail's position relative to container
+    const thumbLeft = activeThumbnail.getBoundingClientRect().left;
+    const containerLeft = container.getBoundingClientRect().left;
+    const scrollLeft = container.scrollLeft;
+
+    // Calculate the offset to center the thumbnail
+    const thumbnailWidth = activeThumbnail.clientWidth;
+    const containerWidth = container.clientWidth;
+
+    const offsetLeft =
+      thumbLeft -
+      containerLeft +
+      scrollLeft -
+      containerWidth / 2 +
+      thumbnailWidth / 2;
+
+    // Smooth scroll to the calculated position
+    container.scrollTo({
+      left: offsetLeft,
+      behavior: "smooth",
     });
   }
 
