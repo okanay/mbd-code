@@ -156,4 +156,54 @@
   .product-slider-active-btn {
     @apply scale-[128%] border border-gray-950 border-primary-50 bg-gray-950;
   }
+
+  @layer components {
+    .day {
+      @apply flex cursor-pointer items-center justify-center rounded-md p-2 text-center hover:bg-gray-100;
+    }
+
+    .day-disabled {
+      @apply cursor-not-allowed opacity-100;
+    }
+
+    .day-selected {
+      @apply bg-blue-500 text-center text-white hover:bg-blue-600;
+    }
+
+    .day-empty {
+      @apply invisible;
+    }
+
+    .month-container {
+      @apply mb-4 flex items-center justify-between;
+    }
+
+    .month-current {
+      @apply text-lg font-semibold;
+    }
+
+    .month-pointer-prev {
+      @apply cursor-pointer text-gray-600 hover:text-gray-800;
+    }
+
+    .month-pointer-next {
+      @apply cursor-pointer text-gray-600 hover:text-gray-800;
+    }
+
+    .month-pointer-disabled {
+      @apply cursor-not-allowed opacity-50;
+    }
+
+    .calendar-grid {
+      @apply grid grid-cols-7 gap-1;
+    }
+
+    .calendar-day-header {
+      @apply mb-2 text-center text-sm font-medium text-gray-500;
+    }
+
+    .hidden {
+      @apply invisible opacity-0;
+    }
+  }
 }

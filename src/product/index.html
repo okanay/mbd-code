@@ -6,7 +6,7 @@
       name="viewport"
       content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
     />
-    <title>Örnek Product Sayfası Test</title>
+    <title>Örnek Product Sayfası</title>
 
     <!-- Project Fonts -->
     <link rel="stylesheet" href="/assets/fonts/custom/font.css" />
@@ -59,9 +59,7 @@
       as="image"
     />
 
-    <link rel="stylesheet" href="/globals.css" />
-
-    <link rel="stylesheet" href=/assets/styles/globals.css?v=faq" />
+    <link rel="stylesheet" href="/assets/styles/globals.css?v=faq" />
     <script type="module" src="/assets/scripts/layout.js?v=faq"></script>
     <script type="module" src="/assets/scripts/product.js?v=faq"></script>
     <script type="module" src="/assets/scripts/product-form.js?v=faq"></script>
@@ -716,22 +714,51 @@
         </div>
       </section>
 
-      <input id="date-picker-input" />
+      <!-- Input fields -->
+      <input
+        type="text"
+        class="date-input w-full rounded-md border px-3 py-2"
+        id="start-date"
+        readonly
+      />
+      <input
+        type="text"
+        class="date-input w-full rounded-md border px-3 py-2"
+        id="end-date"
+        readonly
+      />
+
+      <!-- Shared DatePicker -->
       <div
         id="date-picker-container"
         data-language="tr"
-        class="my-5 w-[240px] rounded-md border bg-gray-50 px-3 py-2"
+        class="absolute hidden w-[240px] rounded-md border bg-gray-50 px-3 py-2"
       >
-        <button
-          id="prev-month-btn"
-          class="size-5 rounded-md bg-red-400"
-        ></button>
-        <button
-          id="next-month-btn"
-          class="size-5 rounded-md bg-blue-400"
-        ></button>
-        <div id="date-picker-months"></div>
-        <div id="date-picker-days"></div>
+        <div class="relative flex w-full justify-between">
+          <button
+            id="prev-month-btn"
+            class="flex size-5 items-center justify-center rounded-md bg-gray-200"
+          >
+            &lt;
+          </button>
+          <div id="date-picker-months" class=""></div>
+          <button
+            id="next-month-btn"
+            class="flex size-5 items-center justify-center rounded-md bg-gray-200"
+          >
+            &gt;
+          </button>
+        </div>
+        <div id="date-picker-days" class=""></div>
+        <!-- Optional Reset Button -->
+        <div class="mt-2 flex justify-center">
+          <button
+            id="reset-to-today-btn"
+            class="rounded-md bg-blue-500 px-3 py-1 text-sm text-white hover:bg-blue-600"
+          >
+            Bugüne Dön
+          </button>
+        </div>
       </div>
 
       <!-- Form and Details -->

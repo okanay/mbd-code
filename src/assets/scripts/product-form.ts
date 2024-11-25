@@ -40,12 +40,11 @@ const englishLanguage: LanguageConfig = {
 };
 
 document.addEventListener("DOMContentLoaded", () => {
-  new DatePicker({
+  const datePicker = new DatePicker({
     language: [turkishLanguage, englishLanguage],
     minDate: new Date(2024, 0, 1),
     maxDate: new Date(2025, 11, 31),
     containers: {
-      input: "date-picker-input",
       container: "date-picker-container",
       monthContainer: "date-picker-months",
       daysContainer: "date-picker-days",
@@ -53,32 +52,48 @@ document.addEventListener("DOMContentLoaded", () => {
         prev: "prev-month-btn",
         next: "next-month-btn",
       },
+      reset: "reset-to-today-btn",
     },
     classes: {
       day: {
         base: "day",
-        disabled: "day--disabled",
-        selected: "day--selected",
-        empty: "day--empty",
+        disabled: "day-disabled",
+        selected: "day-selected",
+        empty: "day-empty",
       },
       month: {
         container: "month-container",
         current: "month-current",
         pointer: {
           prev: {
-            base: "month-nav-prev",
-            disabled: "month-nav-disabled",
+            base: "month-pointer-prev",
+            disabled: "month-pointer-disabled",
           },
           next: {
-            base: "month-nav-next",
-            disabled: "month-nav-disabled",
+            base: "month-pointer-next",
+            disabled: "month-pointer-disabled",
           },
         },
       },
       calendar: {
         grid: "calendar-grid",
-        dayHeader: "calendar-header",
+        dayHeader: "calendar-day-header",
+      },
+      wrapper: {
+        base: "date-picker-wrapper",
+        hidden: "hidden",
       },
     },
   });
+
+  // Register inputs
+  const startDateInput = document.getElementById(
+    "start-date",
+  ) as HTMLInputElement;
+  const endDateInput = document.getElementById("end-date") as HTMLInputElement;
+
+  if (startDateInput && endDateInput) {
+    datePicker.registerInput(startDateInput);
+    datePicker.registerInput(endDateInput);
+  }
 });
