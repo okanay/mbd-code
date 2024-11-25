@@ -9,7 +9,11 @@ interface ModalConfig {
   outsideClickClose?: boolean;
   escapeClose?: boolean;
   preserveModalHistory?: boolean;
-  onToggle?: (menuId: string, isOpen: boolean) => void;
+  onToggle?: (
+    menuId: string,
+    isOpen: boolean,
+    trigger: HTMLElement | null,
+  ) => void;
   attributes?: {
     stateAttribute?: string;
     values: {
@@ -90,8 +94,8 @@ class ModalController {
       }
 
       const triggers = menu.toggleElements
-        .map((selector) => document.querySelector(selector))
-        .filter((el): el is HTMLElement => el !== null);
+        .flatMap((selector) => Array.from(document.querySelectorAll(selector)))
+        .filter((el): el is HTMLElement => el instanceof HTMLElement);
 
       const closeButtons = (menu.closeElements || [])
         .map((selector) => document.querySelector(selector))
@@ -111,7 +115,7 @@ class ModalController {
       triggers.forEach((trigger) => {
         trigger.addEventListener("click", (e) => {
           e.stopPropagation();
-          this.toggleModal(menu.id);
+          this.toggleModal(menu.id, trigger);
         });
       });
 
@@ -156,7 +160,7 @@ class ModalController {
     }
   }
 
-  private toggleModal(menuId: string): void {
+  private toggleModal(menuId: string, trigger: HTMLElement): void {
     const menu = this.menus.get(menuId);
     if (!menu) return;
 
@@ -167,11 +171,11 @@ class ModalController {
     if (isOpen) {
       this.closeModal(menuId);
     } else {
-      this.openModal(menuId);
+      this.openModal(menuId, trigger);
     }
   }
 
-  private openModal(menuId: string): void {
+  private openModal(menuId: string, trigger: HTMLElement): void {
     const menu = this.menus.get(menuId);
     if (!menu) return;
 
@@ -193,7 +197,7 @@ class ModalController {
 
     menu.content?.setAttribute(this.config.attributes.stateAttribute!, "open");
     this.activeModalId = menuId;
-    this.config.onToggle(menuId, true);
+    this.config.onToggle(menuId, true, trigger);
 
     if (this.config.scrollLock.enabled) {
       this.applyStyles(document.body, this.config.scrollLock.styles!.hidden);
@@ -220,7 +224,7 @@ class ModalController {
             "open",
           );
           this.activeModalId = previousModalId;
-          this.config.onToggle(previousModalId, true);
+          this.config.onToggle(previousModalId, true, null);
           return;
         }
       }
@@ -232,7 +236,7 @@ class ModalController {
       }
     }
 
-    this.config.onToggle(menuId, false);
+    this.config.onToggle(menuId, false, null);
   }
 
   private applyStyles(

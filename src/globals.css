@@ -44,4 +44,116 @@
   .slider-active-btn {
     @apply !scale-[102%] !border-primary-500;
   }
+
+  /* Auto eleman durumu */
+  .grid-container[data-items="auto"] {
+    @apply relative animate-pulse grid-cols-1 grid-rows-1 overflow-hidden bg-gray-200;
+  }
+
+  /* 5 eleman durumu */
+  .grid-container[data-items="5"] {
+    @apply relative grid-cols-8 grid-rows-2 overflow-hidden rounded-l-2xl;
+  }
+  .grid-container[data-items="5"] > div:nth-child(1) {
+    @apply col-span-4 row-span-2;
+  }
+  .grid-container[data-items="5"] > div:nth-child(2) {
+    @apply col-span-2 col-start-5;
+  }
+  .grid-container[data-items="5"] > div:nth-child(3) {
+    @apply relative col-span-2 col-start-7 overflow-hidden rounded-tr-2xl;
+  }
+  .grid-container[data-items="5"] > div:nth-child(4) {
+    @apply col-span-2 col-start-5 row-start-2;
+  }
+  .grid-container[data-items="5"] > div:nth-child(5) {
+    @apply relative col-span-2 col-start-7 row-start-2 overflow-hidden rounded-br-2xl;
+  }
+
+  /* 4 eleman durumu */
+  .grid-container[data-items="4"] {
+    @apply grid-cols-8 grid-rows-4;
+  }
+  .grid-container[data-items="4"] > div:nth-child(1) {
+    @apply relative col-span-4 row-span-4 overflow-hidden rounded-l-2xl;
+  }
+  .grid-container[data-items="4"] > div:nth-child(2) {
+    @apply col-span-2 col-start-5 row-span-2;
+  }
+  .grid-container[data-items="4"] > div:nth-child(3) {
+    @apply relative col-span-2 col-start-7 row-span-2 overflow-hidden rounded-tr-2xl;
+  }
+  .grid-container[data-items="4"] > div:nth-child(4) {
+    @apply relative col-span-4 col-start-5 row-span-2 row-start-3 overflow-hidden rounded-br-2xl;
+  }
+
+  /* 3 eleman durumu */
+  .grid-container[data-items="3"] {
+    @apply grid-cols-8 grid-rows-2;
+  }
+  .grid-container[data-items="3"] > div:nth-child(1) {
+    @apply relative col-span-4 row-span-2 overflow-hidden rounded-l-2xl;
+  }
+  .grid-container[data-items="3"] > div:nth-child(2) {
+    @apply relative col-span-4 col-start-5 overflow-hidden rounded-tr-2xl;
+  }
+  .grid-container[data-items="3"] > div:nth-child(3) {
+    @apply relative col-span-4 col-start-5 row-start-2 overflow-hidden rounded-br-2xl;
+  }
+
+  /* 2 eleman durumu */
+  .grid-container[data-items="2"] {
+    @apply grid-cols-2 grid-rows-2;
+  }
+  .grid-container[data-items="2"] > div:nth-child(1) {
+    @apply relative row-span-2 overflow-hidden rounded-l-2xl;
+  }
+  .grid-container[data-items="2"] > div:nth-child(2) {
+    @apply relative row-span-2 overflow-hidden rounded-r-2xl;
+  }
+
+  /* 1 eleman durumu */
+  .grid-container[data-items="1"] {
+    @apply relative grid-cols-1 grid-rows-1 overflow-hidden rounded-2xl;
+  }
+
+  /* 5 eleman durumunda 6 ve sonrasını gizle */
+  .grid-container[data-items="5"] > div:nth-child(n + 6) {
+    @apply lg:hidden;
+  }
+
+  /* 4 eleman durumunda 5 ve sonrasını gizle */
+  .grid-container[data-items="4"] > div:nth-child(n + 5) {
+    @apply lg:hidden;
+  }
+
+  /* 3 eleman durumunda 4 ve sonrasını gizle */
+  .grid-container[data-items="3"] > div:nth-child(n + 4) {
+    @apply lg:hidden;
+  }
+
+  /* 2 eleman durumunda 3 ve sonrasını gizle */
+  .grid-container[data-items="2"] > div:nth-child(n + 3) {
+    @apply lg:hidden;
+  }
+
+  /* 1 eleman durumunda 2 ve sonrasını gizle */
+  .grid-container[data-items="1"] > div:nth-child(n + 2) {
+    @apply lg:hidden;
+  }
+
+  .thumbnail {
+    @apply h-16 w-32 flex-shrink-0 cursor-pointer rounded object-cover transition duration-300 hover:opacity-75 sm:h-16 sm:w-32;
+  }
+
+  .thumbnail-active {
+    @apply ring-2 ring-primary-500;
+  }
+
+  .product-slider-btn {
+    @apply size-3 cursor-pointer rounded-full border border-gray-300 bg-white transition-all duration-500;
+  }
+  .product-slider-active-btn {
+    @apply scale-[125%] border border-primary-500;
+  }
 }

@@ -17,6 +17,12 @@ interface SliderAnimationConfig {
   scaleNotSelected?: number;
 }
 
+interface ResponsiveConfig {
+  enabled: boolean;
+  minWidth: number;
+  maxWidth: number;
+}
+
 interface SliderConfig {
   container: string | HTMLElement;
   slideSelector: string;
@@ -27,6 +33,7 @@ interface SliderConfig {
   activeButtonClassTarget?: string;
   auto?: boolean;
   autoInterval?: number;
+  responsive?: ResponsiveConfig;
   onIndexChange?: (index?: number) => void;
   options: {
     zIndex: {
@@ -59,6 +66,11 @@ class Slider {
     };
   };
   private animationConfig: SliderAnimationConfig;
+  private responsiveConfig: ResponsiveConfig;
+  private resizeObserver: ResizeObserver | null;
+
+  private initialConfig: SliderConfig;
+  private queuedTransition: boolean = false;
 
   constructor(config: SliderConfig) {
     this.container =
@@ -82,6 +94,8 @@ class Slider {
       throw new Error("Slides or buttons not found");
     }
 
+    this.initialConfig = { ...config };
+
     this.animationConfig = {
       duration: config.animationConfig?.duration || 500,
       timingFunction: config.animationConfig?.timingFunction || "ease-in-out",
@@ -103,10 +117,16 @@ class Slider {
             "translate(-20%, 0%)",
         },
       },
-      opacitySelected: config.animationConfig?.opacitySelected || 1,
-      opacityNotSelected: config.animationConfig?.opacityNotSelected || 0.85,
-      scaleSelected: config.animationConfig?.scaleSelected || 1,
-      scaleNotSelected: config.animationConfig?.scaleNotSelected || 0.85,
+      opacitySelected: config.animationConfig?.opacitySelected ?? 1,
+      opacityNotSelected: config.animationConfig?.opacityNotSelected ?? 0.85,
+      scaleSelected: config.animationConfig?.scaleSelected ?? 1,
+      scaleNotSelected: config.animationConfig?.scaleNotSelected ?? 0.85,
+    };
+
+    this.responsiveConfig = {
+      enabled: config.responsive?.enabled ?? false,
+      minWidth: config.responsive?.minWidth ?? 0,
+      maxWidth: config.responsive?.maxWidth ?? 9999,
     };
 
     this.activeIndex = config.defaultActiveIndex || 0;
@@ -125,6 +145,7 @@ class Slider {
       },
     };
     this.onIndexChange = config.onIndexChange;
+    this.resizeObserver = null;
     this.init();
   }
 
@@ -146,6 +167,7 @@ class Slider {
 
     this.buttons.forEach((button: HTMLButtonElement) => {
       button.addEventListener("click", () => {
+        if (!this.isSliderEnabled()) return;
         const target = button.getAttribute("data-target");
         const targetIndex = parseInt(target as string, 10);
         const direction = targetIndex > this.activeIndex ? "right" : "left";
@@ -160,6 +182,109 @@ class Slider {
       );
       this.startAutoPlay();
     }
+
+    // Initialize ResizeObserver for responsive behavior
+    this.initResizeObserver();
+  }
+
+  private initResizeObserver(): void {
+    if (this.responsiveConfig.enabled) {
+      this.resizeObserver = new ResizeObserver(() => {
+        this.checkResponsiveState();
+      });
+      this.resizeObserver.observe(document.body);
+    }
+  }
+
+  private isSliderEnabled(): boolean {
+    if (!this.responsiveConfig.enabled) return true;
+
+    const windowWidth = window.innerWidth;
+    return (
+      windowWidth >= this.responsiveConfig.minWidth &&
+      windowWidth <= this.responsiveConfig.maxWidth
+    );
+  }
+
+  private checkResponsiveState(): void {
+    const wasEnabled = this.isSliderEnabled();
+    const windowWidth = window.innerWidth;
+    const isNowEnabled =
+      windowWidth >= this.responsiveConfig.minWidth &&
+      windowWidth <= this.responsiveConfig.maxWidth;
+
+    if (wasEnabled !== isNowEnabled) {
+      if (isNowEnabled) {
+        this.enableSlider();
+        // Config'i tekrar uygula
+        this.updateAnimationConfig(this.initialConfig.animationConfig || {});
+        if (this.initialConfig.auto) {
+          this.enableAutoPlay();
+        }
+      } else {
+        this.disableSlider();
+        // Animasyonları sıfırla
+        this.resetAllAnimations();
+      }
+    } else if (!isNowEnabled && this.isAnimating) {
+      // Eğer zaten disabled durumunda ise ve animasyon devam ediyorsa
+      this.resetAllAnimations();
+    }
+
+    // Her resize durumunda animasyonları geçici olarak devre dışı bırak
+    this.slides.forEach((slide: HTMLElement) => {
+      slide.style.transition = "none";
+    });
+
+    // RequestAnimationFrame ile transition'ı geri getir
+    requestAnimationFrame(() => {
+      requestAnimationFrame(() => {
+        if (isNowEnabled) {
+          this.slides.forEach((slide: HTMLElement) => {
+            slide.style.transition = `${this.animationConfig.duration}ms ${this.animationConfig.timingFunction}`;
+          });
+        }
+      });
+    });
+  }
+
+  private resetAllAnimations(): void {
+    // Tüm slide'ların animasyonlarını sıfırla
+    this.slides.forEach((slide: HTMLElement) => {
+      slide.style.transition = "none";
+      slide.style.transform = "translate(0%, 0%)";
+      slide.style.opacity = "1";
+      slide.style.scale = "1";
+    });
+
+    // Clone elementleri bul ve kaldır
+    const clones = this.slider.querySelectorAll('[data-clone="true"]');
+    clones.forEach((clone) => clone.remove());
+
+    // Animasyon durumunu sıfırla
+    this.isAnimating = false;
+    this.queuedTransition = false;
+  }
+
+  private enableSlider(): void {
+    this.container.style.pointerEvents = "auto";
+    if (this.autoEnabled) {
+      this.startAutoPlay();
+    }
+  }
+
+  private disableSlider(): void {
+    this.container.style.pointerEvents = "none";
+    this.pauseAutoPlay();
+
+    // Tüm slide'ları varsayılan konumlarına getir
+    this.slides.forEach((slide: HTMLElement) => {
+      slide.style.transition = "none";
+      slide.style.transform = "translate(0%, 0%)";
+      slide.style.opacity = "1";
+      slide.style.scale = "1";
+      slide.style.zIndex = "0";
+    });
   }
 
   private createCloneElement(
@@ -198,9 +323,14 @@ class Slider {
   }
 
   private startAutoPlay(): void {
-    if (this.autoEnabled) {
+    if (this.autoEnabled && this.isSliderEnabled()) {
       this.autoTimer = setInterval(() => {
-        this.next();
+        if (!this.isAnimating) {
+          this.next();
+        } else {
+          // Eğer animasyon devam ediyorsa, bir sonraki geçişi işaretle
+          this.queuedTransition = true;
+        }
       }, this.autoInterval) as unknown as NodeJS.Timeout;
     }
   }
@@ -234,38 +364,47 @@ class Slider {
         ? this.animationConfig.transforms?.fromLeft?.exit
         : this.animationConfig.transforms?.fromRight?.exit;
 
-    requestAnimationFrame(() => {
-      clone.style.transition = `${this.animationConfig.duration}ms ${this.animationConfig.timingFunction}`;
-      clone.style.transform = "translate(0%, 0%)";
-      clone.style.opacity = `${this.animationConfig.opacitySelected}`;
-      clone.style.scale = `${this.animationConfig.scaleSelected}`;
+    return new Promise((resolve) => {
+      requestAnimationFrame(() => {
+        clone.style.transition = `${this.animationConfig.duration}ms ${this.animationConfig.timingFunction}`;
+        clone.style.transform = "translate(0%, 0%)";
+        clone.style.opacity = `${this.animationConfig.opacitySelected}`;
+        clone.style.scale = `${this.animationConfig.scaleSelected}`;
 
-      currentSlide.style.transition = `${this.animationConfig.duration}ms ${this.animationConfig.timingFunction}`;
-      currentSlide.style.transform = exitTransform!;
-      currentSlide.style.opacity = `${this.animationConfig.opacityNotSelected}`;
-      currentSlide.style.scale = `${this.animationConfig.scaleNotSelected}`;
+        currentSlide.style.transition = `${this.animationConfig.duration}ms ${this.animationConfig.timingFunction}`;
+        currentSlide.style.transform = exitTransform!;
+        currentSlide.style.opacity = `${this.animationConfig.opacityNotSelected}`;
+        currentSlide.style.scale = `${this.animationConfig.scaleNotSelected}`;
+
+        setTimeout(() => {
+          resolve();
+          // Animasyon bittikten sonra bekleyen geçiş varsa uygula
+          if (this.queuedTransition) {
+            this.queuedTransition = false;
+            this.next();
+          }
+        }, this.animationConfig.duration);
+      });
     });
-
-    return new Promise((resolve) =>
-      setTimeout(resolve, this.animationConfig.duration),
-    );
   }
 
   public async goToSlide(
     targetIndex: number,
     direction?: "left" | "right",
   ): Promise<void> {
-    if (this.isAnimating || targetIndex === this.activeIndex) return;
+    console.log("goToSlide çalıştı", targetIndex, direction); // Debug
+
+    if (
+      !this.isSliderEnabled() ||
+      this.isAnimating ||
+      targetIndex === this.activeIndex
+    )
+      return;
     if (targetIndex < 0 || targetIndex >= this.slides.length) return;
     this.onIndexChange && this.onIndexChange(targetIndex);
 
-    const slideDirection =
-      direction ||
-      (targetIndex > this.activeIndex
-        ? "right"
-        : targetIndex < this.activeIndex
-          ? "left"
-          : this.lastDirection);
+    // prettier-ignore
+    const slideDirection = direction || (targetIndex > this.activeIndex ? "right" : targetIndex < this.activeIndex ? "left" : this.lastDirection);
     this.lastDirection = slideDirection;
 
     this.resetAutoPlayTimer();
@@ -302,7 +441,55 @@ class Slider {
     this.animationConfig = {
       ...this.animationConfig,
       ...config,
+      transforms: {
+        ...this.animationConfig.transforms,
+        fromLeft: {
+          enter:
+            config.transforms?.fromLeft?.enter ??
+            this.animationConfig.transforms?.fromLeft?.enter!,
+          exit:
+            config.transforms?.fromLeft?.exit ??
+            this.animationConfig.transforms?.fromLeft?.exit!,
+        },
+        fromRight: {
+          enter:
+            config.transforms?.fromRight?.enter ??
+            this.animationConfig.transforms?.fromRight?.enter!,
+          exit:
+            config.transforms?.fromRight?.exit ??
+            this.animationConfig.transforms?.fromRight?.exit!,
+        },
+      },
     };
+
+    // initialConfig'i de güncelle
+    this.initialConfig.animationConfig = { ...this.animationConfig };
+  }
+
+  public updateResponsiveConfig(config: ResponsiveConfig): void {
+    // Mevcut config'i sakla
+    const previousConfig = { ...this.responsiveConfig };
+
+    this.responsiveConfig = {
+      ...this.responsiveConfig,
+      ...config,
+    };
+
+    // initialConfig'i de güncelle
+    this.initialConfig.responsive = { ...this.responsiveConfig };
+
+    if (config.enabled && !this.resizeObserver) {
+      this.initResizeObserver();
+    } else if (!config.enabled && this.resizeObserver) {
+      this.resizeObserver.disconnect();
+      this.resizeObserver = null;
+      this.enableSlider();
+    }
+
+    // Config değişikliğinden sonra durumu kontrol et
+    if (this.responsiveConfig.enabled) {
+      this.checkResponsiveState();
+    }
   }
 
   public getCurrentIndex(): number {
@@ -314,11 +501,13 @@ class Slider {
   }
 
   public next(): void {
+    if (!this.isSliderEnabled()) return;
     const nextIndex = (this.activeIndex + 1) % this.slides.length;
     this.goToSlide(nextIndex, "right");
   }
 
   public prev(): void {
+    if (!this.isSliderEnabled()) return;
     const prevIndex =
       (this.activeIndex - 1 + this.slides.length) % this.slides.length;
     this.goToSlide(prevIndex, "left");
@@ -336,6 +525,10 @@ class Slider {
 
   public destroy(): void {
     this.pauseAutoPlay();
+    if (this.resizeObserver) {
+      this.resizeObserver.disconnect();
+      this.resizeObserver = null;
+    }
     this.container.removeEventListener("mouseenter", () =>
       this.pauseAutoPlay(),
     );
@@ -345,4 +538,9 @@ class Slider {
   }
 }
 
-export { Slider };
+export {
+  Slider,
+  type SliderConfig,
+  type SliderAnimationConfig,
+  type ResponsiveConfig,
+};
