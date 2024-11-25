@@ -10,7 +10,7 @@ document.addEventListener("DOMContentLoaded", () => {
   UpdateProductSliderDataItems("product-slider", {
     min: 1,
     max: 5,
-    dataItems: "auto",
+    dataItems: "auto-detected",
   });
 
   const gallery = new ImageGalleryTracker();
