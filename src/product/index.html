@@ -519,22 +519,65 @@
       </div>
     </header>
 
+    <!-- Modal/Image Gallery - DONT EDIT THIS -->
+    <div
+      id="gallery-modal"
+      data-state="closed"
+      class="fixed inset-0 z-[9001] flex items-center justify-center bg-black/80 p-4 backdrop-blur-sm data-[state=closed]:hidden"
+      aria-hidden="true"
+      role="dialog"
+    >
+      <div
+        id="gallery-modal-content"
+        class="relative w-full max-w-4xl overflow-hidden rounded-lg bg-transparent shadow-xl shadow-primary-700/10"
+      >
+        <!-- Close button - DONT EDIT THIS -->
+        <button
+          id="gallery-modal-close-button"
+          class="absolute right-5 top-4 rounded-full border border-gray-200 bg-white p-1 text-3xl text-gray-600 transition-all duration-500 hover:text-gray-900 hover:opacity-75 focus:outline-none active:scale-95"
+          aria-label="Close Gallery"
+        >
+          <img
+            src="/public/images/icons/hamburger-close.svg"
+            alt="Close Icon"
+          />
+        </button>
+
+        <!-- Main image - DONT EDIT THIS -->
+        <div id="gallery-modal-main-image-container" class="">
+          <img
+            src="#"
+            alt="Gallery Main Image"
+            class="aspect-video h-auto max-h-[280px] w-full object-cover sm:max-h-[480px]"
+          />
+        </div>
+
+        <!-- Thumbnails container -->
+        <div
+          class="relative flex items-center justify-center bg-neutral-900 px-0"
+        >
+          <!-- Thumbnails - DONT EDIT THIS -->
+          <div
+            id="gallery-modal-thumbnails"
+            class="flex space-x-2 overflow-x-auto px-2 py-4"
+          >
+            <img src="#" alt="Thumbnail 1" class="thumbnail" />
+          </div>
+        </div>
+      </div>
+    </div>
+
     <main class="mx-auto max-w-7xl space-y-10 pb-6 pt-0 lg:px-6 lg:pt-6">
       <!-- Slider Container -->
-      <div class="relative z-[99]">
+      <section class="relative z-[99]" aria-labelledby="slider-heading">
+        <h2 id="slider-heading" class="sr-only">Görsel Slider</h2>
         <div id="product-slider-container" class="relative z-[103]">
-          <!-- Eğer auto yaparsan,
-            ilk render aşamasında child elemanlarını hesaplayıp
-            ona göre otomatik bir tasarım verir.
-            Ama bu, minik bir blink yapar.
-            Manuel olarak elinle 5 yazarsan,
-            bir problem olmaz. -->
           <ul
             id="product-slider"
             data-items="auto"
             class="slider lg:grid-container relative z-[103] h-[320px] lg:grid lg:gap-0.5"
           >
-            <div
+            <li
               class="product-slide absolute z-20 h-full w-full cursor-pointer bg-gray-200 lg:!relative lg:!opacity-100 lg:!transition-opacity lg:!duration-500 lg:hover:!opacity-75"
               data-index="0"
             >
@@ -545,8 +588,8 @@
                 class="lazy-image h-full w-full object-cover"
                 style="transition: filter 0.3s ease"
               />
-            </div>
-            <div
+            </li>
+            <li
               class="product-slide absolute z-20 h-full w-full cursor-pointer bg-gray-200 lg:!relative lg:!opacity-100 lg:!transition-opacity lg:!duration-500 lg:hover:!opacity-75"
               data-index="1"
             >
@@ -557,8 +600,8 @@
                 class="lazy-image h-full w-full object-cover"
                 style="transition: filter 0.3s ease"
               />
-            </div>
-            <div
+            </li>
+            <li
               class="product-slide absolute z-20 h-full w-full cursor-pointer bg-gray-200 lg:!relative lg:!opacity-100 lg:!transition-opacity lg:!duration-500 lg:hover:!opacity-75"
               data-index="2"
             >
@@ -569,8 +612,8 @@
                 class="lazy-image h-full w-full object-cover"
                 style="transition: filter 0.3s ease"
               />
-            </div>
-            <div
+            </li>
+            <li
               class="product-slide absolute z-20 h-full w-full cursor-pointer bg-gray-200 lg:!relative lg:!opacity-100 lg:!transition-opacity lg:!duration-500 lg:hover:!opacity-75"
               data-index="3"
             >
@@ -581,8 +624,8 @@
                 class="lazy-image h-full w-full object-cover"
                 style="transition: filter 0.3s ease"
               />
-            </div>
-            <div
+            </li>
+            <li
               class="product-slide absolute z-20 h-full w-full cursor-pointer bg-gray-200 lg:!relative lg:!opacity-100 lg:!transition-opacity lg:!duration-500 lg:hover:!opacity-75"
               data-index="4"
             >
@@ -593,8 +636,8 @@
                 class="lazy-image h-full w-full object-cover"
                 style="transition: filter 0.3s ease"
               />
-            </div>
-            <div
+            </li>
+            <li
               class="product-slide absolute z-20 h-full w-full cursor-pointer bg-gray-200 lg:!relative lg:!opacity-100 lg:!transition-opacity lg:!duration-500 lg:hover:!opacity-75"
               data-index="5"
             >
@@ -605,7 +648,7 @@
                 class="lazy-image h-full w-full object-cover"
                 style="transition: filter 0.3s ease"
               />
-            </div>
+            </li>
           </ul>
         </div>
 
@@ -616,70 +659,36 @@
           <button
             class="product-slider-btn product-slider-btn-item"
             data-target="0"
+            aria-label="Slide 1"
           ></button>
           <button
             class="product-slider-btn product-slider-btn-item"
             data-target="1"
+            aria-label="Slide 2"
           ></button>
           <button
             class="product-slider-btn product-slider-btn-item"
             data-target="2"
+            aria-label="Slide 3"
           ></button>
           <button
             class="product-slider-btn product-slider-btn-item"
             data-target="3"
+            aria-label="Slide 4"
           ></button>
           <button
             class="product-slider-btn product-slider-btn-item"
             data-target="4"
+            aria-label="Slide 5"
           ></button>
           <button
             class="product-slider-btn product-slider-btn-item"
             data-target="5"
+            aria-label="Slide 6"
           ></button>
         </div>
-      </div>
+      </section>
     </main>
-
-    <!-- Modal/Image Gallery -->
-    <div
-      id="gallery-modal"
-      data-state="closed"
-      class="fixed inset-0 z-[9001] flex items-center justify-center bg-black/50 p-4 data-[state=closed]:hidden"
-    >
-      <div
-        id="gallery-modal-content"
-        class="relative w-full max-w-4xl overflow-hidden rounded-lg border border-gray-950/10 bg-white pb-2 shadow-xl shadow-gray-950/10"
-      >
-        <!-- Close button -->
-        <button
-          id="gallery-modal-close-button"
-          class="absolute right-5 top-4 rounded-full border border-gray-200 bg-white p-1 text-3xl text-gray-600 transition-all duration-500 hover:text-gray-900 hover:opacity-75 focus:outline-none active:scale-95"
-        >
-          <img src="/public/images/icons/x.svg" alt="Main Image" />
-        </button>
-
-        <!-- Main image -->
-        <div id="gallery-modal-main-image-container" class="pb-2">
-          <img
-            src="#"
-            alt="Main Image"
-            class="aspect-video h-auto max-h-[280px] w-full object-cover sm:max-h-[480px]"
-          />
-        </div>
-
-        <!-- Thumbnails container -->
-        <div class="relative flex items-center justify-center pl-2 pr-4">
-          <!-- Thumbnails -->
-          <div
-            id="gallery-modal-thumbnails"
-            class="flex space-x-2 overflow-x-auto py-2 pl-2"
-          >
-            <img src="#" alt="Thumbnail 1" class="thumbnail" />
-          </div>
-        </div>
-      </div>
-    </div>
 
     <footer class="w-full">
       <div class="mx-auto max-w-7xl px-3.5 lg:px-8">
