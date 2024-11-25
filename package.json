@@ -5,10 +5,10 @@
   "scripts": {
     "color": "bun run tailwind-color-generator.ts",
     "build:ts": "bun run build.ts",
-    "build:css": "tailwindcss -i ./src/globals.css -o ./dist/globals.min.css --minify",
+    "build:css": "tailwindcss -i ./src/assets/styles/globals.css -o ./dist/assets/styles/globals.min.css --minify",
     "build": "bun run build:ts && bun run build:css",
     "watch:ts": "bun run build.ts --watch",
-    "watch:css": "tailwindcss -i ./src/globals.css -o ./dist/globals.css --watch",
+    "watch:css": "tailwindcss -i ./src/assets/styles/globals.css -o ./dist/assets/styles/globals.css --watch",
     "serve": "bun run build && serve dist",
     "dev": "concurrently \"bun run app.ts\" \"bun run watch:css\" \"bun run watch:ts\""
   },
@@ -25,6 +25,7 @@
     "typescript": "^5.0.0"
   },
   "dependencies": {
+    "air-datepicker": "^3.5.3",
     "hono": "^4.6.10",
     "motion": "^11.11.17",
     "serve": "^14.2.4"

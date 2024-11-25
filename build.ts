@@ -11,12 +11,13 @@ import path from "path";
 
 const srcDir = "./src";
 const distDir = "./dist";
-const packagesDir = path.join(srcDir, "app", "packages");
+const assetsDir = path.join(srcDir, "assets");
+const scriptsDir = path.join(assetsDir, "scripts");
+const packagesDir = path.join(scriptsDir, "packages");
 
-// Sayfa listesini burada tanımla
-const scripts = ["main", "product", "layout"]; // Sayfa listesini genişletebilirsiniz
+// Ana sayfa script listesi
+const scripts = ["layout", "main", "product", "product-form"];
 
-// Eski versiyondaki izleme fonksiyonunu geri ekledim
 function copyFileRecursive(src: string, dest: string) {
   if (statSync(src).isDirectory()) {
     if (!existsSync(dest)) {
@@ -33,8 +34,7 @@ function copyFileRecursive(src: string, dest: string) {
 }
 
 function copyAssets() {
-  const assetsDir = path.join(srcDir, "public");
-  const distAssetsDir = path.join(distDir, "public");
+  const distAssetsDir = path.join(distDir, "assets");
   if (existsSync(assetsDir)) {
     if (!existsSync(distAssetsDir)) {
       mkdirSync(distAssetsDir, { recursive: true });
@@ -45,116 +45,123 @@ function copyAssets() {
 }
 
 function copyHTML() {
-  const distDir = "./dist";
-  if (!existsSync(distDir)) {
-    mkdirSync(distDir, { recursive: true });
-  }
-  const copyHtmlRecursive = (dir: string) => {
-    const items = readdirSync(dir, { withFileTypes: true });
-    items.forEach((item) => {
-      const fullPath = path.join(dir, item.name);
-      if (item.isDirectory()) {
-        copyHtmlRecursive(fullPath);
-      } else if (item.isFile() && item.name.endsWith(".html")) {
-        const relativePath = path.relative(srcDir, fullPath);
-        const destPath = path.join(distDir, relativePath);
-        const destDir = path.dirname(destPath);
-        if (!existsSync(destDir)) {
-          mkdirSync(destDir, { recursive: true });
+  const mainDir = path.join(srcDir, "main");
+  const productDir = path.join(srcDir, "product");
+
+  [mainDir, productDir].forEach((dir) => {
+    if (existsSync(dir)) {
+      const relativePath = path.relative(srcDir, dir);
+      const destDir = path.join(distDir, relativePath);
+
+      if (!existsSync(destDir)) {
+        mkdirSync(destDir, { recursive: true });
+      }
+
+      readdirSync(dir).forEach((file) => {
+        if (file.endsWith(".html")) {
+          copyFileSync(path.join(dir, file), path.join(destDir, file));
+          console.log(`HTML dosyası kopyalandı: ${path.join(destDir, file)}`);
         }
-        copyFileSync(fullPath, destPath);
-        console.log(`HTML dosyası kopyalandı: ${destPath}`);
+      });
+    }
+  });
+}
+
+function copyStyles() {
+  const stylesDir = path.join(assetsDir, "styles");
+  const distStylesDir = path.join(distDir, "assets", "styles");
+
+  if (existsSync(stylesDir)) {
+    if (!existsSync(distStylesDir)) {
+      mkdirSync(distStylesDir, { recursive: true });
+    }
+    readdirSync(stylesDir).forEach((file) => {
+      if (file.endsWith(".css")) {
+        copyFileSync(
+          path.join(stylesDir, file),
+          path.join(distStylesDir, file),
+        );
+        console.log(
+          `CSS dosyası kopyalandı: ${path.join(distStylesDir, file)}`,
+        );
       }
     });
-  };
-  copyHtmlRecursive(srcDir);
+  }
 }
 
 async function buildPageSpecificTS(script: string) {
   const isMinify: boolean = false;
-
-  const entrypoint = path.join(srcDir, "app", `${script}.ts`);
+  const entrypoint = path.join(scriptsDir, `${script}.ts`);
+  const outdir = path.join(distDir, "assets", "scripts");
   const filename = isMinify ? `${script}.min.js` : `${script}.js`;
 
-  if (!existsSync(distDir)) {
-    mkdirSync(distDir, { recursive: true });
+  if (!existsSync(outdir)) {
+    mkdirSync(outdir, { recursive: true });
   }
 
   await build({
     entrypoints: [entrypoint],
-    outdir: distDir,
+    outdir,
     minify: isMinify,
     naming: filename,
-    format: "esm", // veya 'cjs'
-    external: ["./packages/*"], // Shared paketleri external olarak işaretle
+    format: "esm",
+    external: ["./packages/*"],
   });
 
-  console.log(
-    isMinify
-      ? `Minify edilmiş dosya: dist/${filename} oluşturuldu`
-      : `Normal dosya: dist/${filename} oluşturuldu`,
-  );
+  console.log(`${filename} oluşturuldu`);
 }
 
 async function buildSharedPackages() {
   if (!existsSync(packagesDir)) return;
 
-  const packages = readdirSync(packagesDir).filter(
-    (file) => file.endsWith(".ts") || file.endsWith(".js"),
+  const packages = readdirSync(packagesDir).filter((file) =>
+    file.endsWith(".ts"),
   );
 
-  if (!existsSync(path.join(distDir, "packages"))) {
-    mkdirSync(path.join(distDir, "packages"), { recursive: true });
+  const outdir = path.join(distDir, "assets", "scripts", "packages");
+  if (!existsSync(outdir)) {
+    mkdirSync(outdir, { recursive: true });
   }
 
   for (const packageFile of packages) {
     const entrypoint = path.join(packagesDir, packageFile);
-    const basename = path.basename(packageFile, path.extname(packageFile));
+    const basename = path.basename(packageFile, ".ts");
 
     await build({
       entrypoints: [entrypoint],
-      outdir: path.join(distDir, "packages"),
+      outdir,
       minify: true,
       naming: `${basename}.js`,
     });
 
-    console.log(`Shared paket minify edildi: dist/packages/${basename}.js`);
+    console.log(`Package derlendi: ${basename}.js`);
   }
 }
 
 async function buildAll() {
-  // Sayfaya özgü derlemeler
   for (const script of scripts) {
     await buildPageSpecificTS(script);
-    // await buildPageSpecificTS(script, true);
   }
-
-  // Shared paketleri derle
   await buildSharedPackages();
-
   copyHTML();
+  copyStyles();
   copyAssets();
 }
 
 function watchFiles() {
-  const srcWatchPaths = [
-    path.resolve(srcDir), // Tüm src dizinini izle
-  ];
+  const watchPaths = [srcDir];
 
-  srcWatchPaths.forEach((watchPath) => {
+  watchPaths.forEach((watchPath) => {
     fsWatch(watchPath, { recursive: true }, async (event, filename) => {
       if (!filename) return;
-      console.log(`Değişiklik tespit edildi: ${filename}`);
+      console.log(`Değişiklik: ${filename}`);
 
       if (filename.endsWith(".ts")) {
-        // Hangi dosyada değişiklik olduğuna göre ilgili derlemeyi yap
-        const script = scripts.find((p) => filename.includes(`${p}.ts`));
-        if (script) {
-          await buildPageSpecificTS(script);
-        }
-
         if (filename.includes("packages/")) {
           await buildSharedPackages();
+        } else {
+          const script = scripts.find((s) => filename.includes(`${s}.ts`));
+          if (script) await buildPageSpecificTS(script);
         }
       }
 
@@ -162,7 +169,11 @@ function watchFiles() {
         copyHTML();
       }
 
-      if (filename.includes("assets")) {
+      if (filename.endsWith(".css")) {
+        copyStyles();
+      }
+
+      if (filename.startsWith("assets/")) {
         copyAssets();
       }
     });
@@ -171,11 +182,11 @@ function watchFiles() {
 
 async function main() {
   if (process.argv.includes("--watch")) {
-    console.log("Watch modunda çalışıyor...");
-    await buildAll(); // İlk başta her şeyi derle
-    watchFiles(); // Değişiklikleri izlemeye başla
+    console.log("Watch modu başlatıldı...");
+    await buildAll();
+    watchFiles();
   } else {
-    await buildAll(); // Normal build işlemi
+    await buildAll();
   }
 }
 

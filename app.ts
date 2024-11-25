@@ -16,7 +16,7 @@ app.use(
         if (!file) return null;
         return file as any;
       } catch (error) {
-        if (path === "dist/index.html" || path === "dist/") {
+        if (path === "dist/main/index.html" || path === "dist/") {
           return null;
         }
         console.error(`Error reading file at ${path}:`);
@@ -44,7 +44,13 @@ app.get("/", (c) => {
   return c.html(html.text());
 });
 
+app.get("/product", (c) => {
+  const html = Bun.file("./dist/product/index.html");
+  return c.html(html.text());
+});
+
 const secret = "LHOUwjBFGyori7tltMnRQ2YtanvObPZOenCowk/Cq8c=";
+
 app.post("/github-push-event", async (c) => {
   const githubEvent = c.req.header("X-GitHub-Event");
   const signature = c.req.header("X-Hub-Signature-256");
@@ -62,20 +68,16 @@ app.post("/github-push-event", async (c) => {
     return c.json({ error: "Invalid signature" }, 401);
   }
 
-  // Hemen response gönder
   c.status(200);
-
-  // Sonraki işlemleri background'da çalıştır
   setImmediate(() => {
     runBuildProcess();
   });
-
   return c.body(null);
 });
 
 function runBuildProcess(): void {
   exec(
-    "git pull && rm -rf dist && sudo systemctl restart mdb-menuarts.service",
+    "git pull && bun run build && sudo systemctl restart mdb-menuarts.service",
     { cwd: "/root/mdb-code" },
     (error: Error | null, stdout: string, stderr: string) => {
       if (error) {
@@ -90,4 +92,5 @@ function runBuildProcess(): void {
 
 const port = 3080;
 console.log(`Server is running on port ${port}`);
+
 export default { fetch: app.fetch, port };
