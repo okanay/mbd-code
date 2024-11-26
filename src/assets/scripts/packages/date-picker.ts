@@ -355,7 +355,7 @@ class DatePicker {
 
     // Calculate initial positions
     let top = inputRect.bottom + scrollTop + 8 // 16px padding
-    let left = inputRect.left + scrollLeft + -8
+    let left = inputRect.left + scrollLeft + -0
 
     // Check if the datepicker would overflow the right edge of the window
     if (left + datePickerRect.width > windowWidth) {
@@ -382,7 +382,7 @@ class DatePicker {
     }
 
     // Ensure left position is never negative
-    left = Math.max(16, left) // Minimum 16px from left edge
+    left = Math.max(8, left) // Minimum 8px from left edge
 
     // Apply the calculated positions
     this.containerElement.style.position = 'absolute'
@@ -443,17 +443,54 @@ class DatePicker {
     )
     const startingDay = firstDayOfMonth.getDay()
 
+    // Calculate previous month's days
+    const prevMonthLastDay = new Date(
+      this.currentDate.getFullYear(),
+      this.currentDate.getMonth(),
+      0,
+    )
+    const daysFromPrevMonth = startingDay === 0 ? 6 : startingDay - 1
+
+    // Calculate next month's days
+    const totalDaysInMonth = lastDayOfMonth.getDate()
+    const lastDayOfMonthWeekday = lastDayOfMonth.getDay()
+    const daysFromNextMonth =
+      lastDayOfMonthWeekday === 0 ? 0 : 7 - lastDayOfMonthWeekday
+
     let calendarHTML = `<div class="${calendar.grid}">`
 
+    // Render day headers
     dayNames.forEach(dayName => {
       calendarHTML += `<div class="${calendar.dayHeader}">${dayName.substring(0, 2)}</div>`
     })
 
-    for (let i = 0; i < startingDay; i++) {
-      calendarHTML += `<div class="${day.base} ${day.empty}"></div>`
+    // Render previous month's days
+    for (let i = daysFromPrevMonth; i > 0; i--) {
+      const prevDate = new Date(
+        this.currentDate.getFullYear(),
+        this.currentDate.getMonth() - 1,
+        prevMonthLastDay.getDate() - i + 1,
+      )
+      const isValid = this.isDateValid(prevDate)
+      const isSelected = this.areDatesEqual(this.selectedDate, prevDate)
+
+      const dayClasses = [
+        day.base,
+        !isValid ? day.disabled : day.empty,
+        isSelected ? day.selected : '',
+      ]
+        .filter(Boolean)
+        .join(' ')
+
+      calendarHTML += `<div class="${dayClasses}"
+          data-date="${prevDate.toISOString()}"
+          data-month="prev">
+          ${prevMonthLastDay.getDate() - i + 1}
+        </div>`
     }
 
-    for (let i = 1; i <= lastDayOfMonth.getDate(); i++) {
+    // Render current month's days
+    for (let i = 1; i <= totalDaysInMonth; i++) {
       const currentDate = new Date(
         this.currentDate.getFullYear(),
         this.currentDate.getMonth(),
@@ -471,7 +508,34 @@ class DatePicker {
         .join(' ')
 
       calendarHTML += `
-        <div class="${dayClasses}" data-date="${currentDate.toISOString()}">
+          <div class="${dayClasses}"
+            data-date="${currentDate.toISOString()}"
+            data-month="current">
+            ${i}
+          </div>`
+    }
+
+    // Render next month's days
+    for (let i = 1; i <= daysFromNextMonth; i++) {
+      const nextDate = new Date(
+        this.currentDate.getFullYear(),
+        this.currentDate.getMonth() + 1,
+        i,
+      )
+      const isValid = this.isDateValid(nextDate)
+      const isSelected = this.areDatesEqual(this.selectedDate, nextDate)
+
+      const dayClasses = [
+        day.base,
+        !isValid ? day.disabled : day.empty,
+        isSelected ? day.selected : '',
+      ]
+        .filter(Boolean)
+        .join(' ')
+
+      calendarHTML += `<div class="${dayClasses}"
+          data-date="${nextDate.toISOString()}"
+          data-month="next">
           ${i}
         </div>`
     }
@@ -506,13 +570,33 @@ class DatePicker {
       const target = e.target as HTMLElement
       if (
         target.classList.contains(this.classes.day?.base ?? '') &&
-        !target.classList.contains(this.classes.day?.empty ?? '') &&
         !target.classList.contains(this.classes.day?.disabled ?? '')
       ) {
         const dateStr = target.getAttribute('data-date')
+        const monthType = target.getAttribute('data-month')
+
         if (dateStr) {
           const date = new Date(dateStr)
-          this.selectDate(date)
+
+          // Handle month transition if clicking on prev/next month days
+          if (monthType === 'prev') {
+            this.changeMonth('prev')
+          } else if (monthType === 'next') {
+            this.changeMonth('next')
+          }
+
+          // Update selected date
+          this.selectedDate = date
+          this.currentDate = new Date(date)
+
+          // Only hide if it's not a month transition
+          if (monthType === 'current') {
+            this.selectDate(date)
+          } else {
+            this.renderCalendar()
+            this.renderMonthShortNames()
+            this.updateNavigationState()
+          }
         }
       }
     })
@@ -532,7 +616,12 @@ class DatePicker {
         this.containerElement &&
         !this.containerElement.contains(target)
       ) {
-        this.hideDatePicker()
+        // If a date is selected but not yet applied, apply it before hiding
+        if (this.selectedDate && this.activeInput) {
+          this.selectDate(this.selectedDate)
+        } else {
+          this.hideDatePicker()
+        }
       }
     })
   }
@@ -622,6 +711,16 @@ class DatePicker {
 
           if (endDate && endDate < date) {
             endInput.value = ''
+            this.dateValues.delete(inputConfig.linkedInputId)
+          }
+        } else if (inputConfig?.type === 'end' && inputConfig.linkedInputId) {
+          const startInput = document.getElementById(
+            inputConfig.linkedInputId,
+          ) as HTMLInputElement
+          const startDate = this.dateValues.get(inputConfig.linkedInputId)
+
+          if (startDate && startDate > date) {
+            startInput.value = ''
             this.dateValues.delete(inputConfig.linkedInputId)
           }
         }
