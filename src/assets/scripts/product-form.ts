@@ -75,7 +75,7 @@ document.addEventListener('DOMContentLoaded', () => {
       resetAll: 'reset-all-btn',
     },
     input: {
-      type: 'range', // veya "single"
+      type: 'range',
       config: {
         start: {
           id: 'departure-date',
