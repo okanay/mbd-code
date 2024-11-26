@@ -939,20 +939,38 @@ class DatePicker {
 
   public resetToToday() {
     const today = this.stripTime(new Date())
-    this.currentDate = new Date(today)
-    this.selectedDate = today
 
-    // Aktif input varsa bugünün tarihini seç
     if (this.activeInput) {
+      const inputConfig = this.registeredInputs.get(this.activeInput.id)
+
+      if (inputConfig?.type === 'end' && inputConfig.linkedInputId) {
+        // Dönüş tarihi inputu aktifken
+        const startInput = document.getElementById(
+          inputConfig.linkedInputId,
+        ) as HTMLInputElement
+        const startDate = this.selectedDates.get(inputConfig.linkedInputId)
+
+        // Eğer gidiş tarihi seçiliyse, gidiş inputuna geç
+        if (startDate && startInput) {
+          this.handleInputClick(startInput)
+          return
+        }
+      }
+
+      // Gidiş tarihi seçili değilse veya gidiş inputu aktifse bugüne dön
+      this.currentDate = new Date(today)
+      this.selectedDate = today
       this.selectedDates.set(this.activeInput.id, new Date(today))
       this.dateValues.set(this.activeInput.id, new Date(today))
       this.activeInput.value = today.toLocaleDateString()
+    } else {
+      this.currentDate = new Date(today)
+      this.selectedDate = today
     }
 
     this.renderMonthShortNames()
     this.renderCalendar()
     this.updateNavigationState()
-    // Date picker'ı açık bırak, kullanıcı outside click yapınca kapanacak
   }
 
   public resetAllInputs() {
