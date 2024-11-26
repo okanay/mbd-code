@@ -186,7 +186,6 @@
   }
 
   .current-input-date {
-    @apply !bg-primary-500 !opacity-100 hover:!bg-primary-500 hover:!opacity-75;
   }
 
   .linked-date-highlight {

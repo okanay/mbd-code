@@ -143,8 +143,8 @@ interface DatePickerConfig {
   language: LanguageConfig[]
   minDate?: Date
   maxDate?: Date
-  autoClose?: boolean // Yeni config
-  autoSwitchInput?: boolean // Yeni config
+  autoClose?: boolean
+  autoSwitchInput?: boolean
 }
 
 class DatePicker {
@@ -164,7 +164,6 @@ class DatePicker {
   private focusContainers: Map<string, HTMLElement> = new Map()
   private dateValues: Map<string, Date> = new Map()
   private selectedDates: Map<string, Date> = new Map()
-  // Yeni eklenecek state'ler
   private autoClose = true
   private autoSwitchInput = true
 
@@ -744,6 +743,7 @@ class DatePicker {
     this.daysContainer?.addEventListener('click', e => {
       e.stopPropagation()
       const target = e.target as HTMLElement
+
       if (target.classList.contains(this.classes.day?.base ?? '')) {
         const dateStr = target.getAttribute('data-date')
         const monthType = target.getAttribute('data-month')
@@ -753,6 +753,15 @@ class DatePicker {
         const date = new Date(dateStr)
         const selectedDate = this.stripTime(date)
         const inputConfig = this.registeredInputs.get(this.activeInput.id)
+
+        // Önceki/sonraki ay günlerine tıklanınca sadece ay değişimi yap
+        if (monthType === 'prev') {
+          this.changeMonth('prev')
+          return
+        } else if (monthType === 'next') {
+          this.changeMonth('next')
+          return
+        }
 
         // Linked date kontrolü
         const isLinkedDate = (() => {
@@ -813,19 +822,13 @@ class DatePicker {
           }
         }
 
-        // Handle month transition if clicking on prev/next month days
-        if (monthType === 'prev') {
-          this.changeMonth('prev')
-        } else if (monthType === 'next') {
-          this.changeMonth('next')
-        }
-
-        // Update selected date and current date
+        // Seçilen tarihi güncelle
         if (this.activeInput) {
           this.selectedDates.set(this.activeInput.id, date)
         }
         this.currentDate = new Date(date)
 
+        // Sadece mevcut ayın günleri için tarih seçimini işle
         if (monthType === 'current') {
           this.selectDate(date)
         } else {
