@@ -63,6 +63,8 @@ document.addEventListener('DOMContentLoaded', () => {
     language: [turkishLanguage, englishLanguage, arabicLanguage],
     minDate: new Date(),
     maxDate: new Date(8640000000000000),
+    autoClose: false,
+    autoSwitchInput: true,
     containers: {
       container: 'date-picker-container',
       monthContainer: 'date-picker-months',
