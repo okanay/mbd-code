@@ -79,9 +79,11 @@ document.addEventListener('DOMContentLoaded', () => {
       config: {
         start: {
           id: 'departure-date',
+          focusContainer: 'departure-container',
         },
         end: {
           id: 'return-date',
+          focusContainer: 'return-container',
         },
       },
     },

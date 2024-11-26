@@ -1231,7 +1231,7 @@
                 <div
                   class="mt-4 grid grid-cols-2 divide-x divide-gray-200 px-0"
                 >
-                  <div class="relative">
+                  <div class="group relative" id="departure-container">
                     <input
                       type="text"
                       id="departure-date"
@@ -1242,7 +1242,7 @@
                     />
                     <label
                       for="departure-date"
-                      class="absolute -top-2 left-1.5 cursor-text text-nowrap bg-white px-1 text-xs transition-all peer-placeholder-shown:top-3 peer-placeholder-shown:text-sm peer-focus:-top-2 peer-focus:text-xs peer-focus:text-primary-500"
+                      class="absolute -top-2 left-1.5 cursor-text text-nowrap bg-white px-1 text-xs transition-all peer-placeholder-shown:top-3 peer-placeholder-shown:text-sm peer-focus:-top-2 peer-focus:text-xs peer-focus:text-primary-500 group-data-[focus=true]:-top-2 group-data-[focus=true]:text-xs group-data-[focus=true]:text-primary-500"
                     >
                       Gidiş Tarihi
                     </label>
@@ -1252,7 +1252,7 @@
                       class="absolute right-4 top-1/2 size-4 -translate-y-1/2 text-gray-400"
                     />
                   </div>
-                  <div class="relative">
+                  <div class="group relative" id="return-container">
                     <input
                       type="text"
                       id="return-date"
@@ -1263,7 +1263,7 @@
                     />
                     <label
                       for="return-date"
-                      class="absolute -top-2 left-1.5 cursor-text text-nowrap bg-white px-1 text-xs transition-all peer-placeholder-shown:top-3 peer-placeholder-shown:text-sm peer-focus:-top-2 peer-focus:text-xs peer-focus:text-primary-500"
+                      class="absolute -top-2 left-1.5 cursor-text text-nowrap bg-white px-1 text-xs transition-all peer-placeholder-shown:top-3 peer-placeholder-shown:text-sm peer-focus:-top-2 peer-focus:text-xs peer-focus:text-primary-500 group-data-[focus=true]:-top-2 group-data-[focus=true]:text-xs group-data-[focus=true]:text-primary-500"
                     >
                       Dönüş Tarihi
                     </label>
@@ -1507,7 +1507,7 @@
       <div
         id="date-picker-container"
         data-language="tr"
-        class="absolute w-[320px] rounded-md border bg-white px-4 py-3 shadow-lg"
+        class="absolute w-[320px] rounded border bg-white px-4 py-3 shadow-lg"
       >
         <div class="mb-4 flex items-center justify-between">
           <button

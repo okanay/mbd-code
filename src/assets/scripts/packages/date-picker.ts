@@ -26,6 +26,9 @@ const DEFAULT_CLASSES = {
     disabled: 'day-disabled',
     selected: 'day-selected',
     empty: 'day-empty',
+    linked: 'day-linked',
+    currentInput: 'current-input-date', // Yeni eklenen
+    linkedHighlight: 'linked-date-highlight', // Yeni eklenen
   },
 } as const
 
@@ -39,15 +42,25 @@ type DatePickerInputType = 'single' | 'range'
 
 interface SingleDateInput {
   id: string
+  focusContainer?: string // Her input için ayrı container ID'si
 }
 
 interface DateRangeInput {
   start: {
     id: string
+    focusContainer?: string
   }
   end: {
     id: string
+    focusContainer?: string
   }
+}
+
+interface RegisteredInput {
+  element: HTMLInputElement
+  type: 'single' | 'start' | 'end'
+  linkedInputId?: string
+  focusContainerId?: string // Container ID'sini saklayalım
 }
 
 interface DatePickerInputConfig {
@@ -66,6 +79,9 @@ interface DayClasses {
   disabled?: string
   selected?: string
   empty?: string
+  linked?: string
+  currentInput?: string
+  linkedHighlight?: string
 }
 
 interface MonthPointerClasses {
@@ -132,7 +148,9 @@ class DatePicker {
   private resetButton: HTMLElement | null = null
   private resetAllButton: HTMLElement | null = null
   private registeredInputs: Map<string, RegisteredInput> = new Map()
+  private focusContainers: Map<string, HTMLElement> = new Map()
   private dateValues: Map<string, Date> = new Map()
+  private selectedDates: Map<string, Date> = new Map()
 
   constructor(config: DatePickerConfig) {
     this.config = config
@@ -178,11 +196,61 @@ class DatePicker {
       this.initializeDatePicker()
       this.initializeInputs()
       this.addEventListeners()
+      this.initializeFocusContainers()
     }
 
     window.addEventListener('resize', this.handleWindowResize)
 
     this.hideDatePicker()
+  }
+
+  private initializeFocusContainers() {
+    const { input } = this.config
+
+    if (input.type === 'single') {
+      const singleConfig = input.config as SingleDateInput
+      if (singleConfig.focusContainer) {
+        const container = document.getElementById(singleConfig.focusContainer)
+        if (container) {
+          this.focusContainers.set(singleConfig.id, container)
+        }
+      }
+    } else if (input.type === 'range') {
+      const rangeConfig = input.config as DateRangeInput
+
+      if (rangeConfig.start.focusContainer) {
+        const startContainer = document.getElementById(
+          rangeConfig.start.focusContainer,
+        )
+        if (startContainer) {
+          this.focusContainers.set(rangeConfig.start.id, startContainer)
+        }
+      }
+
+      if (rangeConfig.end.focusContainer) {
+        const endContainer = document.getElementById(
+          rangeConfig.end.focusContainer,
+        )
+        if (endContainer) {
+          this.focusContainers.set(rangeConfig.end.id, endContainer)
+        }
+      }
+    }
+  }
+
+  private updateFocusContainer(inputId: string | null, isFocused: boolean) {
+    if (!inputId) return
+
+    // Önce tüm containerlardaki focus'u kaldır
+    this.focusContainers.forEach(container => {
+      container.setAttribute('data-focus', 'false')
+    })
+
+    // Aktif input'un container'ını güncelle
+    const container = this.focusContainers.get(inputId)
+    if (container) {
+      container.setAttribute('data-focus', isFocused ? 'true' : 'false')
+    }
   }
 
   private mergeClasses(
@@ -294,15 +362,25 @@ class DatePicker {
 
     this.activeInput = input
 
+    // Set initial date based on input configuration
     if (input.value) {
       const date = new Date(input.value)
       if (!isNaN(date.getTime())) {
         this.currentDate = new Date(date)
-        this.selectedDate = new Date(date)
+        this.selectedDates.set(input.id, new Date(date))
       }
     } else {
-      this.currentDate = new Date()
-      this.selectedDate = null
+      const inputConfig = this.registeredInputs.get(input.id)
+      if (inputConfig?.linkedInputId) {
+        const linkedDate = this.selectedDates.get(inputConfig.linkedInputId)
+        if (linkedDate) {
+          this.currentDate = new Date(linkedDate)
+        } else {
+          this.currentDate = new Date()
+        }
+      } else {
+        this.currentDate = new Date()
+      }
     }
 
     this.renderCalendar()
@@ -322,11 +400,19 @@ class DatePicker {
     if (this.containerElement && this.classes.wrapper.hidden) {
       this.containerElement.classList.remove(this.classes.wrapper.hidden)
     }
+    // Aktif input'un focus container'ını güncelle
+    if (this.activeInput) {
+      this.updateFocusContainer(this.activeInput.id, true)
+    }
   }
 
   private hideDatePicker() {
     if (this.containerElement && this.classes.wrapper.hidden) {
       this.containerElement.classList.add(this.classes.wrapper.hidden)
+    }
+    // Aktif input'un focus container'ını güncelle
+    if (this.activeInput) {
+      this.updateFocusContainer(this.activeInput.id, false)
     }
   }
 
@@ -355,7 +441,7 @@ class DatePicker {
 
     // Calculate initial positions
     let top = inputRect.bottom + scrollTop + 8 // 16px padding
-    let left = inputRect.left + scrollLeft + -0
+    let left = inputRect.left + scrollLeft + -1.5
 
     // Check if the datepicker would overflow the right edge of the window
     if (left + datePickerRect.width > windowWidth) {
@@ -464,6 +550,55 @@ class DatePicker {
       calendarHTML += `<div class="${calendar.dayHeader}">${dayName.substring(0, 2)}</div>`
     })
 
+    // Helper function to check if a date is selected in any input
+    const isDateSelected = (date: Date): boolean => {
+      for (const selectedDate of this.selectedDates.values()) {
+        if (this.areDatesEqual(selectedDate, date)) {
+          return true
+        }
+      }
+      return false
+    }
+
+    // Helper function to render a day with proper classes
+    const renderDay = (date: Date, isOtherMonth: boolean = false) => {
+      const isValid = this.isDateValid(date)
+      const isSelected = isDateSelected(date)
+      const isCurrentInput =
+        this.activeInput &&
+        this.areDatesEqual(
+          this.selectedDates.get(this.activeInput.id) || null,
+          date,
+        )
+
+      const isLinkedDate = (() => {
+        if (!this.activeInput) return false
+
+        const inputConfig = this.registeredInputs.get(this.activeInput.id)
+        if (!inputConfig?.linkedInputId) return false
+
+        const linkedDate = this.selectedDates.get(inputConfig.linkedInputId)
+        return linkedDate && this.areDatesEqual(linkedDate, date)
+      })()
+
+      const dayClasses = [
+        day.base,
+        !isValid ? day.disabled : isOtherMonth ? day.empty : '',
+        isSelected ? day.selected : '',
+        isCurrentInput ? day.currentInput : '', // Güncellendi
+        isLinkedDate ? day.linkedHighlight : '', // Güncellendi
+      ]
+        .filter(Boolean)
+        .join(' ')
+
+      return `<div class="${dayClasses}"
+            data-date="${date.toISOString()}"
+            data-month="${isOtherMonth ? (date < firstDayOfMonth ? 'prev' : 'next') : 'current'}"
+            ${isLinkedDate ? 'data-linked="true"' : ''}>
+            ${date.getDate()}
+          </div>`
+    }
+
     // Render previous month's days
     for (let i = daysFromPrevMonth; i > 0; i--) {
       const prevDate = new Date(
@@ -471,22 +606,7 @@ class DatePicker {
         this.currentDate.getMonth() - 1,
         prevMonthLastDay.getDate() - i + 1,
       )
-      const isValid = this.isDateValid(prevDate)
-      const isSelected = this.areDatesEqual(this.selectedDate, prevDate)
-
-      const dayClasses = [
-        day.base,
-        !isValid ? day.disabled : day.empty,
-        isSelected ? day.selected : '',
-      ]
-        .filter(Boolean)
-        .join(' ')
-
-      calendarHTML += `<div class="${dayClasses}"
-          data-date="${prevDate.toISOString()}"
-          data-month="prev">
-          ${prevMonthLastDay.getDate() - i + 1}
-        </div>`
+      calendarHTML += renderDay(prevDate, true)
     }
 
     // Render current month's days
@@ -496,23 +616,7 @@ class DatePicker {
         this.currentDate.getMonth(),
         i,
       )
-      const isValid = this.isDateValid(currentDate)
-      const isSelected = this.areDatesEqual(this.selectedDate, currentDate)
-
-      const dayClasses = [
-        day.base,
-        !isValid ? day.disabled : '',
-        isSelected ? day.selected : '',
-      ]
-        .filter(Boolean)
-        .join(' ')
-
-      calendarHTML += `
-          <div class="${dayClasses}"
-            data-date="${currentDate.toISOString()}"
-            data-month="current">
-            ${i}
-          </div>`
+      calendarHTML += renderDay(currentDate)
     }
 
     // Render next month's days
@@ -522,22 +626,7 @@ class DatePicker {
         this.currentDate.getMonth() + 1,
         i,
       )
-      const isValid = this.isDateValid(nextDate)
-      const isSelected = this.areDatesEqual(this.selectedDate, nextDate)
-
-      const dayClasses = [
-        day.base,
-        !isValid ? day.disabled : day.empty,
-        isSelected ? day.selected : '',
-      ]
-        .filter(Boolean)
-        .join(' ')
-
-      calendarHTML += `<div class="${dayClasses}"
-          data-date="${nextDate.toISOString()}"
-          data-month="next">
-          ${i}
-        </div>`
+      calendarHTML += renderDay(nextDate, true)
     }
 
     calendarHTML += '</div>'
@@ -568,35 +657,94 @@ class DatePicker {
     this.daysContainer?.addEventListener('click', e => {
       e.stopPropagation()
       const target = e.target as HTMLElement
-      if (
-        target.classList.contains(this.classes.day?.base ?? '') &&
-        !target.classList.contains(this.classes.day?.disabled ?? '')
-      ) {
+      if (target.classList.contains(this.classes.day?.base ?? '')) {
         const dateStr = target.getAttribute('data-date')
         const monthType = target.getAttribute('data-month')
 
-        if (dateStr) {
-          const date = new Date(dateStr)
+        if (!dateStr || !this.activeInput) return
 
-          // Handle month transition if clicking on prev/next month days
-          if (monthType === 'prev') {
-            this.changeMonth('prev')
-          } else if (monthType === 'next') {
-            this.changeMonth('next')
+        const date = new Date(dateStr)
+        const selectedDate = this.stripTime(date)
+        const inputConfig = this.registeredInputs.get(this.activeInput.id)
+
+        // Linked date kontrolü
+        const isLinkedDate = (() => {
+          if (!this.activeInput) return false
+
+          const currentConfig = this.registeredInputs.get(this.activeInput.id)
+          if (!currentConfig?.linkedInputId) return false
+
+          const linkedDate = this.dateValues.get(currentConfig.linkedInputId)
+          return linkedDate && this.areDatesEqual(linkedDate, date)
+        })()
+
+        // Eğer linked date'e tıklandıysa, bağlantılı input'a geç
+        if (isLinkedDate && this.activeInput) {
+          const currentConfig = this.registeredInputs.get(this.activeInput.id)
+          if (currentConfig?.linkedInputId) {
+            const linkedInput = document.getElementById(
+              currentConfig.linkedInputId,
+            ) as HTMLInputElement
+            if (linkedInput) {
+              this.handleInputClick(linkedInput)
+              return
+            }
           }
+        }
 
-          // Update selected date
-          this.selectedDate = date
-          this.currentDate = new Date(date)
-
-          // Only hide if it's not a month transition
-          if (monthType === 'current') {
-            this.selectDate(date)
-          } else {
-            this.renderCalendar()
-            this.renderMonthShortNames()
-            this.updateNavigationState()
+        // Eğer disabled bir güne tıklandıysa ve bu gün linked date ise
+        // yine diğer input'a geçiş yap
+        if (target.classList.contains(this.classes.day?.disabled ?? '')) {
+          const currentConfig = this.registeredInputs.get(this.activeInput.id)
+          if (currentConfig?.linkedInputId) {
+            const linkedDate = this.dateValues.get(currentConfig.linkedInputId)
+            if (linkedDate && this.areDatesEqual(linkedDate, date)) {
+              const linkedInput = document.getElementById(
+                currentConfig.linkedInputId,
+              ) as HTMLInputElement
+              if (linkedInput) {
+                this.handleInputClick(linkedInput)
+                return
+              }
+            }
           }
+          return // Disabled ise ve linked date değilse hiçbir şey yapma
+        }
+
+        // Tarih seçimi öncesi validasyon
+        if (inputConfig) {
+          if (inputConfig.type === 'start' && inputConfig.linkedInputId) {
+            const endDate = this.dateValues.get(inputConfig.linkedInputId)
+            if (endDate && this.stripTime(endDate) <= selectedDate) {
+              return
+            }
+          } else if (inputConfig.type === 'end' && inputConfig.linkedInputId) {
+            const startDate = this.dateValues.get(inputConfig.linkedInputId)
+            if (startDate && this.stripTime(startDate) >= selectedDate) {
+              return
+            }
+          }
+        }
+
+        // Handle month transition if clicking on prev/next month days
+        if (monthType === 'prev') {
+          this.changeMonth('prev')
+        } else if (monthType === 'next') {
+          this.changeMonth('next')
+        }
+
+        // Update selected date and current date
+        if (this.activeInput) {
+          this.selectedDates.set(this.activeInput.id, date)
+        }
+        this.currentDate = new Date(date)
+
+        if (monthType === 'current') {
+          this.selectDate(date)
+        } else {
+          this.renderCalendar()
+          this.renderMonthShortNames()
+          this.updateNavigationState()
         }
       }
     })
@@ -607,21 +755,28 @@ class DatePicker {
 
     document.addEventListener('click', e => {
       const target = e.target as HTMLElement
+
+      // İnput elementlerine tıklanıp tıklanmadığını kontrol et
       const isDateInput = Array.from(this.registeredInputs.values()).some(
         input => input.element === target,
       )
 
-      if (
-        !isDateInput &&
+      // Date picker'ın dışına tıklanıp tıklanmadığını kontrol et
+      const isOutsideClick =
         this.containerElement &&
-        !this.containerElement.contains(target)
-      ) {
-        // If a date is selected but not yet applied, apply it before hiding
-        if (this.selectedDate && this.activeInput) {
-          this.selectDate(this.selectedDate)
-        } else {
-          this.hideDatePicker()
+        !this.containerElement.contains(target) &&
+        !isDateInput
+
+      if (isOutsideClick) {
+        if (this.activeInput) {
+          // Eğer seçili bir tarih varsa onu uygula
+          const selectedDate = this.selectedDates.get(this.activeInput.id)
+          if (selectedDate) {
+            this.selectDate(selectedDate)
+          }
         }
+        this.hideDatePicker()
+        this.activeInput = null // Aktif input'u temizle
       }
     })
   }
@@ -669,14 +824,23 @@ class DatePicker {
     if (minDate && strippedDate < minDate) return false
     if (maxDate && strippedDate > maxDate) return false
 
-    if (this.activeInput) {
-      const inputConfig = this.registeredInputs.get(this.activeInput.id)
-      if (inputConfig?.type === 'end' && inputConfig.linkedInputId) {
-        const startDate = this.dateValues.get(inputConfig.linkedInputId)
-        if (startDate && strippedDate < this.stripTime(startDate)) return false
-      } else if (inputConfig?.type === 'start' && inputConfig.linkedInputId) {
-        const endDate = this.dateValues.get(inputConfig.linkedInputId)
-        if (endDate && strippedDate > this.stripTime(endDate)) return false
+    if (!this.activeInput) return false
+
+    const inputConfig = this.registeredInputs.get(this.activeInput.id)
+    if (!inputConfig) return false
+
+    // Burada önemli değişiklik: dateValues yerine selectedDates kullanıyoruz
+    if (inputConfig.type === 'end' && inputConfig.linkedInputId) {
+      const startDate = this.selectedDates.get(inputConfig.linkedInputId)
+      if (startDate) {
+        const strippedStartDate = this.stripTime(startDate)
+        if (strippedDate <= strippedStartDate) return false
+      }
+    } else if (inputConfig.type === 'start' && inputConfig.linkedInputId) {
+      const endDate = this.selectedDates.get(inputConfig.linkedInputId)
+      if (endDate) {
+        const strippedEndDate = this.stripTime(endDate)
+        if (strippedDate >= strippedEndDate) return false
       }
     }
 
@@ -696,35 +860,62 @@ class DatePicker {
   }
 
   private selectDate(date: Date) {
-    if (this.isDateValid(date)) {
-      this.selectedDate = date
-      if (this.activeInput) {
-        this.activeInput.value = date.toLocaleDateString()
-        this.dateValues.set(this.activeInput.id, new Date(date))
+    if (!this.activeInput) return
 
-        const inputConfig = this.registeredInputs.get(this.activeInput.id)
-        if (inputConfig?.type === 'start' && inputConfig.linkedInputId) {
-          const endInput = document.getElementById(
-            inputConfig.linkedInputId,
-          ) as HTMLInputElement
-          const endDate = this.dateValues.get(inputConfig.linkedInputId)
+    // Tarihleri karşılaştırmak için hepsini stripTime ile normalize edelim
+    const selectedDate = this.stripTime(date)
+    const inputConfig = this.registeredInputs.get(this.activeInput.id)
 
-          if (endDate && endDate < date) {
-            endInput.value = ''
-            this.dateValues.delete(inputConfig.linkedInputId)
-          }
-        } else if (inputConfig?.type === 'end' && inputConfig.linkedInputId) {
-          const startInput = document.getElementById(
-            inputConfig.linkedInputId,
-          ) as HTMLInputElement
-          const startDate = this.dateValues.get(inputConfig.linkedInputId)
-
-          if (startDate && startDate > date) {
-            startInput.value = ''
-            this.dateValues.delete(inputConfig.linkedInputId)
-          }
+    // Tarih seçimi öncesi validasyon
+    if (inputConfig) {
+      if (inputConfig.type === 'start' && inputConfig.linkedInputId) {
+        // Gidiş tarihi için kontrol
+        const endDate = this.dateValues.get(inputConfig.linkedInputId)
+        if (endDate && this.stripTime(endDate) < selectedDate) {
+          console.warn('Gidiş tarihi dönüş tarihinden sonra olamaz')
+          return
+        }
+      } else if (inputConfig.type === 'end' && inputConfig.linkedInputId) {
+        // Dönüş tarihi için kontrol
+        const startDate = this.dateValues.get(inputConfig.linkedInputId)
+        if (startDate && this.stripTime(startDate) > selectedDate) {
+          console.warn('Dönüş tarihi gidiş tarihinden önce olamaz')
+          return
         }
       }
+    }
+
+    if (this.isDateValid(date)) {
+      // Tarihi seç
+      this.selectedDates.set(this.activeInput.id, new Date(selectedDate))
+      this.activeInput.value = selectedDate.toLocaleDateString()
+      this.dateValues.set(this.activeInput.id, new Date(selectedDate))
+
+      // Bağlantılı tarihleri kontrol et ve gerekirse temizle
+      if (inputConfig?.type === 'start' && inputConfig.linkedInputId) {
+        const endInput = document.getElementById(
+          inputConfig.linkedInputId,
+        ) as HTMLInputElement
+        const endDate = this.dateValues.get(inputConfig.linkedInputId)
+
+        if (endDate && this.stripTime(endDate) < selectedDate) {
+          endInput.value = ''
+          this.dateValues.delete(inputConfig.linkedInputId)
+          this.selectedDates.delete(inputConfig.linkedInputId)
+        }
+      } else if (inputConfig?.type === 'end' && inputConfig.linkedInputId) {
+        const startInput = document.getElementById(
+          inputConfig.linkedInputId,
+        ) as HTMLInputElement
+        const startDate = this.dateValues.get(inputConfig.linkedInputId)
+
+        if (startDate && this.stripTime(startDate) > selectedDate) {
+          startInput.value = ''
+          this.dateValues.delete(inputConfig.linkedInputId)
+          this.selectedDates.delete(inputConfig.linkedInputId)
+        }
+      }
+
       this.renderCalendar()
       this.hideDatePicker()
     }
@@ -737,17 +928,31 @@ class DatePicker {
     return d1.getTime() === d2.getTime()
   }
 
+  public resetInput(inputId: string) {
+    const inputConfig = this.registeredInputs.get(inputId)
+    if (inputConfig) {
+      inputConfig.element.value = ''
+      this.selectedDates.delete(inputId)
+      this.renderCalendar()
+    }
+  }
+
   public resetToToday() {
     const today = this.stripTime(new Date())
     this.currentDate = new Date(today)
     this.selectedDate = today
+
+    // Aktif input varsa bugünün tarihini seç
     if (this.activeInput) {
-      this.activeInput.value = today.toLocaleDateString()
+      this.selectedDates.set(this.activeInput.id, new Date(today))
       this.dateValues.set(this.activeInput.id, new Date(today))
+      this.activeInput.value = today.toLocaleDateString()
     }
+
     this.renderMonthShortNames()
     this.renderCalendar()
     this.updateNavigationState()
+    // Date picker'ı açık bırak, kullanıcı outside click yapınca kapanacak
   }
 
   public resetAllInputs() {
@@ -755,12 +960,17 @@ class DatePicker {
       config.element.value = ''
     })
 
-    this.dateValues.clear()
-    this.selectedDate = null
+    this.selectedDates.clear()
+    this.dateValues.clear() // dateValues'ı da temizleyelim
     this.currentDate = new Date()
+    this.selectedDate = null // selectedDate'i de null yapalım
     this.renderMonthShortNames()
     this.renderCalendar()
     this.updateNavigationState()
+    this.hideDatePicker() // Date picker'ı kapat
+
+    // Aktif input'u da sıfırlayalım
+    this.activeInput = null
   }
 
   public destroy() {
