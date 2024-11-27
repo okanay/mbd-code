@@ -1484,12 +1484,12 @@
       >
         <div
           id="gallery-modal-content"
-          class="relative w-full max-w-5xl overflow-hidden rounded-xl bg-white/10 shadow-2xl"
+          class="relative w-full max-w-5xl overflow-hidden rounded-xl bg-neutral-900 shadow-2xl"
         >
           <!-- Close button - DONT EDIT THIS -->
           <button
             id="gallery-modal-close-button"
-            class="absolute right-4 top-4 rounded-full border border-white/20 bg-gray-950/40 p-2 text-white transition-all duration-300 hover:opacity-60 active:scale-90"
+            class="absolute right-4 top-4 rounded-full border border-white/20 bg-neutral-950 p-2 text-white transition-all duration-300 hover:opacity-60 active:scale-90"
             aria-label="Close Gallery"
           >
             <img
@@ -1500,7 +1500,10 @@
           </button>
 
           <!-- Main image - DONT EDIT THIS -->
-          <div id="gallery-modal-main-image-container" class="bg-black/50 p-4">
+          <div
+            id="gallery-modal-main-image-container"
+            class="mb-0 bg-neutral-900"
+          >
             <img
               src="#"
               alt="Gallery Main Image"
@@ -1509,7 +1512,7 @@
           </div>
 
           <!-- Thumbnails container -->
-          <div class="relative rounded-b-xl bg-gray-950/40 px-4 py-2">
+          <div class="relative rounded-b-xl bg-neutral-950 px-4 pt-4">
             <!-- Thumbnails - DONT EDIT THIS -->
             <div
               id="gallery-modal-thumbnails"
