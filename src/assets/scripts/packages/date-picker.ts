@@ -73,7 +73,7 @@ interface RegisteredInput {
 
 interface DatePickerInputConfig {
   type: DatePickerInputType
-  config: SingleDateInput | DateRangeInput | BetweenDateInput
+  elements: SingleDateInput | DateRangeInput | BetweenDateInput
 }
 
 interface RegisteredInput {
@@ -103,7 +103,7 @@ interface MonthPointerClasses {
 interface MonthClasses {
   container?: string
   current?: string
-  pointer?: {
+  buttons?: {
     prev?: MonthPointerClasses
     next?: MonthPointerClasses
   }
@@ -126,21 +126,28 @@ interface DatePickerClasses {
   wrapper?: WrapperClasses
 }
 
+interface OutputConfig {
+  order: string[] // ["day", "month", "year"]
+  slash: string // "/" or "-" or "."
+  between: string // " - " or " to "
+}
+
 interface DatePickerConfig {
-  containers: {
+  elements: {
     container: string
     monthContainer: string
     daysContainer: string
-    pointer: {
+    buttons: {
       prev: string
       next: string
+      reset?: string
+      resetAll?: string
     }
-    reset?: string
-    resetAll?: string
   }
   input: DatePickerInputConfig
   classes?: DatePickerClasses
   language: LanguageConfig[]
+  output?: OutputConfig
   minDate?: Date
   maxDate?: Date
   autoClose?: boolean
@@ -166,6 +173,11 @@ class DatePicker {
   private selectedDates: Map<string, Date> = new Map()
   private autoClose = true
   private autoSwitchInput = true
+  private outputConfig: OutputConfig = {
+    order: ['day', 'month', 'year'],
+    slash: '/',
+    between: ' - ',
+  }
 
   private betweenStartDate: Date | null = null
   private betweenEndDate: Date | null = null
@@ -179,8 +191,10 @@ class DatePicker {
     this.currentDate = this.stripTime(new Date())
     this.selectedDate = this.stripTime(new Date())
 
-    this.autoClose = config.autoClose || false
-    this.autoSwitchInput = config.autoSwitchInput || true
+    this.autoClose = config.autoClose || this.autoClose
+    this.autoSwitchInput = config.autoSwitchInput || this.autoSwitchInput
+
+    this.outputConfig = config.output || this.outputConfig
 
     // Also strip time from min and max dates
     if (this.config.minDate) {
@@ -191,21 +205,21 @@ class DatePicker {
     }
 
     this.monthShortNamePointer = document.getElementById(
-      config.containers.monthContainer,
+      config.elements.monthContainer,
     )
-    this.daysContainer = document.getElementById(
-      config.containers.daysContainer,
-    )
-    this.containerElement = document.getElementById(config.containers.container)
-    this.prevButton = document.getElementById(config.containers.pointer.prev)
-    this.nextButton = document.getElementById(config.containers.pointer.next)
+    this.daysContainer = document.getElementById(config.elements.daysContainer)
+    this.containerElement = document.getElementById(config.elements.container)
+    this.prevButton = document.getElementById(config.elements.buttons.prev)
+    this.nextButton = document.getElementById(config.elements.buttons.next)
 
-    if (config.containers.reset) {
-      this.resetButton = document.getElementById(config.containers.reset)
+    if (config.elements.buttons.reset) {
+      this.resetButton = document.getElementById(config.elements.buttons.reset)
     }
 
-    if (config.containers.resetAll) {
-      this.resetAllButton = document.getElementById(config.containers.resetAll)
+    if (config.elements.buttons.resetAll) {
+      this.resetAllButton = document.getElementById(
+        config.elements.buttons.resetAll,
+      )
     }
 
     if (
@@ -230,7 +244,7 @@ class DatePicker {
     const { input } = this.config
 
     if (input.type === 'single') {
-      const singleConfig = input.config as SingleDateInput
+      const singleConfig = input.elements as SingleDateInput
       if (singleConfig.focusContainer) {
         const container = document.getElementById(singleConfig.focusContainer)
         if (container) {
@@ -238,7 +252,7 @@ class DatePicker {
         }
       }
     } else if (input.type === 'range') {
-      const rangeConfig = input.config as DateRangeInput
+      const rangeConfig = input.elements as DateRangeInput
 
       if (rangeConfig.start.focusContainer) {
         const startContainer = document.getElementById(
@@ -292,14 +306,14 @@ class DatePicker {
       merged.month = {
         ...defaults.month,
         ...custom.month,
-        pointer: {
+        buttons: {
           prev: {
-            ...defaults.month?.pointer?.prev,
-            ...custom.month?.pointer?.prev,
+            ...defaults.month?.buttons?.prev,
+            ...custom.month?.buttons?.prev,
           },
           next: {
-            ...defaults.month?.pointer?.next,
-            ...custom.month?.pointer?.next,
+            ...defaults.month?.buttons?.next,
+            ...custom.month?.buttons?.next,
           },
         },
       }
@@ -326,7 +340,7 @@ class DatePicker {
     const { input } = this.config
 
     if (input.type === 'single') {
-      const singleConfig = input.config as SingleDateInput
+      const singleConfig = input.elements as SingleDateInput
       const dateInput = document.getElementById(
         singleConfig.id,
       ) as HTMLInputElement
@@ -334,7 +348,7 @@ class DatePicker {
         this.registerInput(dateInput, { type: 'single' })
       }
     } else if (input.type === 'range') {
-      const rangeConfig = input.config as DateRangeInput
+      const rangeConfig = input.elements as DateRangeInput
       const startInput = document.getElementById(
         rangeConfig.start.id,
       ) as HTMLInputElement
@@ -353,7 +367,7 @@ class DatePicker {
         })
       }
     } else if (input.type === 'between') {
-      const betweenConfig = input.config as BetweenDateInput
+      const betweenConfig = input.elements as BetweenDateInput
       const dateInput = document.getElementById(
         betweenConfig.id,
       ) as HTMLInputElement
@@ -719,6 +733,26 @@ class DatePicker {
     return `${day}/${month}/${year}`
   }
 
+  private formatDateBasedOnConfig(date: Date): string {
+    const day = date.getDate().toString().padStart(2, '0')
+    const month = (date.getMonth() + 1).toString().padStart(2, '0')
+    const year = date.getFullYear().toString()
+
+    const parts: Record<string, string> = {
+      day,
+      month,
+      year,
+    }
+
+    const output = this.config.output || {
+      order: ['day', 'month', 'year'],
+      slash: '/',
+      between: ' - ',
+    }
+
+    return output.order.map(part => parts[part]).join(output.slash)
+  }
+
   private addEventListeners() {
     this.prevButton?.addEventListener('click', e => {
       e.stopPropagation()
@@ -882,9 +916,9 @@ class DatePicker {
 
     if (this.prevButton && minDate) {
       const isDisabled = currentMonth <= minDate
-      if (this.classes.month.pointer?.prev?.disabled) {
+      if (this.classes.month.buttons?.prev?.disabled) {
         this.prevButton.classList.toggle(
-          this.classes.month.pointer.prev.disabled,
+          this.classes.month.buttons.prev.disabled,
           isDisabled,
         )
       }
@@ -893,9 +927,9 @@ class DatePicker {
 
     if (this.nextButton && maxDate) {
       const isDisabled = currentMonth >= maxDate
-      if (this.classes.month.pointer?.next?.disabled) {
+      if (this.classes.month.buttons?.next?.disabled) {
         this.nextButton.classList.toggle(
-          this.classes.month.pointer.next.disabled,
+          this.classes.month.buttons.next.disabled,
           isDisabled,
         )
       }
@@ -970,14 +1004,12 @@ class DatePicker {
     const inputConfig = this.registeredInputs.get(this.activeInput.id)
     if (!inputConfig) return
 
-    // Config kontrollerini yap
     const shouldAutoClose = this.config.autoClose ?? true
     const shouldAutoSwitch = this.config.autoSwitchInput ?? true
+    const selectedDate = this.stripTime(date)
 
     // Between tipi için özel tarih seçim mantığı
     if (this.config.input.type === 'between') {
-      const selectedDate = this.stripTime(date)
-
       // Seçilen tarih zaten seçili olan başlangıç veya bitiş tarihiyse, date picker'ı resetle
       if (
         (this.betweenStartDate &&
@@ -996,7 +1028,7 @@ class DatePicker {
         this.betweenStartDate = selectedDate
         this.selectedDates.set(`${this.activeInput.id}-start`, selectedDate)
         this.dateValues.set(`${this.activeInput.id}-start`, selectedDate)
-        this.activeInput.value = this.formatDate(selectedDate)
+        this.activeInput.value = this.formatDateBasedOnConfig(selectedDate)
 
         this.renderCalendar()
         return
@@ -1007,7 +1039,7 @@ class DatePicker {
         this.betweenStartDate = selectedDate
         this.isBetweenSelectionActive = true
 
-        this.activeInput.value = this.formatDate(selectedDate)
+        this.activeInput.value = this.formatDateBasedOnConfig(selectedDate)
         this.selectedDates.set(`${this.activeInput.id}-start`, selectedDate)
         this.dateValues.set(`${this.activeInput.id}-start`, selectedDate)
 
@@ -1022,13 +1054,21 @@ class DatePicker {
           this.betweenStartDate = selectedDate
           this.selectedDates.set(`${this.activeInput.id}-start`, selectedDate)
           this.dateValues.set(`${this.activeInput.id}-start`, selectedDate)
-          this.activeInput.value = this.formatDate(selectedDate)
+          this.activeInput.value = this.formatDateBasedOnConfig(selectedDate)
         } else {
           // Seçilen tarih başlangıçtan sonraysa, bitiş tarihi yap
           this.betweenEndDate = selectedDate
           this.selectedDates.set(`${this.activeInput.id}-end`, selectedDate)
           this.dateValues.set(`${this.activeInput.id}-end`, selectedDate)
-          this.activeInput.value = `${this.formatDate(this.betweenStartDate)} & ${this.formatDate(selectedDate)}`
+
+          // Between separator'ı kullanarak iki tarihi birleştir
+          const output = this.config.output || {
+            order: ['day', 'month', 'year'],
+            slash: '/',
+            between: ' - ',
+          }
+
+          this.activeInput.value = `${this.formatDateBasedOnConfig(this.betweenStartDate)}${output.between}${this.formatDateBasedOnConfig(selectedDate)}`
 
           if (shouldAutoClose) {
             this.hideDatePicker()
@@ -1049,7 +1089,7 @@ class DatePicker {
 
         this.selectedDates.set(`${this.activeInput.id}-start`, selectedDate)
         this.dateValues.set(`${this.activeInput.id}-start`, selectedDate)
-        this.activeInput.value = this.formatDate(selectedDate)
+        this.activeInput.value = this.formatDateBasedOnConfig(selectedDate)
 
         this.renderCalendar()
         return
@@ -1058,12 +1098,10 @@ class DatePicker {
 
     // Range tipi için özel tarih seçim mantığı
     if (this.config.input.type === 'range') {
-      const selectedDate = this.stripTime(date)
-
       // Tarihi seç ve input'u güncelle
       this.selectedDates.set(this.activeInput.id, new Date(selectedDate))
       this.dateValues.set(this.activeInput.id, new Date(selectedDate))
-      this.activeInput.value = this.formatDate(selectedDate)
+      this.activeInput.value = this.formatDateBasedOnConfig(selectedDate)
 
       // Diğer input'a geçiş kontrolü
       if (shouldAutoSwitch && inputConfig.linkedInputId) {
@@ -1092,12 +1130,10 @@ class DatePicker {
     }
 
     // Normal tarih seçimi işlemleri (single mod)
-    const selectedDate = this.stripTime(date)
-
     if (this.isDateValid(date)) {
       // Seçilen tarihi kaydet
       this.selectedDates.set(this.activeInput.id, new Date(selectedDate))
-      this.activeInput.value = this.formatDate(selectedDate)
+      this.activeInput.value = this.formatDateBasedOnConfig(selectedDate)
       this.dateValues.set(this.activeInput.id, new Date(selectedDate))
 
       // Bağlantılı tarihleri kontrol et ve gerekirse temizle
@@ -1157,9 +1193,9 @@ class DatePicker {
       this.selectedDates.set(`${this.activeInput?.id}-start`, today)
       this.dateValues.set(`${this.activeInput?.id}-start`, today)
 
-      // Input değerini güncelle
+      // Input değerini güncelle - yeni formatlama sistemi ile
       if (this.activeInput) {
-        this.activeInput.value = this.formatDate(today)
+        this.activeInput.value = this.formatDateBasedOnConfig(today)
       }
 
       // Calendar'ı bugünün olduğu aya getir
@@ -1195,7 +1231,8 @@ class DatePicker {
       this.selectedDate = today
       this.selectedDates.set(this.activeInput.id, new Date(today))
       this.dateValues.set(this.activeInput.id, new Date(today))
-      this.activeInput.value = today.toLocaleDateString()
+      // Yeni formatlama sistemi ile bugünün tarihini yazdır
+      this.activeInput.value = this.formatDateBasedOnConfig(today)
     } else {
       this.currentDate = new Date(today)
       this.selectedDate = today

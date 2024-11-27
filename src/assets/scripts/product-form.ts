@@ -1,6 +1,62 @@
 import { DatePicker } from './packages/date-picker.js'
 import type { LanguageConfig } from './packages/date-picker.js'
 
+document.addEventListener('DOMContentLoaded', () => {
+  new DatePicker({
+    input: {
+      type: 'range',
+      elements: {
+        start: {
+          id: 'departure-date',
+          focusContainer: 'departure-container',
+        },
+        end: {
+          id: 'return-date',
+          focusContainer: 'return-container',
+        },
+      },
+    },
+    elements: {
+      container: 'date-picker-container',
+      monthContainer: 'date-picker-current-month-name',
+      daysContainer: 'date-picker-days',
+      buttons: {
+        prev: 'prev-month-btn',
+        next: 'next-month-btn',
+        reset: 'reset-to-today-btn',
+        resetAll: 'reset-all-btn',
+      },
+    },
+    minDate: new Date(),
+    maxDate: new Date(8640000000000000),
+    autoClose: false,
+    autoSwitchInput: true,
+    output: {
+      order: ['day', 'month', 'year'],
+      slash: '.',
+      between: ' & ',
+    },
+    language: [turkishLanguage, englishLanguage, arabicLanguage],
+  })
+
+  const ratingContainer = document.querySelector('[data-total-comments]')
+  const totalComments = Number(
+    ratingContainer?.getAttribute('data-total-comments') || 0,
+  )
+
+  const ratingBars = document.querySelectorAll('[data-rate]')
+
+  ratingBars.forEach(bar => {
+    const rate = Number(bar.getAttribute('data-rate') || 0)
+    const percentage = (rate / totalComments) * 100
+
+    // Width değerini yüzdeye göre ayarla
+    if (bar instanceof HTMLElement) {
+      bar.style.width = `${percentage}%`
+    }
+  })
+})
+
 const turkishLanguage: LanguageConfig = {
   language: 'tr',
   monthNames: [
@@ -57,54 +113,3 @@ const englishLanguage: LanguageConfig = {
   ],
   dayNames: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
 }
-
-document.addEventListener('DOMContentLoaded', () => {
-  new DatePicker({
-    language: [turkishLanguage, englishLanguage, arabicLanguage],
-    minDate: new Date(),
-    maxDate: new Date(8640000000000000),
-    autoClose: false,
-    autoSwitchInput: true,
-    containers: {
-      container: 'date-picker-container',
-      monthContainer: 'date-picker-current-month-name',
-      daysContainer: 'date-picker-days',
-      pointer: {
-        prev: 'prev-month-btn',
-        next: 'next-month-btn',
-      },
-      reset: 'reset-to-today-btn',
-      resetAll: 'reset-all-btn',
-    },
-    input: {
-      type: 'range',
-      config: {
-        start: {
-          id: 'departure-date',
-          focusContainer: 'departure-container',
-        },
-        end: {
-          id: 'return-date',
-          focusContainer: 'return-container',
-        },
-      },
-    },
-  })
-
-  const ratingContainer = document.querySelector('[data-total-comments]')
-  const totalComments = Number(
-    ratingContainer?.getAttribute('data-total-comments') || 0,
-  )
-
-  const ratingBars = document.querySelectorAll('[data-rate]')
-
-  ratingBars.forEach(bar => {
-    const rate = Number(bar.getAttribute('data-rate') || 0)
-    const percentage = (rate / totalComments) * 100
-
-    // Width değerini yüzdeye göre ayarla
-    if (bar instanceof HTMLElement) {
-      bar.style.width = `${percentage}%`
-    }
-  })
-})
