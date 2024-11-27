@@ -67,7 +67,7 @@ document.addEventListener('DOMContentLoaded', () => {
     autoSwitchInput: true,
     containers: {
       container: 'date-picker-container',
-      monthContainer: 'date-picker-months',
+      monthContainer: 'date-picker-current-month-name',
       daysContainer: 'date-picker-days',
       pointer: {
         prev: 'prev-month-btn',
