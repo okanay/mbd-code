@@ -3,7 +3,8 @@ import { ImageGalleryTracker, UpdateProductSliderDataItems, UpdateElementInnerHT
 import { Slider } from './packages/slider.js'
 import { TouchDirectionDetector } from './packages/touch-event.js'
 import { ModalController } from './packages/modal.js'
-import { RatingBarController } from '../../../dist/assets/scripts/packages/rating-bar-controller.js'
+import { RatingAnimator } from './packages/rating-bar-controller.js'
+import { URLMatcher } from './packages/url-match.js'
 
 document.addEventListener('DOMContentLoaded', () => {
   const gallery = new ImageGalleryTracker({
@@ -137,13 +138,6 @@ document.addEventListener('DOMContentLoaded', () => {
     },
   )
 
-  const ratingController = new RatingBarController({
-    containerSelector: '#rating-container',
-    barSelector: '.rating-bar',
-    animationDuration: 1000,
-    modalId: 'comments',
-  })
-
   new ModalController(
     [
       {
@@ -184,9 +178,24 @@ document.addEventListener('DOMContentLoaded', () => {
       scrollLock: {
         enabled: false,
       },
-      onToggle(modalId, state) {
-        ratingController.handleModalToggle(modalId, state)
-      },
     },
   )
+
+  const urlMatcher = new URLMatcher({
+    queryParam: 'modal',
+    targetValues: ['comments'],
+  })
+
+  const ratingAnimator = new RatingAnimator({
+    containerSelector: '#rating-container',
+    barSelector: '.rating-bar',
+    animationDuration: 1000,
+  })
+
+  urlMatcher.on('onFirstMatch', 'comments', () => {
+    ratingAnimator.animate()
+    console.log(
+      '"comments" URL eşleştirici ilk kez eşleşti ve dinleyici kapatıldı!',
+    )
+  })
 })
