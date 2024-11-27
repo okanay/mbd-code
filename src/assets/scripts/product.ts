@@ -4,7 +4,7 @@ import { Slider } from './packages/slider.js'
 import { TouchDirectionDetector } from './packages/touch-event.js'
 import { ModalController } from './packages/modal.js'
 import { RatingAnimator } from './packages/rating-bar-controller.js'
-import { URLMatcher } from './packages/url-match.js'
+import { URLMatcher } from './packages/url-matcher.js'
 
 document.addEventListener('DOMContentLoaded', () => {
   const gallery = new ImageGalleryTracker({
