@@ -179,7 +179,7 @@ document.addEventListener('DOMContentLoaded', () => {
       scrollLock: {
         enabled: false,
       },
-      onToggle: (menuId, isOpen, trigger) => {
+      onToggle: (menuId, isOpen) => {
         if (isOpen) {
           // Sadece modal açılırken çalışsın
           const allButtons = [
