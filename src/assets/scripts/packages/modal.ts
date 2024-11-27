@@ -23,6 +23,11 @@ interface ModalConfig {
       preserved: string
     }
   }
+  urlState?: {
+    enabled: boolean
+    queryParam?: string
+    modals?: string[]
+  }
 }
 
 interface ModalDefinition {
@@ -83,6 +88,11 @@ class ModalController {
           preserved: config.attributes?.values?.preserved ?? 'open',
         },
       },
+      urlState: {
+        enabled: config.urlState?.enabled ?? false,
+        queryParam: config.urlState?.queryParam ?? 'modal',
+        modals: config.urlState?.modals ?? [],
+      },
     }
 
     if (document.readyState === 'loading') {
@@ -98,23 +108,80 @@ class ModalController {
     }
   }
 
-  private handleInitialState(): void {
-    if (!this.initialized && this.config.initialActiveModal) {
-      const initialModal = this.menus.get(this.config.initialActiveModal)
-      if (initialModal) {
-        this.openModal(this.config.initialActiveModal, null)
+  private updateButtonStates(activeModalId: string | null): void {
+    const allButtons = Array.from(this.menus.values()).flatMap(menu => [
+      ...menu.triggers,
+      ...menu.openButtons,
+    ])
 
-        const modalButtons = [
-          ...initialModal.triggers,
-          ...initialModal.openButtons,
-        ]
+    allButtons.forEach(button => {
+      button.setAttribute(
+        this.config.attributes.stateAttribute!,
+        this.config.attributes.values.hidden,
+      )
+    })
 
-        modalButtons.forEach(button => {
+    if (activeModalId) {
+      const activeMenu = this.menus.get(activeModalId)
+      if (activeMenu) {
+        ;[...activeMenu.triggers, ...activeMenu.openButtons].forEach(button => {
           button.setAttribute(
             this.config.attributes.stateAttribute!,
             this.config.attributes.values.open,
           )
         })
+      }
+    }
+  }
+
+  private getUrlModalState(): string | null {
+    if (!this.config.urlState.enabled) return null
+
+    const urlParams = new URLSearchParams(window.location.search)
+    const modalId = urlParams.get(this.config.urlState.queryParam!)
+
+    if (
+      modalId &&
+      this.menus.has(modalId) &&
+      (this.config.urlState.modals!.length === 0 ||
+        this.config.urlState.modals!.includes(modalId))
+    ) {
+      return modalId
+    }
+
+    return null
+  }
+
+  private updateUrlState(modalId: string | null, isUserAction: boolean): void {
+    if (!this.config.urlState.enabled || !isUserAction) return
+
+    if (
+      !modalId ||
+      (this.config.urlState.modals!.length > 0 &&
+        !this.config.urlState.modals!.includes(modalId))
+    ) {
+      const url = new URL(window.location.href)
+      url.searchParams.delete(this.config.urlState.queryParam!)
+      window.history.pushState({}, '', url.toString())
+      return
+    }
+
+    const url = new URL(window.location.href)
+    url.searchParams.set(this.config.urlState.queryParam!, modalId)
+    window.history.pushState({}, '', url.toString())
+  }
+
+  private handleInitialState(): void {
+    if (!this.initialized) {
+      const urlModalId = this.getUrlModalState()
+      const initialModalId = urlModalId || this.config.initialActiveModal
+
+      if (initialModalId) {
+        const initialModal = this.menus.get(initialModalId)
+        if (initialModal) {
+          // İlk render'da URL güncellemeyi atlıyoruz
+          this.openModal(initialModalId, null, false)
+        }
       }
     }
     this.initialized = true
@@ -156,6 +223,12 @@ class ModalController {
         this.config.attributes.stateAttribute!,
         this.config.attributes.values.hidden,
       )
+      ;[...triggers, ...openButtons].forEach(button => {
+        button.setAttribute(
+          this.config.attributes.stateAttribute!,
+          this.config.attributes.values.hidden,
+        )
+      })
 
       triggers.forEach(trigger => {
         trigger.addEventListener('click', e => {
@@ -221,13 +294,17 @@ class ModalController {
       this.config.attributes.values.open
 
     if (isOpen) {
-      this.closeModal(menuId)
+      this.closeModal(menuId, true)
     } else {
-      this.openModal(menuId, trigger)
+      this.openModal(menuId, trigger, true)
     }
   }
 
-  private openModal(menuId: string, trigger: HTMLElement | null): void {
+  private openModal(
+    menuId: string,
+    trigger: HTMLElement | null,
+    isUserAction: boolean = true,
+  ): void {
     const menu = this.menus.get(menuId)
     if (!menu) return
 
@@ -236,12 +313,12 @@ class ModalController {
         this.modalHistory.push(this.activeModalId)
         const activeMenu = this.menus.get(this.activeModalId)
         activeMenu?.content?.setAttribute(
-          this.config?.attributes?.stateAttribute!,
+          this.config.attributes.stateAttribute!,
           this.config.attributes.values.preserved,
         )
       }
     } else if (this.activeModalId && this.activeModalId !== menuId) {
-      this.closeModal(this.activeModalId)
+      this.closeModal(this.activeModalId, isUserAction)
     }
 
     menu.content?.setAttribute(
@@ -250,6 +327,8 @@ class ModalController {
     )
 
     this.activeModalId = menuId
+    this.updateButtonStates(menuId)
+    this.updateUrlState(menuId, isUserAction)
     this.config.onToggle(menuId, true, trigger)
 
     if (this.config.scrollLock.enabled) {
@@ -257,7 +336,7 @@ class ModalController {
     }
   }
 
-  private closeModal(menuId: string): void {
+  private closeModal(menuId: string, isUserAction: boolean = true): void {
     const menu = this.menus.get(menuId)
     if (!menu) return
 
@@ -276,12 +355,16 @@ class ModalController {
             this.config.attributes.values.open,
           )
           this.activeModalId = previousModalId
+          this.updateButtonStates(previousModalId)
+          this.updateUrlState(previousModalId, isUserAction)
           this.config.onToggle(previousModalId, true, null)
           return
         }
       }
 
       this.activeModalId = null
+      this.updateButtonStates(null)
+      this.updateUrlState(null, isUserAction)
       if (this.config.scrollLock.enabled) {
         this.applyStyles(document.body, this.config.scrollLock.styles!.visible)
       }
@@ -297,7 +380,6 @@ class ModalController {
     Object.assign(element.style, styles)
   }
 
-  // Public API
   public isModalOpen(menuId: string): boolean {
     const menu = this.menus.get(menuId)
     return (

@@ -757,15 +757,17 @@
           </div>
         </div>
 
+        <!-- Product Information Content and Form -->
         <article
           itemscope
           itemtype="http://schema.org/TouristAttraction"
           class="flex flex-col gap-8 md:flex-row"
         >
           <div class="w-full px-2 md:w-2/3 md:px-0">
+            <!-- Product Information Content -->
             <section
               id="product-info-content-1"
-              data-state="open"
+              data-state="false"
               class="mb-8 hidden data-[state=open]:block"
               aria-labelledby="main-title"
             >
@@ -815,7 +817,8 @@
               </div>
             </section>
 
-            <div
+            <!-- Product Includes -->
+            <section
               id="product-info-content-2"
               data-state="closed"
               class="hidden space-y-6 data-[state=open]:block"
@@ -944,13 +947,10 @@
                   <!-- Diğer ulaşım özellikleri -->
                 </div>
               </section>
+            </section>
 
-              <meta itemprop="location" content="Dubai" />
-              <meta itemprop="tourType" content="Safari" />
-              <meta itemprop="tourDuration" content="P1D" />
-            </div>
-
-            <div
+            <!-- Product Reviews -->
+            <section
               id="product-info-content-3"
               data-state="closed"
               class="hidden data-[state=open]:block"
@@ -986,13 +986,16 @@
                   <span
                     class="text-xl font-medium text-primary-500 md:text-2xl"
                     itemprop="description"
-                    >Mükemmel</span
+                    >Olağanüstü</span
                   >
-                  <meta itemprop="reviewCount" content="26" />
                 </div>
 
                 <!-- Değerlendirme Çubukları -->
-                <div class="space-y-4" data-total-comments="24">
+                <div
+                  class="space-y-4"
+                  id="rating-container"
+                  data-total-comments="24"
+                >
                   <!--  Olağanüstü -->
                   <div
                     class="flex w-full items-end justify-between gap-4"
@@ -1008,7 +1011,7 @@
                       >
                       <div class="h-2 w-full flex-1 rounded-full bg-gray-200">
                         <div
-                          class="h-2 rounded-full bg-gray-900"
+                          class="rating-bar h-2 rounded-full bg-gray-900"
                           data-rate="12"
                           itemprop="ratingCount"
                         ></div>
@@ -1034,7 +1037,7 @@
                       >
                       <div class="h-2 w-full flex-1 rounded-full bg-gray-200">
                         <div
-                          class="h-2 rounded-full bg-gray-900"
+                          class="rating-bar h-2 rounded-full bg-gray-900"
                           data-rate="6"
                           itemprop="ratingCount"
                         ></div>
@@ -1060,7 +1063,7 @@
                       >
                       <div class="h-2 w-full flex-1 rounded-full bg-gray-200">
                         <div
-                          class="h-2 rounded-full bg-gray-900"
+                          class="rating-bar h-2 rounded-full bg-gray-900"
                           data-rate="2"
                           itemprop="ratingCount"
                         ></div>
@@ -1086,7 +1089,7 @@
                       >
                       <div class="h-2 w-full flex-1 rounded-full bg-gray-200">
                         <div
-                          class="h-2 rounded-full bg-gray-900"
+                          class="rating-bar h-2 rounded-full bg-gray-900"
                           data-rate="4"
                           itemprop="ratingCount"
                         ></div>
@@ -1096,8 +1099,6 @@
                       >4</span
                     >
                   </div>
-
-                  <!-- Diğer rating çubukları benzer şekilde... -->
                 </div>
 
                 <!-- Yorumlar -->
@@ -1203,7 +1204,7 @@
                   </article>
                 </div>
               </div>
-            </div>
+            </section>
           </div>
 
           <!--  Form -->
@@ -1452,16 +1453,15 @@
                   <button
                     type="submit"
                     disabled
-                    data-loading="true"
                     class="group h-[48px] w-full rounded-md border border-primary-400 bg-primary-500 text-lg font-semibold text-white transition-all duration-300 hover:opacity-75 active:scale-95 disabled:cursor-not-allowed disabled:opacity-75"
                     aria-label="Aktiviteyi Satın Al"
                   >
-                    <span class="hidden group-data-[loading=false]:block">
+                    <span class="block group-disabled:hidden">
                       Aktiviteyi Satın Al
                     </span>
 
                     <span
-                      class="flex items-center justify-center gap-2 group-data-[loading=false]:hidden"
+                      class="hidden items-center justify-center gap-2 group-disabled:flex"
                     >
                       <span> İşlem Devam Ediyor </span>
                       <img

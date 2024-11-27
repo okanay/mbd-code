@@ -3,6 +3,7 @@ import { ImageGalleryTracker, UpdateProductSliderDataItems, UpdateElementInnerHT
 import { Slider } from './packages/slider.js'
 import { TouchDirectionDetector } from './packages/touch-event.js'
 import { ModalController } from './packages/modal.js'
+import { RatingBarController } from '../../../dist/assets/scripts/packages/rating-bar-controller.js'
 
 document.addEventListener('DOMContentLoaded', () => {
   const gallery = new ImageGalleryTracker({
@@ -136,10 +137,17 @@ document.addEventListener('DOMContentLoaded', () => {
     },
   )
 
+  const ratingController = new RatingBarController({
+    containerSelector: '#rating-container',
+    barSelector: '.rating-bar',
+    animationDuration: 1000,
+    modalId: 'pim-3',
+  })
+
   new ModalController(
     [
       {
-        id: 'product-info-modal-1',
+        id: 'pim-1',
         toggleElements: [],
         openElements: ['#product-info-btn-1'],
         contentElement: '#product-info-content-1',
@@ -147,7 +155,7 @@ document.addEventListener('DOMContentLoaded', () => {
         containers: ['#product-info-content-1'],
       },
       {
-        id: 'product-info-modal-2',
+        id: 'pim-2',
         toggleElements: [],
         openElements: ['#product-info-btn-2'],
         contentElement: '#product-info-content-2',
@@ -155,7 +163,7 @@ document.addEventListener('DOMContentLoaded', () => {
         containers: ['#product-info-content-2'],
       },
       {
-        id: 'product-info-modal-3',
+        id: 'pim-3',
         toggleElements: [],
         openElements: ['#product-info-btn-3'],
         contentElement: '#product-info-content-3',
@@ -164,64 +172,21 @@ document.addEventListener('DOMContentLoaded', () => {
       },
     ],
     {
-      initialActiveModal: 'product-info-modal-1',
+      initialActiveModal: 'pim-1',
+      urlState: {
+        enabled: true,
+        queryParam: 'm',
+        modals: ['pim-1', 'pim-2', 'pim-3'],
+      },
       outsideClickClose: false,
       escapeClose: false,
       preserveModalHistory: false,
-      attributes: {
-        stateAttribute: 'data-state',
-        values: {
-          open: 'open',
-          preserved: 'open',
-          hidden: 'closed',
-        },
-      },
       scrollLock: {
         enabled: false,
       },
-      onToggle: (menuId, isOpen) => {
-        if (isOpen) {
-          // Sadece modal açılırken çalışsın
-          const allButtons = [
-            '#product-info-btn-1',
-            '#product-info-btn-2',
-            '#product-info-btn-3',
-          ]
-
-          // Önce tüm butonları kapat
-          allButtons.forEach(buttonId => {
-            const button = document.querySelector(buttonId)
-            if (button) {
-              button.setAttribute('data-state', 'closed')
-            }
-          })
-
-          // Eğer trigger varsa (yani bir buton tıklaması ile açıldıysa)
-          // veya initial state ise ve ilgili buton bulunabiliyorsa
-          const activeButtonSelector = `#product-info-btn-${menuId.slice(-1)}`
-          const activeButton = document.querySelector(activeButtonSelector)
-          if (activeButton) {
-            activeButton.setAttribute('data-state', 'open')
-          }
-        }
+      onToggle(modalId, state) {
+        ratingController.handleModalToggle(modalId, state)
       },
     },
   )
-
-  const ratingContainer = document.querySelector('[data-total-comments]')
-  const totalComments = Number(
-    ratingContainer?.getAttribute('data-total-comments') || 0,
-  )
-
-  const ratingBars = document.querySelectorAll('[data-rate]')
-
-  ratingBars.forEach(bar => {
-    const rate = Number(bar.getAttribute('data-rate') || 0)
-    const percentage = (rate / totalComments) * 100
-
-    // Width değerini yüzdeye göre ayarla
-    if (bar instanceof HTMLElement) {
-      bar.style.width = `${percentage}%`
-    }
-  })
 })
