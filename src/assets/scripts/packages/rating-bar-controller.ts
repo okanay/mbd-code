@@ -43,10 +43,9 @@ class RatingBarController {
   private setupModalHandlers(): void {
     if (!this.config.modalId) return
 
-    // URL kontrolü sadece bir kere yapılsın
     if (!this.initialUrlChecked) {
       const urlParams = new URLSearchParams(window.location.search)
-      const modalParam = urlParams.get('m')
+      const modalParam = urlParams.get('m') // Modal Controller ile uyumlu sabit parametre
 
       if (modalParam === this.config.modalId) {
         this.modalElement = document.getElementById(this.config.modalId)

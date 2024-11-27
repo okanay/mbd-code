@@ -141,13 +141,13 @@ document.addEventListener('DOMContentLoaded', () => {
     containerSelector: '#rating-container',
     barSelector: '.rating-bar',
     animationDuration: 1000,
-    modalId: 'pim-3',
+    modalId: 'comments',
   })
 
   new ModalController(
     [
       {
-        id: 'pim-1',
+        id: 'information',
         toggleElements: [],
         openElements: ['#product-info-btn-1'],
         contentElement: '#product-info-content-1',
@@ -155,7 +155,7 @@ document.addEventListener('DOMContentLoaded', () => {
         containers: ['#product-info-content-1'],
       },
       {
-        id: 'pim-2',
+        id: 'includes',
         toggleElements: [],
         openElements: ['#product-info-btn-2'],
         contentElement: '#product-info-content-2',
@@ -163,7 +163,7 @@ document.addEventListener('DOMContentLoaded', () => {
         containers: ['#product-info-content-2'],
       },
       {
-        id: 'pim-3',
+        id: 'comments',
         toggleElements: [],
         openElements: ['#product-info-btn-3'],
         contentElement: '#product-info-content-3',
@@ -172,11 +172,11 @@ document.addEventListener('DOMContentLoaded', () => {
       },
     ],
     {
-      initialActiveModal: 'pim-1',
+      initialActiveModal: 'information',
       urlState: {
         enabled: true,
-        queryParam: 'm',
-        modals: ['pim-1', 'pim-2', 'pim-3'],
+        queryParam: 'modal',
+        modals: ['information', 'includes', 'comments'],
       },
       outsideClickClose: false,
       escapeClose: false,
