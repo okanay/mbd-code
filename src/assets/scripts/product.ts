@@ -164,7 +164,7 @@ document.addEventListener('DOMContentLoaded', () => {
       },
     ],
     {
-      initialActiveModal: 'product-info-modal-1', // İlk başta açık olacak modal
+      initialActiveModal: 'product-info-modal-1',
       outsideClickClose: false,
       escapeClose: false,
       preserveModalHistory: false,
@@ -207,4 +207,21 @@ document.addEventListener('DOMContentLoaded', () => {
       },
     },
   )
+
+  const ratingContainer = document.querySelector('[data-total-comments]')
+  const totalComments = Number(
+    ratingContainer?.getAttribute('data-total-comments') || 0,
+  )
+
+  const ratingBars = document.querySelectorAll('[data-rate]')
+
+  ratingBars.forEach(bar => {
+    const rate = Number(bar.getAttribute('data-rate') || 0)
+    const percentage = (rate / totalComments) * 100
+
+    // Width değerini yüzdeye göre ayarla
+    if (bar instanceof HTMLElement) {
+      bar.style.width = `${percentage}%`
+    }
+  })
 })

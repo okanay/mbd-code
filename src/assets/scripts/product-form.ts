@@ -29,7 +29,7 @@ document.addEventListener('DOMContentLoaded', () => {
     },
     minDate: new Date(),
     maxDate: new Date(8640000000000000),
-    autoClose: false,
+    autoClose: true,
     autoSwitchInput: true,
     output: {
       order: ['day', 'month', 'year'],
@@ -37,23 +37,6 @@ document.addEventListener('DOMContentLoaded', () => {
       between: ' & ',
     },
     language: [turkishLanguage, englishLanguage, arabicLanguage],
-  })
-
-  const ratingContainer = document.querySelector('[data-total-comments]')
-  const totalComments = Number(
-    ratingContainer?.getAttribute('data-total-comments') || 0,
-  )
-
-  const ratingBars = document.querySelectorAll('[data-rate]')
-
-  ratingBars.forEach(bar => {
-    const rate = Number(bar.getAttribute('data-rate') || 0)
-    const percentage = (rate / totalComments) * 100
-
-    // Width değerini yüzdeye göre ayarla
-    if (bar instanceof HTMLElement) {
-      bar.style.width = `${percentage}%`
-    }
   })
 })
 
