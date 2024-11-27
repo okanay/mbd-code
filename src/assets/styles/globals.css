@@ -143,11 +143,30 @@
   }
 
   .thumbnail {
-    @apply h-16 w-32 flex-shrink-0 cursor-pointer rounded object-cover transition duration-300 hover:opacity-75 sm:h-16 sm:w-32;
+    @apply h-16 w-28 flex-shrink-0 cursor-pointer rounded-lg object-cover transition duration-300 hover:opacity-75 hover:ring-2 hover:ring-white/50 lg:h-20 lg:w-36;
   }
 
   .thumbnail-active {
-    @apply ring-2 ring-primary-500;
+    @apply ring-2 ring-white;
+  }
+
+  .custom-scrollbar {
+    scrollbar-width: thin;
+    scrollbar-color: rgba(var(--primary-500)) transparent;
+  }
+
+  .custom-scrollbar::-webkit-scrollbar {
+    width: 4px;
+    height: 4px;
+  }
+
+  .custom-scrollbar::-webkit-scrollbar-track {
+    background: rgba(var(--primary-500));
+  }
+
+  .custom-scrollbar::-webkit-scrollbar-thumb {
+    background-color: rgba(var(--primary-500));
+    border-radius: 2px;
   }
 
   .product-slider-btn {

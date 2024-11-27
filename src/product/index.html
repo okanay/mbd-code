@@ -520,7 +520,7 @@
       </div>
     </header>
 
-    <main class="mx-auto max-w-7xl pb-6 pt-0 md:px-6">
+    <main class="mx-auto max-w-7xl pb-6 pt-0 lg:px-6">
       <!-- Breadcrumb -->
       <nav
         class="mx-auto hidden max-w-7xl items-center gap-0 py-6 text-xs lg:flex"
@@ -1478,44 +1478,42 @@
       <div
         id="gallery-modal"
         data-state="closed"
-        class="fixed inset-0 z-[9001] flex items-center justify-center bg-black/80 p-4 backdrop-blur-sm data-[state=closed]:hidden"
+        class="fixed inset-0 z-[9001] flex items-center justify-center bg-black/90 p-4 backdrop-blur-md data-[state=closed]:hidden"
         aria-hidden="true"
         role="dialog"
       >
         <div
           id="gallery-modal-content"
-          class="relative w-full max-w-4xl overflow-hidden rounded-lg bg-transparent shadow-xl shadow-gray-500/10"
+          class="relative w-full max-w-5xl overflow-hidden rounded-xl bg-white/10 shadow-2xl"
         >
           <!-- Close button - DONT EDIT THIS -->
           <button
             id="gallery-modal-close-button"
-            class="absolute right-5 top-4 rounded-full border border-gray-50 bg-gray-950 p-1 text-3xl text-gray-50 transition-all duration-500 hover:text-gray-50 hover:opacity-75 focus:outline-none active:scale-95"
+            class="absolute right-4 top-4 rounded-full border border-white/20 bg-gray-950/40 p-2 text-white transition-all duration-300 hover:opacity-60 active:scale-90"
             aria-label="Close Gallery"
           >
             <img
               src="/assets/images/icons/hamburger-close.svg"
               alt="Close Icon"
-              class="brightness-0 invert"
+              class="h-6 w-6 brightness-0 invert"
             />
           </button>
 
           <!-- Main image - DONT EDIT THIS -->
-          <div id="gallery-modal-main-image-container" class="bg-gray-950">
+          <div id="gallery-modal-main-image-container" class="bg-black/50 p-4">
             <img
               src="#"
               alt="Gallery Main Image"
-              class="aspect-video h-auto max-h-[280px] w-full object-contain sm:max-h-[480px]"
+              class="mx-auto aspect-video h-auto max-h-[70vh] w-full object-contain"
             />
           </div>
 
           <!-- Thumbnails container -->
-          <div
-            class="relative flex items-center justify-center rounded-b-2xl border-b border-l border-r border-gray-500/20 bg-gray-950/95 px-0"
-          >
+          <div class="relative rounded-b-xl bg-gray-950/40 px-4 py-2">
             <!-- Thumbnails - DONT EDIT THIS -->
             <div
               id="gallery-modal-thumbnails"
-              class="flex space-x-2 overflow-x-auto px-2 py-4"
+              class="custom-scrollbar flex space-x-4 overflow-x-auto px-2 py-2"
             >
               <img src="#" alt="Thumbnail 1" class="thumbnail" />
             </div>
