@@ -1220,6 +1220,15 @@
                 </p>
               </div>
 
+              <div class="mb-4">
+                <p
+                  class="text-pretty px-0.5 text-start text-xs font-medium text-rose-500"
+                  aria-label="Availability Status"
+                >
+                  Seçtiğiniz tarihlerde tur planında müsaitlik bulunmamaktadır.
+                </p>
+              </div>
+
               <div
                 class="relative mb-6 divide-y divide-gray-200 overflow-hidden rounded border border-gray-200"
               >
@@ -1442,10 +1451,25 @@
                   </div>
                   <button
                     type="submit"
-                    class="h-[48px] w-full rounded-md border border-primary-400 bg-primary-500 text-lg font-semibold text-white transition-all duration-300 hover:opacity-75 active:scale-95"
+                    disabled
+                    data-loading="true"
+                    class="group h-[48px] w-full rounded-md border border-primary-400 bg-primary-500 text-lg font-semibold text-white transition-all duration-300 hover:opacity-75 active:scale-95 disabled:cursor-not-allowed disabled:opacity-75"
                     aria-label="Aktiviteyi Satın Al"
                   >
-                    Aktiviteyi Satın Al
+                    <span class="hidden group-data-[loading=false]:block">
+                      Aktiviteyi Satın Al
+                    </span>
+
+                    <span
+                      class="flex items-center justify-center gap-2 group-data-[loading=false]:hidden"
+                    >
+                      <span> İşlem Devam Ediyor </span>
+                      <img
+                        src="/assets/images/icons/loading-spinner.svg"
+                        alt="Loading"
+                        class="size-6 brightness-0 invert"
+                      />
+                    </span>
                   </button>
                 </div>
               </div>
@@ -1480,7 +1504,7 @@
           </button>
 
           <!-- Main image - DONT EDIT THIS -->
-          <div id="gallery-modal-main-image-container" class="bg-gray-900">
+          <div id="gallery-modal-main-image-container" class="bg-gray-950">
             <img
               src="#"
               alt="Gallery Main Image"
@@ -1490,7 +1514,7 @@
 
           <!-- Thumbnails container -->
           <div
-            class="relative flex items-center justify-center rounded-b-2xl border-b border-l border-r border-gray-500/20 bg-gray-950 px-0"
+            class="relative flex items-center justify-center rounded-b-2xl border-b border-l border-r border-gray-500/20 bg-gray-950/95 px-0"
           >
             <!-- Thumbnails - DONT EDIT THIS -->
             <div
@@ -1737,7 +1761,7 @@
 
           <!-- Help Section -->
           <div class="order-3 items-center text-center lg:order-2">
-            <h2 class="text-balance text-3xl font-bold text-red-500">
+            <h2 class="text-balance text-3xl font-bold text-rose-500">
               Yardıma <br />İhtiyacınız var mı?
             </h2>
             <p class="mt-0 text-xs text-gray-600 lg:text-sm">Hemen Ara</p>

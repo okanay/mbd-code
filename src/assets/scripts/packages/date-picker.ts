@@ -41,7 +41,7 @@ interface LanguageConfig {
   dayNames: string[]
 }
 
-type DatePickerInputType = 'single' | 'range' | 'between'
+type DatePickerInputType = 'single' | 'two' | 'between'
 
 interface SingleDateInput {
   id: string
@@ -251,7 +251,7 @@ class DatePicker {
           this.focusContainers.set(singleConfig.id, container)
         }
       }
-    } else if (input.type === 'range') {
+    } else if (input.type === 'two') {
       const rangeConfig = input.elements as DateRangeInput
 
       if (rangeConfig.start.focusContainer) {
@@ -347,7 +347,7 @@ class DatePicker {
       if (dateInput) {
         this.registerInput(dateInput, { type: 'single' })
       }
-    } else if (input.type === 'range') {
+    } else if (input.type === 'two') {
       const rangeConfig = input.elements as DateRangeInput
       const startInput = document.getElementById(
         rangeConfig.start.id,
@@ -951,7 +951,7 @@ class DatePicker {
     if (maxDate && strippedDate > maxDate) return false
 
     // Range modu için özel validasyon
-    if (this.config.input.type === 'range' && this.activeInput) {
+    if (this.config.input.type === 'two' && this.activeInput) {
       const inputConfig = this.registeredInputs.get(this.activeInput.id)
 
       if (inputConfig?.type === 'start' && inputConfig.linkedInputId) {
@@ -1097,7 +1097,7 @@ class DatePicker {
     }
 
     // Range tipi için özel tarih seçim mantığı
-    if (this.config.input.type === 'range') {
+    if (this.config.input.type === 'two') {
       // Tarihi seç ve input'u güncelle
       this.selectedDates.set(this.activeInput.id, new Date(selectedDate))
       this.dateValues.set(this.activeInput.id, new Date(selectedDate))

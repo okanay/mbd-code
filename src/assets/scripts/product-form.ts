@@ -4,7 +4,7 @@ import type { LanguageConfig } from './packages/date-picker.js'
 document.addEventListener('DOMContentLoaded', () => {
   new DatePicker({
     input: {
-      type: 'range',
+      type: 'two',
       elements: {
         start: {
           id: 'departure-date',
