@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg id="katman_2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 476.39 192.27">
+  <defs>
+    <style>
+      .cls-1 {
+        letter-spacing: 0em;
+      }
+
+      .cls-2 {
+        letter-spacing: -.02em;
+      }
+
+      .cls-2, .cls-3 {
+        font-family: NexaText-Bold, NexaText;
+        font-size: 46.15px;
+      }
+
+      .cls-4 {
+        letter-spacing: -.02em;
+      }
+
+      .cls-4, .cls-5, .cls-6, .cls-7, .cls-8, .cls-9 {
+        font-family: NexaText-ExtraBold, NexaText;
+      }
+
+      .cls-4, .cls-5, .cls-7, .cls-8, .cls-9 {
+        font-size: 71.08px;
+      }
+
+      .cls-3 {
+        letter-spacing: 0em;
+      }
+
+      .cls-10, .cls-6, .cls-11 {
+        fill: #fff;
+      }
+
+      .cls-12 {
+        letter-spacing: -.03em;
+      }
+
+      .cls-5 {
+        letter-spacing: -.02em;
+      }
+
+      .cls-13 {
+        letter-spacing: -.02em;
+      }
+
+      .cls-6 {
+        font-size: 98.11px;
+      }
+
+      .cls-6, .cls-11 {
+        font-weight: 700;
+      }
+
+      .cls-14 {
+        letter-spacing: -.02em;
+      }
+
+      .cls-7 {
+        letter-spacing: 0em;
+      }
+
+      .cls-8 {
+        letter-spacing: -.03em;
+      }
+
+      .cls-9 {
+        letter-spacing: -.03em;
+      }
+
+      .cls-15 {
+        letter-spacing: -.02em;
+      }
+    </style>
+  </defs>
+  <g id="katman_1">
+    <g>
+      <g>
+        <polygon class="cls-10" points="123.25 65.47 123.25 89.48 100.96 89.48 100.96 101.46 123.25 101.46 123.25 101.47 135.24 101.47 135.24 65.47 123.25 65.47"/>
+        <polygon class="cls-10" points="123.25 139.38 100.96 139.38 100.96 151.36 123.25 151.36 123.25 151.37 135.24 151.37 135.24 115.36 123.25 115.36 123.25 139.38"/>
+        <path class="cls-10" d="M113.58,111.93h-11.87v9.12h-45.83v42.11H14.45s-4.19-7.72,2.14-41.12H4.61c-5.33,18.35-6.19,37.15-1.8,53.1h65.04v-42.11h45.73v-21.1Z"/>
+        <rect class="cls-10" x="77.11" y="138.66" width="12.7" height="12.7"/>
+        <rect class="cls-10" x="63.51" y="89.49" width="11.98" height="11.98"/>
+        <rect class="cls-10" x="79.81" y="89.49" width="11.98" height="11.98"/>
+        <path class="cls-10" d="M54.87,81.79h60.7V0c-2.79,1.14-6.91,2.95-11.98,5.5v64.31h-18.36V15.87c-3.86,2.42-7.88,5.12-11.99,8.11v45.83h-18.36v-30.86c-4.05,3.72-8.07,7.73-11.98,12.03v54.31h-23.73l4.27-28.5c-4.5,7.35-8.55,15.28-11.98,23.84l-5.51,16.64h48.94v-35.48Z"/>
+        <rect class="cls-10" x="18.18" y="180.29" width="11.98" height="11.98"/>
+        <rect class="cls-10" x="34.49" y="180.29" width="11.98" height="11.98"/>
+      </g>
+      <g>
+        <text class="cls-6" transform="translate(168.96 91.51)"><tspan class="cls-13" x="0" y="0">G</tspan><tspan class="cls-14" x="71.8" y="0">U</tspan><tspan class="cls-12" x="144.22" y="0">I</tspan><tspan class="cls-15" x="172.09" y="0">D</tspan><tspan class="cls-1" x="244.34" y="0">E</tspan></text>
+        <text class="cls-11" transform="translate(170.89 153.5)"><tspan class="cls-2" x="0" y="0">O</tspan><tspan class="cls-3" x="36.92" y="0">F </tspan><tspan class="cls-4" x="76.19" y="7.69">D</tspan><tspan class="cls-9" x="128.58" y="7.69">U</tspan><tspan class="cls-8" x="181" y="7.69">B</tspan><tspan class="cls-5" x="228.84" y="7.69">A</tspan><tspan class="cls-7" x="282.28" y="7.69">I</tspan></text>
+      </g>
+    </g>
+  </g>
+</svg>
