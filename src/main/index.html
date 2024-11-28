@@ -978,9 +978,12 @@
         <h2 class="px-0.5 text-2xl font-semibold text-gray-800">
           Dubai Etkinlikleri
         </h2>
-        <ul class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
+
+        <ul
+          class="grid grid-cols-2 grid-rows-3 gap-x-2 gap-y-6 sm:grid-rows-1 lg:grid-cols-4"
+        >
           <li
-            class="group grid h-full w-full grid-rows-[180px_auto_1fr_auto] gap-y-1 overflow-hidden rounded-2xl border border-gray-200 bg-white transition-all duration-300 hover:border-primary-500 sm:gap-y-0"
+            class="group col-span-2 grid h-full w-full grid-rows-[180px_auto_1fr_auto] gap-y-1 overflow-hidden rounded-2xl border border-gray-200 bg-white transition-all duration-300 hover:border-primary-500 sm:col-span-1 sm:gap-y-0"
           >
             <!-- Image Container - Sabit yükseklik -->
             <div class="relative overflow-hidden rounded-b-2xl">
@@ -1053,7 +1056,7 @@
           </li>
 
           <li
-            class="group grid h-full w-full grid-rows-[180px_auto_1fr_auto] gap-y-1 overflow-hidden rounded-2xl border border-gray-200 bg-white transition-all duration-300 hover:border-primary-500 sm:gap-y-0"
+            class="group col-span-2 row-start-2 grid h-full w-full grid-rows-[180px_auto_1fr_auto] gap-y-1 overflow-hidden rounded-2xl border border-gray-200 bg-white transition-all duration-300 hover:border-primary-500 sm:col-span-1 sm:row-start-auto sm:gap-y-0"
           >
             <!-- Image Container - Sabit yükseklik -->
             <div class="relative overflow-hidden rounded-b-2xl">
@@ -1126,7 +1129,7 @@
           </li>
 
           <li
-            class="group grid h-full w-full grid-rows-[180px_auto_1fr_auto] gap-y-1 overflow-hidden rounded-2xl border border-gray-200 bg-white transition-all duration-300 hover:border-primary-500 sm:gap-y-0"
+            class="group row-start-3 grid h-full w-full grid-rows-[180px_auto_1fr_auto] gap-y-1 overflow-hidden rounded-lg border border-gray-200 bg-white transition-all duration-300 hover:border-primary-500 sm:row-start-auto sm:gap-y-0 sm:rounded-2xl"
           >
             <!-- Image Container - Sabit yükseklik -->
             <div class="relative overflow-hidden rounded-b-2xl">
@@ -1145,33 +1148,43 @@
             </div>
 
             <!-- Title Container - Auto height -->
-            <div class="p-4 pb-2">
+            <div class="px-2 pb-2 pt-4 sm:px-4">
               <h2
-                class="line-clamp-2 text-pretty text-xl font-semibold text-gray-800 sm:min-h-[56px]"
+                class="line-clamp-2 text-pretty text-base font-semibold text-gray-800 sm:min-h-[56px] sm:text-xl"
               >
                 Dubai Şehir Turu
               </h2>
             </div>
 
             <!-- Info Container - 1fr (flexible height) -->
-            <div class="flex flex-col gap-2 px-4 sm:gap-4">
-              <div class="flex items-center gap-2">
-                <img
-                  src="/assets/images/icons/yellow-star.svg"
-                  alt="Daha Fazla Bilgi"
-                  class="size-4"
-                />
-                <span class="text-sm font-medium text-gray-600">4.1</span>
-                <span class="text-sm text-gray-500">(43 değerlendirme)</span>
+            <div class="flex flex-col gap-2 px-2 sm:gap-4 sm:px-4">
+              <div
+                class="flex flex-col items-start gap-2 sm:flex-row sm:items-center"
+              >
+                <div class="order-2 flex gap-2 sm:order-1">
+                  <img
+                    src="/assets/images/icons/yellow-star.svg"
+                    alt="Daha Fazla Bilgi"
+                    class="size-4"
+                  />
+                  <span class="text-xs font-medium text-gray-600 sm:text-sm"
+                    >4.1</span
+                  >
+                </div>
+
+                <span
+                  class="order-1 text-xs text-gray-500 sm:order-2 sm:text-sm"
+                  >(43 değerlendirme)</span
+                >
               </div>
               <div class="space-y-2">
                 <div class="flex items-center gap-2">
                   <img
                     src="/assets/images/icons/group.svg"
                     alt="Daha Fazla Bilgi"
-                    class="size-4 fill-primary-500"
+                    class="size-3.5 fill-primary-500 sm:size-4"
                   />
-                  <span class="text-sm text-gray-600">6 kişi</span>
+                  <span class="text-xs text-gray-600 sm:text-sm">6 kişi</span>
                 </div>
                 <div class="flex items-center justify-between">
                   <span
@@ -1184,22 +1197,17 @@
             </div>
 
             <!-- Button Container - Auto height -->
-            <div class="px-4 py-6 sm:py-4">
+            <div class="px-2 py-6 sm:px-4 sm:py-4">
               <button
-                class="flex h-[48px] w-full items-center justify-center rounded-lg border border-primary-950/10 bg-primary-500 font-semibold text-white transition-opacity hover:opacity-80"
+                class="flex h-[48px] w-full items-center justify-center rounded-lg border border-primary-950/10 bg-primary-500 text-sm font-semibold text-white transition-opacity hover:opacity-80 sm:text-base"
               >
                 Aktivite Detayları
-                <img
-                  src="/assets/images/icons/chevron-right.svg"
-                  alt="Daha Fazla Bilgi"
-                  class="transiton-all ml-1 size-5 brightness-0 invert duration-300 group-hover:translate-x-1/4"
-                />
               </button>
             </div>
           </li>
 
           <li
-            class="group grid h-full w-full grid-rows-[180px_auto_1fr_auto] gap-y-1 overflow-hidden rounded-2xl border border-gray-200 bg-white transition-all duration-300 hover:border-primary-500 sm:gap-y-0"
+            class="group row-start-3 grid h-full w-full grid-rows-[180px_auto_1fr_auto] gap-y-1 overflow-hidden rounded-lg border border-gray-200 bg-white transition-all duration-300 hover:border-primary-500 sm:row-start-auto sm:gap-y-0 sm:rounded-2xl"
           >
             <!-- Image Container - Sabit yükseklik -->
             <div class="relative overflow-hidden rounded-b-2xl">
@@ -1218,33 +1226,43 @@
             </div>
 
             <!-- Title Container - Auto height -->
-            <div class="p-4 pb-2">
+            <div class="px-2 pb-2 pt-4 sm:px-4">
               <h2
-                class="line-clamp-2 text-pretty text-xl font-semibold text-gray-800 sm:min-h-[56px]"
+                class="line-clamp-2 text-pretty text-base font-semibold text-gray-800 sm:min-h-[56px] sm:text-xl"
               >
                 Abu Dhabi Çöl Safari
               </h2>
             </div>
 
             <!-- Info Container - 1fr (flexible height) -->
-            <div class="flex flex-col gap-2 px-4 sm:gap-4">
-              <div class="flex items-center gap-2">
-                <img
-                  src="/assets/images/icons/yellow-star.svg"
-                  alt="Daha Fazla Bilgi"
-                  class="size-4"
-                />
-                <span class="text-sm font-medium text-gray-600">4.7</span>
-                <span class="text-sm text-gray-500">(231 değerlendirme)</span>
+            <div class="flex flex-col gap-2 px-2 sm:gap-4 sm:px-4">
+              <div
+                class="flex flex-col items-start gap-2 sm:flex-row sm:items-center"
+              >
+                <div class="order-2 flex gap-2 sm:order-1">
+                  <img
+                    src="/assets/images/icons/yellow-star.svg"
+                    alt="Daha Fazla Bilgi"
+                    class="size-4"
+                  />
+                  <span class="text-xs font-medium text-gray-600 sm:text-sm"
+                    >4.7</span
+                  >
+                </div>
+
+                <span
+                  class="order-1 text-xs text-gray-500 sm:order-2 sm:text-sm"
+                  >(231 değerlendirme)</span
+                >
               </div>
               <div class="space-y-2">
                 <div class="flex items-center gap-2">
                   <img
                     src="/assets/images/icons/group.svg"
                     alt="Daha Fazla Bilgi"
-                    class="size-4 fill-primary-500"
+                    class="size-3.5 fill-primary-500 sm:size-4"
                   />
-                  <span class="text-sm text-gray-600">6 kişi</span>
+                  <span class="text-xs text-gray-600 sm:text-sm">6 kişi</span>
                 </div>
                 <div class="flex items-center justify-between">
                   <span
@@ -1257,16 +1275,11 @@
             </div>
 
             <!-- Button Container - Auto height -->
-            <div class="px-4 py-6 sm:py-4">
+            <div class="px-2 py-6 sm:px-4 sm:py-4">
               <button
-                class="flex h-[48px] w-full items-center justify-center rounded-lg border border-primary-950/10 bg-primary-500 font-semibold text-white transition-opacity hover:opacity-80"
+                class="flex h-[48px] w-full items-center justify-center rounded-lg border border-primary-950/10 bg-primary-500 text-sm font-semibold text-white transition-opacity hover:opacity-80 sm:text-base"
               >
                 Aktivite Detayları
-                <img
-                  src="/assets/images/icons/chevron-right.svg"
-                  alt="Daha Fazla Bilgi"
-                  class="transiton-all ml-1 size-5 brightness-0 invert duration-300 group-hover:translate-x-1/4"
-                />
               </button>
             </div>
           </li>
@@ -2397,17 +2410,17 @@
               <div class="flex w-[780px] px-3.5 py-4">
                 <a
                   href="#"
-                  class="w-[260px] flex-shrink-0 text-start text-sm font-medium text-gray-900 transition-opacity hover:opacity-75"
+                  class="w-[260px] flex-shrink-0 text-start text-sm font-medium text-gray-900 decoration-primary-500 underline-offset-4 transition-opacity hover:underline hover:opacity-75"
                   >İkonik Yerler Turu</a
                 >
                 <a
                   href="#"
-                  class="w-[260px] flex-shrink-0 text-start text-sm font-medium text-gray-900 transition-opacity hover:opacity-75"
+                  class="w-[260px] flex-shrink-0 text-start text-sm font-medium text-gray-900 decoration-primary-500 underline-offset-4 transition-opacity hover:underline hover:opacity-75"
                   >Dubai Helikopter Turu</a
                 >
                 <a
                   href="#"
-                  class="w-[260px] flex-shrink-0 text-start text-sm font-medium text-gray-900 transition-opacity hover:opacity-75"
+                  class="w-[260px] flex-shrink-0 text-start text-sm font-medium text-gray-900 decoration-primary-500 underline-offset-4 transition-opacity hover:underline hover:opacity-75"
                   >Sonsuzluk Havuzu</a
                 >
               </div>
@@ -2415,18 +2428,18 @@
               <div class="flex w-[780px] px-3.5 py-4">
                 <a
                   href="#"
-                  class="w-[260px] flex-shrink-0 text-start text-sm font-medium text-gray-900 transition-opacity hover:opacity-75"
+                  class="w-[260px] flex-shrink-0 text-start text-sm font-medium text-gray-900 decoration-primary-500 underline-offset-4 transition-opacity hover:underline hover:opacity-75"
                 >
                   Özel Limuzin</a
                 >
                 <a
                   href="#"
-                  class="w-[260px] flex-shrink-0 text-start text-sm font-medium text-gray-900 transition-opacity hover:opacity-75"
+                  class="w-[260px] flex-shrink-0 text-start text-sm font-medium text-gray-900 decoration-primary-500 underline-offset-4 transition-opacity hover:underline hover:opacity-75"
                   >Jetski Aktivite</a
                 >
                 <a
                   href="#"
-                  class="w-[260px] flex-shrink-0 text-start text-sm font-medium text-gray-900 transition-opacity hover:opacity-75"
+                  class="w-[260px] flex-shrink-0 text-start text-sm font-medium text-gray-900 decoration-primary-500 underline-offset-4 transition-opacity hover:underline hover:opacity-75"
                   >Ekonomik VIP Safari</a
                 >
               </div>
@@ -2434,17 +2447,17 @@
               <div class="flex w-[780px] px-3.5 py-4">
                 <a
                   href="#"
-                  class="w-[260px] flex-shrink-0 text-start text-sm font-medium text-gray-900 transition-opacity hover:opacity-75"
+                  class="w-[260px] flex-shrink-0 text-start text-sm font-medium text-gray-900 decoration-primary-500 underline-offset-4 transition-opacity hover:underline hover:opacity-75"
                   >Dubai Müzeleri</a
                 >
                 <a
                   href="#"
-                  class="w-[260px] flex-shrink-0 text-start text-sm font-medium text-gray-900 transition-opacity hover:opacity-75"
+                  class="w-[260px] flex-shrink-0 text-start text-sm font-medium text-gray-900 decoration-primary-500 underline-offset-4 transition-opacity hover:underline hover:opacity-75"
                   >Abu Dhabi Şehir Turu</a
                 >
                 <a
                   href="#"
-                  class="w-[260px] flex-shrink-0 text-start text-sm font-medium text-gray-900 transition-opacity hover:opacity-75"
+                  class="w-[260px] flex-shrink-0 text-start text-sm font-medium text-gray-900 decoration-primary-500 underline-offset-4 transition-opacity hover:underline hover:opacity-75"
                   >Luxury Safari Tur</a
                 >
               </div>
@@ -2458,7 +2471,7 @@
               <div class="flex w-[780px] px-3.5 py-4">
                 <a
                   href="#"
-                  class="w-[260px] flex-shrink-0 text-start text-sm font-medium text-gray-900 transition-opacity hover:opacity-75"
+                  class="w-[260px] flex-shrink-0 text-start text-sm font-medium text-gray-900 decoration-primary-500 underline-offset-4 transition-opacity hover:underline hover:opacity-75"
                   >Content 1</a
                 >
               </div>
@@ -2466,7 +2479,7 @@
               <div class="flex w-[780px] px-3.5 py-4">
                 <a
                   href="#"
-                  class="w-[260px] flex-shrink-0 text-start text-sm font-medium text-gray-900 transition-opacity hover:opacity-75"
+                  class="w-[260px] flex-shrink-0 text-start text-sm font-medium text-gray-900 decoration-primary-500 underline-offset-4 transition-opacity hover:underline hover:opacity-75"
                 >
                   Content 1</a
                 >
@@ -2475,7 +2488,7 @@
               <div class="flex w-[780px] px-3.5 py-4">
                 <a
                   href="#"
-                  class="w-[260px] flex-shrink-0 text-start text-sm font-medium text-gray-900 transition-opacity hover:opacity-75"
+                  class="w-[260px] flex-shrink-0 text-start text-sm font-medium text-gray-900 decoration-primary-500 underline-offset-4 transition-opacity hover:underline hover:opacity-75"
                   >Content 1</a
                 >
               </div>
@@ -2489,7 +2502,7 @@
               <div class="flex w-[780px] px-3.5 py-4">
                 <a
                   href="#"
-                  class="w-[260px] flex-shrink-0 text-start text-sm font-medium text-gray-900 transition-opacity hover:opacity-75"
+                  class="w-[260px] flex-shrink-0 text-start text-sm font-medium text-gray-900 decoration-primary-500 underline-offset-4 transition-opacity hover:underline hover:opacity-75"
                   >Content 2</a
                 >
               </div>
@@ -2497,7 +2510,7 @@
               <div class="flex w-[780px] px-3.5 py-4">
                 <a
                   href="#"
-                  class="w-[260px] flex-shrink-0 text-start text-sm font-medium text-gray-900 transition-opacity hover:opacity-75"
+                  class="w-[260px] flex-shrink-0 text-start text-sm font-medium text-gray-900 decoration-primary-500 underline-offset-4 transition-opacity hover:underline hover:opacity-75"
                 >
                   Content 2</a
                 >
@@ -2506,7 +2519,7 @@
               <div class="flex w-[780px] px-3.5 py-4">
                 <a
                   href="#"
-                  class="w-[260px] flex-shrink-0 text-start text-sm font-medium text-gray-900 transition-opacity hover:opacity-75"
+                  class="w-[260px] flex-shrink-0 text-start text-sm font-medium text-gray-900 decoration-primary-500 underline-offset-4 transition-opacity hover:underline hover:opacity-75"
                   >Content 2</a
                 >
               </div>
@@ -2523,7 +2536,7 @@
             class="group flex w-1/4 items-center gap-4 transition-opacity duration-300 hover:opacity-75"
           >
             <img src="/assets/images/icons/email.svg" class="size-7" />
-            <span class="group-hover:underline">Bize Mesaj Gönderin</span>
+            <span class="">Bize Mesaj Gönderin</span>
           </a>
 
           <a
@@ -2531,7 +2544,7 @@
             class="group flex w-1/4 items-center gap-4 transition-opacity duration-300 hover:opacity-75"
           >
             <img src="/assets/images/icons/ring-bell.svg" class="size-7" />
-            <span class="group-hover:underline">Rezervasyonlarım</span>
+            <span class="">Rezervasyonlarım</span>
           </a>
 
           <a
@@ -2542,7 +2555,7 @@
               src="/assets/images/icons/callender-check.svg"
               class="size-7"
             />
-            <span class="group-hover:underline">Anlaşmalı Oteller</span>
+            <span class="">Anlaşmalı Oteller</span>
           </a>
 
           <a
@@ -2550,7 +2563,7 @@
             class="group flex w-1/4 items-center justify-center gap-4 transition-opacity duration-300 hover:opacity-75"
           >
             <img src="/assets/images/icons/message.svg" class="size-7" />
-            <span class="group-hover:underline">Müşteri Hizmetleri</span>
+            <span class="">Müşteri Hizmetleri</span>
           </a>
         </div>
       </div>
@@ -2736,56 +2749,56 @@
           <ul class="flex flex-col gap-1 text-sm font-medium">
             <li>
               <a
-                class="transition-opacity duration-300 hover:underline hover:opacity-75"
+                class="decoration-primary-500 underline-offset-4 transition-opacity duration-300 hover:underline hover:opacity-75"
                 href="#"
                 >Hakkımızda</a
               >
             </li>
             <li>
               <a
-                class="transition-opacity duration-300 hover:underline hover:opacity-75"
+                class="decoration-primary-500 underline-offset-4 transition-opacity duration-300 hover:underline hover:opacity-75"
                 href="#"
                 >Neden MBD Travel?</a
               >
             </li>
             <li>
               <a
-                class="transition-opacity duration-300 hover:underline hover:opacity-75"
+                class="decoration-primary-500 underline-offset-4 transition-opacity duration-300 hover:underline hover:opacity-75"
                 href="#"
                 >İletişim</a
               >
             </li>
             <li>
               <a
-                class="transition-opacity duration-300 hover:underline hover:opacity-75"
+                class="decoration-primary-500 underline-offset-4 transition-opacity duration-300 hover:underline hover:opacity-75"
                 href="#"
                 >Kampanyalar</a
               >
             </li>
             <li>
               <a
-                class="transition-opacity duration-300 hover:underline hover:opacity-75"
+                class="decoration-primary-500 underline-offset-4 transition-opacity duration-300 hover:underline hover:opacity-75"
                 href="#"
                 >Ödeme Seçenekleri</a
               >
             </li>
             <li>
               <a
-                class="transition-opacity duration-300 hover:underline hover:opacity-75"
+                class="decoration-primary-500 underline-offset-4 transition-opacity duration-300 hover:underline hover:opacity-75"
                 href="#"
                 >Sık Sorulan Sorular</a
               >
             </li>
             <li>
               <a
-                class="transition-opacity duration-300 hover:underline hover:opacity-75"
+                class="decoration-primary-500 underline-offset-4 transition-opacity duration-300 hover:underline hover:opacity-75"
                 href="#"
                 >Resmi Tatil Günleri</a
               >
             </li>
             <li>
               <a
-                class="transition-opacity duration-300 hover:underline hover:opacity-75"
+                class="decoration-primary-500 underline-offset-4 transition-opacity duration-300 hover:underline hover:opacity-75"
                 href="#"
                 >Blog</a
               >
@@ -2803,42 +2816,42 @@
           <ul class="flex flex-col gap-1 text-sm font-medium">
             <li>
               <a
-                class="transition-opacity duration-300 hover:underline hover:opacity-75"
+                class="decoration-primary-500 underline-offset-4 transition-opacity duration-300 hover:underline hover:opacity-75"
                 href="#"
                 >MBD Travel Sözleşmelerimiz</a
               >
             </li>
             <li>
               <a
-                class="transition-opacity duration-300 hover:underline hover:opacity-75"
+                class="decoration-primary-500 underline-offset-4 transition-opacity duration-300 hover:underline hover:opacity-75"
                 href="#"
                 >KVKK ve Gizlilik Politikası</a
               >
             </li>
             <li>
               <a
-                class="transition-opacity duration-300 hover:underline hover:opacity-75"
+                class="decoration-primary-500 underline-offset-4 transition-opacity duration-300 hover:underline hover:opacity-75"
                 href="#"
                 >Paket Tatil Sözleşmesi</a
               >
             </li>
             <li>
               <a
-                class="transition-opacity duration-300 hover:underline hover:opacity-75"
+                class="decoration-primary-500 underline-offset-4 transition-opacity duration-300 hover:underline hover:opacity-75"
                 href="#"
                 >Kullanım Koşulları</a
               >
             </li>
             <li>
               <a
-                class="transition-opacity duration-300 hover:underline hover:opacity-75"
+                class="decoration-primary-500 underline-offset-4 transition-opacity duration-300 hover:underline hover:opacity-75"
                 href="#"
                 >Çerez Politikası</a
               >
             </li>
             <li>
               <a
-                class="transition-opacity duration-300 hover:underline hover:opacity-75"
+                class="decoration-primary-500 underline-offset-4 transition-opacity duration-300 hover:underline hover:opacity-75"
                 href="#"
                 >Bilgi Güvenliği Politikası</a
               >
