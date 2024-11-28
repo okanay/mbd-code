@@ -786,20 +786,19 @@
         >
           <div class="w-full px-3.5 lg:w-2/3 lg:px-0">
             <!-- Product Information Content -->
+            <h1
+              id="main-title"
+              itemprop="name"
+              class="mb-4 text-xl font-medium lg:text-2xl"
+            >
+              Lüks Safari Platinium Heritage
+            </h1>
             <section
               id="product-info-content-1"
               data-state="closed"
               class="mb-8 hidden data-[state=open]:block group-data-[query=info]/query:!block"
               aria-labelledby="main-title"
             >
-              <h1
-                id="main-title"
-                itemprop="name"
-                class="mb-4 text-xl font-medium lg:text-2xl"
-              >
-                Lüks Safari Platinium Heritage
-              </h1>
-
               <div itemscope itemtype="http://schema.org/Description">
                 <h2 class="mb-2 text-sm font-medium lg:text-lg">
                   Genel Tanıtım
@@ -846,9 +845,9 @@
               itemscope
               itemtype="http://schema.org/TouristPackage"
             >
-              <h1 class="text-xl font-medium lg:text-2xl" itemprop="name">
+              <h2 class="mb-2 text-sm font-medium lg:text-lg">
                 Tur Olanakları
-              </h1>
+              </h2>
 
               <!-- Eğlence -->
               <section
@@ -978,10 +977,6 @@
               itemscope
               itemtype="http://schema.org/Review"
             >
-              <!-- Başlık -->
-              <h2 class="mb-6 text-lg font-medium lg:text-2xl" itemprop="about">
-                Misafir Yorumları
-              </h2>
               <!-- İçerik -->
               <div class="rounded-lg bg-white">
                 <!-- Değerlendirme Çubukları -->
@@ -1121,10 +1116,7 @@
 
                 <!-- Yeni Mesaj Input -->
                 <div class="max-h-full w-full rounded-lg bg-white">
-                  <h2
-                    class="mb-6 mt-10 text-lg font-medium lg:text-2xl"
-                    itemprop="about"
-                  >
+                  <h2 class="my-8 mb-4 text-sm font-medium lg:text-lg">
                     Ürünü Değerlendir
                   </h2>
                   <form>
@@ -1261,7 +1253,11 @@
                 </div>
 
                 <!-- Yorumlar -->
+
                 <div class="mt-8 space-y-6">
+                  <h2 class="text-sm font-medium lg:text-lg">
+                    Misafir Yorumları
+                  </h2>
                   <!-- Yorum 1 -->
                   <article
                     class="border-t pt-6"
