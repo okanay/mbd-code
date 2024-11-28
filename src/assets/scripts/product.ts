@@ -144,7 +144,7 @@ document.addEventListener('DOMContentLoaded', () => {
   new ModalController(
     [
       {
-        id: 'information',
+        id: 'info',
         toggleElements: [],
         openElements: ['#product-info-btn-1'],
         contentElement: '#product-info-content-1',
@@ -160,7 +160,7 @@ document.addEventListener('DOMContentLoaded', () => {
         containers: ['#product-info-content-2'],
       },
       {
-        id: 'comments',
+        id: 'reviews',
         toggleElements: [],
         openElements: ['#product-info-btn-3'],
         contentElement: '#product-info-content-3',
@@ -169,11 +169,11 @@ document.addEventListener('DOMContentLoaded', () => {
       },
     ],
     {
-      initialActiveModal: 'information',
+      initialActiveModal: 'info',
       urlState: {
         enabled: true,
-        queryParam: 'modal',
-        modals: ['information', 'includes', 'comments'],
+        queryParam: 'view',
+        modals: ['info', 'includes', 'reviews'],
       },
       outsideClickClose: false,
       escapeClose: false,
@@ -185,8 +185,8 @@ document.addEventListener('DOMContentLoaded', () => {
   )
 
   const urlMatcher = new URLMatcher({
-    queryParam: 'modal',
-    targetValues: ['comments'],
+    queryParam: 'view',
+    targetValues: ['reviews'],
   })
 
   const ratingAnimator = new RatingAnimator({
@@ -195,10 +195,10 @@ document.addEventListener('DOMContentLoaded', () => {
     animationDuration: 1000,
   })
 
-  urlMatcher.on('onFirstMatch', 'comments', () => {
+  urlMatcher.on('onFirstMatch', 'reviews', () => {
     ratingAnimator.animate()
     console.log(
-      '"comments" URL eşleştirici ilk kez eşleşti ve dinleyici kapatıldı!',
+      '"reviews" URL eşleştirici ilk kez eşleşti ve dinleyici kapatıldı!',
     )
   })
 })

@@ -67,17 +67,19 @@
     <script>
       ;(function () {
         const urlParams = new URLSearchParams(window.location.search)
-        const modalParam = urlParams.get('modal')
+        const modalParam = urlParams.get('view')
 
         if (modalParam) {
           document.documentElement.classList.add('group/query')
           document.documentElement.setAttribute('data-query', modalParam)
-
-          // DOM yüklenince data attribute'u kaldır
-          document.addEventListener('DOMContentLoaded', function () {
-            document.documentElement.removeAttribute('data-query')
-          })
+        } else {
+          document.documentElement.classList.add('group/query')
+          document.documentElement.setAttribute('data-query', 'info')
         }
+
+        document.addEventListener('DOMContentLoaded', function () {
+          document.documentElement.removeAttribute('data-query')
+        })
       })()
     </script>
   </head>
@@ -787,7 +789,7 @@
             <section
               id="product-info-content-1"
               data-state="closed"
-              class="mb-8 hidden data-[state=open]:block group-data-[query=information]/query:!block"
+              class="mb-8 hidden data-[state=open]:block group-data-[query=info]/query:!block"
               aria-labelledby="main-title"
             >
               <h1
@@ -972,7 +974,7 @@
             <section
               id="product-info-content-3"
               data-state="closed"
-              class="hidden data-[state=open]:block group-data-[query=comments]/query:!block"
+              class="hidden data-[state=open]:block group-data-[query=reviews]/query:!block"
               itemscope
               itemtype="http://schema.org/Review"
             >
@@ -1006,6 +1008,7 @@
                           class="rating-bar h-2 rounded-full bg-gray-900"
                           data-rate="12"
                           itemprop="ratingCount"
+                          style="width: 0%"
                         ></div>
                       </div>
                     </div>
@@ -1032,6 +1035,7 @@
                           class="rating-bar h-2 rounded-full bg-gray-900"
                           data-rate="6"
                           itemprop="ratingCount"
+                          style="width: 0%"
                         ></div>
                       </div>
                     </div>
@@ -1058,6 +1062,7 @@
                           class="rating-bar h-2 rounded-full bg-gray-900"
                           data-rate="2"
                           itemprop="ratingCount"
+                          style="width: 0%"
                         ></div>
                       </div>
                     </div>
@@ -1084,6 +1089,7 @@
                           class="rating-bar h-2 rounded-full bg-gray-900"
                           data-rate="4"
                           itemprop="ratingCount"
+                          style="width: 0%"
                         ></div>
                       </div>
                     </div>
