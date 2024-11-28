@@ -405,8 +405,6 @@ class Slider {
     targetIndex: number,
     direction?: 'left' | 'right',
   ): Promise<void> {
-    console.log('goToSlide çalıştı', targetIndex, direction) // Debug
-
     if (
       !this.isSliderEnabled() ||
       this.isAnimating ||

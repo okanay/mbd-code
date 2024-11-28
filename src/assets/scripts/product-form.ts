@@ -1,7 +1,33 @@
 import { DatePicker } from './packages/date-picker.js'
 import type { LanguageConfig } from './packages/date-picker.js'
+import { CompleteProductButton } from './packages/product-complete-btn.js'
 
 document.addEventListener('DOMContentLoaded', () => {
+  new CompleteProductButton({
+    elements: {
+      formContainerId: '#purchase-form',
+      completePurchaseContainer: '#complete-purchase-container',
+    },
+    options: {
+      threshold: {
+        start: 0.7,
+        end: 0.15,
+      },
+      animationOptions: {
+        active: {
+          bottom: '0',
+          opacity: '1',
+          transition: 'all 2000ms ease-in-out',
+        },
+        exit: {
+          bottom: '-100%',
+          opacity: '0',
+          transition: 'all 2000ms ease-in-out',
+        },
+      },
+    },
+  })
+
   new DatePicker({
     input: {
       type: 'two',
