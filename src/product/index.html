@@ -388,7 +388,7 @@
               <!-- Language/Currency Button -->
               <button
                 id="language-currency-selector-button-mobile"
-                class="mt-8 flex items-center gap-3 text-gray-700 transition hover:text-gray-900"
+                class="mt-8 flex items-center gap-3 text-gray-800 transition hover:text-gray-900"
               >
                 <img
                   src="/assets/images/flags/tr.svg"
@@ -963,8 +963,7 @@
               <h2 class="mb-6 text-lg font-medium lg:text-2xl" itemprop="about">
                 Misafir Yorumları
               </h2>
-
-              <!-- Değerlendirme Kartı -->
+              <!-- İçerik -->
               <div class="rounded-lg bg-white">
                 <!-- Değerlendirme Çubukları -->
                 <div
@@ -1095,6 +1094,147 @@
                     >
                     <span class="text-sm" itemprop="bestRating">/5</span>
                   </div>
+                </div>
+
+                <!-- Yeni Mesaj Input -->
+                <div class="max-h-full w-full rounded-lg bg-white">
+                  <h2
+                    class="mb-6 mt-10 text-lg font-medium lg:text-2xl"
+                    itemprop="about"
+                  >
+                    Ürünü Değerlendir
+                  </h2>
+                  <form>
+                    <!-- Stars -->
+                    <div class="mb-4">
+                      <label
+                        class="mb-1 block text-sm font-medium text-gray-800"
+                        >Puan</label
+                      >
+                      <div class="-ml-2 flex items-center space-x-2.5">
+                        <input
+                          type="radio"
+                          id="star1"
+                          name="rating"
+                          value="5"
+                          class="peer order-8 hidden"
+                          required
+                        />
+                        <label
+                          for="star1"
+                          class="order-9 cursor-pointer text-2xl peer-checked:text-yellow-400"
+                          >★</label
+                        >
+
+                        <input
+                          type="radio"
+                          id="star2"
+                          name="rating"
+                          value="4"
+                          class="peer order-6 hidden"
+                        />
+                        <label
+                          for="star2"
+                          class="order-7 cursor-pointer text-2xl peer-checked:text-yellow-400"
+                          >★</label
+                        >
+
+                        <input
+                          type="radio"
+                          id="star3"
+                          name="rating"
+                          value="3"
+                          class="peer order-4 hidden"
+                        />
+                        <label
+                          for="star3"
+                          class="order-5 cursor-pointer text-2xl peer-checked:text-yellow-400"
+                          >★</label
+                        >
+
+                        <input
+                          type="radio"
+                          id="star4"
+                          name="rating"
+                          value="2"
+                          class="peer order-2 hidden"
+                        />
+                        <label
+                          for="star4"
+                          class="order-3 cursor-pointer text-2xl peer-checked:text-yellow-400"
+                          >★</label
+                        >
+
+                        <input
+                          type="radio"
+                          id="star5"
+                          name="rating"
+                          value="1"
+                          class="order-0 peer hidden"
+                        />
+                        <label
+                          for="star5"
+                          class="order-1 cursor-pointer text-2xl peer-checked:text-yellow-400"
+                          >★</label
+                        >
+                      </div>
+                    </div>
+
+                    <!-- Titles -->
+                    <div class="mb-4">
+                      <label
+                        for="title"
+                        class="mb-1 block text-sm font-medium text-gray-800"
+                        >Başlık</label
+                      >
+                      <input
+                        type="text"
+                        id="title"
+                        name="title"
+                        required
+                        class="w-full border border-gray-300 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-primary-400"
+                      />
+                    </div>
+
+                    <!-- Comments -->
+                    <div class="mb-4">
+                      <label
+                        for="comment"
+                        class="mb-1 block text-sm font-medium text-gray-800"
+                        >Yorum</label
+                      >
+                      <textarea
+                        id="comment"
+                        name="comment"
+                        rows="4"
+                        required
+                        class="w-full border border-gray-300 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-primary-400"
+                      ></textarea>
+                    </div>
+
+                    <!-- Submit -->
+                    <div class="-mt-2 flex justify-start">
+                      <button
+                        type="submit"
+                        class="group h-[52px] w-[240px] border border-primary-200 bg-primary-500 px-4 py-2 text-white transition-colors duration-300 hover:bg-primary-600 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-75"
+                      >
+                        <span class="block group-disabled:hidden">
+                          Yorumu Gönder
+                        </span>
+
+                        <span
+                          class="hidden items-center justify-center gap-2 group-disabled:flex"
+                        >
+                          <span> İşlem Devam Ediyor </span>
+                          <img
+                            src="/assets/images/icons/loading-spinner.svg"
+                            alt="Loading"
+                            class="size-6 animate-spin brightness-0 invert !duration-[2500ms]"
+                          />
+                        </span>
+                      </button>
+                    </div>
+                  </form>
                 </div>
 
                 <!-- Yorumlar -->
@@ -1229,7 +1369,7 @@
               </div>
 
               <div
-                class="relative mb-6 divide-y divide-gray-200 overflow-hidden rounded border border-gray-200"
+                class="relative mb-6 divide-y divide-gray-200 overflow-hidden border border-gray-200"
               >
                 <div class="flex flex-col px-2.5 pt-5">
                   <h3 class="text-xs font-medium">Tur Paketi</h3>
@@ -1293,7 +1433,7 @@
                       id="fullname"
                       name="fullname"
                       placeholder=" "
-                      class="peer h-[44px] w-full rounded border bg-transparent px-3 text-sm outline-none transition-all duration-200"
+                      class="peer h-[44px] w-full border bg-transparent px-3 text-sm outline-none transition-all duration-200"
                       aria-label="İsim Soyisim"
                     />
                     <label
@@ -1309,7 +1449,7 @@
                       id="identity"
                       name="identity"
                       placeholder=" "
-                      class="peer h-[44px] w-full rounded border bg-transparent px-3 text-sm outline-none transition-all duration-200"
+                      class="peer h-[44px] w-full border bg-transparent px-3 text-sm outline-none transition-all duration-200"
                       aria-required="true"
                       aria-label="Kimlik / Pasaport No"
                     />
@@ -1329,7 +1469,7 @@
                       id="email"
                       name="email"
                       placeholder=" "
-                      class="peer h-[44px] w-full rounded border bg-transparent px-3 outline-none transition-all duration-200 peer-placeholder-shown:pointer-events-none peer-focus:pointer-events-auto"
+                      class="peer h-[44px] w-full border bg-transparent px-3 outline-none transition-all duration-200 peer-placeholder-shown:pointer-events-none peer-focus:pointer-events-auto"
                       aria-label="E-posta Adresi"
                     />
                     <label
@@ -1345,7 +1485,7 @@
                       id="phone"
                       name="phone"
                       placeholder=" "
-                      class="peer h-[44px] w-full rounded border bg-transparent px-3 text-sm outline-none transition-all duration-200"
+                      class="peer h-[44px] w-full border bg-transparent px-3 text-sm outline-none transition-all duration-200"
                       aria-required="true"
                       aria-label="Telefon Numarası"
                     />
@@ -1365,7 +1505,7 @@
                       id="hotel"
                       name="hotel"
                       placeholder=" "
-                      class="peer h-[44px] w-full rounded border bg-transparent px-3 text-sm outline-none transition-all duration-200"
+                      class="peer h-[44px] w-full border bg-transparent px-3 text-sm outline-none transition-all duration-200"
                       aria-required="true"
                       aria-label="Otel Adı"
                     />
@@ -1382,7 +1522,7 @@
                       id="transfer"
                       name="transfer"
                       placeholder=" "
-                      class="peer h-[44px] w-full rounded border bg-transparent px-3 text-sm outline-none transition-all duration-200"
+                      class="peer h-[44px] w-full border bg-transparent px-3 text-sm outline-none transition-all duration-200"
                       aria-required="true"
                       aria-label="Transfer"
                     />
@@ -1402,7 +1542,7 @@
                       id="atv"
                       name="atv"
                       placeholder=" "
-                      class="peer h-[44px] w-full rounded border bg-transparent px-3 text-sm outline-none transition-all duration-200"
+                      class="peer h-[44px] w-full border bg-transparent px-3 text-sm outline-none transition-all duration-200"
                       aria-required="true"
                       aria-label="ATV"
                     />
@@ -1419,7 +1559,7 @@
                       id="notes"
                       name="notes"
                       placeholder=" "
-                      class="peer h-[44px] w-full rounded border bg-transparent px-3 text-sm outline-none transition-all duration-200"
+                      class="peer h-[44px] w-full border bg-transparent px-3 text-sm outline-none transition-all duration-200"
                       aria-label="Notlar"
                     />
                     <label
@@ -1435,7 +1575,7 @@
                 <div class="mt-4 flex items-center justify-center">
                   <span
                     id="error-message"
-                    class="-mt-1.5 w-full rounded border border-primary-200 bg-primary-50 px-4 py-2 text-xs font-medium text-primary-600"
+                    class="-mt-1.5 w-full border border-primary-200 bg-primary-50 px-4 py-2 text-xs font-medium text-primary-600"
                   >
                     Lütfen * ile işaretli tüm alanları doldurun.
                   </span>
@@ -1451,7 +1591,7 @@
                   <button
                     type="submit"
                     disabled
-                    class="group h-[48px] w-full rounded-md border border-primary-400 bg-primary-500 text-lg font-semibold text-white transition-all duration-300 hover:opacity-75 active:scale-95 disabled:cursor-not-allowed disabled:opacity-75"
+                    class="group -mt-2 h-[52px] w-full border border-primary-400 bg-primary-500 text-lg font-semibold text-white transition-all duration-300 hover:opacity-75 active:scale-95 disabled:cursor-not-allowed disabled:opacity-75"
                     aria-label="Aktiviteyi Satın Al"
                   >
                     <span class="block group-disabled:hidden">
@@ -1517,7 +1657,7 @@
 
               <button
                 id="prev-image-gallery"
-                class="pointer-events-auto rounded-full border border-white/20 bg-neutral-900 p-1.5  transition-all duration-300 hover:opacity-60 active:scale-90 lg:p-2""
+                class="pointer-events-auto rounded-full border border-white/20 bg-neutral-900 p-1.5 transition-all duration-300 hover:opacity-60 active:scale-90 lg:p-2"
               >
                 <img
                   src="/assets/images/icons/chevron-left.svg"
@@ -1527,7 +1667,7 @@
               </button>
               <button
                 id="next-image-gallery"
-                class="pointer-events-auto rounded-full border border-white/20 bg-neutral-900 p-1.5  transition-all duration-300 hover:opacity-60 active:scale-90 lg:p-2""
+                class="pointer-events-auto rounded-full border border-white/20 bg-neutral-900 p-1.5 transition-all duration-300 hover:opacity-60 active:scale-90 lg:p-2"
               >
                 <img
                   src="/assets/images/icons/chevron-right.svg"
@@ -1557,7 +1697,7 @@
       <div
         id="date-picker-container"
         data-language="tr"
-        class="date-hidden absolute w-[320px] rounded border bg-white px-4 py-3 shadow-lg"
+        class="date-hidden absolute w-[320px] border bg-white px-4 py-3"
       >
         <div class="mb-4 flex items-center justify-between">
           <button
