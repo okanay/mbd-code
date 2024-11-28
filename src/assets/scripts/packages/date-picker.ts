@@ -989,6 +989,7 @@ class DatePicker {
     this.renderMonthShortNames()
     this.renderCalendar()
     this.updateNavigationState()
+    this.positionDatePickerUnderInput(this.activeInput!)
   }
 
   private areDatesEqual(date1: Date | null, date2: Date): boolean {
