@@ -175,13 +175,6 @@ document.addEventListener('DOMContentLoaded', () => {
         queryParam: 'modal',
         modals: ['information', 'includes', 'comments'],
       },
-      loading: {
-        enabled: true,
-        elements: {
-          container: '#product-info-container',
-          skeleton: '#product-info-skeleton',
-        },
-      },
       outsideClickClose: false,
       escapeClose: false,
       preserveModalHistory: false,

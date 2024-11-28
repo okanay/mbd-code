@@ -63,6 +63,23 @@
     <script type="module" src="/assets/scripts/layout.js?v=faq"></script>
     <script type="module" src="/assets/scripts/product.js?v=faq"></script>
     <script type="module" src="/assets/scripts/product-form.js?v=faq"></script>
+
+    <script>
+      ;(function () {
+        const urlParams = new URLSearchParams(window.location.search)
+        const modalParam = urlParams.get('modal')
+
+        if (modalParam) {
+          document.documentElement.classList.add('group/query')
+          document.documentElement.setAttribute('data-query', modalParam)
+
+          // DOM yüklenince data attribute'u kaldır
+          document.addEventListener('DOMContentLoaded', function () {
+            document.documentElement.removeAttribute('data-query')
+          })
+        }
+      })()
+    </script>
   </head>
   <body class="bg-white">
     <header class="w-full border-gray-200 lg:h-[80px] lg:border-b">
@@ -759,23 +776,6 @@
           </div>
         </div>
 
-        <!-- Skeleton Loading -->
-        <div
-          id="product-info-skeleton"
-          data-loading="true"
-          class="h-[440px] px-3.5 transition-opacity duration-300 data-[loading=false]:hidden data-[loading=false]:opacity-0"
-        >
-          <!-- Skeleton içeriği -->
-          <div class="animate-pulse">
-            <div class="mb-4 h-8 w-1/4 rounded bg-gray-200"></div>
-            <div class="space-y-3">
-              <div class="h-4 w-3/4 rounded bg-gray-200"></div>
-              <div class="h-4 w-1/2 rounded bg-gray-200"></div>
-              <div class="h-4 w-5/6 rounded bg-gray-200"></div>
-            </div>
-          </div>
-        </div>
-
         <!-- Product Information Content and Form -->
         <article
           id="product-info-container"
@@ -787,7 +787,7 @@
             <section
               id="product-info-content-1"
               data-state="closed"
-              class="mb-8 hidden data-[state=open]:block"
+              class="mb-8 hidden data-[state=open]:block group-data-[query=information]/query:!block"
               aria-labelledby="main-title"
             >
               <h1
@@ -840,7 +840,7 @@
             <section
               id="product-info-content-2"
               data-state="closed"
-              class="hidden space-y-6 data-[state=open]:block"
+              class="hidden space-y-6 data-[state=open]:block group-data-[query=includes]/query:!block"
               itemscope
               itemtype="http://schema.org/TouristPackage"
             >
@@ -972,7 +972,7 @@
             <section
               id="product-info-content-3"
               data-state="closed"
-              class="hidden data-[state=open]:block"
+              class="hidden data-[state=open]:block group-data-[query=comments]/query:!block"
               itemscope
               itemtype="http://schema.org/Review"
             >

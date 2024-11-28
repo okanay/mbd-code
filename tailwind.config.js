@@ -1,27 +1,27 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
-  content: ["./src/**/*.{ts,html,css}", "./dist/**/*.html"],
+  content: ['./src/**/*.{ts,html,css}', './dist/**/*.html'],
   theme: {
     extend: {
       screens: {
-        xsp: "320px",
-        smp: "360px",
-        mdp: "380px",
-        lgp: "420px",
-        xlp: "440px",
-        tablet: "560px",
+        xsp: '320px',
+        smp: '360px',
+        mdp: '380px',
+        lgp: '420px',
+        xlp: '440px',
+        tablet: '560px',
       },
       colors: {
-        primary: setColors("primary"),
+        primary: setColors('primary'),
       },
       fontFamily: {
-        custom: ["Fellix", "Helvetica Neue", "IBM Plex Sans", "sans-serif"],
+        custom: ['Fellix', 'Helvetica Neue', 'IBM Plex Sans', 'sans-serif'],
       },
     },
   },
   plugins: [],
-  safelist: [],
-};
+  safelist: ['group/query'],
+}
 
 function setColors(color) {
   return {
@@ -36,5 +36,5 @@ function setColors(color) {
     800: `rgb(var(--${color}-800))`,
     900: `rgb(var(--${color}-900))`,
     950: `rgb(var(--${color}-950))`,
-  };
+  }
 }
