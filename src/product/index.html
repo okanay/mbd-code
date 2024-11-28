@@ -745,7 +745,7 @@
             <button
               id="product-info-btn-1"
               data-state="closed"
-              class="h-full text-nowrap border-primary-500 text-sm font-medium data-[state=open]:translate-y-[4%] data-[state=open]:border-b-4 data-[state=open]:font-semibold group-data-[query=info]/query:!translate-y-[4%] group-data-[query=info]/query:!border-b-4 group-data-[query=info]/query:!font-semibold lg:text-base"
+              class="h-full text-nowrap border-primary-500 text-sm font-semibold data-[state=open]:translate-y-[4%] data-[state=open]:border-b-4 group-data-[query=info]/query:!translate-y-[4%] group-data-[query=info]/query:!border-b-4 lg:text-base"
               aria-label="Genel Bilgiler"
             >
               Genel Bilgiler
@@ -753,7 +753,7 @@
             <button
               id="product-info-btn-2"
               data-state="closed"
-              class="h-full text-nowrap border-primary-500 text-sm font-medium data-[state=open]:translate-y-[4%] data-[state=open]:border-b-4 data-[state=open]:font-semibold group-data-[query=includes]/query:!translate-y-[4%] group-data-[query=includes]/query:!border-b-4 group-data-[query=includes]/query:!font-semibold lg:text-base"
+              class="h-full text-nowrap border-primary-500 text-sm font-semibold data-[state=open]:translate-y-[4%] data-[state=open]:border-b-4 group-data-[query=includes]/query:!translate-y-[4%] group-data-[query=includes]/query:!border-b-4 lg:text-base"
               aria-label="Tur Olanakları"
             >
               Tur Olanakları
@@ -761,7 +761,7 @@
             <button
               id="product-info-btn-3"
               data-state="closed"
-              class="h-full text-nowrap border-primary-500 text-sm font-medium data-[state=open]:translate-y-[4%] data-[state=open]:border-b-4 data-[state=open]:font-semibold group-data-[query=reviews]/query:!translate-y-[4%] group-data-[query=reviews]/query:!border-b-4 group-data-[query=reviews]/query:!font-semibold lg:text-base"
+              class="h-full text-nowrap border-primary-500 text-sm font-semibold data-[state=open]:translate-y-[4%] data-[state=open]:border-b-4 group-data-[query=reviews]/query:!translate-y-[4%] group-data-[query=reviews]/query:!border-b-4 lg:text-base"
               aria-label="Yorumlar"
             >
               Yorumlar
@@ -823,7 +823,9 @@
                       >★</span
                     >
                   </div>
-                  <h4 class="-mt-1 text-sm font-semibold text-lime-500">
+                  <h4
+                    class="-mt-1 text-sm font-medium text-lime-500 lg:text-base"
+                  >
                     Mükemmel
                   </h4>
                 </div>
@@ -837,7 +839,7 @@
               aria-labelledby="main-title"
             >
               <div itemscope itemtype="http://schema.org/Description">
-                <h2 class="mb-3 text-base font-bold lg:text-lg">
+                <h2 class="mb-3 text-base font-bold lg:text-xl">
                   Genel Tanıtım
                 </h2>
                 <div
@@ -882,7 +884,7 @@
               itemscope
               itemtype="http://schema.org/TouristPackage"
             >
-              <h2 class="text-base font-bold lg:text-lg">Tur Olanakları</h2>
+              <h2 class="text-base font-bold lg:text-xl">Tur Olanakları</h2>
 
               <!-- Eğlence -->
               <section
@@ -1029,7 +1031,7 @@
                   >
                     <div class="flex w-full flex-col gap-2">
                       <span
-                        class="text-sm font-medium lg:text-lg"
+                        class="text-sm font-medium lg:text-base"
                         itemprop="name"
                         >Olağanüstü</span
                       >
@@ -1056,7 +1058,7 @@
                   >
                     <div class="flex w-full flex-col gap-2">
                       <span
-                        class="text-sm font-medium lg:text-lg"
+                        class="text-sm font-medium lg:text-base"
                         itemprop="name"
                         >Çok İyi</span
                       >
@@ -1083,7 +1085,7 @@
                   >
                     <div class="flex w-full flex-col gap-2">
                       <span
-                        class="text-sm font-medium lg:text-lg"
+                        class="text-sm font-medium lg:text-base"
                         itemprop="name"
                         >İyi</span
                       >
@@ -1110,7 +1112,7 @@
                   >
                     <div class="flex w-full flex-col gap-2">
                       <span
-                        class="text-sm font-medium lg:text-lg"
+                        class="text-sm font-medium lg:text-base"
                         itemprop="name"
                         >Düşük</span
                       >
@@ -1131,14 +1133,14 @@
 
                 <!-- Yeni Mesaj Input -->
                 <div class="max-h-full w-full rounded-lg bg-white">
-                  <h2 class="my-8 mb-4 text-base font-bold lg:text-lg">
+                  <h2 class="my-8 mb-4 text-base font-bold lg:text-xl">
                     Turu Değerlendir
                   </h2>
                   <form>
                     <!-- Stars -->
                     <div class="mb-4">
                       <label
-                        class="mb-1 block text-sm font-medium text-gray-800"
+                        class="mb-1 block text-sm font-medium text-gray-800 lg:text-base"
                         >Puan</label
                       >
                       <div class="-ml-2 flex items-center space-x-2.5">
@@ -1214,7 +1216,7 @@
                     <div class="mb-4">
                       <label
                         for="title"
-                        class="mb-1 block text-sm font-medium text-gray-800"
+                        class="mb-1 block text-sm font-medium text-gray-800 lg:text-base"
                         >Başlık</label
                       >
                       <input
@@ -1230,7 +1232,7 @@
                     <div class="mb-4">
                       <label
                         for="comment"
-                        class="mb-1 block text-sm font-medium text-gray-800"
+                        class="mb-1 block text-sm font-medium text-gray-800 lg:text-base"
                         >Yorum</label
                       >
                       <textarea
@@ -1246,7 +1248,7 @@
                     <div class="-mt-2 flex justify-start">
                       <button
                         type="submit"
-                        class="group h-[52px] w-full border border-primary-200 bg-primary-500 px-4 py-2 text-white transition-colors duration-300 hover:bg-primary-600 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-75 sm:w-[240px]"
+                        class="group h-[52px] w-full border border-primary-200 bg-primary-500 px-4 py-2 font-semibold text-white transition-colors duration-300 hover:bg-primary-600 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-75 sm:w-[240px]"
                       >
                         <span class="block group-disabled:hidden">
                           Yorumu Gönder
@@ -1269,7 +1271,7 @@
 
                 <!-- Yorumlar -->
                 <div class="mt-8 space-y-6">
-                  <h2 class="text-base font-bold lg:text-lg">
+                  <h2 class="text-base font-bold lg:text-xl">
                     Misafir Yorumları
                   </h2>
                   <!-- Yorum 1 -->
@@ -1278,7 +1280,7 @@
                     itemscope
                     itemtype="http://schema.org/Review"
                   >
-                    <div class="flex justify-between lg:mb-1">
+                    <div class="flex justify-between font-semibold lg:mb-1">
                       <div>
                         <span
                           class="text-lg font-semibold lg:text-xl"
@@ -1286,11 +1288,9 @@
                           itemscope
                           itemtype="http://schema.org/Rating"
                         >
-                          <span class="text-lg font-medium lg:text-xl">4</span>
+                          <span class="text-lg lg:text-xl">4</span>
                           <span class="text-sm" itemprop="bestRating">/5</span>
-                          <span class="ml-1 text-sm font-medium lg:text-lg"
-                            >Çok İyi</span
-                          >
+                          <span class="ml-1 text-sm lg:text-lg">Çok İyi</span>
                         </span>
                       </div>
                     </div>
