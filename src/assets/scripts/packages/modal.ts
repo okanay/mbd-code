@@ -28,6 +28,13 @@ interface ModalConfig {
     queryParam?: string
     modals?: string[]
   }
+  loading?: {
+    enabled: boolean
+    elements?: {
+      container: string
+      skeleton: string
+    }
+  }
 }
 
 interface ModalDefinition {
@@ -54,6 +61,13 @@ class ModalController {
   private activeModalId: string | null = null
   private modalHistory: string[] = []
   private config: Required<ModalConfig>
+  private loadingElements: {
+    container: HTMLElement | null
+    skeleton: HTMLElement | null
+  } = {
+    container: null,
+    skeleton: null,
+  }
   private initialized: boolean = false
 
   constructor(menuDefinitions: ModalDefinition[], config: ModalConfig = {}) {
@@ -93,18 +107,58 @@ class ModalController {
         queryParam: config.urlState?.queryParam ?? 'modal',
         modals: config.urlState?.modals ?? [],
       },
+      loading: {
+        enabled: config.loading?.enabled ?? false,
+        elements: {
+          container: config.loading?.elements?.container ?? '',
+          skeleton: config.loading?.elements?.skeleton ?? '',
+        },
+      },
     }
 
     if (document.readyState === 'loading') {
       document.addEventListener('DOMContentLoaded', () => {
+        this.initializeLoading()
         this.initializeModals(menuDefinitions)
         this.setupEventListeners()
         this.handleInitialState()
+        this.finishLoading()
       })
     } else {
+      this.initializeLoading()
       this.initializeModals(menuDefinitions)
       this.setupEventListeners()
       this.handleInitialState()
+      this.finishLoading()
+    }
+  }
+
+  private initializeLoading(): void {
+    if (!this.config.loading.enabled) return
+
+    this.loadingElements = {
+      container: document.querySelector(
+        this.config.loading.elements!.container,
+      ),
+      skeleton: document.querySelector(this.config.loading.elements!.skeleton),
+    }
+
+    if (this.loadingElements.container) {
+      this.loadingElements.container.setAttribute('data-loading', 'true')
+    }
+    if (this.loadingElements.skeleton) {
+      this.loadingElements.skeleton.setAttribute('data-loading', 'true')
+    }
+  }
+
+  private finishLoading(): void {
+    if (!this.config.loading.enabled) return
+
+    if (this.loadingElements.container) {
+      this.loadingElements.container.setAttribute('data-loading', 'false')
+    }
+    if (this.loadingElements.skeleton) {
+      this.loadingElements.skeleton.setAttribute('data-loading', 'false')
     }
   }
 
