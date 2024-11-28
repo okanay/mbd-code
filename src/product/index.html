@@ -1488,29 +1488,54 @@
           id="gallery-modal-content"
           class="relative w-full max-w-5xl overflow-hidden rounded-xl bg-neutral-900 shadow-2xl"
         >
-          <!-- Close button - DONT EDIT THIS -->
-          <button
-            id="gallery-modal-close-button"
-            class="absolute right-2 top-2 rounded-full border border-white/20 bg-neutral-900 p-1.5 text-white transition-all duration-300 hover:opacity-60 active:scale-90 lg:p-2"
-            aria-label="Close Gallery"
-          >
-            <img
-              src="/assets/images/icons/hamburger-close.svg"
-              alt="Close Icon"
-              class="size-4 brightness-0 invert lg:size-6"
-            />
-          </button>
-
           <!-- Main image - DONT EDIT THIS -->
           <div
             id="gallery-modal-main-image-container"
-            class="bg-neutral-950 py-4"
+            class="relative bg-neutral-950 py-4"
           >
             <img
               src="#"
               alt="Gallery Main Image"
               class="mx-auto aspect-video h-auto w-full object-contain lg:max-h-[70vh]"
             />
+
+            <!-- Gallery Control Buttons - DONT EDIT THIS -->
+            <div
+              class="pointer-events-none absolute inset-0 flex items-center justify-between px-2"
+            >
+              <button
+                id="close-image-gallery"
+                class="pointer-events-auto absolute right-2 top-2 isolate z-40 rounded-full border border-white/20 bg-neutral-900 p-1.5 transition-all duration-300 hover:opacity-60 active:scale-90 lg:p-2"
+                aria-label="Close Gallery"
+              >
+                <img
+                  src="/assets/images/icons/hamburger-close.svg"
+                  alt="Close Icon"
+                  class="size-4 brightness-0 invert lg:size-6"
+                />
+              </button>
+
+              <button
+                id="prev-image-gallery"
+                class="pointer-events-auto rounded-full border border-white/20 bg-neutral-900 p-1.5  transition-all duration-300 hover:opacity-60 active:scale-90 lg:p-2""
+              >
+                <img
+                  src="/assets/images/icons/chevron-left.svg"
+                  alt="Previous"
+                  class="size-4 brightness-0 invert lg:size-6"
+                />
+              </button>
+              <button
+                id="next-image-gallery"
+                class="pointer-events-auto rounded-full border border-white/20 bg-neutral-900 p-1.5  transition-all duration-300 hover:opacity-60 active:scale-90 lg:p-2""
+              >
+                <img
+                  src="/assets/images/icons/chevron-right.svg"
+                  alt="Next"
+                  class="size-4 brightness-0 invert lg:size-6"
+                />
+              </button>
+            </div>
           </div>
 
           <!-- Thumbnails container -->
@@ -1532,7 +1557,7 @@
       <div
         id="date-picker-container"
         data-language="tr"
-        class="absolute w-[320px] rounded border bg-white px-4 py-3 shadow-lg"
+        class="date-hidden absolute w-[320px] rounded border bg-white px-4 py-3 shadow-lg"
       >
         <div class="mb-4 flex items-center justify-between">
           <button
@@ -2161,7 +2186,7 @@
       <div class="relative mt-4 w-full overflow-hidden">
         <!-- Logo Grid -->
         <div
-          class="relative w-full space-y-2 bg-primary-500 px-3.5 pb-6 pt-8 lg:space-y-4 xl:scale-x-[105%] xl:rounded-t-[100%] xl:pb-4 xl:pt-20"
+          class="relative w-full space-y-2 bg-primary-500 px-3.5 pb-6 pt-8 lg:space-y-4 xl:scale-x-[105%] xl:rounded-t-[100%] xl:pb-4 xl:pt-12"
         >
           <div
             class="mx-auto grid max-w-[720px] grid-cols-4 items-center justify-items-center gap-x-8 lg:gap-x-12"

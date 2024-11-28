@@ -7,27 +7,6 @@ import { RatingAnimator } from './packages/rating-bar-controller.js'
 import { URLMatcher } from './packages/url-matcher.js'
 
 document.addEventListener('DOMContentLoaded', () => {
-  const gallery = new ImageGalleryTracker({
-    activeThumbnailClass: 'thumbnail-active',
-    thumbnailClass: 'thumbnail',
-    thumbnailsContainerId: 'gallery-modal-thumbnails',
-    mainImageContainerId: 'gallery-modal-main-image-container',
-    modalId: 'gallery-modal',
-    sourceContainerId: 'product-slider',
-    dataSrcAttribute: 'data-src',
-    sourceImageSelector: '.product-slide img',
-    onImageCount: count => {
-      UpdateProductSliderDataItems('product-slider', {
-        min: 1,
-        max: 5,
-        childElements: count,
-        dataItems: 'auto-detected',
-      })
-
-      UpdateElementInnerHTMLById('product-slider-image-count', count.toString())
-    },
-  })
-
   const slider = new Slider({
     container: '#product-slider-container',
     slideSelector: '.product-slide',
@@ -81,15 +60,27 @@ document.addEventListener('DOMContentLoaded', () => {
     },
   })
 
-  new TouchDirectionDetector('gallery-modal-main-image-container', {
-    threshold: 50,
-    onSwipe: direction => {
-      if (direction === 'right') {
-        return gallery.prevImage()
-      }
-      if (direction === 'left') {
-        return gallery.nextImage()
-      }
+  const gallery = new ImageGalleryTracker({
+    elements: {
+      modalId: 'gallery-modal',
+      mainImageContainerId: 'gallery-modal-main-image-container',
+      thumbnailsContainerId: 'gallery-modal-thumbnails',
+      sourceContainerId: 'product-slider',
+      prevButtonId: 'prev-image-gallery',
+      nextButtonId: 'next-image-gallery',
+    },
+    activeThumbnailClass: 'thumbnail-active',
+    thumbnailClass: 'thumbnail',
+    dataSrcAttribute: 'data-src',
+    sourceImageSelector: '.product-slide img',
+    onImageCount: count => {
+      UpdateProductSliderDataItems('product-slider', {
+        min: 1,
+        max: 5,
+        childElements: count,
+        dataItems: 'auto-detected',
+      })
+      UpdateElementInnerHTMLById('product-slider-image-count', count.toString())
     },
   })
 
@@ -97,9 +88,9 @@ document.addEventListener('DOMContentLoaded', () => {
     [
       {
         id: 'gallery-modal',
-        toggleElements: ['.product-slide', '#gallery-modal-close-button'],
+        toggleElements: ['.product-slide', '#close-image-gallery'],
         contentElement: '#gallery-modal',
-        closeElements: ['#gallery-modal-close-button'],
+        closeElements: ['#close-image-gallery'],
         containers: ['#gallery-modal-content'],
       },
     ],
@@ -137,6 +128,18 @@ document.addEventListener('DOMContentLoaded', () => {
       },
     },
   )
+
+  new TouchDirectionDetector('gallery-modal-main-image-container', {
+    threshold: 50,
+    onSwipe: direction => {
+      if (direction === 'right') {
+        return gallery.prevImage()
+      }
+      if (direction === 'left') {
+        return gallery.nextImage()
+      }
+    },
+  })
 
   new ModalController(
     [
