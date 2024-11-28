@@ -786,13 +786,50 @@
         >
           <div class="w-full px-3.5 lg:w-2/3 lg:px-0">
             <!-- Product Information Content -->
-            <h1
-              id="main-title"
-              itemprop="name"
-              class="mb-4 text-xl font-medium lg:text-2xl"
-            >
-              Lüks Safari Platinium Heritage
-            </h1>
+            <div class="mb-4 flex flex-col gap-1">
+              <h1
+                id="main-title"
+                itemprop="name"
+                class="text-xl font-bold lg:text-2xl"
+              >
+                Lüks Safari Platinium Heritage
+              </h1>
+
+              <!-- Puan ve Toplam Değerlendirme Sayısı-->
+              <div class="flex items-center gap-2.5">
+                <div class="rounded-custom bg-lime-500 px-4 py-1.5 text-white">
+                  <span
+                    class="text-base font-bold lg:text-xl"
+                    itemprop="ratingValue"
+                    >4.4</span
+                  >
+                  <span class="text-sm" itemprop="bestRating">/5</span>
+                </div>
+                <div>
+                  <div>
+                    <span class="cursor-pointer text-xl text-yellow-500"
+                      >★</span
+                    >
+                    <span class="cursor-pointer text-xl text-yellow-500"
+                      >★</span
+                    >
+                    <span class="cursor-pointer text-xl text-yellow-500"
+                      >★</span
+                    >
+                    <span class="cursor-pointer text-xl text-yellow-500"
+                      >★</span
+                    >
+                    <span class="cursor-pointer text-xl text-yellow-500"
+                      >★</span
+                    >
+                  </div>
+                  <h4 class="-mt-1 text-sm font-semibold text-lime-500">
+                    Mükemmel
+                  </h4>
+                </div>
+              </div>
+            </div>
+
             <section
               id="product-info-content-1"
               data-state="closed"
@@ -800,7 +837,7 @@
               aria-labelledby="main-title"
             >
               <div itemscope itemtype="http://schema.org/Description">
-                <h2 class="mb-2 text-sm font-medium lg:text-lg">
+                <h2 class="mb-3 text-base font-bold lg:text-lg">
                   Genel Tanıtım
                 </h2>
                 <div
@@ -845,9 +882,7 @@
               itemscope
               itemtype="http://schema.org/TouristPackage"
             >
-              <h2 class="mb-2 text-sm font-medium lg:text-lg">
-                Tur Olanakları
-              </h2>
+              <h2 class="text-base font-bold lg:text-lg">Tur Olanakları</h2>
 
               <!-- Eğlence -->
               <section
@@ -857,7 +892,7 @@
               >
                 <h2
                   id="entertainment-title"
-                  class="mb-4 text-sm font-medium lg:text-lg"
+                  class="mb-4 text-base font-bold lg:text-lg"
                   itemprop="name"
                 >
                   Eğlence
@@ -908,7 +943,7 @@
               >
                 <h2
                   id="food-beverage-title"
-                  class="mb-4 text-sm font-medium lg:text-lg"
+                  class="mb-4 text-base font-bold lg:text-lg"
                   itemprop="name"
                 >
                   Yeme İçme
@@ -942,7 +977,7 @@
               >
                 <h2
                   id="transportation-title"
-                  class="mb-4 text-sm font-medium lg:text-lg"
+                  class="mb-4 text-base font-bold lg:text-lg"
                   itemprop="name"
                 >
                   Ulaşım
@@ -1093,31 +1128,11 @@
                     >
                   </div>
                 </div>
-                <!-- Puan ve Toplam Değerlendirme Sayısı-->
-                <div
-                  class="mt-4 flex flex-col items-start justify-end gap-1.5 lg:gap-2"
-                >
-                  <span
-                    class="text-sm font-medium text-primary-500 lg:text-lg"
-                    itemprop="description"
-                    >128 değerlendirme</span
-                  >
-                  <div
-                    class="rounded-custom bg-primary-500 px-3 py-1.5 text-white"
-                  >
-                    <span
-                      class="text-lg font-bold lg:text-xl"
-                      itemprop="ratingValue"
-                      >4.4</span
-                    >
-                    <span class="text-sm" itemprop="bestRating">/5</span>
-                  </div>
-                </div>
 
                 <!-- Yeni Mesaj Input -->
                 <div class="max-h-full w-full rounded-lg bg-white">
-                  <h2 class="my-8 mb-4 text-sm font-medium lg:text-lg">
-                    Ürünü Değerlendir
+                  <h2 class="my-8 mb-4 text-base font-bold lg:text-lg">
+                    Turu Değerlendir
                   </h2>
                   <form>
                     <!-- Stars -->
@@ -1253,9 +1268,8 @@
                 </div>
 
                 <!-- Yorumlar -->
-
                 <div class="mt-8 space-y-6">
-                  <h2 class="text-sm font-medium lg:text-lg">
+                  <h2 class="text-base font-bold lg:text-lg">
                     Misafir Yorumları
                   </h2>
                   <!-- Yorum 1 -->
