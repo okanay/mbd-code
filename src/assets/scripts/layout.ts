@@ -19,7 +19,8 @@ document.addEventListener('DOMContentLoaded', () => {
     [
       {
         id: 'language-menu',
-        toggleElements: [
+        toggleElements: [],
+        openElements: [
           '#language-currency-selector-button',
           '#language-currency-selector-button-mobile',
         ],
@@ -30,6 +31,7 @@ document.addEventListener('DOMContentLoaded', () => {
       {
         id: 'mobile-menu',
         toggleElements: ['#mobile-menu-button'],
+        openElements: [],
         contentElement: '#mobile-navigation',
         closeElements: [],
         containers: ['#mobile-navigation-content'],
