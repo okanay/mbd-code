@@ -8,7 +8,7 @@ import { ModalController } from './packages/modal.js'
 import { RatingAnimator } from './packages/rating-bar-controller.js'
 import { URLMatcher } from './packages/url-matcher.js'
 import { DatePicker } from './packages/date-picker.js'
-import { FloatingButtonsManager } from './packages/product-complete-btn.js'
+import { FloatingButtonsManager } from './packages/floating-buttons-elements.js'
 import { NavStickyManager } from './packages/scroll-style.js'
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -220,9 +220,6 @@ document.addEventListener('DOMContentLoaded', () => {
   // Rating Animator URL Listener
   urlMatcher.on('onFirstMatch', 'reviews', () => {
     ratingAnimator.animate()
-    console.log(
-      '"reviews" URL eşleştirici ilk kez eşleşti ve dinleyici kapatıldı!',
-    )
   })
 
   // Date Picker Instance
