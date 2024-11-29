@@ -12,7 +12,8 @@ import { CompleteProductButton } from './packages/product-complete-btn.js'
 import { NavStickyManager } from './packages/scroll-style.js'
 
 document.addEventListener('DOMContentLoaded', () => {
-  const slider = new Slider({
+  // Product Slider Instance
+  const MainSlider = new Slider({
     container: '#product-slider-container',
     slideSelector: '.product-slide',
     buttonSelector: '.product-slider-btn',
@@ -53,18 +54,20 @@ document.addEventListener('DOMContentLoaded', () => {
     },
   })
 
+  // Slider touch event detector
   new TouchDirectionDetector('product-slider-container', {
     threshold: 50,
     onSwipe: direction => {
       if (direction === 'right') {
-        return slider.prev()
+        return MainSlider.prev()
       }
       if (direction === 'left') {
-        return slider.next()
+        return MainSlider.next()
       }
     },
   })
 
+  // Image Gallery Instance for Product Slider
   const gallery = new ImageGalleryTracker({
     elements: {
       modalId: 'gallery-modal',
@@ -89,6 +92,7 @@ document.addEventListener('DOMContentLoaded', () => {
     },
   })
 
+  // Image Gallery Modal Controller
   new ModalController(
     [
       {
@@ -134,6 +138,7 @@ document.addEventListener('DOMContentLoaded', () => {
     },
   )
 
+  // Image Gallery Modal Touch Event Detector
   new TouchDirectionDetector('gallery-modal-main-image-container', {
     threshold: 50,
     onSwipe: direction => {
@@ -146,6 +151,7 @@ document.addEventListener('DOMContentLoaded', () => {
     },
   })
 
+  // Product Info Modal Controller
   new ModalController(
     [
       {
@@ -196,17 +202,20 @@ document.addEventListener('DOMContentLoaded', () => {
     },
   )
 
-  const urlMatcher = new URLMatcher({
-    queryParam: 'view',
-    targetValues: ['reviews'],
-  })
-
+  // Rating Animator Instance
   const ratingAnimator = new RatingAnimator({
     containerSelector: '#rating-container',
     barSelector: '.rating-bar',
     animationDuration: 1000,
   })
 
+  // Rating Animator URL Listener
+  const urlMatcher = new URLMatcher({
+    queryParam: 'view',
+    targetValues: ['reviews'],
+  })
+
+  // Rating Animator URL Listener
   urlMatcher.on('onFirstMatch', 'reviews', () => {
     ratingAnimator.animate()
     console.log(
@@ -214,6 +223,7 @@ document.addEventListener('DOMContentLoaded', () => {
     )
   })
 
+  // Date Picker Instance
   new DatePicker({
     input: {
       type: 'two',
@@ -251,6 +261,7 @@ document.addEventListener('DOMContentLoaded', () => {
     language: [turkishLanguage, englishLanguage, arabicLanguage],
   })
 
+  // Mobile Screen ScrollTo Form
   new CompleteProductButton({
     elements: {
       formContainerId: '#purchase-form',
@@ -276,6 +287,7 @@ document.addEventListener('DOMContentLoaded', () => {
     },
   })
 
+  // Mobile Screen Nav Sticky Manager
   new NavStickyManager({
     navId: '#product-nav',
     contentId: '#product-content',
