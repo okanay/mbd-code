@@ -409,8 +409,8 @@ class ModalController {
       this.config.attributes.values.open,
     )
 
-    // ScrollTo logic with offset
-    if (this.config.scrollTo.enabled && menu.content) {
+    // ScrollTo logic with offset - sadece kullanıcı etkileşiminde çalışacak
+    if (this.config.scrollTo.enabled && menu.content && isUserAction) {
       this.scrollToElement(menu.content)
     }
 

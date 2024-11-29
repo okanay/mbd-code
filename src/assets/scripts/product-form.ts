@@ -77,7 +77,7 @@ document.addEventListener('DOMContentLoaded', () => {
       top: '0',
       left: '0',
       width: '100%',
-      zIndex: '100',
+      zIndex: '1',
       backgroundColor: '#fff',
       borderBottom: '1px solid #eee',
     },
