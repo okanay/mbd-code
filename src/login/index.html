@@ -113,7 +113,7 @@
               type="text"
               style="-webkit-border-radius: 0; border-radius: 0"
               id="name"
-              class="h-12 rounded border border-gray-200 px-3 py-2 outline-none focus:border-primary-200"
+              class="h-12 !rounded border border-gray-200 px-3 py-2 outline-none focus:border-primary-200"
               placeholder="Adınız"
             />
 
@@ -122,7 +122,7 @@
               type="text"
               style="-webkit-border-radius: 0; border-radius: 0"
               id="surname"
-              class="h-12 rounded border border-gray-200 px-3 py-2 outline-none focus:border-primary-200"
+              class="h-12 !rounded border border-gray-200 px-3 py-2 outline-none focus:border-primary-200"
               placeholder="Soyadınız"
             />
 
@@ -131,7 +131,7 @@
               type="text"
               style="-webkit-border-radius: 0; border-radius: 0"
               id="email"
-              class="h-12 rounded border border-gray-200 px-3 py-2 outline-none focus:border-primary-200"
+              class="h-12 !rounded border border-gray-200 px-3 py-2 outline-none focus:border-primary-200"
               placeholder="E-Posta Adresiniz"
             />
 
@@ -139,13 +139,13 @@
             <div class="flex max-w-md">
               <div class="relative">
                 <div
-                  class="flex h-12 cursor-pointer items-center gap-1 rounded-l border border-r-0 border-gray-200 bg-white px-3 text-xs hover:bg-gray-50"
+                  class="flex h-12 cursor-pointer items-center gap-1 !rounded-l border border-r-0 border-gray-200 bg-white px-3 text-xs hover:bg-gray-50"
                 >
                   <img
                     id="country-flag"
                     src="https://flagcdn.com/us.svg"
                     alt="flag"
-                    class="h-4 w-5 rounded object-cover"
+                    class="h-4 w-5 !rounded object-cover"
                   />
                   <span id="country-prefix">+1</span>
                 </div>
@@ -158,7 +158,7 @@
               <input
                 type="tel"
                 style="-webkit-border-radius: 0; border-radius: 0"
-                class="h-12 flex-1 rounded-r border border-gray-200 px-3 py-2 outline-none focus:border-primary-200"
+                class="h-12 flex-1 !rounded-r border border-gray-200 px-3 py-2 outline-none focus:border-primary-200"
                 placeholder="Telefon numarası giriniz"
               />
             </div>
@@ -169,7 +169,7 @@
                 type="password"
                 style="-webkit-border-radius: 0; border-radius: 0"
                 id="password"
-                class="h-12 w-full rounded border border-gray-200 px-3 py-2 pr-10 outline-none focus:border-primary-200"
+                class="h-12 w-full !rounded border border-gray-200 px-3 py-2 pr-10 outline-none focus:border-primary-200"
                 placeholder="Şifreniz"
               />
               <button
@@ -199,7 +199,7 @@
             <!--  Sifre Bilgilendirme -->
             <div class="-mt-1 flex items-start gap-2">
               <div
-                class="flex size-4 items-center justify-center rounded-full bg-primary-500 p-1"
+                class="flex size-4 items-center justify-center !rounded-full bg-primary-500 p-1"
               >
                 <img
                   src="/assets/images/icons/circle-alert.svg"
@@ -219,7 +219,7 @@
                 type="password"
                 style="-webkit-border-radius: 0; border-radius: 0"
                 id="password-confirm"
-                class="h-12 w-full rounded border border-gray-200 px-3 py-2 pr-10 outline-none focus:border-primary-200"
+                class="h-12 w-full !rounded border border-gray-200 px-3 py-2 pr-10 outline-none focus:border-primary-200"
                 placeholder="Şifrenizi tekrar giriniz"
               />
               <button
@@ -260,7 +260,7 @@
               />
 
               <div
-                class="flex size-4 flex-shrink-0 flex-grow-0 items-center justify-center rounded border border-gray-300 bg-white transition-colors peer-checked:border-primary-500 peer-checked:bg-primary-500"
+                class="flex size-4 flex-shrink-0 flex-grow-0 items-center justify-center !rounded border border-gray-300 bg-white transition-colors peer-checked:border-primary-500 peer-checked:bg-primary-500"
               >
                 <!-- Unchecked durumu (boş kutu) -->
                 <span
@@ -302,7 +302,7 @@
               />
 
               <div
-                class="flex size-4 flex-shrink-0 flex-grow-0 items-center justify-center rounded border border-gray-300 bg-white transition-colors peer-checked:border-primary-500 peer-checked:bg-primary-500"
+                class="flex size-4 flex-shrink-0 flex-grow-0 items-center justify-center !rounded border border-gray-300 bg-white transition-colors peer-checked:border-primary-500 peer-checked:bg-primary-500"
               >
                 <!-- Unchecked durumu (boş kutu) -->
                 <span
@@ -343,7 +343,7 @@
             <!-- Submit Button -->
             <button
               type="submit"
-              class="group h-[52px] w-full rounded border border-primary-200 bg-primary-500 px-4 py-2 font-semibold text-white transition-colors duration-300 hover:bg-primary-600 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-75"
+              class="group h-[52px] w-full !rounded border border-primary-200 bg-primary-500 px-4 py-2 font-semibold text-white transition-colors duration-300 hover:bg-primary-600 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-75"
             >
               <span class="block group-disabled:hidden"> Üyeliği Başlat </span>
 
@@ -362,7 +362,7 @@
             <!--  Sifre Bilgilendirme -->
             <div class="flex items-start gap-2">
               <div
-                class="flex size-4 items-center justify-center rounded-full bg-primary-500 p-1"
+                class="flex size-4 items-center justify-center !rounded-full bg-primary-500 p-1"
               >
                 <img
                   src="/assets/images/icons/circle-alert.svg"
@@ -388,6 +388,13 @@
                 Giriş Yap
               </a>
             </div>
+
+            <style>
+              input {
+                -webkit-border-radius: 0;
+                -moz-border-radius: 0;
+              }
+            </style>
           </form>
         </div>
       </div>
