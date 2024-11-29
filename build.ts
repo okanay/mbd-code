@@ -14,6 +14,7 @@ const distDir = './dist'
 const assetsDir = path.join(srcDir, 'assets')
 const scriptsDir = path.join(assetsDir, 'scripts')
 const packagesDir = path.join(scriptsDir, 'packages')
+const uiFormsDir = path.join(scriptsDir, 'ui') // UI formları için yeni klasör
 
 // Ana sayfa script listesi
 const scripts = ['layout', 'main', 'product', 'login', 'register']
@@ -172,6 +173,47 @@ async function buildPageSpecificTS(script: string) {
   console.log(`${filename} güncellendi`)
 }
 
+async function buildUIForms(specificFile?: string) {
+  const uiOutDir = path.join(distDir, 'assets', 'scripts', 'ui')
+
+  if (!existsSync(uiFormsDir)) return
+
+  if (!existsSync(uiOutDir)) {
+    mkdirSync(uiOutDir, { recursive: true })
+  }
+
+  if (specificFile) {
+    const entrypoint = path.join(uiFormsDir, specificFile)
+    if (isFileChanged(entrypoint)) {
+      const basename = path.basename(specificFile, '.ts')
+      await build({
+        entrypoints: [entrypoint],
+        outdir: uiOutDir,
+        minify: false, // Sıkıştırma yapılmayacak
+        naming: `${basename}.js`,
+        format: 'esm',
+      })
+      console.log(`UI Form güncellendi: ${basename}.js`)
+    }
+  } else {
+    const forms = readdirSync(uiFormsDir).filter(file => file.endsWith('.ts'))
+    for (const formFile of forms) {
+      const entrypoint = path.join(uiFormsDir, formFile)
+      if (isFileChanged(entrypoint)) {
+        const basename = path.basename(formFile, '.ts')
+        await build({
+          entrypoints: [entrypoint],
+          outdir: uiOutDir,
+          minify: false, // Sıkıştırma yapılmayacak
+          naming: `${basename}.js`,
+          format: 'esm',
+        })
+        console.log(`UI Form güncellendi: ${basename}.js`)
+      }
+    }
+  }
+}
+
 async function buildSharedPackages(specificFile?: string) {
   if (!existsSync(packagesDir)) return
 
@@ -213,12 +255,12 @@ async function buildSharedPackages(specificFile?: string) {
 }
 
 async function buildAll() {
-  // İlk build'de tüm dosyaları işle
-  fileCache.clear() // Cache'i temizle ki her şey yeniden build alsın
+  fileCache.clear()
   for (const script of scripts) {
     await buildPageSpecificTS(script)
   }
   await buildSharedPackages()
+  await buildUIForms() // UI formlarını build et
   copyHTML()
   copyStyles()
   copyAssets()
@@ -234,7 +276,11 @@ function watchFiles() {
     console.log(`Değişiklik algılandı: ${relativePath}`)
 
     if (relativePath.endsWith('.ts')) {
-      if (relativePath.includes('packages/')) {
+      if (relativePath.includes('ui/')) {
+        // UI form değişikliklerini yakala
+        const formFile = path.basename(relativePath)
+        await buildUIForms(formFile)
+      } else if (relativePath.includes('packages/')) {
         const packageFile = path.basename(relativePath)
         await buildSharedPackages(packageFile)
       } else {
