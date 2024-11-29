@@ -211,7 +211,7 @@ class NavStickyManager {
 
     // Ana nav'ın clone ID'sini ayarla
     this.clonedNav.id = `${this.originalNav.id}-clone`
-    this.clonedNav.setAttribute('aria-hidden', 'true')
+    // this.clonedNav.setAttribute('aria-hidden', 'true')
 
     // Tüm alt elementlerdeki ID'leri güncelle
     const elementsWithId = this.clonedNav.querySelectorAll('[id]')

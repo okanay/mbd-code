@@ -10,9 +10,6 @@ document.addEventListener('DOMContentLoaded', () => {
     threshold: 0.2,
     filterStyle: 'blur(5px)',
     maxConcurrentLoads: 3,
-    onLoadCallback: img => {
-      console.log(`Görsel yüklendii: ${img.src}`)
-    },
   })
 
   new ModalController(
