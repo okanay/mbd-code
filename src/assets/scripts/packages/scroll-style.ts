@@ -1,10 +1,11 @@
 interface NavConfig {
   navId: string
   contentId: string
-  mobileOnly?: boolean // Mobil ekranda çalışması için breakpoint kontrolü
-  mobileBreakpoint?: number // Mobil breakpoint değeri (varsayılan: 768px)
-  animationDuration?: number // Animasyon süresi (ms)
-  throttleDelay?: number // Scroll event throttle delay (ms)
+  mobileOnly?: boolean
+  mobileBreakpoint?: number
+  animationDuration?: number
+  throttleDelay?: number
+  threshold?: number // Animasyon tetiklenme eşiği
   fixedStyles: {
     position: 'fixed'
     top: string
@@ -17,6 +18,7 @@ interface NavConfig {
     maxWidth?: string
     margin?: string
     padding?: string
+    transform?: string
     transition?: string
   }
 }
@@ -25,28 +27,30 @@ class NavStickyManager {
   private nav: HTMLElement | null
   private content: HTMLElement | null
   private isFixed: boolean = false
+  private isAnimating: boolean = false
   private placeholder: HTMLElement | null = null
   private navInitialTop: number = 0
   private contentTop: number = 0
   private contentBottom: number = 0
-  private isTransitioning: boolean = false
-  private scrollTimeout: number | null = null
+  private lastScrollY: number = 0
+  private scrollDirection: 'up' | 'down' = 'up'
   private resizeObserver: ResizeObserver | null = null
   private initialNavStyles: {
     maxWidth?: string
     margin?: string
     padding?: string
+    transform?: string
     transition?: string
   } = {}
 
   constructor(private config: NavConfig) {
-    // Varsayılan değerleri ayarla
     this.config = {
       ...config,
       mobileOnly: config.mobileOnly ?? true,
-      mobileBreakpoint: config.mobileBreakpoint ?? 768,
+      mobileBreakpoint: config.mobileBreakpoint ?? 1080,
       animationDuration: config.animationDuration ?? 300,
       throttleDelay: config.throttleDelay ?? 100,
+      threshold: config.threshold ?? 50, // 50px varsayılan eşik değeri
     }
 
     this.init()
@@ -61,49 +65,54 @@ class NavStickyManager {
       return
     }
 
-    // İlk stilleri ve pozisyonları kaydet
+    // İlk durumu ayarla
+    this.setupInitialState()
+    this.setupEventListeners()
+    this.checkPosition(true) // true = initial check
+  }
+
+  private setupInitialState(): void {
+    if (!this.nav) return
+
+    // İlk stiller ve pozisyonları kaydet
     this.saveInitialStyles()
     this.saveInitialPositions()
 
-    // Event listener'ları ekle
-    this.setupEventListeners()
-
-    // ResizeObserver ekle
-    this.setupResizeObserver()
-
-    // İlk durumu kontrol et
-    this.checkPosition()
+    // Başlangıç animasyon stillerini ayarla
+    this.nav.style.transition = `all ${this.config.animationDuration}ms cubic-bezier(0.4, 0, 0.2, 1)`
+    this.nav.style.willChange = 'transform' // Performance optimizasyonu
   }
 
   private setupEventListeners(): void {
-    // Scroll event için throttle uygula
-    let lastScrollTime = 0
+    let scrollTimeout: number | undefined
 
+    // Scroll yönünü ve hızını takip eden gelişmiş scroll listener
     window.addEventListener(
       'scroll',
       () => {
-        const now = Date.now()
+        if (this.isAnimating) return
 
-        if (now - lastScrollTime >= this.config.throttleDelay!) {
-          this.checkPosition()
-          lastScrollTime = now
-        }
+        window.cancelAnimationFrame(scrollTimeout)
+        scrollTimeout = window.requestAnimationFrame(() => {
+          const currentScrollY = window.scrollY
+          this.scrollDirection =
+            currentScrollY > this.lastScrollY ? 'down' : 'up'
+
+          // Scroll hızını ve yönünü hesapla
+          const scrollSpeed = Math.abs(currentScrollY - this.lastScrollY)
+          const shouldUpdate = scrollSpeed < 50 // Çok hızlı scroll'da güncelleme yapma
+
+          if (shouldUpdate) {
+            this.checkPosition()
+          }
+
+          this.lastScrollY = currentScrollY
+        })
       },
       { passive: true },
     )
 
-    // Sayfa yüklendiğinde ve resize olduğunda pozisyonları güncelle
-    window.addEventListener('load', () => this.recalculate())
-    window.addEventListener(
-      'resize',
-      this.throttle(() => {
-        this.recalculate()
-      }, 250),
-    )
-  }
-
-  private setupResizeObserver(): void {
-    // İçerik boyutu değiştiğinde pozisyonları güncelle
+    // Resize observer
     this.resizeObserver = new ResizeObserver(
       this.throttle(() => {
         this.recalculate()
@@ -113,6 +122,9 @@ class NavStickyManager {
     if (this.content) {
       this.resizeObserver.observe(this.content)
     }
+
+    // Sayfa yüklendiğinde pozisyonları güncelle
+    window.addEventListener('load', () => this.recalculate())
   }
 
   private throttle(func: Function, limit: number): () => void {
@@ -134,6 +146,7 @@ class NavStickyManager {
       maxWidth: computedStyle.maxWidth,
       margin: computedStyle.margin,
       padding: computedStyle.padding,
+      transform: computedStyle.transform,
       transition: computedStyle.transition,
     }
   }
@@ -150,6 +163,8 @@ class NavStickyManager {
   }
 
   private shouldActivate(): boolean {
+    if (this.isAnimating) return this.isFixed
+
     // Mobil kontrolü
     if (
       this.config.mobileOnly &&
@@ -162,8 +177,9 @@ class NavStickyManager {
     const viewportHeight = window.innerHeight
     const navHeight = this.nav?.offsetHeight || 0
 
-    // Nav görünür durumda mı kontrol et
-    const isNavVisible = scrollY >= this.navInitialTop
+    // Threshold kontrolü
+    const passedThreshold =
+      scrollY > this.navInitialTop + this.config.threshold!
 
     // Content viewport içinde mi kontrol et
     const isContentVisible =
@@ -173,11 +189,11 @@ class NavStickyManager {
     // Nav'ın container içinde kalması kontrolü
     const isWithinContainer = scrollY + navHeight <= this.contentBottom
 
-    return isNavVisible && isContentVisible && isWithinContainer
+    return passedThreshold && isContentVisible && isWithinContainer
   }
 
-  private checkPosition(): void {
-    if (this.isTransitioning || !this.nav) return
+  private checkPosition(isInitial: boolean = false): void {
+    if (!this.nav || (this.isAnimating && !isInitial)) return
 
     const shouldBeFixed = this.shouldActivate()
 
@@ -188,85 +204,66 @@ class NavStickyManager {
     }
   }
 
-  private makeNavFixed(): void {
-    if (!this.nav || this.isFixed) return
+  private async makeNavFixed(): Promise<void> {
+    if (!this.nav || this.isFixed || this.isAnimating) return
 
-    // Animasyon için transition ekle
-    this.nav.style.transition = `all ${this.config.animationDuration}ms ease`
+    this.isAnimating = true
+
+    // Önce transform ile yukarı çık
+    this.nav.style.transform = 'translateY(-100%)'
 
     // Placeholder oluştur
     this.placeholder = document.createElement('div')
     this.placeholder.style.height = `${this.nav.offsetHeight}px`
-    this.placeholder.style.transition = `height ${this.config.animationDuration}ms ease`
     this.nav.parentNode?.insertBefore(this.placeholder, this.nav)
 
-    // Container için wrapper oluştur
-    const wrapper = document.createElement('div')
-    wrapper.style.maxWidth =
-      this.config.fixedStyles.maxWidth || this.initialNavStyles.maxWidth || ''
-    wrapper.style.margin =
-      this.config.fixedStyles.margin || this.initialNavStyles.margin || ''
-    wrapper.style.padding =
-      this.config.fixedStyles.padding || this.initialNavStyles.padding || ''
-    wrapper.id = 'nav-fixed-wrapper'
-
-    // Nav'ı wrapper'a taşı
-    this.nav.parentNode?.insertBefore(wrapper, this.nav)
-    wrapper.appendChild(this.nav)
-
     // Fixed stilleri uygula
+    Object.assign(this.nav.style, this.config.fixedStyles)
+
+    // RAF ile smooth animasyon
     requestAnimationFrame(() => {
       if (!this.nav) return
-      Object.assign(this.nav.style, this.config.fixedStyles)
 
-      // Animasyon bitince flag'i güncelle
-      this.isTransitioning = true
+      // Transform'u sıfırla = aşağı in
+      this.nav.style.transform = 'translateY(0)'
+
+      // Animasyon bitince
       setTimeout(() => {
-        this.isTransitioning = false
+        this.isAnimating = false
+        this.isFixed = true
       }, this.config.animationDuration)
     })
-
-    this.isFixed = true
   }
 
-  private makeNavNormal(): void {
-    if (!this.nav || !this.isFixed) return
+  private async makeNavNormal(): Promise<void> {
+    if (!this.nav || !this.isFixed || this.isAnimating) return
 
-    // Animasyon için transition ekle
-    this.nav.style.transition = `all ${this.config.animationDuration}ms ease`
+    this.isAnimating = true
 
-    // Wrapper'ı kaldır ve nav'ı orijinal yerine taşı
-    const wrapper = document.getElementById('nav-fixed-wrapper')
-    if (wrapper && wrapper.parentNode) {
-      wrapper.parentNode.insertBefore(this.nav, wrapper)
-      wrapper.remove()
-    }
+    // Önce yukarı çık
+    this.nav.style.transform = 'translateY(-100%)'
+
+    await new Promise(resolve =>
+      setTimeout(resolve, this.config.animationDuration! / 2),
+    )
 
     // Stilleri temizle
-    requestAnimationFrame(() => {
-      if (!this.nav) return
-
-      this.nav.style.position = ''
-      this.nav.style.top = ''
-      this.nav.style.left = ''
-      this.nav.style.width = ''
-      this.nav.style.zIndex = ''
-      this.nav.style.backgroundColor = ''
-      this.nav.style.borderBottom = ''
-      this.nav.style.boxShadow = ''
-      this.nav.style.maxWidth = this.initialNavStyles.maxWidth || ''
-      this.nav.style.margin = this.initialNavStyles.margin || ''
-      this.nav.style.padding = this.initialNavStyles.padding || ''
-
-      // Animasyon bitince transition'ı kaldır
-      this.isTransitioning = true
-      setTimeout(() => {
-        if (this.nav) {
-          this.nav.style.transition = this.initialNavStyles.transition || ''
-        }
-        this.isTransitioning = false
-      }, this.config.animationDuration)
+    Object.assign(this.nav.style, {
+      position: '',
+      top: '',
+      left: '',
+      width: '',
+      zIndex: '',
+      backgroundColor: '',
+      borderBottom: '',
+      boxShadow: '',
+      maxWidth: this.initialNavStyles.maxWidth || '',
+      margin: this.initialNavStyles.margin || '',
+      padding: this.initialNavStyles.padding || '',
     })
+
+    // Transform'u normale döndür
+    this.nav.style.transform = 'translateY(0)'
 
     // Placeholder'ı kaldır
     if (this.placeholder) {
@@ -277,20 +274,20 @@ class NavStickyManager {
       }, this.config.animationDuration)
     }
 
-    this.isFixed = false
+    // Animasyon bitince
+    setTimeout(() => {
+      this.isAnimating = false
+      this.isFixed = false
+    }, this.config.animationDuration)
   }
 
   public recalculate(): void {
     this.saveInitialPositions()
-    this.checkPosition()
+    this.checkPosition(true)
   }
 
   public destroy(): void {
-    // Event listener'ları ve observer'ı temizle
-    window.removeEventListener('resize', this.recalculate)
     this.resizeObserver?.disconnect()
-
-    // Normal duruma döndür
     this.makeNavNormal()
   }
 }

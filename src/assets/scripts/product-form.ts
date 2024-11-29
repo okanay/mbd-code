@@ -69,9 +69,9 @@ document.addEventListener('DOMContentLoaded', () => {
   new NavStickyManager({
     navId: '#product-nav',
     contentId: '#product-content',
-    mobileOnly: true, // Sadece mobilde çalışsın
-    mobileBreakpoint: 1080, // 1080 altında aktif olsun
-    animationDuration: 300, // 300ms animasyon süresi
+    mobileOnly: true,
+    mobileBreakpoint: 1080,
+    animationDuration: 300,
     fixedStyles: {
       position: 'fixed',
       top: '0',
@@ -80,7 +80,8 @@ document.addEventListener('DOMContentLoaded', () => {
       zIndex: '100',
       backgroundColor: '#fff',
       borderBottom: '1px solid #eee',
-      transition: 'all 300ms ease', // Animasyon için
+      transition: 'all 300ms ease',
+      maxWidth: '100%', // Maksimum genişliği sınırla
     },
   })
 
