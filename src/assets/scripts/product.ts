@@ -1,10 +1,15 @@
 // prettier-ignore
+import { arabicLanguage, englishLanguage, turkishLanguage } from '../constants/index.js'
+// prettier-ignore
 import { ImageGalleryTracker, UpdateProductSliderDataItems, UpdateElementInnerHTMLById} from "./packages/image-gallery.js";
 import { Slider } from './packages/slider.js'
 import { TouchDirectionDetector } from './packages/touch-event.js'
 import { ModalController } from './packages/modal.js'
 import { RatingAnimator } from './packages/rating-bar-controller.js'
 import { URLMatcher } from './packages/url-matcher.js'
+import { DatePicker } from './packages/date-picker.js'
+import { CompleteProductButton } from './packages/product-complete-btn.js'
+import { NavStickyManager } from './packages/scroll-style.js'
 
 document.addEventListener('DOMContentLoaded', () => {
   const slider = new Slider({
@@ -207,5 +212,84 @@ document.addEventListener('DOMContentLoaded', () => {
     console.log(
       '"reviews" URL eşleştirici ilk kez eşleşti ve dinleyici kapatıldı!',
     )
+  })
+
+  new DatePicker({
+    input: {
+      type: 'two',
+      elements: {
+        start: {
+          id: 'departure-date',
+          focusContainer: 'departure-container',
+        },
+        end: {
+          id: 'return-date',
+          focusContainer: 'return-container',
+        },
+      },
+    },
+    elements: {
+      container: 'date-picker-container',
+      monthContainer: 'date-picker-current-month-name',
+      daysContainer: 'date-picker-days',
+      buttons: {
+        prev: 'prev-month-btn',
+        next: 'next-month-btn',
+        reset: 'reset-to-today-btn',
+        resetAll: 'reset-all-btn',
+      },
+    },
+    minDate: new Date(),
+    maxDate: new Date(8640000000000000),
+    autoClose: true,
+    autoSwitchInput: true,
+    output: {
+      order: ['day', 'month', 'year'],
+      slash: '.',
+      between: ' & ',
+    },
+    language: [turkishLanguage, englishLanguage, arabicLanguage],
+  })
+
+  new CompleteProductButton({
+    elements: {
+      formContainerId: '#purchase-form',
+      completePurchaseContainer: '#complete-purchase-container',
+    },
+    options: {
+      threshold: {
+        start: 0.7,
+        end: 0.15,
+      },
+      animationOptions: {
+        active: {
+          bottom: '0',
+          opacity: '1',
+          transition: 'all 500ms ease-in-out',
+        },
+        exit: {
+          bottom: '-100%',
+          opacity: '0',
+          transition: 'all 500ms ease-in-out',
+        },
+      },
+    },
+  })
+
+  new NavStickyManager({
+    navId: '#product-nav',
+    contentId: '#product-content',
+    mobileOnly: true,
+    mobileBreakpoint: 768,
+    threshold: 50,
+    fixedStyles: {
+      position: 'fixed',
+      top: '0',
+      left: '0',
+      width: '100%',
+      zIndex: '100',
+      backgroundColor: '#fff',
+      borderBottom: '1px solid #eee',
+    },
   })
 })
