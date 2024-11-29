@@ -1,6 +1,7 @@
-interface CompleteProductButtonElements {
+interface FloatingButtonsElements {
   formContainerId: string
   completePurchaseContainer: string
+  whatsappButton: string
 }
 
 interface AnimationOptions {
@@ -9,25 +10,30 @@ interface AnimationOptions {
 }
 
 interface ThresholdOptions {
-  start: number // Form'un yüzde kaçı görünür olduğunda button gizlensin (0-1 arası)
-  end: number // Form'un yüzde kaçı görünmez olduğunda button görünsün (0-1 arası)
+  start: number
+  end: number
 }
 
-interface CompleteProductButtonOptions {
+interface FloatingButtonsOptions {
   threshold: ThresholdOptions
   animationOptions: AnimationOptions
+  whatsappPositions: {
+    default: Partial<CSSStyleDeclaration>
+    shifted: Partial<CSSStyleDeclaration>
+  }
 }
 
-class CompleteProductButton {
-  private elements: CompleteProductButtonElements
-  private options: CompleteProductButtonOptions
+class FloatingButtonsManager {
+  private elements: FloatingButtonsElements
+  private options: FloatingButtonsOptions
   private formContainer: HTMLElement | null
   private purchaseContainer: HTMLElement | null
+  private whatsappButton: HTMLElement | null
   private isVisible: boolean
 
   constructor(config: {
-    elements: CompleteProductButtonElements
-    options: CompleteProductButtonOptions
+    elements: FloatingButtonsElements
+    options: FloatingButtonsOptions
   }) {
     this.elements = config.elements
     this.options = config.options
@@ -35,9 +41,14 @@ class CompleteProductButton {
     this.purchaseContainer = document.querySelector(
       this.elements.completePurchaseContainer,
     )
+    this.whatsappButton = document.querySelector(this.elements.whatsappButton)
     this.isVisible = false
 
-    if (!this.formContainer || !this.purchaseContainer) {
+    if (
+      !this.formContainer ||
+      !this.purchaseContainer ||
+      !this.whatsappButton
+    ) {
       console.error('Required elements not found')
       return
     }
@@ -60,6 +71,14 @@ class CompleteProductButton {
         opacity: '0',
       })
     }
+
+    if (this.whatsappButton) {
+      Object.assign(this.whatsappButton.style, {
+        position: 'fixed',
+        transition: 'all 0.3s ease-in-out',
+        ...this.options.whatsappPositions.default,
+      })
+    }
   }
 
   private initializeFirstRender(): void {
@@ -67,7 +86,7 @@ class CompleteProductButton {
       const observer = new IntersectionObserver(
         ([entry]) => {
           if (entry.intersectionRatio <= this.options.threshold.end) {
-            setTimeout(() => this.showPurchaseContainer(), 50)
+            setTimeout(() => this.showElements(), 50)
           }
         },
         { threshold: [0, this.options.threshold.end] },
@@ -75,7 +94,6 @@ class CompleteProductButton {
 
       if (this.formContainer) {
         observer.observe(this.formContainer)
-        // Bir kez çalıştıktan sonra observer'ı kaldır
         setTimeout(() => observer.disconnect(), 100)
       }
     })
@@ -107,7 +125,6 @@ class CompleteProductButton {
   }
 
   private setupObserver(): void {
-    // Çoklu threshold değerleri oluştur
     const thresholdSteps = Array.from({ length: 100 }, (_, i) => i / 100)
 
     const observer = new IntersectionObserver(
@@ -115,11 +132,10 @@ class CompleteProductButton {
         entries.forEach(entry => {
           const ratio = entry.intersectionRatio
 
-          // Form'un görünürlük oranına göre button'u göster/gizle
           if (ratio >= this.options.threshold.start) {
-            this.hidePurchaseContainer()
+            this.hideElements()
           } else if (ratio <= this.options.threshold.end) {
-            this.showPurchaseContainer()
+            this.showElements()
           }
         })
       },
@@ -134,25 +150,39 @@ class CompleteProductButton {
     }
   }
 
-  private showPurchaseContainer(): void {
+  private showElements(): void {
     if (this.purchaseContainer && !this.isVisible) {
       this.isVisible = true
       Object.assign(
         this.purchaseContainer.style,
         this.options.animationOptions.active,
       )
+
+      if (this.whatsappButton) {
+        Object.assign(
+          this.whatsappButton.style,
+          this.options.whatsappPositions.shifted,
+        )
+      }
     }
   }
 
-  private hidePurchaseContainer(): void {
+  private hideElements(): void {
     if (this.purchaseContainer && this.isVisible) {
       this.isVisible = false
       Object.assign(
         this.purchaseContainer.style,
         this.options.animationOptions.exit,
       )
+
+      if (this.whatsappButton) {
+        Object.assign(
+          this.whatsappButton.style,
+          this.options.whatsappPositions.default,
+        )
+      }
     }
   }
 }
 
-export { CompleteProductButton }
+export { FloatingButtonsManager }

@@ -8,7 +8,7 @@ import { ModalController } from './packages/modal.js'
 import { RatingAnimator } from './packages/rating-bar-controller.js'
 import { URLMatcher } from './packages/url-matcher.js'
 import { DatePicker } from './packages/date-picker.js'
-import { CompleteProductButton } from './packages/product-complete-btn.js'
+import { FloatingButtonsManager } from './packages/product-complete-btn.js'
 import { NavStickyManager } from './packages/scroll-style.js'
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -264,10 +264,11 @@ document.addEventListener('DOMContentLoaded', () => {
   })
 
   // Mobile Screen ScrollTo Form
-  new CompleteProductButton({
+  new FloatingButtonsManager({
     elements: {
       formContainerId: '#purchase-form',
       completePurchaseContainer: '#complete-purchase-container',
+      whatsappButton: '#whatsapp-button', // Whatsapp butonunuza bu id'yi eklemelisiniz
     },
     options: {
       threshold: {
@@ -278,12 +279,22 @@ document.addEventListener('DOMContentLoaded', () => {
         active: {
           bottom: '0',
           opacity: '1',
-          transition: 'all 500ms ease-in-out',
+          transition: 'all 150ms ease-in-out',
         },
         exit: {
           bottom: '-100%',
           opacity: '0',
-          transition: 'all 500ms ease-in-out',
+          transition: 'all 250ms ease-in-out',
+        },
+      },
+      whatsappPositions: {
+        default: {
+          bottom: '20px', // Satın al butonu gizliyken
+          right: '14px',
+        },
+        shifted: {
+          bottom: '88px', // Satın al butonu görünürken
+          right: '14px',
         },
       },
     },
