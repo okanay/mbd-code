@@ -268,8 +268,8 @@ document.addEventListener('DOMContentLoaded', () => {
           {
             selector: '#purchase-form',
             threshold: {
-              start: 0.7,
-              end: 0.15,
+              start: 0.65,
+              end: 0.1,
             },
           },
         ],
@@ -308,15 +308,6 @@ document.addEventListener('DOMContentLoaded', () => {
       },
       {
         id: 'whatsapp-button',
-        observeTargets: [
-          {
-            selector: '#footer',
-            threshold: {
-              start: 0.1, // Footer görünür olmaya başladığında
-              end: 0, // Footer tamamen görünmez olduğunda
-            },
-          },
-        ],
         order: 2,
         initialPosition: {
           position: 'fixed',
