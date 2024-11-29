@@ -80,7 +80,6 @@ document.addEventListener('DOMContentLoaded', () => {
       zIndex: '100',
       backgroundColor: '#fff',
       borderBottom: '1px solid #eee',
-      padding: '0 1rem',
     },
   })
 
