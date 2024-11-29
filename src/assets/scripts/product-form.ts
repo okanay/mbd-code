@@ -4,31 +4,6 @@ import { CompleteProductButton } from './packages/product-complete-btn.js'
 import { NavStickyManager } from './packages/scroll-style.js'
 
 document.addEventListener('DOMContentLoaded', () => {
-  new CompleteProductButton({
-    elements: {
-      formContainerId: '#purchase-form',
-      completePurchaseContainer: '#complete-purchase-container',
-    },
-    options: {
-      threshold: {
-        start: 0.7,
-        end: 0.15,
-      },
-      animationOptions: {
-        active: {
-          bottom: '0',
-          opacity: '1',
-          transition: 'all 2000ms ease-in-out',
-        },
-        exit: {
-          bottom: '-100%',
-          opacity: '0',
-          transition: 'all 2000ms ease-in-out',
-        },
-      },
-    },
-  })
-
   new DatePicker({
     input: {
       type: 'two',
@@ -66,11 +41,36 @@ document.addEventListener('DOMContentLoaded', () => {
     language: [turkishLanguage, englishLanguage, arabicLanguage],
   })
 
+  new CompleteProductButton({
+    elements: {
+      formContainerId: '#purchase-form',
+      completePurchaseContainer: '#complete-purchase-container',
+    },
+    options: {
+      threshold: {
+        start: 0.7,
+        end: 0.15,
+      },
+      animationOptions: {
+        active: {
+          bottom: '0',
+          opacity: '1',
+          transition: 'all 500ms ease-in-out',
+        },
+        exit: {
+          bottom: '-100%',
+          opacity: '0',
+          transition: 'all 500ms ease-in-out',
+        },
+      },
+    },
+  })
+
   new NavStickyManager({
     navId: '#product-nav',
     contentId: '#product-content',
     mobileOnly: true,
-    mobileBreakpoint: 1080,
+    mobileBreakpoint: 768,
     threshold: 50,
     fixedStyles: {
       position: 'fixed',

@@ -40,7 +40,7 @@ class NavStickyManager {
       ...config,
       mobileOnly: config.mobileOnly ?? true,
       mobileBreakpoint: config.mobileBreakpoint ?? 1080,
-      animationDuration: config.animationDuration ?? 300,
+      animationDuration: config.animationDuration ?? 500,
       throttleDelay: config.throttleDelay ?? 100,
       threshold: config.threshold ?? 50,
     }
