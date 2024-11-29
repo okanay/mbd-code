@@ -24,6 +24,7 @@ interface NavConfig {
 }
 
 class NavStickyManager {
+  private observers: MutationObserver[] = []
   private originalNav: HTMLElement | null = null
   private clonedNav: HTMLElement | null = null
   private content: HTMLElement | null = null
@@ -62,58 +63,54 @@ class NavStickyManager {
     this.checkPosition()
   }
 
-  private createClone(): void {
-    if (!this.originalNav) return
-
-    // Derin klon oluştur
-    this.clonedNav = this.originalNav.cloneNode(true) as HTMLElement
-
-    // Klonu özelleştir
-    this.clonedNav.id = `${this.originalNav.id}-clone`
-    this.clonedNav.setAttribute('aria-hidden', 'true')
-
-    // Fixed stilleri uygula
-    Object.assign(this.clonedNav.style, {
-      ...this.config.fixedStyles,
-      position: 'fixed',
-      transform: 'translateY(-120%)', // Başlangıçta gizli
-      transition: `transform ${this.config.animationDuration}ms cubic-bezier(0.4, 0, 0.2, 1)`,
-      willChange: 'transform',
-    })
-
-    // Event listener'ları klona da ekle
-    this.syncEventListeners(this.originalNav, this.clonedNav)
-
-    // Klonu body'nin en altına ekle
-    document.body.appendChild(this.clonedNav)
-  }
-
   private syncEventListeners(source: HTMLElement, target: HTMLElement): void {
-    // Tüm tıklanabilir elementleri bul
     const sourceButtons = source.querySelectorAll('button, a')
     const targetButtons = target.querySelectorAll('button, a')
 
-    // Her bir butona event listener ekle
+    // MutationObserver ile data-state değişimlerini izle
+    const observer = new MutationObserver(mutations => {
+      mutations.forEach(mutation => {
+        if (
+          mutation.type === 'attributes' &&
+          mutation.attributeName === 'data-state'
+        ) {
+          const sourceButton = mutation.target as HTMLElement
+          const sourceIndex = Array.from(sourceButtons).indexOf(sourceButton)
+          const targetButton = targetButtons[sourceIndex]
+
+          if (targetButton) {
+            const state = sourceButton.getAttribute('data-state')
+            targetButton.setAttribute('data-state', state || '')
+          }
+        }
+      })
+    })
+
+    // Her bir butonu gözlemle ve click event'lerini ekle
     sourceButtons.forEach((btn, index) => {
       const targetBtn = targetButtons[index]
       if (!targetBtn) return
 
-      // Orijinal butonun tüm event listener'larını klona kopyala
+      // Her bir kaynak butonu gözlemle
+      observer.observe(btn, {
+        attributes: true,
+        attributeFilter: ['data-state'],
+      })
+
       const cloneClick = (e: Event) => {
         e.preventDefault()
-        ;(btn as HTMLElement).click() // Orijinal butonu tetikle
-
-        // Data state'i senkronize et
-        const state = btn.getAttribute('data-state')
-        targetBtn.setAttribute('data-state', state || '')
+        ;(btn as HTMLElement).click()
       }
 
       targetBtn.addEventListener('click', cloneClick)
     })
+
+    // Cleanup için observer'ı sakla
+    if (!this.observers) this.observers = []
+    this.observers.push(observer)
   }
 
   private setupInitialState(): void {
-    if (!this.originalNav) return
     this.saveInitialPositions()
   }
 
@@ -137,7 +134,6 @@ class NavStickyManager {
       { passive: true },
     )
 
-    // Resize observer
     this.resizeObserver = new ResizeObserver(
       this.throttle(() => {
         this.recalculate()
@@ -174,7 +170,6 @@ class NavStickyManager {
   }
 
   private shouldActivate(): boolean {
-    // Mobil kontrolü
     if (
       this.config.mobileOnly &&
       window.innerWidth > this.config.mobileBreakpoint!
@@ -186,16 +181,11 @@ class NavStickyManager {
     const viewportHeight = window.innerHeight
     const navHeight = this.originalNav?.offsetHeight || 0
 
-    // Threshold kontrolü
     const passedThreshold =
       scrollY > this.navInitialTop + this.config.threshold!
-
-    // Content viewport içinde mi kontrol et
     const isContentVisible =
       this.contentTop <= scrollY + viewportHeight &&
       scrollY <= this.contentBottom
-
-    // Nav'ın container içinde kalması kontrolü
     const isWithinContainer = scrollY + navHeight <= this.contentBottom
 
     return passedThreshold && isContentVisible && isWithinContainer
@@ -213,12 +203,60 @@ class NavStickyManager {
     }
   }
 
+  private createClone(): void {
+    if (!this.originalNav) return
+
+    // Derin klon oluştur
+    this.clonedNav = this.originalNav.cloneNode(true) as HTMLElement
+
+    // Ana nav'ın clone ID'sini ayarla
+    this.clonedNav.id = `${this.originalNav.id}-clone`
+    this.clonedNav.setAttribute('aria-hidden', 'true')
+
+    // Tüm alt elementlerdeki ID'leri güncelle
+    const elementsWithId = this.clonedNav.querySelectorAll('[id]')
+    elementsWithId.forEach(element => {
+      const originalId = element.id
+      element.id = `${originalId}-clone`
+    })
+
+    // Fixed stilleri uygula
+    Object.assign(this.clonedNav.style, {
+      ...this.config.fixedStyles,
+      position: 'fixed',
+      visibility: 'hidden',
+      opacity: '0',
+      top: '0',
+      left: '0',
+      width: '100%',
+      transform: 'translateY(-100%)',
+      transition: `
+          transform ${this.config.animationDuration}ms cubic-bezier(0.4, 0, 0.2, 1),
+          opacity ${this.config.animationDuration}ms cubic-bezier(0.4, 0, 0.2, 1)
+        `,
+      willChange: 'transform, opacity',
+    })
+
+    // Event listener'ları klona da ekle
+    this.syncEventListeners(this.originalNav, this.clonedNav)
+
+    // Klonu orijinal nav'ın hemen altına ekle
+    this.originalNav.parentNode?.insertBefore(
+      this.clonedNav,
+      this.originalNav.nextSibling,
+    )
+  }
+
   private showClone(): void {
     if (!this.clonedNav) return
 
     requestAnimationFrame(() => {
       if (!this.clonedNav) return
-      this.clonedNav.style.transform = 'translateY(0)'
+
+      this.clonedNav.style.visibility = 'visible'
+      this.clonedNav.style.opacity = '1'
+      this.clonedNav.style.transform = 'translateY(0)' // Aşağı in
+
       this.isVisible = true
     })
   }
@@ -228,7 +266,16 @@ class NavStickyManager {
 
     requestAnimationFrame(() => {
       if (!this.clonedNav) return
-      this.clonedNav.style.transform = 'translateY(-120%)'
+
+      this.clonedNav.style.opacity = '0'
+      this.clonedNav.style.transform = 'translateY(-100%)' // Yukarı çık
+
+      // Opacity animasyonu bitince visibility'yi gizle
+      setTimeout(() => {
+        if (!this.clonedNav) return
+        this.clonedNav.style.visibility = 'hidden'
+      }, this.config.animationDuration)
+
       this.isVisible = false
     })
   }
@@ -248,10 +295,8 @@ class NavStickyManager {
   }
 
   public destroy(): void {
-    // Event listener'ları temizle
     this.resizeObserver?.disconnect()
-
-    // Klonu kaldır
+    this.observers?.forEach(observer => observer.disconnect())
     this.clonedNav?.remove()
     this.clonedNav = null
   }

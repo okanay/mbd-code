@@ -175,6 +175,13 @@ document.addEventListener('DOMContentLoaded', () => {
         queryParam: 'view',
         modals: ['info', 'includes', 'reviews'],
       },
+      scrollTo: {
+        enabled: true,
+        behavior: 'smooth',
+        block: 'start',
+        inline: 'start',
+        offset: 160,
+      },
       outsideClickClose: false,
       escapeClose: false,
       preserveModalHistory: false,

@@ -66,7 +66,7 @@ document.addEventListener('DOMContentLoaded', () => {
     language: [turkishLanguage, englishLanguage, arabicLanguage],
   })
 
-  const navManager = new NavStickyManager({
+  new NavStickyManager({
     navId: '#product-nav',
     contentId: '#product-content',
     mobileOnly: true,

@@ -1,3 +1,5 @@
+type ScrollLogicPosition = 'start' | 'center' | 'end' | 'nearest'
+
 interface ModalConfig {
   scrollLock?: {
     enabled: boolean
@@ -5,6 +7,13 @@ interface ModalConfig {
       hidden: Partial<CSSStyleDeclaration>
       visible: Partial<CSSStyleDeclaration>
     }
+  }
+  scrollTo?: {
+    enabled: boolean
+    behavior?: ScrollBehavior
+    block?: ScrollLogicPosition
+    inline?: ScrollLogicPosition
+    offset?: number // Yeni eklenen offset değeri
   }
   outsideClickClose?: boolean
   escapeClose?: boolean
@@ -89,6 +98,13 @@ class ModalController {
           },
         },
       },
+      scrollTo: {
+        enabled: config.scrollTo?.enabled ?? false,
+        behavior: config.scrollTo?.behavior ?? 'smooth',
+        block: config.scrollTo?.block ?? 'start',
+        inline: config.scrollTo?.inline ?? 'nearest',
+        offset: config.scrollTo?.offset ?? 0, // Default offset değeri
+      },
       outsideClickClose: config.outsideClickClose ?? true,
       escapeClose: config.escapeClose ?? true,
       preserveModalHistory: config.preserveModalHistory ?? false,
@@ -149,6 +165,19 @@ class ModalController {
     if (this.loadingElements.skeleton) {
       this.loadingElements.skeleton.setAttribute('data-loading', 'true')
     }
+  }
+
+  private scrollToElement(element: HTMLElement): void {
+    if (!this.config.scrollTo.enabled) return
+
+    const elementPosition = element.getBoundingClientRect().top
+    const offsetPosition =
+      elementPosition + window.scrollY - (this.config.scrollTo.offset || 0)
+
+    window.scrollTo({
+      top: offsetPosition,
+      behavior: this.config.scrollTo.behavior,
+    })
   }
 
   private finishLoading(): void {
@@ -379,6 +408,11 @@ class ModalController {
       this.config.attributes.stateAttribute!,
       this.config.attributes.values.open,
     )
+
+    // ScrollTo logic with offset
+    if (this.config.scrollTo.enabled && menu.content) {
+      this.scrollToElement(menu.content)
+    }
 
     this.activeModalId = menuId
     this.updateButtonStates(menuId)
