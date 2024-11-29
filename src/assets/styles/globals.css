@@ -21,6 +21,10 @@
     @apply font-custom text-gray-800;
   }
 
+  input {
+    -webkit-border-radius: 0;
+  }
+
   .rounded-custom {
     border-radius: 8px 0px 8px 8px;
   }
