@@ -279,12 +279,12 @@ document.addEventListener('DOMContentLoaded', () => {
         active: {
           bottom: '0',
           opacity: '1',
-          transition: 'all 150ms ease-in-out',
+          transition: 'all 400ms ease-in-out',
         },
         exit: {
           bottom: '-100%',
           opacity: '0',
-          transition: 'all 250ms ease-in-out',
+          transition: 'all 550ms ease-in-out',
         },
       },
       whatsappPositions: {
