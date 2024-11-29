@@ -270,32 +270,47 @@
           >
             <!-- Header Section -->
             <section
-              class="flex w-full items-center justify-between bg-white px-6 pt-28"
+              class="flex w-full flex-col items-start justify-between bg-white px-6 pt-28"
             >
-              <div class="flex items-start gap-3">
-                <img
-                  src="/assets/images/icons/circle-user.svg"
-                  alt="User Icon"
-                  class="size-6"
-                />
-                <div class="flex flex-col gap-1.5">
-                  <a
-                    href="#"
-                    class="font-semibold text-primary-900 transition hover:text-primary-800"
-                    >Giriş Yapın</a
-                  >
-                  <a
-                    href="#"
-                    class="text-sm text-gray-700 transition hover:text-gray-900"
-                    >Üye Olun</a
-                  >
+              <div class="flex w-full items-center justify-between">
+                <div class="flex items-start gap-3">
+                  <img
+                    src="/assets/images/icons/circle-user.svg"
+                    alt="User Icon"
+                    class="size-6"
+                  />
+                  <div class="flex flex-col gap-1.5">
+                    <a
+                      href="#"
+                      class="font-semibold text-primary-900 transition hover:text-primary-800"
+                      >Giriş Yapın</a
+                    >
+                    <a
+                      href="#"
+                      class="text-sm text-gray-700 transition hover:text-gray-900"
+                      >Üye Olun</a
+                    >
+                  </div>
                 </div>
+                <img
+                  src="/assets/images/icons/chevron-right.svg"
+                  alt="Chevron Right Icon"
+                  class="size-5"
+                />
               </div>
-              <img
-                src="/assets/images/icons/chevron-right.svg"
-                alt="Chevron Right Icon"
-                class="size-5"
-              />
+
+              <!-- Language/Currency Button -->
+              <button
+                id="language-currency-selector-button-mobile"
+                class="mt-8 flex items-center gap-3 bg-white text-gray-700 transition hover:text-gray-900"
+              >
+                <img
+                  src="/assets/images/flags/tr.svg"
+                  alt="Phone Icon"
+                  class="size-6 rounded-full"
+                />
+                <span>Dil/Para Birimi</span>
+              </button>
             </section>
 
             <!-- Navigation Section -->
@@ -486,19 +501,6 @@
                   />
                 </li>
               </ul>
-
-              <!-- Language/Currency Button -->
-              <button
-                id="language-currency-selector-button-mobile"
-                class="mt-8 flex items-center gap-3 text-gray-700 transition hover:text-gray-900"
-              >
-                <img
-                  src="/assets/images/flags/tr.svg"
-                  alt="Phone Icon"
-                  class="size-6 rounded-full"
-                />
-                <span>Dil/Para Birimi</span>
-              </button>
             </nav>
           </aside>
         </div>
