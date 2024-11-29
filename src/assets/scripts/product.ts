@@ -273,7 +273,7 @@ document.addEventListener('DOMContentLoaded', () => {
         zIndex: '50',
         visibility: 'hidden',
         opacity: '0',
-        transform: 'translateY(100%)',
+        transform: 'translateY(0%)',
         transition:
           'transform 500ms cubic-bezier(0.4, 0, 0.2, 1), opacity 500ms cubic-bezier(0.4, 0, 0.2, 1)',
         willChange: 'transform, opacity',
@@ -281,7 +281,7 @@ document.addEventListener('DOMContentLoaded', () => {
       showAnimation: {
         visibility: 'visible',
         opacity: '1',
-        transform: 'translateY(0)',
+        transform: 'translateY(0%)',
       },
       hideAnimation: {
         visibility: 'hidden',
@@ -300,8 +300,8 @@ document.addEventListener('DOMContentLoaded', () => {
       order: 2,
       position: {
         position: 'fixed',
-        left: '16px',
-        bottom: '73px',
+        right: '16px',
+        bottom: '84px',
         visibility: 'hidden',
         opacity: '0%',
         transform: 'translateY(100%)',
