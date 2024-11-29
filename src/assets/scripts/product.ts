@@ -25,7 +25,7 @@ document.addEventListener('DOMContentLoaded', () => {
     auto: true,
     autoInterval: 6000,
     animationConfig: {
-      duration: 1000,
+      duration: 400,
       timingFunction: 'cubic-bezier(0.4, 0, 0.2, 1)',
       transforms: {
         fromLeft: {
