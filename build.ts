@@ -16,7 +16,8 @@ const scriptsDir = path.join(assetsDir, 'scripts')
 const packagesDir = path.join(scriptsDir, 'packages')
 
 // Ana sayfa script listesi
-const scripts = ['layout', 'main', 'product']
+const scripts = ['layout', 'main', 'product', 'login', 'register']
+const directories = ['main', 'product', 'login', 'register']
 
 // Dosya işlem takibi için cache
 const fileCache = new Map<string, number>()
@@ -86,8 +87,6 @@ function copyAssets(specificFile?: string) {
 }
 
 function copyHTML(specificFile?: string) {
-  const directories = ['main', 'product']
-
   directories.forEach(dir => {
     const srcDirPath = path.join(srcDir, dir)
     if (!existsSync(srcDirPath)) return
