@@ -6,21 +6,7 @@ interface NavConfig {
   animationDuration?: number
   throttleDelay?: number
   threshold?: number
-  fixedStyles: {
-    position: 'fixed'
-    top: string
-    left: string
-    width: string
-    zIndex: string
-    backgroundColor: string
-    borderBottom?: string
-    boxShadow?: string
-    maxWidth?: string
-    margin?: string
-    padding?: string
-    transform?: string
-    transition?: string
-  }
+  fixedStyles: Partial<CSSStyleDeclaration>
 }
 
 class NavStickyManager {
@@ -288,7 +274,7 @@ class NavStickyManager {
     if (this.clonedNav && this.originalNav) {
       const rect = this.originalNav.getBoundingClientRect()
       Object.assign(this.clonedNav.style, {
-        width: `${rect.width}px`,
+        width: `100vw`,
         height: `${rect.height}px`,
       })
     }

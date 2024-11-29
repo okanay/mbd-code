@@ -343,13 +343,9 @@ document.addEventListener('DOMContentLoaded', () => {
     mobileBreakpoint: 768,
     threshold: 50,
     fixedStyles: {
-      position: 'fixed',
-      top: '0',
-      left: '0',
-      width: '100%',
       zIndex: '100',
-      backgroundColor: '#fff',
-      borderBottom: '1px solid #eee',
+      maxWidth: '1232px',
+      margin: '0 auto',
     },
   })
 })
