@@ -58,18 +58,21 @@
   </head>
   <body class="bg-white">
     <main>
-      <div class="flex h-screen w-full overflow-hidden">
+      <div
+        class="flex h-fit min-h-screen w-full justify-end overflow-hidden overflow-y-auto"
+      >
         <!-- Gorsel -->
-        <div class="relative left-0 top-0 z-10 h-full w-full bg-gray-100">
-          <!-- prettier-ignore -->
-          <div class="absolute inset-0 hidden px-8 py-14 text-primary-50 md:block">
-                <h1 class="mb-2 text-balance text-4xl font-bold">
-                  Guıde olf Dubai’ye Üye Olun
-                </h1>
-                <p class="-mt-1.5 text-balance text-xl">
-                  Size özel fırsatların keyfini çıkarın
-                </p>
-              </div>
+        <div class="fixed -left-[240px] top-0 z-10 h-full w-full bg-gray-100">
+          <div
+            class="absolute left-[240px] top-0 hidden px-8 py-14 text-primary-50 md:block"
+          >
+            <h1 class="mb-2 text-balance text-4xl font-bold">
+              Guıde olf Dubai’ye Üye Olun
+            </h1>
+            <p class="-mt-1.5 text-balance text-xl">
+              Size özel fırsatların keyfini çıkarın
+            </p>
+          </div>
           <img
             src="https://images.project-test.info/login.webp"
             loading="lazy"
@@ -77,13 +80,16 @@
             class="h-full w-full object-cover"
           />
         </div>
+
         <!-- Form -->
-        <div class="w-full max-w-[480px] flex-shrink-0 px-4">
+        <div
+          class="relative z-20 w-full max-w-[480px] flex-shrink-0 bg-white px-4 py-10"
+        >
           <form
-            class="relative z-20 flex h-full flex-col justify-start gap-4 overflow-y-auto bg-white py-6 [&>*]:flex-shrink-0"
+            class="relative z-20 flex h-full flex-col gap-4 bg-white py-6 [&>*]:flex-shrink-0"
           >
             <!--  Form Header -->
-            <div class="flex flex-col gap-2 py-4">
+            <div class="flex flex-col gap-2">
               <h1 class="text-2xl font-bold text-primary-500">Üye Ol</h1>
               <p class="text-balance text-sm text-gray-700">
                 Rezervasyonunuzu kolayca oluşturmak ve kampanyalardan haberdar
