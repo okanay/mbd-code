@@ -62,10 +62,10 @@
         class="flex h-fit min-h-screen w-full justify-end overflow-hidden overflow-y-auto"
       >
         <!-- Gorsel -->
-        <div class="fixed -left-[240px] top-0 z-10 h-full w-full bg-gray-100">
-          <div
-            class="absolute left-[240px] top-0 hidden px-8 py-14 text-primary-50 md:block"
-          >
+        <div
+          class="invisible fixed -left-[240px] top-0 z-10 h-full w-full bg-gray-100 sm:visible"
+        >
+          <div class="absolute left-[240px] top-0 px-8 py-14 text-primary-50">
             <h1 class="mb-2 text-balance text-4xl font-bold">
               Guıde olf Dubai’ye Üye Olun
             </h1>
@@ -83,7 +83,7 @@
 
         <!-- Form -->
         <div
-          class="relative z-20 w-full max-w-[480px] flex-shrink-0 bg-white px-4 py-10"
+          class="relative z-20 w-full flex-shrink-0 bg-white px-4 py-10 sm:max-w-[480px]"
         >
           <form
             class="relative z-20 flex h-full flex-col gap-4 bg-white py-6 [&>*]:flex-shrink-0"
