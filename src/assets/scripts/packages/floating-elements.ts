@@ -1,248 +1,182 @@
-interface FloatingElement {
+interface FixedElement {
   id: string
-  observeTargets?: {
-    selector: string
-    threshold?: {
-      start: number
-      end: number
-    }
-  }[]
   order: number
-  initialPosition: Partial<CSSStyleDeclaration>
-  activePosition?: Partial<CSSStyleDeclaration>
-  animationOptions: {
-    active: Partial<CSSStyleDeclaration>
-    exit: Partial<CSSStyleDeclaration>
-  }
+  watchSelector?: string
+  position: Partial<CSSStyleDeclaration>
+  showAnimation: Partial<CSSStyleDeclaration>
+  hideAnimation: Partial<CSSStyleDeclaration>
   onClick?: () => void
 }
 
-interface ManagerConfig {
-  elements: FloatingElement[]
-  gap: number
-  defaultThreshold?: {
-    start: number
-    end: number
-  }
-}
-
-class FloatingElementsManager {
+export class ScrollManager {
   private elements: Map<
     string,
     {
-      config: FloatingElement
+      config: FixedElement
       element: HTMLElement
-      observers: IntersectionObserver[]
       height: number
       isVisible: boolean
-      isActive: boolean
-      observerStates: Map<string, boolean>
     }
   > = new Map()
 
-  private gap: number
-  private defaultThreshold: { start: number; end: number }
-  private activeElements: string[] = []
+  private scrollTimeout: number | null = null
+  private resizeTimeout: number | null = null
+  private readonly startThreshold = 0.65 // Eski threshold.start değeri
+  private readonly endThreshold = 0.1 // Eski threshold.end değeri
 
-  constructor(config: ManagerConfig) {
-    this.gap = config.gap
-    this.defaultThreshold = config.defaultThreshold || { start: 0.7, end: 0.15 }
+  constructor(elements: FixedElement[]) {
+    this.initializeElements(elements)
 
-    requestAnimationFrame(() => {
-      this.initializeElements(config.elements)
-    })
+    window.addEventListener('scroll', this.handleScroll)
+    window.addEventListener('resize', this.handleResize)
+
+    // Initial check
+    this.checkElementsVisibility()
   }
 
-  private initializeElements(elements: FloatingElement[]): void {
-    const sortedElements = [...elements].sort((a, b) => a.order - b.order)
-
-    sortedElements.forEach(config => {
-      const element = document.querySelector<HTMLElement>(`#${config.id}`)
-      if (!element) {
-        console.error(`Element not found: ${config.id}`)
-        return
-      }
-
-      const height = element.offsetHeight
+  private initializeElements(elements: FixedElement[]) {
+    elements.forEach(config => {
+      const element = document.getElementById(config.id)
+      if (!element) return
 
       Object.assign(element.style, {
-        position: 'fixed',
-        transition: 'all 0.3s ease-in-out',
-        ...config.initialPosition,
+        ...config.position,
       })
 
       this.elements.set(config.id, {
         config,
         element,
-        observers: [],
-        height,
+        height: element.offsetHeight,
         isVisible: false,
-        isActive: true,
-        observerStates: new Map(),
       })
 
       if (config.onClick) {
         element.addEventListener('click', config.onClick)
       }
-
-      if (config.observeTargets) {
-        this.setupObservers(config.id)
-      }
-    })
-
-    this.updateActiveElements()
-  }
-
-  private setupObservers(elementId: string): void {
-    const elementData = this.elements.get(elementId)
-    if (!elementData?.config.observeTargets) return
-
-    elementData.config.observeTargets.forEach(target => {
-      const targetElement = document.querySelector(target.selector)
-      if (!targetElement) return
-
-      // Initialize observer state for this target
-      elementData.observerStates.set(target.selector, true)
-
-      const threshold = target.threshold || this.defaultThreshold
-      const thresholdSteps = Array.from({ length: 100 }, (_, i) => i / 100)
-
-      const observer = new IntersectionObserver(
-        entries => {
-          entries.forEach(entry => {
-            const ratio = entry.intersectionRatio
-            const currentState = elementData.observerStates.get(target.selector)
-
-            if (ratio >= threshold.start) {
-              elementData.observerStates.set(target.selector, false)
-            } else if (ratio <= threshold.end) {
-              elementData.observerStates.set(target.selector, true)
-            }
-
-            // Only update if the state has changed
-            if (
-              currentState !== elementData.observerStates.get(target.selector)
-            ) {
-              this.updateElementState(elementId)
-            }
-          })
-        },
-        {
-          threshold: thresholdSteps,
-          rootMargin: '0px',
-        },
-      )
-
-      observer.observe(targetElement)
-      elementData.observers.push(observer)
     })
   }
 
-  private updateElementState(elementId: string): void {
-    const elementData = this.elements.get(elementId)
-    if (!elementData) return
+  private handleScroll = () => {
+    if (this.scrollTimeout) {
+      window.clearTimeout(this.scrollTimeout)
+    }
 
-    // Element should be active only if ALL observers are in active state
-    const shouldBeActive = Array.from(
-      elementData.observerStates.values(),
-    ).every(state => state)
+    this.scrollTimeout = window.setTimeout(() => {
+      this.checkElementsVisibility()
+    }, 100)
+  }
 
-    if (shouldBeActive !== elementData.isActive) {
-      elementData.isActive = shouldBeActive
-      if (shouldBeActive) {
-        this.activateElement(elementId)
-      } else {
-        this.deactivateElement(elementId)
+  private handleResize = () => {
+    if (this.resizeTimeout) {
+      window.clearTimeout(this.resizeTimeout)
+    }
+
+    this.resizeTimeout = window.setTimeout(() => {
+      this.elements.forEach(data => {
+        // Store original styles
+        const originalDisplay = data.element.style.display
+        const originalVisibility = data.element.style.visibility
+        const originalOpacity = data.element.style.opacity
+
+        // Temporarily make element visible but hidden
+        data.element.style.display = 'block'
+        data.element.style.visibility = 'hidden'
+        data.element.style.opacity = '0'
+
+        // Force reflow and get height
+        void data.element.offsetHeight
+        data.height = data.element.getBoundingClientRect().height
+
+        // Restore original styles
+        data.element.style.display = originalDisplay
+        data.element.style.visibility = originalVisibility
+        data.element.style.opacity = originalOpacity
+      })
+      this.checkElementsVisibility()
+    }, 250)
+  }
+
+  private checkElementsVisibility() {
+    let hasVisibilityChanged = false
+
+    this.elements.forEach((data, id) => {
+      if (!data.config.watchSelector) {
+        // Eğer izlenecek element yoksa her zaman görünür
+        if (!data.isVisible) {
+          data.isVisible = true
+          hasVisibilityChanged = true
+        }
+        return
       }
+
+      const watchElement = document.querySelector(data.config.watchSelector)
+      if (!watchElement) return
+
+      const rect = watchElement.getBoundingClientRect()
+      const viewportHeight = window.innerHeight
+      const elementVisibleHeight =
+        Math.min(rect.bottom, viewportHeight) - Math.max(rect.top, 0)
+      const elementTotalVisibleHeight = rect.height
+      const visibilityRatio = elementVisibleHeight / elementTotalVisibleHeight
+
+      // Ana değişiklik burada: threshold mantığını düzelttik
+      const shouldBeVisible = visibilityRatio <= this.endThreshold
+
+      if (shouldBeVisible !== data.isVisible) {
+        data.isVisible = shouldBeVisible
+        hasVisibilityChanged = true
+      }
+    })
+
+    if (hasVisibilityChanged) {
+      this.updatePositions()
     }
   }
 
-  private activateElement(elementId: string): void {
-    const elementData = this.elements.get(elementId)
-    if (!elementData) return
-
-    elementData.isActive = true
-    this.updateActiveElements()
-  }
-
-  private deactivateElement(elementId: string): void {
-    const elementData = this.elements.get(elementId)
-    if (!elementData) return
-
-    elementData.isActive = false
-    this.hideElement(elementId)
-    this.updateActiveElements()
-  }
-
-  private updateActiveElements(): void {
-    this.activeElements = Array.from(this.elements.entries())
-      .filter(([_, data]) => data.isActive)
-      .sort((a, b) => a[1].config.order - b[1].config.order)
-      .map(([id]) => id)
-
-    this.recalculatePositions()
-  }
-
-  private showElement(elementId: string): void {
-    const elementData = this.elements.get(elementId)
-    if (!elementData || elementData.isVisible) return
-
-    elementData.isVisible = true
-    Object.assign(
-      elementData.element.style,
-      elementData.config.animationOptions.active,
+  private updatePositions() {
+    const sortedElements = Array.from(this.elements.entries()).sort(
+      (a, b) => a[1].config.order - b[1].config.order,
     )
-  }
 
-  private hideElement(elementId: string): void {
-    const elementData = this.elements.get(elementId)
-    if (!elementData || !elementData.isVisible) return
+    let currentBottom = 0
 
-    elementData.isVisible = false
-    Object.assign(
-      elementData.element.style,
-      elementData.config.animationOptions.exit,
-    )
-  }
+    sortedElements.forEach(([_, data]) => {
+      // Her element için animasyon uygula, görünür olsun veya olmasın
+      const animation = data.isVisible
+        ? data.config.showAnimation
+        : data.config.hideAnimation
 
-  private recalculatePositions(): void {
-    let currentOffset = 0
-
-    this.activeElements.forEach((elementId, index) => {
-      const elementData = this.elements.get(elementId)
-      if (!elementData) return
-
-      const position =
-        elementData.config.activePosition || elementData.config.initialPosition
-      const bottom = parseInt((position.bottom as string) || '0')
-
-      if (index > 0) {
-        currentOffset += this.gap
-      }
-
-      Object.assign(elementData.element.style, {
-        ...position,
-        bottom: `${bottom + currentOffset}px`,
-        transition: 'all 0.3s ease-in-out',
-      })
-
-      if (elementData.isActive) {
-        this.showElement(elementId)
-        currentOffset += elementData.height
+      if (data.isVisible) {
+        Object.assign(data.element.style, {
+          ...data.config.position,
+          ...animation,
+          bottom: `${currentBottom}px`,
+        })
+        currentBottom += data.height
+      } else {
+        Object.assign(data.element.style, {
+          ...data.config.position,
+          ...animation,
+        })
       }
     })
   }
 
-  public destroy(): void {
-    this.elements.forEach(elementData => {
-      elementData.observers.forEach(observer => observer.disconnect())
-      elementData.element.removeEventListener(
-        'click',
-        elementData.config.onClick as any,
-      )
+  public destroy() {
+    if (this.scrollTimeout) {
+      window.clearTimeout(this.scrollTimeout)
+    }
+    if (this.resizeTimeout) {
+      window.clearTimeout(this.resizeTimeout)
+    }
+
+    window.removeEventListener('scroll', this.handleScroll)
+    window.removeEventListener('resize', this.handleResize)
+
+    this.elements.forEach(data => {
+      if (data.config.onClick) {
+        data.element.removeEventListener('click', data.config.onClick)
+      }
     })
-    this.elements.clear()
   }
 }
-
-export { FloatingElementsManager, type FloatingElement, type ManagerConfig }

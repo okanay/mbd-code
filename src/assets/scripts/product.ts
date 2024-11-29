@@ -8,7 +8,7 @@ import { ModalController } from './packages/modal.js'
 import { RatingAnimator } from './packages/rating-bar-controller.js'
 import { URLMatcher } from './packages/url-matcher.js'
 import { DatePicker } from './packages/date-picker.js'
-import { FloatingElementsManager } from './packages/floating-elements.js'
+import { ScrollManager } from './packages/floating-elements.js'
 import { NavStickyManager } from './packages/scroll-style.js'
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -260,80 +260,68 @@ document.addEventListener('DOMContentLoaded', () => {
     language: [turkishLanguage, englishLanguage, arabicLanguage],
   })
 
-  new FloatingElementsManager({
-    elements: [
-      {
-        id: 'complete-purchase-container',
-        observeTargets: [
-          {
-            selector: '#purchase-form',
-            threshold: {
-              start: 0.65,
-              end: 0.1,
-            },
-          },
-        ],
-        order: 1,
-        initialPosition: {
-          position: 'fixed',
-          right: '0px',
-          bottom: '0px',
-          width: '100%',
-          zIndex: '50',
-          visibility: 'hidden',
-          opacity: '0',
-          transform: 'translateY(100%)',
-          transition:
-            'transform 500ms cubic-bezier(0.4, 0, 0.2, 1), opacity 500ms cubic-bezier(0.4, 0, 0.2, 1)',
-          willChange: 'transform, opacity',
-        },
-        animationOptions: {
-          active: {
-            visibility: 'visible',
-            opacity: '1',
-            transform: 'translateY(0)',
-          },
-          exit: {
-            visibility: 'hidden',
-            opacity: '0',
-            transform: 'translateY(100%)',
-          },
-        },
-        onClick: () => {
-          document.querySelector('#purchase-form')?.scrollIntoView({
-            behavior: 'smooth',
-            block: 'center',
-          })
-        },
+  new ScrollManager([
+    {
+      id: 'complete-purchase-container',
+      watchSelector: '#purchase-form',
+      order: 1,
+      position: {
+        position: 'fixed',
+        right: '0px',
+        bottom: '0px',
+        width: '100%',
+        zIndex: '50',
+        visibility: 'hidden',
+        opacity: '0',
+        transform: 'translateY(100%)',
+        transition:
+          'transform 500ms cubic-bezier(0.4, 0, 0.2, 1), opacity 500ms cubic-bezier(0.4, 0, 0.2, 1)',
+        willChange: 'transform, opacity',
       },
-      {
-        id: 'whatsapp-button',
-        order: 2,
-        initialPosition: {
-          position: 'fixed',
-          right: '16px',
-          bottom: '12px',
-          transition: 'all 0.3s ease-in-out',
-          zIndex: '60',
-        },
-        animationOptions: {
-          active: {
-            transition: 'all 0.3s ease-in-out',
-            transform: 'translateY(0)',
-          },
-          exit: {
-            transition: 'all 0.3s ease-in-out',
-            transform: 'translateY(120%)',
-          },
-        },
+      showAnimation: {
+        visibility: 'visible',
+        opacity: '1',
+        transform: 'translateY(0)',
       },
-    ],
-    gap: 0,
-    defaultThreshold: {
-      start: 0.7,
-      end: 0.15,
+      hideAnimation: {
+        visibility: 'hidden',
+        opacity: '0',
+        transform: 'translateY(100%)',
+      },
+      onClick: () => {
+        document.querySelector('#purchase-form')?.scrollIntoView({
+          behavior: 'smooth',
+          block: 'center',
+        })
+      },
     },
-  })
+    {
+      id: 'whatsapp-button',
+      order: 2,
+      position: {
+        position: 'fixed',
+        left: '16px',
+        bottom: '73px',
+        visibility: 'hidden',
+        opacity: '0%',
+        transform: 'translateY(100%)',
+        transition: 'all 0.3s ease-in-out',
+        zIndex: '60',
+      },
+      showAnimation: {
+        transition: 'all 0.3s ease-in-out',
+        transform: 'translateY(-12px)',
+        visibility: 'visible',
+        opacity: '100%',
+      },
+      hideAnimation: {
+        transition: 'all 0.3s ease-in-out',
+        transform: 'translateY(120%)',
+        visibility: 'hidden',
+        opacity: '0%',
+      },
+    },
+  ])
 
   // Mobile Screen Nav Sticky Manager
   new NavStickyManager({
