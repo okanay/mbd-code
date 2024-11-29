@@ -734,39 +734,54 @@
       </section>
 
       <!-- Product Information -->
-      <div class="flex flex-col gap-6">
+      <div id="product-content" class="flex flex-col gap-6">
         <!-- Navigation Tabs -->
         <div
-          class="flex h-12 w-full items-center justify-between border-b pt-1.5"
+          id="product-content"
+          class="flex h-12 w-full items-center justify-between border-b bg-white pt-1.5"
         >
-          <div
-            class="flex h-full w-3/4 items-start justify-start gap-8 px-3.5 lg:gap-16 lg:px-0"
+          <nav
+            id="product-nav"
+            class="flex h-12 w-full items-center justify-between border-b bg-white pt-1.5"
           >
-            <button
-              id="product-info-btn-1"
-              data-state="closed"
-              class="h-full text-nowrap border-primary-500 text-sm font-bold data-[state=open]:translate-y-[4%] data-[state=open]:border-b-4 group-data-[query=info]/query:!translate-y-[4%] group-data-[query=info]/query:!border-b-4 lg:text-base"
-              aria-label="Genel Bilgiler"
+            <div
+              class="flex h-full w-3/4 items-start justify-start gap-8 px-3.5 lg:gap-16 lg:px-0"
             >
-              Genel Bilgiler
-            </button>
-            <button
-              id="product-info-btn-2"
-              data-state="closed"
-              class="h-full text-nowrap border-primary-500 text-sm font-bold data-[state=open]:translate-y-[4%] data-[state=open]:border-b-4 group-data-[query=includes]/query:!translate-y-[4%] group-data-[query=includes]/query:!border-b-4 lg:text-base"
-              aria-label="Tur Olanakları"
-            >
-              Tur Olanakları
-            </button>
-            <button
-              id="product-info-btn-3"
-              data-state="closed"
-              class="h-full text-nowrap border-primary-500 text-sm font-bold data-[state=open]:translate-y-[4%] data-[state=open]:border-b-4 group-data-[query=reviews]/query:!translate-y-[4%] group-data-[query=reviews]/query:!border-b-4 lg:text-base"
-              aria-label="Yorumlar"
-            >
-              Yorumlar
-            </button>
-          </div>
+              <button
+                id="product-info-btn-1"
+                data-state="closed"
+                class="h-full text-nowrap border-primary-500 text-sm font-bold data-[state=open]:translate-y-[4%] data-[state=open]:border-b-4 group-data-[query=info]/query:!translate-y-[4%] group-data-[query=info]/query:!border-b-4 lg:text-base"
+                aria-label="Genel Bilgiler"
+              >
+                Genel Bilgiler
+              </button>
+              <button
+                id="product-info-btn-2"
+                data-state="closed"
+                class="h-full text-nowrap border-primary-500 text-sm font-bold data-[state=open]:translate-y-[4%] data-[state=open]:border-b-4 group-data-[query=includes]/query:!translate-y-[4%] group-data-[query=includes]/query:!border-b-4 lg:text-base"
+                aria-label="Tur Olanakları"
+              >
+                Tur Olanakları
+              </button>
+              <button
+                id="product-info-btn-3"
+                data-state="closed"
+                class="h-full text-nowrap border-primary-500 text-sm font-bold data-[state=open]:translate-y-[4%] data-[state=open]:border-b-4 group-data-[query=reviews]/query:!translate-y-[4%] group-data-[query=reviews]/query:!border-b-4 lg:text-base"
+                aria-label="Yorumlar"
+              >
+                Yorumlar
+              </button>
+            </div>
+            <div class="hidden items-center gap-2 lg:flex">
+              <img
+                src="/assets/images/icons/yellow-star.svg"
+                alt="Yıldız Değerlendirmesi"
+                class="size-4"
+              />
+              <span class="text-sm font-medium text-gray-600">4.4</span>
+              <span class="text-sm text-gray-500">(128 değerlendirme)</span>
+            </div>
+          </nav>
           <div class="hidden items-center gap-2 lg:flex">
             <img
               src="/assets/images/icons/yellow-star.svg"
@@ -777,13 +792,8 @@
             <span class="text-sm text-gray-500">(128 değerlendirme)</span>
           </div>
         </div>
-
         <!-- Product Information Content and Form -->
-        <article
-          id="product-info-container"
-          class="flex flex-col gap-8 lg:flex-row"
-          data-loading="true"
-        >
+        <article class="flex flex-col gap-8 lg:flex-row">
           <div class="w-full px-3.5 lg:w-2/3 lg:px-0">
             <!-- Product Information Content -->
             <div class="mb-4 flex flex-col gap-1">
@@ -1646,41 +1656,41 @@
               </div>
             </div>
           </form>
-
-          <!-- Mobile Complete Purchase Button -->
-          <div
-            id="complete-purchase-container"
-            class="fixed bottom-0 left-0 z-50 w-full max-w-[100vw] overflow-hidden border-t border-gray-200 bg-white p-3 lg:hidden"
-          >
-            <div class="flex items-center justify-between">
-              <div class="flex flex-col">
-                <span class="text-xs font-semibold text-lime-600"
-                  >%25 İndirim</span
-                >
-                <div class="flex items-center gap-2">
-                  <span class="text-xs font-medium text-gray-500 line-through"
-                    >650 AED</span
-                  >
-                  <span class="text-lg font-semibold text-primary-500"
-                    >550 AED</span
-                  >
-                </div>
-              </div>
-
-              <button
-                class="flex h-12 items-center justify-center gap-2.5 rounded-sm bg-primary-500 px-8 text-sm font-semibold text-white transition-all duration-300 active:scale-95"
-              >
-                <span class="-mb-[0.15rem]"> Satın Al </span>
-                <img
-                  src="/assets/images/icons/shop-bucket.svg"
-                  alt="Satın Al"
-                  class="size-5 brightness-0 invert"
-                  style="webkit-transform: scaleX(-1); transform: scaleX(-1)"
-                />
-              </button>
-            </div>
-          </div>
         </article>
+
+        <!-- Mobile Complete Purchase Button -->
+        <div
+          id="complete-purchase-container"
+          class="fixed bottom-0 left-0 z-50 w-full overflow-hidden border-t border-gray-200 bg-white p-3 lg:hidden"
+        >
+          <div class="flex items-center justify-between">
+            <div class="flex flex-col">
+              <span class="text-xs font-semibold text-lime-600"
+                >%25 İndirim</span
+              >
+              <div class="flex items-center gap-2">
+                <span class="text-xs font-medium text-gray-500 line-through"
+                  >650 AED</span
+                >
+                <span class="text-lg font-semibold text-primary-500"
+                  >550 AED</span
+                >
+              </div>
+            </div>
+
+            <button
+              class="flex h-12 items-center justify-center gap-2.5 rounded-sm bg-primary-500 px-8 text-sm font-semibold text-white transition-all duration-300 active:scale-95"
+            >
+              <span class="-mb-[0.15rem]"> Satın Al </span>
+              <img
+                src="/assets/images/icons/shop-bucket.svg"
+                alt="Satın Al"
+                class="size-5 brightness-0 invert"
+                style="webkit-transform: scaleX(-1); transform: scaleX(-1)"
+              />
+            </button>
+          </div>
+        </div>
       </div>
 
       <!-- Modal/Image Gallery - DONT EDIT THIS ** AUTO -->

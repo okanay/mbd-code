@@ -1,6 +1,7 @@
-import { DatePicker } from './packages/date-picker.js'
 import type { LanguageConfig } from './packages/date-picker.js'
+import { DatePicker } from './packages/date-picker.js'
 import { CompleteProductButton } from './packages/product-complete-btn.js'
+import { NavStickyManager } from './packages/scroll-style.js'
 
 document.addEventListener('DOMContentLoaded', () => {
   new CompleteProductButton({
@@ -64,6 +65,26 @@ document.addEventListener('DOMContentLoaded', () => {
     },
     language: [turkishLanguage, englishLanguage, arabicLanguage],
   })
+
+  new NavStickyManager({
+    navId: '#product-nav',
+    contentId: '#product-content',
+    mobileOnly: true, // Sadece mobilde çalışsın
+    mobileBreakpoint: 1080, // 1080 altında aktif olsun
+    animationDuration: 300, // 300ms animasyon süresi
+    fixedStyles: {
+      position: 'fixed',
+      top: '0',
+      left: '0',
+      width: '100%',
+      zIndex: '100',
+      backgroundColor: '#fff',
+      borderBottom: '1px solid #eee',
+      transition: 'all 300ms ease', // Animasyon için
+    },
+  })
+
+  //
 })
 
 const turkishLanguage: LanguageConfig = {
