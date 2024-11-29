@@ -8,7 +8,7 @@ import { ModalController } from './packages/modal.js'
 import { RatingAnimator } from './packages/rating-bar-controller.js'
 import { URLMatcher } from './packages/url-matcher.js'
 import { DatePicker } from './packages/date-picker.js'
-import { FloatingButtonsManager } from './packages/floating-buttons-elements.js'
+import { FloatingElementsManager } from './packages/floating-elements.js'
 import { NavStickyManager } from './packages/scroll-style.js'
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -260,40 +260,87 @@ document.addEventListener('DOMContentLoaded', () => {
     language: [turkishLanguage, englishLanguage, arabicLanguage],
   })
 
-  // Mobile Screen ScrollTo Form
-  new FloatingButtonsManager({
-    elements: {
-      formContainerId: '#purchase-form',
-      completePurchaseContainer: '#complete-purchase-container',
-      whatsappButton: '#whatsapp-button', // Whatsapp butonunuza bu id'yi eklemelisiniz
-    },
-    options: {
-      threshold: {
-        start: 0.7,
-        end: 0.15,
-      },
-      animationOptions: {
-        active: {
-          bottom: '0',
-          opacity: '1',
-          transition: 'all 400ms ease-in-out',
-        },
-        exit: {
-          bottom: '-100%',
+  new FloatingElementsManager({
+    elements: [
+      {
+        id: 'complete-purchase-container',
+        observeTargets: [
+          {
+            selector: '#purchase-form',
+            threshold: {
+              start: 0.7,
+              end: 0.15,
+            },
+          },
+        ],
+        order: 1,
+        initialPosition: {
+          position: 'fixed',
+          right: '0px',
+          bottom: '0px',
+          width: '100%',
+          zIndex: '50',
+          visibility: 'hidden',
           opacity: '0',
-          transition: 'all 550ms ease-in-out',
+          transform: 'translateY(100%)',
+          transition:
+            'transform 500ms cubic-bezier(0.4, 0, 0.2, 1), opacity 500ms cubic-bezier(0.4, 0, 0.2, 1)',
+          willChange: 'transform, opacity',
+        },
+        animationOptions: {
+          active: {
+            visibility: 'visible',
+            opacity: '1',
+            transform: 'translateY(0)',
+          },
+          exit: {
+            visibility: 'hidden',
+            opacity: '0',
+            transform: 'translateY(100%)',
+          },
+        },
+        onClick: () => {
+          document.querySelector('#purchase-form')?.scrollIntoView({
+            behavior: 'smooth',
+            block: 'center',
+          })
         },
       },
-      whatsappPositions: {
-        default: {
-          bottom: '20px', // Satın al butonu gizliyken
-          right: '14px',
+      {
+        id: 'whatsapp-button',
+        observeTargets: [
+          {
+            selector: '#footer',
+            threshold: {
+              start: 0.1, // Footer görünür olmaya başladığında
+              end: 0, // Footer tamamen görünmez olduğunda
+            },
+          },
+        ],
+        order: 2,
+        initialPosition: {
+          position: 'fixed',
+          right: '16px',
+          bottom: '12px',
+          transition: 'all 0.3s ease-in-out',
+          zIndex: '60',
         },
-        shifted: {
-          bottom: '88px', // Satın al butonu görünürken
-          right: '14px',
+        animationOptions: {
+          active: {
+            transition: 'all 0.3s ease-in-out',
+            transform: 'translateY(0)',
+          },
+          exit: {
+            transition: 'all 0.3s ease-in-out',
+            transform: 'translateY(120%)',
+          },
         },
       },
+    ],
+    gap: 0,
+    defaultThreshold: {
+      start: 0.7,
+      end: 0.15,
     },
   })
 

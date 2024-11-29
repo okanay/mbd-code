@@ -1757,7 +1757,7 @@
           <!-- Mobile Complete Purchase Button -->
           <div
             id="complete-purchase-container"
-            class="fixed bottom-0 left-0 z-50 w-full overflow-hidden border-t border-gray-200 bg-white p-3 md:hidden"
+            class="w-full overflow-hidden border-t border-gray-200 bg-white p-3 md:hidden"
           >
             <div class="flex items-center justify-between">
               <div class="flex flex-col">
@@ -1781,29 +1781,11 @@
                   src="/assets/images/icons/shop-bucket.svg"
                   alt="Satın Al"
                   class="size-5 brightness-0 invert"
-                  style="webkit-transform: scaleX(-1); transform: scaleX(-1)"
+                  style="transform: scaleX(-1)"
                 />
               </button>
             </div>
           </div>
-
-          <!-- Whatsapp Button -->
-          <button
-            id="whatsapp-button"
-            class="fixed bottom-[88px] right-3.5 !z-[100] size-14 rounded-full border border-gray-200 bg-white p-1 md:hidden"
-            style="transition: all 0.3s ease-in-out"
-          >
-            <a
-              href="https://wa.me/97152521419"
-              aria-label="WhatsApp ile mesaj gönder"
-            >
-              <img
-                src="/assets/images/icons/whatsapp.svg"
-                alt="WhatsApp ile İletişime Geç"
-                class="size-full"
-              />
-            </a>
-          </button>
         </article>
       </div>
 
@@ -1932,7 +1914,25 @@
       </div>
     </main>
 
-    <footer class="w-full">
+    <footer class="w-full" id="footer">
+      <!-- Mobile Fixed Whatsapp Button -->
+      <button
+        id="whatsapp-button"
+        class="size-12 rounded-full border border-gray-200 bg-white p-1 md:hidden"
+      >
+        <a
+          href="https://wa.me/97152521419"
+          aria-label="WhatsApp ile mesaj gönder"
+          class="block"
+        >
+          <img
+            src="/assets/images/icons/whatsapp.svg"
+            alt="WhatsApp ile İletişime Geç"
+            class="size-full"
+          />
+        </a>
+      </button>
+
       <div class="hidden w-full lg:block">
         <!-- Modals -->
         <div class="mb-6">
