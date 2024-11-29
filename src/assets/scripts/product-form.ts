@@ -66,12 +66,12 @@ document.addEventListener('DOMContentLoaded', () => {
     language: [turkishLanguage, englishLanguage, arabicLanguage],
   })
 
-  new NavStickyManager({
+  const navManager = new NavStickyManager({
     navId: '#product-nav',
     contentId: '#product-content',
     mobileOnly: true,
     mobileBreakpoint: 1080,
-    animationDuration: 300,
+    threshold: 50,
     fixedStyles: {
       position: 'fixed',
       top: '0',
@@ -80,8 +80,7 @@ document.addEventListener('DOMContentLoaded', () => {
       zIndex: '100',
       backgroundColor: '#fff',
       borderBottom: '1px solid #eee',
-      transition: 'all 300ms ease',
-      maxWidth: '100%', // Maksimum genişliği sınırla
+      padding: '0 1rem',
     },
   })
 
