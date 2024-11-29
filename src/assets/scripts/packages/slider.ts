@@ -28,6 +28,8 @@ interface SliderConfig {
   slideSelector: string
   buttonSelector: string
   animationConfig?: SliderAnimationConfig
+  nextButtonSelector?: string
+  prevButtonSelector?: string
   defaultActiveIndex?: number
   activeButtonClass?: string
   activeButtonClassTarget?: string
@@ -49,6 +51,8 @@ class Slider {
   private slider: HTMLElement
   private slides: NodeListOf<HTMLElement>
   private buttons: NodeListOf<HTMLButtonElement>
+  private nextButton: HTMLElement | null // Yeni eklendi
+  private prevButton: HTMLElement | null // Yeni eklendi
   private activeIndex: number
   private isAnimating: boolean
   private activeButtonClass: string
@@ -89,6 +93,13 @@ class Slider {
 
     this.slides = this.container.querySelectorAll(config.slideSelector)
     this.buttons = document.querySelectorAll(config.buttonSelector)
+
+    this.nextButton = config.nextButtonSelector
+      ? document.querySelector(config.nextButtonSelector)
+      : null
+    this.prevButton = config.prevButtonSelector
+      ? document.querySelector(config.prevButtonSelector)
+      : null
 
     if (!this.slides.length || !this.buttons.length) {
       throw new Error('Slides or buttons not found')
@@ -165,6 +176,21 @@ class Slider {
         this.goToSlide(targetIndex, direction)
       })
     })
+
+    // Next ve Prev butonlarını dinle
+    if (this.nextButton) {
+      this.nextButton.addEventListener('click', () => {
+        if (!this.isSliderEnabled()) return
+        this.next()
+      })
+    }
+
+    if (this.prevButton) {
+      this.prevButton.addEventListener('click', () => {
+        if (!this.isSliderEnabled()) return
+        this.prev()
+      })
+    }
 
     if (this.autoEnabled) {
       this.container.addEventListener('mouseenter', () => this.pauseAutoPlay())
@@ -540,6 +566,15 @@ class Slider {
       this.resizeObserver.disconnect()
       this.resizeObserver = null
     }
+
+    // Next/Prev buton event listener'larını temizle
+    if (this.nextButton) {
+      this.nextButton.removeEventListener('click', () => this.next())
+    }
+    if (this.prevButton) {
+      this.prevButton.removeEventListener('click', () => this.prev())
+    }
+
     this.container.removeEventListener('mouseenter', () => this.pauseAutoPlay())
     this.container.removeEventListener('mouseleave', () =>
       this.resumeAutoPlay(),

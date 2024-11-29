@@ -17,6 +17,8 @@ document.addEventListener('DOMContentLoaded', () => {
     container: '#product-slider-container',
     slideSelector: '.product-slide',
     buttonSelector: '.product-slider-btn',
+    nextButtonSelector: '#slider-next', // yeni
+    prevButtonSelector: '#slider-prev', // yeni
     defaultActiveIndex: 0,
     activeButtonClass: 'product-slider-active-btn',
     activeButtonClassTarget: '.product-slider-btn-item',
