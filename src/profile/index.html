@@ -654,12 +654,12 @@
       </div>
     </header>
 
-    <main class="mx-auto max-w-7xl bg-white px-2 pt-20 lg:pt-4">
+    <main class="mx-auto max-w-7xl bg-white pt-20 lg:pt-4">
       <div class="flex">
         <aside
           id="profile-navigation"
           data-state="closed"
-          class="fixed inset-y-0 left-0 z-40 h-full w-64 overflow-hidden border-r border-gray-200 bg-white pt-20 transition-all data-[state=closed]:w-[48px] data-[state=open]:translate-x-0 sm:translate-x-0 md:static md:min-h-screen md:!translate-x-0 md:!pt-0"
+          class="group/nav w-64 flex-shrink-0 overflow-hidden border-r border-gray-200 bg-white transition-all data-[state=closed]:w-[54px] data-[state=open]:translate-x-0 sm:translate-x-0 md:static md:min-h-screen md:!translate-x-0 md:!pt-0"
         >
           <div
             id="profile-navigation-content"
@@ -685,7 +685,10 @@
                     class="size-full group-data-[state=closed]:hidden"
                   ></i>
                 </span>
-                <span class="ms-3 text-nowrap">Gizle</span>
+                <span
+                  class="ms-3 text-nowrap group-data-[state=closed]/nav:opacity-0"
+                  >Gizle</span
+                >
               </button>
               <li class="group">
                 <button
@@ -698,7 +701,10 @@
                   >
                     <i data-lucide="calendar" class="size-full"></i>
                   </span>
-                  <span class="ms-3 text-nowrap">Rezervasyonlarım</span>
+                  <span
+                    class="ms-3 text-nowrap group-data-[state=closed]/nav:opacity-0"
+                    >Rezervasyonlarım</span
+                  >
                 </button>
               </li>
               <li class="group">
@@ -712,7 +718,10 @@
                   >
                     <i data-lucide="heart" class="size-full"></i>
                   </span>
-                  <span class="ms-3 text-nowrap">Favorilerim</span>
+                  <span
+                    class="ms-3 text-nowrap group-data-[state=closed]/nav:opacity-0"
+                    >Favorilerim</span
+                  >
                 </button>
               </li>
               <li class="group">
@@ -726,7 +735,10 @@
                   >
                     <i data-lucide="user" class="size-full"></i>
                   </span>
-                  <span class="ms-3 text-nowrap">Profil Detayları</span>
+                  <span
+                    class="ms-3 text-nowrap group-data-[state=closed]/nav:opacity-0"
+                    >Profil Detayları</span
+                  >
                 </button>
               </li>
               <li class="group">
@@ -740,7 +752,10 @@
                   >
                     <i data-lucide="lock" class="size-full"></i>
                   </span>
-                  <span class="ms-3 text-nowrap">Şifre ve E-Posta</span>
+                  <span
+                    class="ms-3 text-nowrap group-data-[state=closed]/nav:opacity-0"
+                    >Şifre ve E-Posta</span
+                  >
                 </button>
               </li>
               <li class="group">
@@ -754,7 +769,10 @@
                   >
                     <i data-lucide="settings" class="size-full"></i>
                   </span>
-                  <span class="ms-3 text-nowrap">Tercihler</span>
+                  <span
+                    class="ms-3 text-nowrap group-data-[state=closed]/nav:opacity-0"
+                    >Tercihler</span
+                  >
                 </button>
               </li>
             </ul>
