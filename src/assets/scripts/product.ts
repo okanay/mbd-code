@@ -7,7 +7,6 @@ import { TouchDirectionDetector } from './packages/touch-event.js'
 import { ModalController } from './packages/modal.js'
 import { RatingAnimator } from './packages/rating-bar-controller.js'
 import { URLMatcher } from './packages/url-matcher.js'
-import { DatePicker } from './packages/date-picker.js'
 import { ScrollManager } from './packages/floating-elements.js'
 import { NavStickyManager } from './packages/scroll-style.js'
 
@@ -222,44 +221,6 @@ document.addEventListener('DOMContentLoaded', () => {
     ratingAnimator.animate()
   })
 
-  // Date Picker Instance
-  new DatePicker({
-    input: {
-      type: 'two',
-      elements: {
-        start: {
-          id: 'departure-date',
-          focusContainer: 'departure-container',
-        },
-        end: {
-          id: 'return-date',
-          focusContainer: 'return-container',
-        },
-      },
-    },
-    elements: {
-      container: 'date-picker-container',
-      monthContainer: 'date-picker-current-month-name',
-      daysContainer: 'date-picker-days',
-      buttons: {
-        prev: 'prev-month-btn',
-        next: 'next-month-btn',
-        reset: 'reset-to-today-btn',
-        resetAll: 'reset-all-btn',
-      },
-    },
-    minDate: new Date(),
-    maxDate: new Date(8640000000000000),
-    autoClose: true,
-    autoSwitchInput: true,
-    output: {
-      order: ['day', 'month', 'year'],
-      slash: '.',
-      between: ' & ',
-    },
-    language: [turkishLanguage, englishLanguage, arabicLanguage],
-  })
-
   new ScrollManager([
     {
       id: 'complete-purchase-container',
@@ -322,6 +283,21 @@ document.addEventListener('DOMContentLoaded', () => {
       },
     },
   ])
+
+  const dateContainers = document.querySelectorAll(
+    '#departure-container, #return-container',
+  )
+
+  dateContainers.forEach(container => {
+    container.addEventListener('click', () => {
+      const input = container.querySelector(
+        'input[type="date"]',
+      ) as HTMLInputElement | null
+      if (input) {
+        input.showPicker()
+      }
+    })
+  })
 
   // Mobile Screen Nav Sticky Manager
   new NavStickyManager({

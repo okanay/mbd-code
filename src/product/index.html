@@ -1570,44 +1570,18 @@
                 >
                   <div class="group relative" id="departure-container">
                     <input
-                      type="text"
+                      type="date"
                       id="departure-date"
                       name="departure-date"
-                      placeholder=" "
-                      class="peer h-[44px] w-full items-center px-2.5 text-sm outline-none transition-all duration-200"
-                      readonly
-                    />
-                    <label
-                      for="departure-date"
-                      class="absolute -top-2 left-1.5 cursor-text text-nowrap bg-white px-1 text-xs transition-all peer-placeholder-shown:top-[12px] peer-placeholder-shown:text-sm peer-focus:-top-2 peer-focus:text-xs peer-focus:text-primary-500 group-data-[focus=true]:-top-2 group-data-[focus=true]:text-xs group-data-[focus=true]:text-primary-500"
-                    >
-                      Gidiş Tarihi
-                    </label>
-                    <img
-                      src="/assets/images/icons/calendar.svg"
-                      alt="Calendar Icon"
-                      class="absolute right-4 top-1/2 size-4 -translate-y-1/2 text-gray-400"
+                      class="peer h-[44px] w-full cursor-pointer items-center px-2.5 text-sm outline-none transition-all duration-200"
                     />
                   </div>
                   <div class="group relative" id="return-container">
                     <input
-                      type="text"
+                      type="date"
                       id="return-date"
                       name="return-date"
-                      placeholder=" "
                       class="peer h-[44px] w-full px-2.5 text-sm outline-none transition-all duration-200"
-                      readonly
-                    />
-                    <label
-                      for="return-date"
-                      class="absolute -top-2 left-1.5 cursor-text text-nowrap bg-white px-1 text-xs transition-all peer-placeholder-shown:top-[12px] peer-placeholder-shown:text-sm peer-focus:-top-2 peer-focus:text-xs peer-focus:text-primary-500 group-data-[focus=true]:-top-2 group-data-[focus=true]:text-xs group-data-[focus=true]:text-primary-500"
-                    >
-                      Dönüş Tarihi
-                    </label>
-                    <img
-                      src="/assets/images/icons/calendar.svg"
-                      alt="Calendar Icon"
-                      class="absolute right-4 top-1/2 size-4 -translate-y-1/2 text-gray-400"
                     />
                   </div>
                 </div>
@@ -1914,53 +1888,6 @@
               <img src="#" alt="Thumbnail 1" class="thumbnail" />
             </div>
           </div>
-        </div>
-      </div>
-
-      <!-- Date Picker Instance -->
-      <div
-        id="date-picker-container"
-        data-language="tr"
-        class="date-hidden absolute w-[320px] border bg-white px-4 py-3"
-      >
-        <div class="mb-4 flex items-center justify-between">
-          <button
-            id="prev-month-btn"
-            class="flex h-8 w-8 items-center justify-center rounded-full text-gray-600 hover:bg-gray-100"
-          >
-            <img
-              src="/assets/images/icons/chevron-left.svg"
-              alt=""
-              class="size-6"
-            />
-          </button>
-          <div id="date-picker-current-month-name">AUTO</div>
-          <button
-            id="next-month-btn"
-            class="flex h-8 w-8 items-center justify-center rounded-full text-gray-600 hover:bg-gray-100"
-          >
-            <img
-              src="/assets/images/icons/chevron-right.svg"
-              alt=""
-              class="size-6"
-            />
-          </button>
-        </div>
-        <div id="date-picker-days" class="">AUTO</div>
-        <!-- Optional Reset Button -->
-        <div class="mt-3 flex justify-center gap-2">
-          <button
-            id="reset-to-today-btn"
-            class="w-1/2 rounded-md bg-primary-500 px-3 py-2 text-sm font-semibold text-white hover:bg-primary-600"
-          >
-            Bugüne Dön
-          </button>
-          <button
-            id="reset-all-btn"
-            class="w-1/2 rounded-md bg-gray-200 px-3 py-2 text-sm font-semibold text-gray-700 hover:bg-gray-300"
-          >
-            Sıfırla
-          </button>
         </div>
       </div>
     </main>
