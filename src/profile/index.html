@@ -63,24 +63,7 @@
     <script type="module" src="/assets/scripts/layout.js"></script>
     <script type="module" src="/assets/scripts/profile.js"></script>
 
-    <script>
-      ;(function () {
-        const urlParams = new URLSearchParams(window.location.search)
-        const modalParam = urlParams.get('view')
-
-        if (modalParam) {
-          document.documentElement.classList.add('group/query')
-          document.documentElement.setAttribute('data-query', modalParam)
-        } else {
-          document.documentElement.classList.add('group/query')
-          document.documentElement.setAttribute('data-query', 'main')
-        }
-
-        document.addEventListener('DOMContentLoaded', function () {
-          document.documentElement.removeAttribute('data-query')
-        })
-      })()
-    </script>
+    <script></script>
   </head>
   <body class="bg-white">
     <header class="w-full border-gray-200 lg:h-[80px] lg:border-b">
@@ -665,7 +648,7 @@
           <aside
             id="profile-navigation"
             data-state="closed"
-            class="group/nav w-64 flex-shrink-0 overflow-hidden border-r border-gray-200 bg-white transition-all data-[state=closed]:w-[54px] data-[state=open]:translate-x-0 sm:translate-x-0 md:static md:min-h-screen md:!w-fit md:!translate-x-0 xl:border-l"
+            class="group/nav min-h-[440px] w-64 flex-shrink-0 overflow-hidden border-r border-gray-200 bg-white transition-all data-[state=closed]:w-[54px] data-[state=open]:translate-x-0 sm:translate-x-0 md:static md:min-h-[800px] md:!w-fit md:!translate-x-0 xl:border-l"
           >
             <div
               id="profile-navigation-content"
@@ -701,7 +684,7 @@
                     class="group flex items-center rounded-lg p-2 font-medium transition-all duration-300 hover:opacity-75 data-[state=open]:hover:!opacity-100"
                   >
                     <span
-                      class="size-[22px] flex-shrink-0 transition-all duration-300 group-hover:scale-[105%] group-hover:text-primary-600 data-[state=open]:hover:!scale-100 group-data-[query=reservation]/query:text-primary-500 group-data-[state=open]:text-primary-500"
+                      class="size-[22px] flex-shrink-0 transition-all duration-300 group-hover:scale-[105%] group-hover:text-primary-600 data-[state=open]:hover:!scale-100 group-data-[state=open]:text-primary-500"
                     >
                       <i data-lucide="calendar" class="size-full"></i>
                     </span>
@@ -718,7 +701,7 @@
                     class="group flex items-center rounded-lg p-2 font-medium transition-all duration-300 hover:opacity-75 data-[state=open]:hover:!opacity-100"
                   >
                     <span
-                      class="size-[22px] flex-shrink-0 transition-all duration-300 group-hover:scale-[105%] group-hover:text-primary-600 data-[state=open]:hover:!scale-100 group-data-[query=favorites]/query:text-primary-500 group-data-[state=open]:text-primary-500"
+                      class="size-[22px] flex-shrink-0 transition-all duration-300 group-hover:scale-[105%] group-hover:text-primary-600 data-[state=open]:hover:!scale-100 group-data-[state=open]:text-primary-500"
                     >
                       <i data-lucide="heart" class="size-full"></i>
                     </span>
@@ -735,7 +718,7 @@
                     class="group flex items-center rounded-lg p-2 font-medium transition-all duration-300 hover:opacity-75 data-[state=open]:hover:!opacity-100"
                   >
                     <span
-                      class="size-[22px] flex-shrink-0 transition-all duration-300 group-hover:scale-[105%] group-hover:text-primary-600 data-[state=open]:hover:!scale-100 group-data-[query=profile-details]/query:text-primary-500 group-data-[state=open]:text-primary-500"
+                      class="size-[22px] flex-shrink-0 transition-all duration-300 group-hover:scale-[105%] group-hover:text-primary-600 data-[state=open]:hover:!scale-100 group-data-[state=open]:text-primary-500"
                     >
                       <i data-lucide="user" class="size-full"></i>
                     </span>
@@ -752,7 +735,7 @@
                     class="group flex items-center rounded-lg p-2 font-medium transition-all duration-300 hover:opacity-75 data-[state=open]:hover:!opacity-100"
                   >
                     <span
-                      class="size-[22px] flex-shrink-0 transition-all duration-300 group-hover:scale-[105%] group-hover:text-primary-600 data-[state=open]:hover:!scale-100 group-data-[query=password-email]/query:text-primary-500 group-data-[state=open]:text-primary-500"
+                      class="size-[22px] flex-shrink-0 transition-all duration-300 group-hover:scale-[105%] group-hover:text-primary-600 data-[state=open]:hover:!scale-100 group-data-[state=open]:text-primary-500"
                     >
                       <i data-lucide="lock" class="size-full"></i>
                     </span>
@@ -769,7 +752,7 @@
                     class="group flex items-center rounded-lg p-2 font-medium transition-all duration-300 hover:opacity-75 data-[state=open]:hover:!opacity-100"
                   >
                     <span
-                      class="size-[22px] flex-shrink-0 transition-all duration-300 group-hover:scale-[105%] group-hover:text-primary-600 data-[state=open]:hover:!scale-100 group-data-[query=preferences]/query:text-primary-500 group-data-[state=open]:text-primary-500"
+                      class="size-[22px] flex-shrink-0 transition-all duration-300 group-hover:scale-[105%] group-hover:text-primary-600 data-[state=open]:hover:!scale-100 group-data-[state=open]:text-primary-500"
                     >
                       <i data-lucide="settings" class="size-full"></i>
                     </span>
@@ -784,7 +767,7 @@
           </aside>
 
           <div
-            class="h-screen min-h-fit w-full max-w-[calc(100%-60px)] flex-shrink-0 border-gray-200 bg-gray-50 px-4 pt-[14px] md:max-w-full md:flex-shrink md:pt-[16px] lg:px-8 lg:pt-4 xl:border-r"
+            class="min-h-fit w-full max-w-[calc(100%-60px)] flex-shrink-0 border-gray-200 bg-gray-50 px-4 pt-[14px] md:max-w-full md:flex-shrink md:pt-[16px] lg:px-8 lg:pt-4 xl:border-r"
           >
             <div
               data-state="closed"
@@ -1422,21 +1405,6 @@
             <img
               src="/assets/images/brand-images/guide_of_dubai_yatay.svg"
               alt="HOI Health logosu"
-              class="h-12 w-auto object-scale-down brightness-0 invert"
-            />
-            <img
-              src="/assets/images/brand-images/guide_of_dubai_yatay.svg"
-              alt="Hair of Istanbul logosu"
-              class="h-12 w-auto object-scale-down brightness-0 invert"
-            />
-            <img
-              src="/assets/images/brand-images/guide_of_dubai_yatay.svg"
-              alt="MBD Travel logosu"
-              class="h-12 w-auto object-scale-down brightness-0 invert"
-            />
-            <img
-              src="/assets/images/brand-images/guide_of_dubai_yatay.svg"
-              alt="Guide of Dubai logosu"
               class="h-12 w-auto object-scale-down brightness-0 invert"
             />
           </div>
