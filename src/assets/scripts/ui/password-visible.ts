@@ -1,86 +1,46 @@
-interface PasswordElements {
-  passwordInput: HTMLInputElement
-  passwordConfirmInput: HTMLInputElement
-  passwordContainer: HTMLDivElement
-  passwordConfirmContainer: HTMLDivElement
-}
-
 function setupPasswordVisibility() {
-  const elements: PasswordElements = {
-    passwordInput: document.getElementById('password') as HTMLInputElement,
-    passwordConfirmInput: document.getElementById(
-      'password-confirm',
-    ) as HTMLInputElement,
-    passwordContainer: document
-      .getElementById('password')
-      ?.closest('.group') as HTMLDivElement,
-    passwordConfirmContainer: document
-      .getElementById('password-confirm')
-      ?.closest('.group') as HTMLDivElement,
-  }
+  // Data-visible attribute'u olan tüm container'ları bul
+  const containers = document.querySelectorAll('div[data-visible]')
 
-  // Elementlerden herhangi biri bulunamadıysa çık
-  if (!Object.values(elements).every(element => element)) {
-    console.error('Required password elements not found')
-    return
-  }
+  containers.forEach(container => {
+    const passwordInput = container.querySelector(
+      'input[type="password"]',
+    ) as HTMLInputElement | null
+    const toggleButton = container.querySelector(
+      '.visible-control-btn',
+    ) as HTMLElement | null
 
-  // Şifre göster/gizle olaylarını ekle
-  elements.passwordContainer
-    .querySelector('button')
-    ?.addEventListener('click', e => {
-      e.stopPropagation() // Event'in document click'e ulaşmasını engelle
-      togglePasswordVisibility(
-        elements.passwordInput,
-        elements.passwordContainer,
-      )
+    if (!passwordInput || !toggleButton) return
+
+    // Toggle butonuna tıklama olayı ekle
+    toggleButton.addEventListener('click', e => {
+      e.stopPropagation()
+      const isVisible = (container as HTMLElement).dataset.visible === 'true'
+
+      passwordInput.type = isVisible ? 'password' : 'text'
+      ;(container as HTMLElement).dataset.visible = isVisible ? 'false' : 'true'
     })
 
-  elements.passwordConfirmContainer
-    .querySelector('button')
-    ?.addEventListener('click', e => {
-      e.stopPropagation() // Event'in document click'e ulaşmasını engelle
-      togglePasswordVisibility(
-        elements.passwordConfirmInput,
-        elements.passwordConfirmContainer,
-      )
-    })
-
-  // Input'lara tıklandığında event'in document'a ulaşmasını engelle
-  elements.passwordInput.addEventListener('click', e => e.stopPropagation())
-  elements.passwordConfirmInput.addEventListener('click', e =>
-    e.stopPropagation(),
-  )
+    // Input'a tıklandığında event'in yayılmasını engelle
+    passwordInput.addEventListener('click', e => e.stopPropagation())
+  })
 
   // Sayfa herhangi bir yerine tıklandığında şifreleri gizle
   document.addEventListener('click', () => {
-    if (elements.passwordContainer.dataset.visible === 'true') {
-      hidePassword(elements.passwordInput, elements.passwordContainer)
-    }
-    if (elements.passwordConfirmContainer.dataset.visible === 'true') {
-      hidePassword(
-        elements.passwordConfirmInput,
-        elements.passwordConfirmContainer,
-      )
-    }
+    containers.forEach(container => {
+      const passwordInput = container.querySelector(
+        'input[type="password"], input[type="text"]',
+      ) as HTMLInputElement | null
+      if (
+        (container as HTMLElement).dataset.visible === 'true' &&
+        passwordInput
+      ) {
+        passwordInput.type = 'password'
+        ;(container as HTMLElement).dataset.visible = 'false'
+      }
+    })
   })
 }
 
-function togglePasswordVisibility(
-  input: HTMLInputElement,
-  container: HTMLDivElement,
-) {
-  const isVisible = container.dataset.visible === 'true'
-  input.type = isVisible ? 'password' : 'text'
-  container.dataset.visible = isVisible ? 'false' : 'true'
-}
-
-function hidePassword(input: HTMLInputElement, container: HTMLDivElement) {
-  input.type = 'password'
-  container.dataset.visible = 'false'
-}
-
-// Sayfa yüklendiğinde başlat
-document.addEventListener('DOMContentLoaded', () => {
-  setupPasswordVisibility()
-})
+// Sayfa yüklendiğinde çalıştır
+document.addEventListener('DOMContentLoaded', setupPasswordVisibility)
