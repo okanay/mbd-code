@@ -659,14 +659,14 @@
         <aside
           id="profile-navigation"
           data-state="closed"
-          class="group/nav w-64 flex-shrink-0 overflow-hidden border-b border-r border-t border-gray-200 bg-white transition-all data-[state=closed]:w-[54px] data-[state=open]:translate-x-0 sm:translate-x-0 md:static md:min-h-screen md:!w-64 md:!translate-x-0 md:px-2 md:!pt-0 lg:border-t-0"
+          class="group/nav w-64 flex-shrink-0 overflow-hidden border-b border-r border-t border-gray-200 bg-white transition-all data-[state=closed]:w-[54px] data-[state=open]:translate-x-0 sm:translate-x-0 md:static md:min-h-screen md:!w-64 md:!translate-x-0 md:px-2 lg:border-t-0 lg:!pt-6"
         >
           <div
             id="profile-navigation-content"
             class="flex h-full w-full flex-col"
           >
             <ul
-              class="flex w-full flex-grow flex-col space-y-0.5 overflow-hidden overflow-y-auto px-2 py-2 font-medium md:px-0 md:py-0"
+              class="flex w-full flex-grow flex-col space-y-1 overflow-hidden overflow-y-auto px-2 py-2 font-medium md:space-y-2.5 md:px-0 md:py-0"
             >
               <button
                 id="profile-menu-button"
@@ -692,10 +692,10 @@
                 <button
                   id="profile-info-1"
                   data-state="closed"
-                  class="group flex items-center rounded-lg p-2 font-medium transition-all duration-300 hover:opacity-75"
+                  class="group flex items-center rounded-lg p-2 font-medium transition-all duration-300 hover:opacity-75 data-[state=open]:hover:!opacity-100"
                 >
                   <span
-                    class="size-[22px] flex-shrink-0 transition-all duration-300 group-hover:scale-[105%] group-hover:text-primary-600 group-data-[query=reservation]/query:text-primary-500 group-data-[state=open]:text-primary-500"
+                    class="size-[22px] flex-shrink-0 transition-all duration-300 group-hover:scale-[105%] group-hover:text-primary-600 data-[state=open]:hover:!scale-100 group-data-[query=reservation]/query:text-primary-500 group-data-[state=open]:text-primary-500"
                   >
                     <i data-lucide="calendar" class="size-full"></i>
                   </span>
@@ -709,10 +709,10 @@
                 <button
                   id="profile-info-2"
                   data-state="closed"
-                  class="group flex items-center rounded-lg p-2 font-medium transition-all duration-300 hover:opacity-75"
+                  class="group flex items-center rounded-lg p-2 font-medium transition-all duration-300 hover:opacity-75 data-[state=open]:hover:!opacity-100"
                 >
                   <span
-                    class="size-[22px] flex-shrink-0 transition-all duration-300 group-hover:scale-[105%] group-hover:text-primary-600 group-data-[query=favorites]/query:text-primary-500 group-data-[state=open]:text-primary-500"
+                    class="size-[22px] flex-shrink-0 transition-all duration-300 group-hover:scale-[105%] group-hover:text-primary-600 data-[state=open]:hover:!scale-100 group-data-[query=favorites]/query:text-primary-500 group-data-[state=open]:text-primary-500"
                   >
                     <i data-lucide="heart" class="size-full"></i>
                   </span>
@@ -726,10 +726,10 @@
                 <button
                   id="profile-info-3"
                   data-state="closed"
-                  class="group flex items-center rounded-lg p-2 font-medium transition-all duration-300 hover:opacity-75"
+                  class="group flex items-center rounded-lg p-2 font-medium transition-all duration-300 hover:opacity-75 data-[state=open]:hover:!opacity-100"
                 >
                   <span
-                    class="size-[22px] flex-shrink-0 transition-all duration-300 group-hover:scale-[105%] group-hover:text-primary-600 group-data-[query=reviews]/query:text-primary-500 group-data-[state=open]:text-primary-500"
+                    class="size-[22px] flex-shrink-0 transition-all duration-300 group-hover:scale-[105%] group-hover:text-primary-600 data-[state=open]:hover:!scale-100 group-data-[query=profile-details]/query:text-primary-500 group-data-[state=open]:text-primary-500"
                   >
                     <i data-lucide="user" class="size-full"></i>
                   </span>
@@ -743,10 +743,10 @@
                 <button
                   id="profile-info-4"
                   data-state="closed"
-                  class="group flex items-center rounded-lg p-2 font-medium transition-all duration-300 hover:opacity-75"
+                  class="group flex items-center rounded-lg p-2 font-medium transition-all duration-300 hover:opacity-75 data-[state=open]:hover:!opacity-100"
                 >
                   <span
-                    class="size-[22px] flex-shrink-0 transition-all duration-300 group-hover:scale-[105%] group-hover:text-primary-600 group-data-[query=email]/query:text-primary-500 group-data-[state=open]:text-primary-500"
+                    class="size-[22px] flex-shrink-0 transition-all duration-300 group-hover:scale-[105%] group-hover:text-primary-600 data-[state=open]:hover:!scale-100 group-data-[query=password-email]/query:text-primary-500 group-data-[state=open]:text-primary-500"
                   >
                     <i data-lucide="lock" class="size-full"></i>
                   </span>
@@ -760,10 +760,10 @@
                 <button
                   id="profile-info-5"
                   data-state="closed"
-                  class="group flex items-center rounded-lg p-2 font-medium transition-all duration-300 hover:opacity-75"
+                  class="group flex items-center rounded-lg p-2 font-medium transition-all duration-300 hover:opacity-75 data-[state=open]:hover:!opacity-100"
                 >
                   <span
-                    class="size-[22px] flex-shrink-0 transition-all duration-300 group-hover:scale-[105%] group-hover:text-primary-600 group-data-[query=preferences]/query:text-primary-500 group-data-[state=open]:text-primary-500"
+                    class="size-[22px] flex-shrink-0 transition-all duration-300 group-hover:scale-[105%] group-hover:text-primary-600 data-[state=open]:hover:!scale-100 group-data-[query=preferences]/query:text-primary-500 group-data-[state=open]:text-primary-500"
                   >
                     <i data-lucide="settings" class="size-full"></i>
                   </span>
@@ -778,7 +778,7 @@
         </aside>
 
         <div
-          class="h-screen min-h-fit w-full border-b border-t border-gray-200 bg-gray-50 p-4 lg:border-t-0"
+          class="h-screen min-h-fit w-full border-b border-t border-gray-200 bg-gray-50 p-4 lg:border-t-0 lg:pt-10"
         >
           <div
             data-state="closed"

@@ -67,7 +67,7 @@ document.addEventListener('DOMContentLoaded', () => {
         containers: ['#profile-content-2'],
       },
       {
-        id: 'reviews',
+        id: 'profile-details',
         toggleElements: [],
         openElements: ['#profile-info-3'],
         contentElement: '#profile-content-3',
@@ -120,7 +120,7 @@ document.addEventListener('DOMContentLoaded', () => {
         modals: [
           'reservation',
           'favorites',
-          'reviews',
+          'profile-details',
           'password-email',
           'preferences',
         ],
