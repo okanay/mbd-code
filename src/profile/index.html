@@ -761,6 +761,7 @@
           <div
             class="min-h-fit w-full max-w-[calc(100%-60px)] flex-shrink-0 border-gray-200 bg-gray-50 px-4 pt-[14px] md:max-w-full md:flex-shrink md:pt-[16px] lg:px-8 lg:pt-3.5 xl:border-r"
           >
+            <!-- Reservations -->
             <div
               data-state="closed"
               id="reservation"
@@ -771,46 +772,82 @@
                   Rezervasyonlarım
                 </h2>
                 <div
-                  class="flex h-full w-full flex-col items-center justify-start pt-8"
+                  class="flex h-full w-full flex-col items-center justify-start gap-2 pt-8"
                 >
                   <img
                     src="/assets/images/illustrations/empty-reservation.png"
                     alt="Empty Reservation Illustration"
                     class="h-auto w-[200px] object-scale-down"
                   />
-                  <p class="text-pretty text-center font-medium">
+                  <p class="text-pretty text-center text-sm font-medium">
                     Herhangi bir tatil rezervasyonunuz bulunmuyor.
                   </p>
                 </div>
               </div>
             </div>
+            <!-- Favorites -->
             <div
               data-state="closed"
               id="favorites"
               class="flex data-[state=closed]:hidden"
             >
-              test2
+              <div class="h-full w-full">
+                <h2 class="text-2xl font-semibold text-gray-800">
+                  Favorilerim
+                </h2>
+                <div
+                  class="flex h-full w-full flex-col items-center justify-start gap-2 pt-0 md:pt-8"
+                >
+                  <img
+                    src="/assets/images/illustrations/empty-favorites.png"
+                    alt="Empty Reservation Illustration"
+                    class="h-auto w-[200px] object-scale-down"
+                  />
+                  <p class="text-pretty text-center text-sm font-medium">
+                    Favori listeniz boş
+                  </p>
+
+                  <button
+                    class="h-[52px] rounded bg-primary-500 px-8 text-lg font-semibold text-white"
+                  >
+                    Tatilinizi Planlayın
+                  </button>
+                </div>
+              </div>
             </div>
+            <!-- Profile Details -->
             <div
               data-state="closed"
               id="profile-details"
               class="flex data-[state=closed]:hidden"
             >
-              test3
+              <div class="h-full w-full">
+                <h2 class="text-2xl font-semibold text-gray-800">
+                  Profil Detayları
+                </h2>
+              </div>
             </div>
+            <!-- Password and Email -->
             <div
               data-state="closed"
               id="password-email"
               class="flex data-[state=closed]:hidden"
             >
-              test4
+              <div class="h-full w-full">
+                <h2 class="text-2xl font-semibold text-gray-800">
+                  Şifre ve E-Posta
+                </h2>
+              </div>
             </div>
+            <!--  Preferences -->
             <div
               data-state="closed"
               id="preferences"
               class="flex data-[state=closed]:hidden"
             >
-              test5
+              <div class="h-full w-full">
+                <h2 class="text-2xl font-semibold text-gray-800">Tercihler</h2>
+              </div>
             </div>
           </div>
         </div>
