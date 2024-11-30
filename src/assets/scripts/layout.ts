@@ -102,6 +102,35 @@ document.addEventListener('DOMContentLoaded', () => {
     },
   )
 
+  new ModalController(
+    [
+      {
+        id: 'desktop-nav-1',
+        openElements: [],
+        toggleElements: ['#desktop-nav-1-btn'],
+        contentElement: '#desktop-nav-1-content',
+        closeElements: [],
+        containers: ['#desktop-nav-1'],
+      },
+      {
+        id: 'desktop-nav-2',
+        openElements: [],
+        toggleElements: ['#desktop-nav-2-btn'],
+        contentElement: '#desktop-nav-2-content',
+        closeElements: [],
+        containers: ['#desktop-nav-2'],
+      },
+    ],
+    {
+      outsideClickClose: true,
+      escapeClose: true,
+      preserveModalHistory: false,
+      scrollLock: {
+        enabled: false,
+      },
+    },
+  )
+
   new AccordionController({
     container: '#footer-container',
     accordionSelector: '.footer',
