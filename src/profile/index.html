@@ -654,166 +654,170 @@
       </div>
     </header>
 
-    <main class="mx-auto max-w-7xl bg-white pb-6 pt-[76px] lg:pt-0">
-      <div class="flex">
-        <aside
-          id="profile-navigation"
-          data-state="closed"
-          class="group/nav w-64 flex-shrink-0 overflow-hidden border-b border-r border-t border-gray-200 bg-white transition-all data-[state=closed]:w-[54px] data-[state=open]:translate-x-0 sm:translate-x-0 md:static md:min-h-screen md:!w-64 md:!translate-x-0 md:px-2 lg:border-t-0 lg:!pt-6"
-        >
-          <div
-            id="profile-navigation-content"
-            class="flex h-full w-full flex-col"
+    <main class="bg-white pt-[76px] lg:pt-0">
+      <div
+        class="mb-6 flex border-b border-t border-b-gray-200 lg:mb-0 lg:border-t-0"
+      >
+        <div class="mx-auto flex w-full max-w-7xl lg:px-4">
+          <aside
+            id="profile-navigation"
+            data-state="closed"
+            class="group/nav w-64 flex-shrink-0 overflow-hidden border-r border-gray-200 bg-white transition-all data-[state=closed]:w-[54px] data-[state=open]:translate-x-0 sm:translate-x-0 md:static md:min-h-screen md:!w-fit md:!translate-x-0 lg:border-l"
           >
-            <ul
-              class="flex w-full flex-grow flex-col space-y-1 overflow-hidden overflow-y-auto px-2 py-2 font-medium md:space-y-2.5 md:px-0 md:py-0"
+            <div
+              id="profile-navigation-content"
+              class="flex h-fit w-full flex-col border-b border-b-gray-200 px-2 pb-6 pt-4 md:pl-2 md:pr-12 lg:pl-6 lg:pr-6"
             >
-              <button
-                id="profile-menu-button"
-                data-state="closed"
-                class="group flex items-center rounded-lg p-2 font-medium transition-all duration-300 hover:opacity-75 md:hidden"
+              <ul
+                class="flex h-fit w-full flex-grow flex-col space-y-1 overflow-hidden overflow-y-auto font-medium md:space-y-2.5"
               >
-                <span class="size-[22px] flex-shrink-0">
-                  <i
-                    data-lucide="panel-right-close"
-                    class="size-full group-data-[state=open]:hidden"
-                  ></i>
-                  <i
-                    data-lucide="panel-right-open"
-                    class="size-full group-data-[state=closed]:hidden"
-                  ></i>
-                </span>
-                <span
-                  class="ms-3 text-nowrap group-data-[state=closed]/nav:opacity-0 md:!opacity-100"
-                  >Gizle</span
-                >
-              </button>
-              <li class="group">
                 <button
-                  id="profile-info-1"
+                  id="profile-menu-button"
                   data-state="closed"
-                  class="group flex items-center rounded-lg p-2 font-medium transition-all duration-300 hover:opacity-75 data-[state=open]:hover:!opacity-100"
+                  class="group flex items-center rounded-lg p-2 font-medium transition-all duration-300 hover:opacity-75 md:hidden"
                 >
-                  <span
-                    class="size-[22px] flex-shrink-0 transition-all duration-300 group-hover:scale-[105%] group-hover:text-primary-600 data-[state=open]:hover:!scale-100 group-data-[query=reservation]/query:text-primary-500 group-data-[state=open]:text-primary-500"
-                  >
-                    <i data-lucide="calendar" class="size-full"></i>
+                  <span class="size-[22px] flex-shrink-0">
+                    <i
+                      data-lucide="panel-right-close"
+                      class="size-full group-data-[state=open]:hidden"
+                    ></i>
+                    <i
+                      data-lucide="panel-right-open"
+                      class="size-full group-data-[state=closed]:hidden"
+                    ></i>
                   </span>
                   <span
                     class="ms-3 text-nowrap group-data-[state=closed]/nav:opacity-0 md:!opacity-100"
-                    >Rezervasyonlarım</span
+                    >Gizle</span
                   >
                 </button>
-              </li>
-              <li class="group">
-                <button
-                  id="profile-info-2"
-                  data-state="closed"
-                  class="group flex items-center rounded-lg p-2 font-medium transition-all duration-300 hover:opacity-75 data-[state=open]:hover:!opacity-100"
-                >
-                  <span
-                    class="size-[22px] flex-shrink-0 transition-all duration-300 group-hover:scale-[105%] group-hover:text-primary-600 data-[state=open]:hover:!scale-100 group-data-[query=favorites]/query:text-primary-500 group-data-[state=open]:text-primary-500"
+                <li class="group">
+                  <button
+                    id="profile-info-1"
+                    data-state="closed"
+                    class="group flex items-center rounded-lg p-2 font-medium transition-all duration-300 hover:opacity-75 data-[state=open]:hover:!opacity-100"
                   >
-                    <i data-lucide="heart" class="size-full"></i>
-                  </span>
-                  <span
-                    class="ms-3 text-nowrap group-data-[state=closed]/nav:opacity-0 md:!opacity-100"
-                    >Favorilerim</span
+                    <span
+                      class="size-[22px] flex-shrink-0 transition-all duration-300 group-hover:scale-[105%] group-hover:text-primary-600 data-[state=open]:hover:!scale-100 group-data-[query=reservation]/query:text-primary-500 group-data-[state=open]:text-primary-500"
+                    >
+                      <i data-lucide="calendar" class="size-full"></i>
+                    </span>
+                    <span
+                      class="ms-3 text-nowrap group-data-[state=closed]/nav:opacity-0 md:!opacity-100"
+                      >Rezervasyonlarım</span
+                    >
+                  </button>
+                </li>
+                <li class="group">
+                  <button
+                    id="profile-info-2"
+                    data-state="closed"
+                    class="group flex items-center rounded-lg p-2 font-medium transition-all duration-300 hover:opacity-75 data-[state=open]:hover:!opacity-100"
                   >
-                </button>
-              </li>
-              <li class="group">
-                <button
-                  id="profile-info-3"
-                  data-state="closed"
-                  class="group flex items-center rounded-lg p-2 font-medium transition-all duration-300 hover:opacity-75 data-[state=open]:hover:!opacity-100"
-                >
-                  <span
-                    class="size-[22px] flex-shrink-0 transition-all duration-300 group-hover:scale-[105%] group-hover:text-primary-600 data-[state=open]:hover:!scale-100 group-data-[query=profile-details]/query:text-primary-500 group-data-[state=open]:text-primary-500"
+                    <span
+                      class="size-[22px] flex-shrink-0 transition-all duration-300 group-hover:scale-[105%] group-hover:text-primary-600 data-[state=open]:hover:!scale-100 group-data-[query=favorites]/query:text-primary-500 group-data-[state=open]:text-primary-500"
+                    >
+                      <i data-lucide="heart" class="size-full"></i>
+                    </span>
+                    <span
+                      class="ms-3 text-nowrap group-data-[state=closed]/nav:opacity-0 md:!opacity-100"
+                      >Favorilerim</span
+                    >
+                  </button>
+                </li>
+                <li class="group">
+                  <button
+                    id="profile-info-3"
+                    data-state="closed"
+                    class="group flex items-center rounded-lg p-2 font-medium transition-all duration-300 hover:opacity-75 data-[state=open]:hover:!opacity-100"
                   >
-                    <i data-lucide="user" class="size-full"></i>
-                  </span>
-                  <span
-                    class="ms-3 text-nowrap group-data-[state=closed]/nav:opacity-0 md:!opacity-100"
-                    >Profil Detayları</span
+                    <span
+                      class="size-[22px] flex-shrink-0 transition-all duration-300 group-hover:scale-[105%] group-hover:text-primary-600 data-[state=open]:hover:!scale-100 group-data-[query=profile-details]/query:text-primary-500 group-data-[state=open]:text-primary-500"
+                    >
+                      <i data-lucide="user" class="size-full"></i>
+                    </span>
+                    <span
+                      class="ms-3 text-nowrap group-data-[state=closed]/nav:opacity-0 md:!opacity-100"
+                      >Profil Detayları</span
+                    >
+                  </button>
+                </li>
+                <li class="group">
+                  <button
+                    id="profile-info-4"
+                    data-state="closed"
+                    class="group flex items-center rounded-lg p-2 font-medium transition-all duration-300 hover:opacity-75 data-[state=open]:hover:!opacity-100"
                   >
-                </button>
-              </li>
-              <li class="group">
-                <button
-                  id="profile-info-4"
-                  data-state="closed"
-                  class="group flex items-center rounded-lg p-2 font-medium transition-all duration-300 hover:opacity-75 data-[state=open]:hover:!opacity-100"
-                >
-                  <span
-                    class="size-[22px] flex-shrink-0 transition-all duration-300 group-hover:scale-[105%] group-hover:text-primary-600 data-[state=open]:hover:!scale-100 group-data-[query=password-email]/query:text-primary-500 group-data-[state=open]:text-primary-500"
+                    <span
+                      class="size-[22px] flex-shrink-0 transition-all duration-300 group-hover:scale-[105%] group-hover:text-primary-600 data-[state=open]:hover:!scale-100 group-data-[query=password-email]/query:text-primary-500 group-data-[state=open]:text-primary-500"
+                    >
+                      <i data-lucide="lock" class="size-full"></i>
+                    </span>
+                    <span
+                      class="ms-3 text-nowrap group-data-[state=closed]/nav:opacity-0 md:!opacity-100"
+                      >Şifre ve E-Posta</span
+                    >
+                  </button>
+                </li>
+                <li class="group">
+                  <button
+                    id="profile-info-5"
+                    data-state="closed"
+                    class="group flex items-center rounded-lg p-2 font-medium transition-all duration-300 hover:opacity-75 data-[state=open]:hover:!opacity-100"
                   >
-                    <i data-lucide="lock" class="size-full"></i>
-                  </span>
-                  <span
-                    class="ms-3 text-nowrap group-data-[state=closed]/nav:opacity-0 md:!opacity-100"
-                    >Şifre ve E-Posta</span
-                  >
-                </button>
-              </li>
-              <li class="group">
-                <button
-                  id="profile-info-5"
-                  data-state="closed"
-                  class="group flex items-center rounded-lg p-2 font-medium transition-all duration-300 hover:opacity-75 data-[state=open]:hover:!opacity-100"
-                >
-                  <span
-                    class="size-[22px] flex-shrink-0 transition-all duration-300 group-hover:scale-[105%] group-hover:text-primary-600 data-[state=open]:hover:!scale-100 group-data-[query=preferences]/query:text-primary-500 group-data-[state=open]:text-primary-500"
-                  >
-                    <i data-lucide="settings" class="size-full"></i>
-                  </span>
-                  <span
-                    class="ms-3 text-nowrap group-data-[state=closed]/nav:opacity-0 md:!opacity-100"
-                    >Tercihler</span
-                  >
-                </button>
-              </li>
-            </ul>
-          </div>
-        </aside>
+                    <span
+                      class="size-[22px] flex-shrink-0 transition-all duration-300 group-hover:scale-[105%] group-hover:text-primary-600 data-[state=open]:hover:!scale-100 group-data-[query=preferences]/query:text-primary-500 group-data-[state=open]:text-primary-500"
+                    >
+                      <i data-lucide="settings" class="size-full"></i>
+                    </span>
+                    <span
+                      class="ms-3 text-nowrap group-data-[state=closed]/nav:opacity-0 md:!opacity-100"
+                      >Tercihler</span
+                    >
+                  </button>
+                </li>
+              </ul>
+            </div>
+          </aside>
 
-        <div
-          class="h-screen min-h-fit w-full border-b border-t border-gray-200 bg-gray-50 p-4 lg:border-t-0 lg:pt-10"
-        >
           <div
-            data-state="closed"
-            id="profile-content-1"
-            class="flex data-[state=closed]:hidden"
+            class="h-screen min-h-fit w-full border-gray-200 bg-gray-50 px-12 pt-8"
           >
-            test
-          </div>
-          <div
-            data-state="closed"
-            id="profile-content-2"
-            class="flex data-[state=closed]:hidden"
-          >
-            test2
-          </div>
-          <div
-            data-state="closed"
-            id="profile-content-3"
-            class="flex data-[state=closed]:hidden"
-          >
-            test3
-          </div>
-          <div
-            data-state="closed"
-            id="profile-content-4"
-            class="flex data-[state=closed]:hidden"
-          >
-            test4
-          </div>
-          <div
-            data-state="closed"
-            id="profile-content-5"
-            class="flex data-[state=closed]:hidden"
-          >
-            test5
+            <div
+              data-state="closed"
+              id="profile-content-1"
+              class="flex data-[state=closed]:hidden"
+            >
+              test
+            </div>
+            <div
+              data-state="closed"
+              id="profile-content-2"
+              class="flex data-[state=closed]:hidden"
+            >
+              test2
+            </div>
+            <div
+              data-state="closed"
+              id="profile-content-3"
+              class="flex data-[state=closed]:hidden"
+            >
+              test3
+            </div>
+            <div
+              data-state="closed"
+              id="profile-content-4"
+              class="flex data-[state=closed]:hidden"
+            >
+              test4
+            </div>
+            <div
+              data-state="closed"
+              id="profile-content-5"
+              class="flex data-[state=closed]:hidden"
+            >
+              test5
+            </div>
           </div>
         </div>
       </div>
