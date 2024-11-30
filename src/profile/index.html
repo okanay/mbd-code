@@ -685,7 +685,8 @@
             >
               <li class="group">
                 <button
-                  id="profile-btn-1"
+                  id="profile-info-1"
+                  data-state="closed"
                   class="group flex items-center rounded-lg p-2 font-medium transition-all duration-300 hover:opacity-75"
                 >
                   <span
@@ -698,7 +699,8 @@
               </li>
               <li class="group">
                 <button
-                  id="profile-btn-2"
+                  id="profile-info-2"
+                  data-state="closed"
                   class="group flex items-center rounded-lg p-2 font-medium transition-all duration-300 hover:opacity-75"
                 >
                   <span
@@ -711,7 +713,8 @@
               </li>
               <li class="group">
                 <button
-                  id="profile-btn-3"
+                  id="profile-info-3"
+                  data-state="closed"
                   class="group flex items-center rounded-lg p-2 font-medium transition-all duration-300 hover:opacity-75"
                 >
                   <span
@@ -724,7 +727,8 @@
               </li>
               <li class="group">
                 <button
-                  id="profile-btn-4"
+                  id="profile-info-4"
+                  data-state="closed"
                   class="group flex items-center rounded-lg p-2 font-medium transition-all duration-300 hover:opacity-75"
                 >
                   <span
@@ -737,7 +741,8 @@
               </li>
               <li class="group">
                 <button
-                  id="profile-btn-5"
+                  id="profile-info-5"
+                  data-state="closed"
                   class="group flex items-center rounded-lg p-2 font-medium transition-all duration-300 hover:opacity-75"
                 >
                   <span
@@ -752,7 +757,43 @@
           </div>
         </aside>
 
-        <div class="h-screen min-h-fit w-full bg-gray-200 p-4"></div>
+        <div class="h-screen min-h-fit w-full bg-gray-200 p-4">
+          <div
+            data-state="closed"
+            id="profile-content-1"
+            class="flex data-[state=closed]:hidden"
+          >
+            test
+          </div>
+          <div
+            data-state="closed"
+            id="profile-content-2"
+            class="flex data-[state=closed]:hidden"
+          >
+            test2
+          </div>
+          <div
+            data-state="closed"
+            id="profile-content-3"
+            class="flex data-[state=closed]:hidden"
+          >
+            test3
+          </div>
+          <div
+            data-state="closed"
+            id="profile-content-4"
+            class="flex data-[state=closed]:hidden"
+          >
+            test4
+          </div>
+          <div
+            data-state="closed"
+            id="profile-content-5"
+            class="flex data-[state=closed]:hidden"
+          >
+            test5
+          </div>
+        </div>
       </div>
     </main>
 
