@@ -2,7 +2,7 @@ import { AccordionController } from './packages/accordion.js'
 import { ModalController } from './packages/modal.js'
 import { LazyImageLoadController } from './packages/lazy-load-controller.js'
 
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded', async () => {
   new LazyImageLoadController({
     imageSelector: '.lazy-image',
     dataAttribute: 'data-src',
