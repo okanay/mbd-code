@@ -65,7 +65,7 @@
         <div
           class="invisible fixed -left-[240px] top-0 z-10 h-full w-full bg-gray-100 sm:visible"
         >
-          <div class="absolute left-[240px] top-0 px-8 py-14 text-primary-50">
+          <div class="absolute left-[240px] top-0 px-8 py-11 text-primary-50">
             <h1 class="mb-2 text-balance text-4xl font-bold">
               Guıde olf Dubai’ye Üye Olun
             </h1>
@@ -81,33 +81,34 @@
           />
         </div>
 
-        <!-- Form -->
+        <!-- Form Container -->
         <div
-          class="relative z-20 w-full flex-shrink-0 bg-white px-4 py-4 sm:max-w-[480px] sm:px-8 sm:py-10"
+          class="relative z-20 flex h-screen min-h-fit w-full flex-shrink-0 flex-col gap-4 bg-white px-4 py-2 sm:max-w-[480px] sm:px-8 sm:py-10 [&>*]:flex-shrink-0"
         >
-          <form
-            class="relative z-20 flex h-full flex-col gap-4 bg-white py-6 [&>*]:flex-shrink-0"
-          >
-            <!--  Form Header -->
-            <div class="flex flex-col gap-4">
-              <div class="flex items-end justify-between">
-                <h1 class="text-2xl font-bold text-primary-500">Üye Ol</h1>
-                <!--  Logo -->
-                <a href="/">
-                  <img
-                    src="/assets/images/brand-images/guide_of_dubai_yatay.svg"
-                    alt="MBD Travel"
-                    class="h-10 w-auto"
-                  />
-                </a>
-              </div>
-
-              <p class="text-balance text-sm text-gray-700">
-                Rezervasyonunuzu kolayca oluşturmak ve kampanyalardan haberdar
-                olmak için hemen üye olun.
-              </p>
+          <!--  Form Header -->
+          <div class="mb-4 flex flex-col gap-4">
+            <div class="flex items-end justify-between">
+              <h1 class="text-2xl font-bold text-primary-500">Üye Ol</h1>
+              <!--  Logo -->
+              <a href="/">
+                <img
+                  src="/assets/images/brand-images/guide_of_dubai_yatay.svg"
+                  alt="Guide of Dubai"
+                  class="h-10 w-auto"
+                />
+              </a>
             </div>
 
+            <p class="text-balance text-sm text-gray-700">
+              Rezervasyonunuzu kolayca oluşturmak ve kampanyalardan haberdar
+              olmak için hemen üye olun.
+            </p>
+          </div>
+
+          <!-- Form -->
+          <form
+            class="relative z-20 flex flex-col gap-4 bg-white [&>*]:flex-shrink-0"
+          >
             <!-- Name -->
             <input
               type="text"
@@ -325,7 +326,8 @@
 
               <!-- Checkbox Label -->
               <span class="text-pretty text-xs">
-                MBD Travel teklif ve fırsatlarından haberdar olmak istiyorum.
+                Guide of Dubai teklif ve fırsatlarından haberdar olmak
+                istiyorum.
                 <a href="#" class="underline">Detaylı Bilgi</a>
               </span>
             </label>
