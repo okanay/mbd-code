@@ -31,8 +31,8 @@ const DIRECTORIES = {
   get styles() {
     return path.join(this.assets, 'styles')
   },
-  get externals() {
-    return path.join(this.scripts, 'externals')
+  get deps() {
+    return path.join(this.scripts, 'deps')
   },
 }
 
@@ -56,7 +56,7 @@ const BUILD_CONFIG = {
   splitting: true,
 }
 
-const EXTERNAL_BUILD_CONFIG = {
+const DEPS_BUILD_CONFIG = {
   format: 'esm' as const,
   external: [], // Hiçbir şeyi external olarak işaretleme
   splitting: false, // Code splitting'i kapat
@@ -213,17 +213,17 @@ async function buildSharedPackages(specificFile?: string) {
 }
 
 async function buildExternals(specificFile?: string) {
-  if (!existsSync(DIRECTORIES.externals)) return
+  if (!existsSync(DIRECTORIES.deps)) return
 
-  const outdir = path.join(DIRECTORIES.dist, 'assets/scripts/externals')
+  const outdir = path.join(DIRECTORIES.dist, 'assets/scripts/deps')
   ensureDirectoryExists(outdir)
 
-  const buildExternal = async (externalFile: string) => {
-    const entrypoint = path.join(DIRECTORIES.externals, externalFile)
+  const buildExternal = async (depsFile: string) => {
+    const entrypoint = path.join(DIRECTORIES.deps, depsFile)
     if (isFileChanged(entrypoint)) {
-      const basename = path.basename(externalFile, '.ts')
+      const basename = path.basename(depsFile, '.ts')
       await build({
-        ...EXTERNAL_BUILD_CONFIG,
+        ...DEPS_BUILD_CONFIG,
         entrypoints: [entrypoint],
         outdir,
         minify: true,
@@ -236,10 +236,10 @@ async function buildExternals(specificFile?: string) {
   if (specificFile) {
     await buildExternal(specificFile)
   } else {
-    const externalFiles = readdirSync(DIRECTORIES.externals).filter(file =>
+    const depsFiles = readdirSync(DIRECTORIES.deps).filter(file =>
       file.endsWith('.ts'),
     )
-    for (const file of externalFiles) {
+    for (const file of depsFiles) {
       await buildExternal(file)
     }
   }
@@ -268,7 +268,7 @@ function watchFiles() {
     const relativePath = filename.replace(/\\/g, '/')
     console.log(`Değişiklik algılandı: ${relativePath}`)
 
-    if (relativePath.includes('scripts/externals/')) {
+    if (relativePath.includes('scripts/deps/')) {
       // External paketler için kontrol
       await buildExternals(path.basename(relativePath))
     } else if (relativePath.startsWith('constants/')) {
