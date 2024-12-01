@@ -91,7 +91,7 @@ function getOutputDirectory(type: 'scripts' | 'packages' | 'ui' | 'styles') {
     case 'scripts':
       return path.join(base, 'scripts')
     case 'packages':
-      return path.join(base, 'scripts', 'packages')
+      return path.join(base, 'scripts', 'packages', 'dependencies')
     case 'ui':
       return path.join(base, 'scripts', 'ui')
     case 'styles':
