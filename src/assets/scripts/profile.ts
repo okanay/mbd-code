@@ -147,7 +147,7 @@ document.addEventListener('DOMContentLoaded', () => {
       {
         id: 'accordion',
         containerSelector: '.accordion-section',
-        parentIndex: 0, // tour-card'ı parent olarak belirt
+        parentIndex: 0,
         toggleConfig: {
           inputSelector: '.card-info-container-input',
           labelSelector: '.card-info-container-label',
