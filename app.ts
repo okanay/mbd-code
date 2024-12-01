@@ -35,7 +35,7 @@ app.use(
 )
 
 app.use(
-  '/assets/scripts/dependencies/*',
+  '/assets/scripts/test/*',
   serveStatic({
     root: './', // or the absolute path to your project root
     getContent: path => {
