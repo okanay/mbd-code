@@ -1568,39 +1568,102 @@
                 <div
                   class="mt-4 grid grid-cols-2 divide-x divide-gray-200 px-0"
                 >
-                  <div class="group relative" id="departure-container">
+                  <div class="date-input-container">
                     <input
                       type="text"
-                      readonly
-                      id="departure-date"
-                      name="departure-date"
+                      class="date-input"
+                      id="display-departure"
                       placeholder="Gidiş Tarihi"
-                      class="peer h-[44px] w-full cursor-pointer appearance-none items-center bg-white px-2.5 text-sm outline-none transition-all duration-200"
-                      onclick="this.nextElementSibling.showPicker()"
+                      readonly
                     />
                     <input
                       type="date"
-                      class="hidden"
-                      onchange="this.previousElementSibling.value = this.value"
+                      id="departure-date"
+                      onchange="handleDateChange(this, 'display-departure')"
                     />
                   </div>
 
-                  <div class="group relative" id="return-container">
+                  <div class="date-input-container">
                     <input
                       type="text"
-                      readonly
-                      id="return-date"
-                      name="return-date"
+                      class="date-input"
+                      id="display-return"
                       placeholder="Dönüş Tarihi"
-                      class="peer h-[44px] w-full cursor-pointer appearance-none items-center bg-white px-2.5 text-sm outline-none transition-all duration-200"
-                      onclick="this.nextElementSibling.showPicker()"
+                      readonly
                     />
                     <input
                       type="date"
-                      class="hidden"
-                      onchange="this.previousElementSibling.value = this.value"
+                      id="return-date"
+                      onchange="handleDateChange(this, 'display-return')"
                     />
                   </div>
+
+                  <script>
+                    function handleDateChange(dateInput, displayId) {
+                      const displayElement = document.getElementById(displayId)
+                      if (dateInput.value) {
+                        // Tarihi Türkçe formatına çevirme
+                        const date = new Date(dateInput.value)
+                        const formattedDate = date.toLocaleDateString('tr-TR', {
+                          year: 'numeric',
+                          month: 'long',
+                          day: 'numeric',
+                        })
+                        displayElement.value = formattedDate
+                        displayElement.setAttribute('data-has-value', 'true')
+                      } else {
+                        displayElement.value = ''
+                        displayElement.setAttribute('data-has-value', 'false')
+                      }
+                    }
+
+                    // Safari için özel işleyici
+                    if (/iPad|iPhone|iPod/.test(navigator.userAgent)) {
+                      const dateInputs =
+                        document.querySelectorAll('input[type="date"]')
+                      dateInputs.forEach(input => {
+                        input.style.opacity = '0'
+                        input.style.position = 'absolute'
+                      })
+                    }
+                  </script>
+
+                  <style>
+                    .date-input-container {
+                      position: relative;
+                      width: 100%;
+                      max-width: 300px;
+                      margin: 10px 0;
+                    }
+
+                    .date-input {
+                      width: 100%;
+                      height: 44px;
+                      padding: 0 10px;
+                      border: 1px solid #ccc;
+                      border-radius: 4px;
+                      cursor: pointer;
+                      background-color: white;
+                    }
+
+                    .date-input[data-has-value='false']::placeholder {
+                      color: #666;
+                      opacity: 1;
+                    }
+
+                    /* Safari için özel stil */
+                    @supports (-webkit-touch-callout: none) {
+                      input[type='date'] {
+                        position: absolute;
+                        top: 0;
+                        left: 0;
+                        width: 100%;
+                        height: 100%;
+                        opacity: 0;
+                        cursor: pointer;
+                      }
+                    }
+                  </style>
                 </div>
               </div>
               <h2 class="mb-2.5 text-lg font-semibold">Tur Bilgileriniz</h2>
