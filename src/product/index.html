@@ -1570,28 +1570,77 @@
                 >
                   <div class="group relative" id="departure-container">
                     <input
-                      onfocus="(this.type='date')"
-                      onblur="(this.type='text')"
-                      type="text"
-                      placeholder="Gidiş Tarihi"
+                      type="date"
                       id="departure-date"
                       name="departure-date"
-                      style="-webkit-appearance: none"
+                      data-placeholder="Gidiş Tarihi"
                       class="peer h-[44px] w-full cursor-pointer appearance-none items-center bg-white px-2.5 text-sm outline-none transition-all duration-200"
                     />
+                    <label
+                      for="departure-date"
+                      class="date-label pointer-events-none absolute left-2.5 top-1/2 -translate-y-1/2 text-gray-400"
+                      >Gidiş Tarihi</label
+                    >
                   </div>
+
                   <div class="group relative" id="return-container">
                     <input
-                      onfocus="(this.type='date')"
-                      onblur="(this.type='text')"
-                      type="text"
-                      placeholder="Dönüş Tarihi"
+                      type="date"
                       id="return-date"
                       name="return-date"
-                      style="-webkit-appearance: none"
-                      class="peer h-[44px] w-full appearance-none bg-white px-2.5 text-sm outline-none transition-all duration-200"
+                      data-placeholder="Dönüş Tarihi"
+                      class="peer h-[44px] w-full cursor-pointer appearance-none items-center bg-white px-2.5 text-sm outline-none transition-all duration-200"
                     />
+                    <label
+                      for="return-date"
+                      class="date-label pointer-events-none absolute left-2.5 top-1/2 -translate-y-1/2 text-gray-400"
+                      >Dönüş Tarihi</label
+                    >
                   </div>
+
+                  <style>
+                    input[type='date']::-webkit-datetime-edit-text,
+                    input[type='date']::-webkit-datetime-edit-month-field,
+                    input[type='date']::-webkit-datetime-edit-day-field,
+                    input[type='date']::-webkit-datetime-edit-year-field {
+                      color: transparent;
+                    }
+
+                    input[type='date']:focus::-webkit-datetime-edit-text,
+                    input[type='date']:focus::-webkit-datetime-edit-month-field,
+                    input[type='date']:focus::-webkit-datetime-edit-day-field,
+                    input[type='date']:focus::-webkit-datetime-edit-year-field,
+                    input[type='date']:valid::-webkit-datetime-edit-text,
+                    input[type='date']:valid::-webkit-datetime-edit-month-field,
+                    input[type='date']:valid::-webkit-datetime-edit-day-field,
+                    input[type='date']:valid::-webkit-datetime-edit-year-field {
+                      color: inherit;
+                    }
+
+                    input[type='date']:valid + .date-label {
+                      display: none;
+                    }
+                  </style>
+
+                  <script>
+                    document.addEventListener('DOMContentLoaded', function () {
+                      const dateInputs =
+                        document.querySelectorAll('input[type="date"]')
+
+                      dateInputs.forEach(input => {
+                        // Safari'de value boş olduğunda :valid çalışması için
+                        input.value = ''
+
+                        input.addEventListener('change', function (e) {
+                          if (this.value) {
+                            this.setAttribute('value', this.value)
+                          } else {
+                            this.removeAttribute('value')
+                          }
+                        })
+                      })
+                    })
+                  </script>
                 </div>
               </div>
               <h2 class="mb-2.5 text-lg font-semibold">Tur Bilgileriniz</h2>
