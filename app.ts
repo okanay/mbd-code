@@ -34,6 +34,29 @@ app.use(
   }),
 )
 
+app.use(
+  '/assets/scripts/dependencies/*',
+  serveStatic({
+    root: './', // or the absolute path to your project root
+    getContent: path => {
+      try {
+        const file = fs.readFileSync(path)
+        if (!file) return null
+        return file as any
+      } catch (error) {
+        console.error(`Error reading dependency file at ${path}:`)
+        return null
+      }
+    },
+    onFound: (path, c) => {
+      c.header(
+        'Cache-Control',
+        'no-store, no-cache, must-revalidate, max-age=0',
+      )
+    },
+  }),
+)
+
 app.use('*', async (c, next) => {
   c.header('Cache-Control', 'no-store, no-cache')
   await next()
