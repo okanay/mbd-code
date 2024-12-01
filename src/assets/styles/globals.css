@@ -36,6 +36,14 @@
     -ms-overflow-style: none;
   }
 
+  .accordion-toggle:checked ~ label .chevron-icon {
+    transform: rotate(180deg);
+  }
+
+  .chevron-icon {
+    transition: transform 0.3s ease;
+  }
+
   input[type='date']::-webkit-inner-spin-button,
   input[type='date']::-webkit-calendar-picker-indicator {
     display: none;
