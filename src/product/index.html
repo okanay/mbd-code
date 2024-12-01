@@ -1570,77 +1570,37 @@
                 >
                   <div class="group relative" id="departure-container">
                     <input
-                      type="date"
+                      type="text"
+                      readonly
                       id="departure-date"
                       name="departure-date"
-                      data-placeholder="Gidiş Tarihi"
+                      placeholder="Gidiş Tarihi"
                       class="peer h-[44px] w-full cursor-pointer appearance-none items-center bg-white px-2.5 text-sm outline-none transition-all duration-200"
+                      onclick="this.nextElementSibling.showPicker()"
                     />
-                    <label
-                      for="departure-date"
-                      class="date-label pointer-events-none absolute left-2.5 top-1/2 -translate-y-1/2 text-gray-400"
-                      >Gidiş Tarihi</label
-                    >
+                    <input
+                      type="date"
+                      class="hidden"
+                      onchange="this.previousElementSibling.value = this.value"
+                    />
                   </div>
 
                   <div class="group relative" id="return-container">
                     <input
-                      type="date"
+                      type="text"
+                      readonly
                       id="return-date"
                       name="return-date"
-                      data-placeholder="Dönüş Tarihi"
+                      placeholder="Dönüş Tarihi"
                       class="peer h-[44px] w-full cursor-pointer appearance-none items-center bg-white px-2.5 text-sm outline-none transition-all duration-200"
+                      onclick="this.nextElementSibling.showPicker()"
                     />
-                    <label
-                      for="return-date"
-                      class="date-label pointer-events-none absolute left-2.5 top-1/2 -translate-y-1/2 text-gray-400"
-                      >Dönüş Tarihi</label
-                    >
+                    <input
+                      type="date"
+                      class="hidden"
+                      onchange="this.previousElementSibling.value = this.value"
+                    />
                   </div>
-
-                  <style>
-                    input[type='date']::-webkit-datetime-edit-text,
-                    input[type='date']::-webkit-datetime-edit-month-field,
-                    input[type='date']::-webkit-datetime-edit-day-field,
-                    input[type='date']::-webkit-datetime-edit-year-field {
-                      color: transparent;
-                    }
-
-                    input[type='date']:focus::-webkit-datetime-edit-text,
-                    input[type='date']:focus::-webkit-datetime-edit-month-field,
-                    input[type='date']:focus::-webkit-datetime-edit-day-field,
-                    input[type='date']:focus::-webkit-datetime-edit-year-field,
-                    input[type='date']:valid::-webkit-datetime-edit-text,
-                    input[type='date']:valid::-webkit-datetime-edit-month-field,
-                    input[type='date']:valid::-webkit-datetime-edit-day-field,
-                    input[type='date']:valid::-webkit-datetime-edit-year-field {
-                      color: inherit;
-                    }
-
-                    input[type='date']:valid + .date-label {
-                      display: none;
-                    }
-                  </style>
-
-                  <script>
-                    document.addEventListener('DOMContentLoaded', function () {
-                      const dateInputs =
-                        document.querySelectorAll('input[type="date"]')
-
-                      dateInputs.forEach(input => {
-                        // Safari'de value boş olduğunda :valid çalışması için
-                        input.value = ''
-
-                        input.addEventListener('change', function (e) {
-                          if (this.value) {
-                            this.setAttribute('value', this.value)
-                          } else {
-                            this.removeAttribute('value')
-                          }
-                        })
-                      })
-                    })
-                  </script>
                 </div>
               </div>
               <h2 class="mb-2.5 text-lg font-semibold">Tur Bilgileriniz</h2>
