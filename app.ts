@@ -11,25 +11,19 @@ app.use(
   serveStatic({
     root: './dist/',
     getContent: path => {
-      // Debug için path bilgisini yazdıralım
-      console.log('Requested path:', path)
       try {
-        // Dosyanın var olup olmadığını kontrol edelim
-        const exists = fs.existsSync(path)
-        console.log('File exists:', exists)
-
-        if (exists) {
-          // Dosya izinlerini kontrol edelim
-          const stats = fs.statSync(path)
-          console.log('File permissions:', stats.mode)
+        // .js uzantılı dosya istendiyse ve dosya bulunamadıysa .ts dosyasını kontrol et
+        if (path.endsWith('.js') && !fs.existsSync(path)) {
+          const tsPath = path.replace('.js', '.ts')
+          if (fs.existsSync(tsPath)) {
+            console.log('Found TypeScript file instead:', tsPath)
+            const file = fs.readFileSync(tsPath)
+            return file
+          }
         }
 
         const file = fs.readFileSync(path)
-        if (!file) {
-          console.log('File is empty or null')
-          return null
-        }
-        console.log('File successfully read')
+        if (!file) return null
         return file as any
       } catch (error) {
         if (path === 'dist/main/index.html' || path === 'dist/') {
@@ -40,8 +34,11 @@ app.use(
       }
     },
     onFound: (path, c) => {
-      console.log('onFound path:', path)
-      if (path.endsWith('.js') || path.endsWith('.css')) {
+      if (
+        path.endsWith('.js') ||
+        path.endsWith('.ts') ||
+        path.endsWith('.css')
+      ) {
         c.header(
           'Cache-Control',
           'no-store, no-cache, must-revalidate, max-age=0',
