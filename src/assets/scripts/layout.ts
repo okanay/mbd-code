@@ -1,7 +1,7 @@
 import { AccordionController } from './packages/accordion.js'
 import { ModalController } from './packages/modal.js'
 import { LazyImageLoadController } from './packages/lazy-load-controller.js'
-import { createIcons, icons } from './test/icons.js'
+import { createIcons, icons } from './externals/icons.js'
 document.addEventListener('DOMContentLoaded', async () => {
   createIcons({ icons: { ...icons } })
 

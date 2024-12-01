@@ -31,8 +31,8 @@ const DIRECTORIES = {
   get styles() {
     return path.join(this.assets, 'styles')
   },
-  get dependencies() {
-    return path.join(this.scripts, 'dependencies')
+  get externals() {
+    return path.join(this.scripts, 'externals')
   },
 }
 
@@ -212,14 +212,14 @@ async function buildSharedPackages(specificFile?: string) {
   }
 }
 
-async function buildDependencies(specificFile?: string) {
-  if (!existsSync(DIRECTORIES.dependencies)) return
+async function buildExternals(specificFile?: string) {
+  if (!existsSync(DIRECTORIES.externals)) return
 
-  const outdir = path.join(DIRECTORIES.dist, 'assets/scripts/dependencies')
+  const outdir = path.join(DIRECTORIES.dist, 'assets/scripts/externals')
   ensureDirectoryExists(outdir)
 
-  const buildDependencies = async (externalFile: string) => {
-    const entrypoint = path.join(DIRECTORIES.dependencies, externalFile)
+  const buildExternal = async (externalFile: string) => {
+    const entrypoint = path.join(DIRECTORIES.externals, externalFile)
     if (isFileChanged(entrypoint)) {
       const basename = path.basename(externalFile, '.ts')
       await build({
@@ -229,18 +229,18 @@ async function buildDependencies(specificFile?: string) {
         minify: true,
         naming: `${basename}.js`,
       })
-      console.log(`Dependencies paket güncellendi: ${basename}.js`)
+      console.log(`External paket güncellendi: ${basename}.js`)
     }
   }
 
   if (specificFile) {
-    await buildDependencies(specificFile)
+    await buildExternal(specificFile)
   } else {
-    const externalFiles = readdirSync(DIRECTORIES.dependencies).filter(file =>
+    const externalFiles = readdirSync(DIRECTORIES.externals).filter(file =>
       file.endsWith('.ts'),
     )
     for (const file of externalFiles) {
-      await buildDependencies(file)
+      await buildExternal(file)
     }
   }
 }
@@ -248,7 +248,7 @@ async function buildDependencies(specificFile?: string) {
 async function buildAll() {
   fileCache.clear()
   await buildConstants()
-  await buildDependencies() // Dependenciess build'i ekle
+  await buildExternals() // Externals build'i ekle
   for (const script of PAGES.scripts) {
     await buildPageSpecificTS(script)
   }
@@ -268,9 +268,9 @@ function watchFiles() {
     const relativePath = filename.replace(/\\/g, '/')
     console.log(`Değişiklik algılandı: ${relativePath}`)
 
-    if (relativePath.includes('scripts/dependencies/')) {
-      // Dependencies paketler için kontrol
-      await buildDependencies(path.basename(relativePath))
+    if (relativePath.includes('scripts/externals/')) {
+      // External paketler için kontrol
+      await buildExternals(path.basename(relativePath))
     } else if (relativePath.startsWith('constants/')) {
       await buildConstants()
     } else if (relativePath.endsWith('.ts')) {
