@@ -11,19 +11,36 @@ app.use(
   serveStatic({
     root: './dist/',
     getContent: path => {
+      // Debug için path bilgisini yazdıralım
+      console.log('Requested path:', path)
       try {
+        // Dosyanın var olup olmadığını kontrol edelim
+        const exists = fs.existsSync(path)
+        console.log('File exists:', exists)
+
+        if (exists) {
+          // Dosya izinlerini kontrol edelim
+          const stats = fs.statSync(path)
+          console.log('File permissions:', stats.mode)
+        }
+
         const file = fs.readFileSync(path)
-        if (!file) return null
+        if (!file) {
+          console.log('File is empty or null')
+          return null
+        }
+        console.log('File successfully read')
         return file as any
       } catch (error) {
         if (path === 'dist/main/index.html' || path === 'dist/') {
           return null
         }
-        console.error(`Error reading file at ${path}:`)
+        console.error(`Error reading file at ${path}:`, error)
         return null
       }
     },
     onFound: (path, c) => {
+      console.log('onFound path:', path)
       if (path.endsWith('.js') || path.endsWith('.css')) {
         c.header(
           'Cache-Control',
