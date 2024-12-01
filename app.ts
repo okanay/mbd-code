@@ -9,7 +9,7 @@ const app = new Hono()
 app.use(
   '/*',
   serveStatic({
-    root: './dist/**/*',
+    root: './dist/',
     getContent: path => {
       try {
         const file = fs.readFileSync(path)
