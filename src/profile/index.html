@@ -62,6 +62,7 @@
     <link rel="stylesheet" href="/assets/styles/globals-out.css" />
     <script type="module" src="/assets/scripts/layout.js"></script>
     <script type="module" src="/assets/scripts/profile.js"></script>
+    <script type="module" src="/assets/scripts/ui/password-visible.js"></script>
 
     <script></script>
   </head>
@@ -796,7 +797,7 @@
                   Favorilerim
                 </h2>
                 <div
-                  class="flex h-full w-full flex-col items-center justify-start gap-2 pt-0 md:pt-8"
+                  class="flex h-full w-full flex-col items-center justify-start gap-2"
                 >
                   <img
                     src="/assets/images/illustrations/empty-favorites.png"
@@ -821,10 +822,73 @@
               id="profile-details"
               class="flex data-[state=closed]:hidden"
             >
-              <div class="h-full w-full">
+              <div class="flex h-full w-full flex-col gap-4">
+                <!-- Kişisel Bilgiler -->
                 <h2 class="text-2xl font-semibold text-gray-800">
-                  Profil Detayları
+                  Kişisel Bilgiler
                 </h2>
+
+                <form class="flex max-w-[360px] flex-col gap-4">
+                  <div
+                    class="flex gap-6 !rounded border border-gray-200 px-3 py-2"
+                  >
+                    <label
+                      class="relative flex cursor-pointer items-center gap-2"
+                    >
+                      <input
+                        type="radio"
+                        name="gender"
+                        checked
+                        value="male"
+                        class="peer sr-only"
+                      />
+                      <span
+                        class="relative block h-4 w-4 rounded-full border-2 border-gray-300 after:absolute after:left-[-1px] after:top-[-2px] after:h-[15px] after:w-[15px] after:rounded-full after:bg-gray-200 after:content-[''] peer-checked:border-primary-500 peer-checked:after:bg-primary-500"
+                      >
+                      </span>
+                      <span class="text-gray-700">Erkek</span>
+                    </label>
+
+                    <label
+                      class="relative flex cursor-pointer items-center gap-2"
+                    >
+                      <input
+                        type="radio"
+                        name="gender"
+                        value="female"
+                        class="peer sr-only"
+                      />
+                      <span
+                        class="relative block h-4 w-4 rounded-full border-2 border-gray-300 after:absolute after:left-[-1px] after:top-[-2px] after:h-[15px] after:w-[15px] after:rounded-full after:bg-gray-200 after:content-[''] peer-checked:border-primary-500 peer-checked:after:bg-primary-500"
+                      >
+                      </span>
+                      <span class="text-gray-700">Kadın</span>
+                    </label>
+                  </div>
+
+                  <input
+                    type="text"
+                    style="-webkit-border-radius: 0; border-radius: 0"
+                    id="name"
+                    class="h-12 !rounded border border-gray-200 px-3 py-2 outline-none focus:border-primary-200"
+                    placeholder="Adınız"
+                  />
+
+                  <input
+                    type="text"
+                    style="-webkit-border-radius: 0; border-radius: 0"
+                    id="surname"
+                    class="h-12 !rounded border border-gray-200 px-3 py-2 outline-none focus:border-primary-200"
+                    placeholder="Soyadınız"
+                  />
+
+                  <button
+                    type="submit"
+                    class="h-[52px] rounded bg-primary-500 px-8 text-lg font-semibold text-white"
+                  >
+                    Bilgileri Güncelle
+                  </button>
+                </form>
               </div>
             </div>
             <!-- Password and Email -->
@@ -833,10 +897,109 @@
               id="password-email"
               class="flex data-[state=closed]:hidden"
             >
-              <div class="h-full w-full">
+              <div class="flex h-full w-full flex-col gap-4">
+                <!-- Kişisel Bilgiler -->
                 <h2 class="text-2xl font-semibold text-gray-800">
                   Şifre ve E-Posta
                 </h2>
+
+                <form class="flex max-w-[360px] flex-col gap-4">
+                  <input
+                    type="email"
+                    style="-webkit-border-radius: 0; border-radius: 0"
+                    id="email"
+                    class="h-12 !rounded border border-gray-200 px-3 py-2 outline-none focus:border-primary-200"
+                    placeholder="E-Posta Adresiniz"
+                  />
+
+                  <!-- Eski Şifre -->
+                  <div class="group relative" data-visible="false">
+                    <input
+                      type="password"
+                      style="-webkit-border-radius: 0; border-radius: 0"
+                      id="password-old"
+                      class="h-12 w-full !rounded border border-gray-200 px-3 py-2 pr-10 outline-none focus:border-primary-200"
+                      placeholder="Eski Şifreniz"
+                    />
+                    <button
+                      type="button"
+                      class="visible-control-btn absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 hover:text-gray-700"
+                    >
+                      <!-- Kapalı göz ikonu -->
+                      <span class="group-data-[visible=true]:hidden">
+                        <img
+                          src="/assets/images/icons/eye.svg"
+                          class="size-4"
+                          alt="eye"
+                        />
+                      </span>
+                      <!-- Açık göz ikonu -->
+                      <span class="hidden group-data-[visible=true]:block">
+                        <img
+                          src="/assets/images/icons/eye-off.svg"
+                          class="size-4"
+                          alt="eye"
+                        />
+                      </span>
+                    </button>
+                  </div>
+
+                  <!-- Yeni Şifre -->
+                  <div class="group relative" data-visible="false">
+                    <input
+                      type="password"
+                      style="-webkit-border-radius: 0; border-radius: 0"
+                      id="password-new"
+                      class="h-12 w-full !rounded border border-gray-200 px-3 py-2 pr-10 outline-none focus:border-primary-200"
+                      placeholder="Yeni Şifreniz"
+                    />
+                    <button
+                      type="button"
+                      class="visible-control-btn absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 hover:text-gray-700"
+                    >
+                      <!-- Kapalı göz ikonu -->
+                      <span class="group-data-[visible=true]:hidden">
+                        <img
+                          src="/assets/images/icons/eye.svg"
+                          class="size-4"
+                          alt="eye"
+                        />
+                      </span>
+                      <!-- Açık göz ikonu -->
+                      <span class="hidden group-data-[visible=true]:block">
+                        <img
+                          src="/assets/images/icons/eye-off.svg"
+                          class="size-4"
+                          alt="eye"
+                        />
+                      </span>
+                    </button>
+                  </div>
+
+                  <!--  Sifre Bilgilendirme -->
+                  <div class="-mt-1 flex items-start gap-2">
+                    <div
+                      class="flex size-4 items-center justify-center !rounded-full bg-primary-500 p-1"
+                    >
+                      <img
+                        src="/assets/images/icons/circle-alert.svg"
+                        class="size-4 brightness-0 invert"
+                        alt="eye"
+                      />
+                    </div>
+                    <p class="text-xs text-gray-500">
+                      Minimum 6 karakterden oluşmalı, en az 1 harf ve rakam
+                      içermelidir.
+                    </p>
+                  </div>
+
+                  <button
+                    type="submit"
+                    class="h-[52px] rounded bg-primary-500 px-8 text-lg font-semibold text-white"
+                  >
+                    Bilgileri Güncelle
+                  </button>
+                </form>
               </div>
             </div>
             <!--  Preferences -->
@@ -845,8 +1008,94 @@
               id="preferences"
               class="flex data-[state=closed]:hidden"
             >
-              <div class="h-full w-full">
-                <h2 class="text-2xl font-semibold text-gray-800">Tercihler</h2>
+              <div class="flex h-full w-full flex-col gap-4">
+                <!-- Kişisel Bilgiler -->
+                <h2 class="text-2xl font-semibold text-gray-800">
+                  İletişim Tercihleri
+                </h2>
+
+                <form class="flex max-w-[360px] flex-col gap-4">
+                  <div class="flex flex-col gap-4">
+                    <!-- E-posta tercihi -->
+                    <div
+                      class="flex items-center justify-between !rounded border border-gray-200 px-3 py-2"
+                    >
+                      <div>
+                        <h3 class="text-base font-medium">E-posta</h3>
+                        <p class="text-sm text-gray-600">
+                          E-posta yoluyla iletilmesini istiyorum.
+                        </p>
+                      </div>
+                      <label
+                        class="relative inline-flex cursor-pointer items-center"
+                      >
+                        <input
+                          type="checkbox"
+                          class="peer sr-only"
+                          name="email_preference"
+                        />
+                        <div
+                          class="h-6 w-11 rounded-full bg-gray-200 after:absolute after:left-[2px] after:top-[2px] after:h-5 after:w-5 after:rounded-full after:bg-white after:transition-all after:content-[''] peer-checked:bg-primary-500 peer-checked:after:translate-x-full"
+                        ></div>
+                      </label>
+                    </div>
+
+                    <!-- SMS tercihi -->
+                    <div
+                      class="flex items-center justify-between !rounded border border-gray-200 px-3 py-2"
+                    >
+                      <div>
+                        <h3 class="text-base font-medium">SMS</h3>
+                        <p class="text-sm text-gray-600">
+                          Telefon ile iletişim kurulmasını istiyorum.
+                        </p>
+                      </div>
+                      <label
+                        class="relative inline-flex cursor-pointer items-center"
+                      >
+                        <input
+                          type="checkbox"
+                          class="peer sr-only"
+                          name="sms_preference"
+                        />
+                        <div
+                          class="h-6 w-11 rounded-full bg-gray-200 after:absolute after:left-[2px] after:top-[2px] after:h-5 after:w-5 after:rounded-full after:bg-white after:transition-all after:content-[''] peer-checked:bg-primary-500 peer-checked:after:translate-x-full"
+                        ></div>
+                      </label>
+                    </div>
+
+                    <!-- Çağrı Merkezi tercihi -->
+                    <div
+                      class="flex items-center justify-between !rounded border border-gray-200 px-3 py-2"
+                    >
+                      <div>
+                        <h3 class="text-base font-medium">Çağrı Merkezi</h3>
+                        <p class="text-sm text-gray-600">
+                          Telefon ile aranarak iletişim kurulmasını istiyorum.
+                        </p>
+                      </div>
+                      <label
+                        class="relative inline-flex cursor-pointer items-center"
+                      >
+                        <input
+                          type="checkbox"
+                          class="peer sr-only"
+                          name="call_preference"
+                        />
+                        <div
+                          class="h-6 w-11 rounded-full bg-gray-200 after:absolute after:left-[2px] after:top-[2px] after:h-5 after:w-5 after:rounded-full after:bg-white after:transition-all after:content-[''] peer-checked:bg-primary-500 peer-checked:after:translate-x-full"
+                        ></div>
+                      </label>
+                    </div>
+                  </div>
+
+                  <button
+                    type="submit"
+                    class="h-[52px] rounded bg-primary-500 px-8 text-lg font-semibold text-white"
+                  >
+                    Bilgileri Güncelle
+                  </button>
+                </form>
               </div>
             </div>
           </div>
