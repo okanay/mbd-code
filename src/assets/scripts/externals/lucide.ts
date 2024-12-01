@@ -18,6 +18,19 @@ import {
   Phone,
   CircleUser,
   LogOut,
+  Check,
+  ChevronRight,
+  ChevronLeft,
+  ChevronUp,
+  Menu,
+  Star,
+  Group,
+  MessageSquareText,
+  ConciergeBell,
+  PhoneCall,
+  Info,
+  Eye,
+  EyeOff,
 } from 'lucide'
 
 const icons = {
@@ -39,5 +52,18 @@ const icons = {
   Phone,
   CircleUser,
   LogOut,
+  Check,
+  ChevronRight,
+  ChevronLeft,
+  ChevronUp,
+  Menu,
+  Star,
+  Group,
+  MessageSquareText,
+  ConciergeBell,
+  PhoneCall,
+  Info,
+  Eye,
+  EyeOff,
 }
 export { createIcons, icons }
