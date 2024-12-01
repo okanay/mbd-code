@@ -1575,17 +1575,17 @@
                       id="departure-date"
                       name="departure-date"
                       placeholder=" "
-                      class="peer h-[44px] w-full cursor-pointer appearance-none border bg-transparent px-3 text-sm outline-none transition-all duration-200"
+                      class="peer relative z-10 h-[44px] w-full cursor-pointer appearance-none border bg-transparent px-3 text-sm outline-none transition-all duration-200"
                       onclick="this.nextElementSibling.showPicker()"
                     />
                     <input
                       type="date"
-                      class="hidden"
+                      class="absolute inset-0 opacity-0"
                       onchange="this.previousElementSibling.value = this.value"
                     />
                     <label
                       for="departure-date"
-                      class="absolute -top-2 left-2 cursor-text bg-white px-1 text-xs transition-all peer-placeholder-shown:pointer-events-none peer-placeholder-shown:top-[13px] peer-placeholder-shown:text-sm peer-focus:pointer-events-auto peer-focus:-top-2 peer-focus:text-xs peer-focus:text-primary-500"
+                      class="absolute -top-2 left-2 z-20 cursor-text bg-white px-1 text-xs transition-all peer-placeholder-shown:pointer-events-none peer-placeholder-shown:top-[13px] peer-placeholder-shown:text-sm peer-focus:pointer-events-auto peer-focus:-top-2 peer-focus:text-xs peer-focus:text-primary-500"
                     >
                       Gidiş Tarihi
                     </label>
@@ -1598,17 +1598,17 @@
                       id="return-date"
                       name="return-date"
                       placeholder=" "
-                      class="peer h-[44px] w-full cursor-pointer appearance-none border bg-transparent px-3 text-sm outline-none transition-all duration-200"
+                      class="peer relative z-10 h-[44px] w-full cursor-pointer appearance-none border bg-transparent px-3 text-sm outline-none transition-all duration-200"
                       onclick="this.nextElementSibling.showPicker()"
                     />
                     <input
                       type="date"
-                      class="hidden"
+                      class="absolute inset-0 opacity-0"
                       onchange="this.previousElementSibling.value = this.value"
                     />
                     <label
                       for="return-date"
-                      class="absolute -top-2 left-2 cursor-text bg-white px-1 text-xs transition-all peer-placeholder-shown:pointer-events-none peer-placeholder-shown:top-[13px] peer-placeholder-shown:text-sm peer-focus:pointer-events-auto peer-focus:-top-2 peer-focus:text-xs peer-focus:text-primary-500"
+                      class="absolute -top-2 left-2 z-20 cursor-text bg-white px-1 text-xs transition-all peer-placeholder-shown:pointer-events-none peer-placeholder-shown:top-[13px] peer-placeholder-shown:text-sm peer-focus:pointer-events-auto peer-focus:-top-2 peer-focus:text-xs peer-focus:text-primary-500"
                     >
                       Dönüş Tarihi
                     </label>
