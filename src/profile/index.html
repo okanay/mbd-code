@@ -625,7 +625,7 @@
           <aside
             id="profile-navigation"
             data-state="closed"
-            class="group/nav min-h-[520px] w-[270px] flex-shrink-0 overflow-hidden border-r border-gray-200 bg-gray-100 transition-all data-[state=closed]:w-[54px] data-[state=open]:translate-x-0 sm:translate-x-0 md:static md:min-h-[800px] md:!w-fit md:!translate-x-0 lg:!min-w-[272.5px] xl:!min-w-[257px]"
+            class="group/nav min-h-[520px] w-[240px] flex-shrink-0 overflow-hidden border-r border-gray-200 bg-gray-100 transition-all data-[state=closed]:w-[54px] data-[state=open]:translate-x-0 sm:translate-x-0 md:static md:min-h-[800px] md:!w-fit md:!translate-x-0 lg:!min-w-[272.5px] xl:!min-w-[257px]"
           >
             <div
               id="profile-navigation-content"
@@ -635,8 +635,23 @@
                 class="hidden border-b border-gray-200 bg-gray-100 py-2 lg:block"
               ></div>
               <ul
-                class="flex h-fit w-full flex-grow flex-col space-y-[5px] overflow-hidden overflow-y-auto px-2 pb-2.5 pt-4 font-medium md:space-y-2.5 md:pl-2 md:pr-12 md:pt-2.5 lg:pb-3 lg:pl-3.5 lg:pr-12 lg:pt-0"
+                class="flex h-fit flex-grow flex-col space-y-[5px] overflow-hidden overflow-y-auto border-b border-gray-200 px-2 pb-2.5 pr-0 pt-4 font-medium md:space-y-2.5 md:pl-2 md:pr-12 md:pt-2.5 lg:pb-3 lg:pl-3.5 lg:pr-12 lg:pt-0"
               >
+                <a
+                  href="#"
+                  class="group flex items-center rounded-lg p-2 font-medium transition-all duration-300 hover:opacity-75 md:hidden"
+                >
+                  <span class="size-[22px] flex-shrink-0">
+                    <i
+                      data-lucide="home"
+                      class="size-full group-data-[state=open]:hidden"
+                    ></i>
+                  </span>
+                  <span
+                    class="ms-3 text-nowrap group-data-[state=closed]/nav:opacity-0 md:!opacity-100"
+                    >Anasayfa</span
+                  >
+                </a>
                 <button
                   id="profile-menu-button"
                   data-state="closed"
@@ -657,6 +672,10 @@
                     >Gizle</span
                   >
                 </button>
+              </ul>
+              <ul
+                class="flex h-fit flex-grow flex-col space-y-[5px] overflow-hidden overflow-y-auto px-2 pb-2.5 pr-0 pt-4 font-medium md:space-y-2.5 md:pl-2 md:pr-12 md:pt-2.5 lg:pb-3 lg:pl-3.5 lg:pr-12 lg:pt-0"
+              >
                 <li class="group">
                   <button
                     id="profile-view-control-1"
