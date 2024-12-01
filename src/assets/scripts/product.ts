@@ -1,6 +1,4 @@
 // prettier-ignore
-import { arabicLanguage, englishLanguage, turkishLanguage } from '../constants/index.js'
-// prettier-ignore
 import { ImageGalleryTracker, UpdateProductSliderDataItems, UpdateElementInnerHTMLById} from "./packages/image-gallery.js";
 import { Slider } from './packages/slider.js'
 import { TouchDirectionDetector } from './packages/touch-event.js'
@@ -283,21 +281,6 @@ document.addEventListener('DOMContentLoaded', () => {
       },
     },
   ])
-
-  const dateContainers = document.querySelectorAll(
-    '#departure-container, #return-container',
-  )
-
-  dateContainers.forEach(container => {
-    container.addEventListener('click', () => {
-      const input = container.querySelector(
-        'input[type="date"]',
-      ) as HTMLInputElement | null
-      if (input) {
-        input.showPicker()
-      }
-    })
-  })
 
   // Mobile Screen Nav Sticky Manager
   new NavStickyManager({
