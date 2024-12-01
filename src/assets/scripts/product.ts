@@ -7,8 +7,13 @@ import { RatingAnimator } from './packages/rating-bar-controller.js'
 import { URLMatcher } from './packages/url-matcher.js'
 import { ScrollManager } from './packages/floating-elements.js'
 import { NavStickyManager } from './packages/scroll-style.js'
+import { DatePickerManager } from './packages/date-picker.js'
 
 document.addEventListener('DOMContentLoaded', () => {
+  new DatePickerManager({
+    containerSelector: '.date-input-container',
+  })
+
   // Product Slider Instance
   const MainSlider = new Slider({
     container: '#product-slider-container',

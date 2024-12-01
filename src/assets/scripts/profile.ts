@@ -1,4 +1,6 @@
 import { ModalController } from './packages/modal.js'
+import { URLMatcher } from './packages/url-matcher.js'
+import { DynamicHeightCalculator } from './packages/dynamic-height-calculator.js'
 
 document.addEventListener('DOMContentLoaded', () => {
   new ModalController(
@@ -127,4 +129,41 @@ document.addEventListener('DOMContentLoaded', () => {
       },
     },
   )
+
+  const height = new DynamicHeightCalculator([
+    {
+      id: 'tour-card',
+      containerSelector: '.tour-card',
+      toggleConfig: {
+        inputSelector: '.card-input',
+        labelSelector: '.card-label',
+      },
+      contentConfig: {
+        contentSelector: '.card-content',
+        heightVariable: '--card-height',
+      },
+    },
+    {
+      id: 'accordion',
+      containerSelector: '.accordion-section',
+      toggleConfig: {
+        inputSelector: '.card-info-container-input',
+        labelSelector: '.card-info-container-label',
+      },
+      contentConfig: {
+        contentSelector: '.accordion-content',
+        innerSelector: '.accordion-inner',
+        heightVariable: '--content-height',
+      },
+    },
+  ])
+
+  const urlMatcher = new URLMatcher({
+    queryParam: 'view',
+    targetValues: ['reservation'],
+  })
+
+  urlMatcher.on('onFirstMatch', 'reservation', () => {
+    height.recalculate()
+  })
 })

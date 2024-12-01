@@ -63,7 +63,6 @@
     <script type="module" src="/assets/scripts/layout.js"></script>
     <script type="module" src="/assets/scripts/profile.js"></script>
     <script type="module" src="/assets/scripts/ui/password-visible.js"></script>
-    <script type="module" src="/assets/scripts/ui/height-calculate.js"></script>
     <!-- Icon Library -->
     <script type="module" src="/assets/scripts/lucide.js"></script>
 
@@ -801,15 +800,12 @@
                         <!-- Card Toggle Checkbox -->
                         <input
                           type="checkbox"
-                          id="cardToggle"
-                          class="peer/card accordion-toggle hidden"
-                          checked
+                          class="peer/card card-input accordion-toggle hidden"
                         />
 
                         <!-- Card Header/Label -->
                         <label
-                          for="cardToggle"
-                          class="block cursor-pointer bg-gradient-to-r from-primary-600 to-primary-500 p-4 text-white"
+                          class="card-label block cursor-pointer bg-gradient-to-r from-primary-600 to-primary-500 p-4 text-white"
                         >
                           <div
                             class="flex items-start justify-between lg:gap-8"
@@ -839,17 +835,20 @@
                         <div
                           class="overflow-hidden transition-[height] duration-500 ease-out sm:h-0 sm:peer-checked/card:h-[var(--card-height)]"
                         >
-                          <div class="space-y-4">
+                          <div class="card-content space-y-4">
                             <!-- Tour Information Section -->
                             <div
                               class="accordion-section relative px-4 pt-4 sm:block"
                             >
                               <!-- Section Toggle -->
-                              <input type="checkbox" class="peer hidden" />
+                              <input
+                                type="checkbox"
+                                class="card-info-container-input peer hidden"
+                              />
 
                               <!-- Section Header -->
                               <label
-                                class="flex cursor-pointer items-center justify-between text-gray-800 sm:cursor-default"
+                                class="card-info-container-label flex cursor-pointer items-center justify-between text-gray-800 sm:cursor-default"
                               >
                                 <h3 class="text-lg font-semibold">
                                   Tur Bilgileri
@@ -971,11 +970,14 @@
                               class="accordion-section relative px-4 sm:block"
                             >
                               <!-- Section Toggle -->
-                              <input type="checkbox" class="peer hidden" />
+                              <input
+                                type="checkbox"
+                                class="card-info-container-input peer hidden"
+                              />
 
                               <!-- Section Header -->
                               <label
-                                class="flex cursor-pointer items-center justify-between text-gray-800 sm:cursor-default"
+                                class="card-info-container-label flex cursor-pointer items-center justify-between text-gray-800 sm:cursor-default"
                               >
                                 <h3 class="text-lg font-semibold">
                                   İletişim Bilgileri
@@ -1099,11 +1101,14 @@
                               class="accordion-section relative border-gray-200 px-4 pb-4 sm:block sm:border-t sm:bg-gray-100 sm:pt-4"
                             >
                               <!-- Section Toggle -->
-                              <input type="checkbox" class="peer hidden" />
+                              <input
+                                type="checkbox"
+                                class="card-info-container-input peer hidden"
+                              />
 
                               <!-- Section Header -->
                               <label
-                                class="flex cursor-pointer items-center justify-between text-gray-800 sm:cursor-default"
+                                class="card-info-container-label flex cursor-pointer items-center justify-between text-gray-800 sm:cursor-default"
                               >
                                 <h3 class="text-lg font-semibold">Notlar</h3>
                                 <i
