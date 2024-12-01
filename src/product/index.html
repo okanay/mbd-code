@@ -1570,18 +1570,10 @@
                 >
                   <div class="group relative" id="departure-container">
                     <input
-                      type="text"
-                      readonly
+                      type="date"
                       id="departure-date"
                       name="departure-date"
-                      placeholder=" "
-                      class="peer relative z-10 h-[44px] w-full cursor-pointer appearance-none border bg-transparent px-3 text-sm outline-none transition-all duration-200"
-                      onclick="this.nextElementSibling.showPicker()"
-                    />
-                    <input
-                      type="date"
-                      class="absolute inset-0 opacity-0"
-                      onchange="this.previousElementSibling.value = this.value"
+                      class="peer relative z-10 h-[44px] w-full cursor-pointer appearance-none bg-transparent px-3 text-sm text-gray-800 outline-none transition-all duration-200"
                     />
                     <label
                       for="departure-date"
@@ -1591,20 +1583,12 @@
                     </label>
                   </div>
 
-                  <div class="group relative" id="return-container">
-                    <input
-                      type="text"
-                      readonly
-                      id="return-date"
-                      name="return-date"
-                      placeholder=" "
-                      class="peer relative z-10 h-[44px] w-full cursor-pointer appearance-none border bg-transparent px-3 text-sm outline-none transition-all duration-200"
-                      onclick="this.nextElementSibling.showPicker()"
-                    />
+                  <div class="group relative" id="departure-container">
                     <input
                       type="date"
-                      class="absolute inset-0 opacity-0"
-                      onchange="this.previousElementSibling.value = this.value"
+                      id="return-date"
+                      name="return-date"
+                      class="peer relative z-10 h-[44px] w-full cursor-pointer appearance-none bg-transparent px-3 text-sm text-gray-800 outline-none transition-all duration-200"
                     />
                     <label
                       for="return-date"
