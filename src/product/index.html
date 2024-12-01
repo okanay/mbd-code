@@ -1570,7 +1570,10 @@
                 >
                   <div class="group relative" id="departure-container">
                     <input
-                      type="date"
+                      onfocus="(this.type='date')"
+                      onblur="(this.type='text')"
+                      type="text"
+                      placeholder="Gidiş Tarihi"
                       id="departure-date"
                       name="departure-date"
                       style="-webkit-appearance: none"
@@ -1579,7 +1582,10 @@
                   </div>
                   <div class="group relative" id="return-container">
                     <input
-                      type="date"
+                      onfocus="(this.type='date')"
+                      onblur="(this.type='text')"
+                      type="text"
+                      placeholder="Dönüş Tarihi"
                       id="return-date"
                       name="return-date"
                       style="-webkit-appearance: none"
