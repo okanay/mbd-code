@@ -20,7 +20,7 @@ module.exports = {
     },
   },
   plugins: [],
-  safelist: ['group/query'],
+  safelist: ['group/query', 'to-primary-100', 'via-primary-50'],
 }
 
 function setColors(color) {
