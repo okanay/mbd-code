@@ -164,6 +164,6 @@ document.addEventListener('DOMContentLoaded', () => {
   })
 
   urlMatcher.on('onFirstMatch', 'reservation', () => {
-    height.recalculate()
+    height.recalculateAll()
   })
 })

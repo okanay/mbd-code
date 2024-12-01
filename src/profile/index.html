@@ -631,7 +631,7 @@
               class="flex h-fit w-full flex-col border-b border-gray-200 border-b-gray-200"
             >
               <div
-                class="hidden border-b border-gray-200 bg-gray-100 py-2 lg:block"
+                class="hidden border-b border-gray-200 bg-primary-50 py-4 lg:block"
               ></div>
 
               <!-- Mobile Navigation Extra -->
@@ -771,7 +771,7 @@
             class="min-h-fit w-full max-w-[calc(100%-50px)] flex-shrink-0 pb-8 pt-5 md:max-w-full md:flex-shrink md:px-0 md:pt-6 lg:pt-0"
           >
             <!-- prettier-ignore -->
-            <div class="hidden border-b border-gray-200 bg-gray-100 py-2 lg:block"></div>
+            <div class="hidden border-b border-gray-200 bg-primary-50 py-4 lg:block"></div>
             <div
               class="h-full min-h-fit w-full bg-white px-3.5 lg:px-8 lg:pt-4"
             >
@@ -788,7 +788,7 @@
 
                   <!-- Tour Card Grid Container -->
                   <div
-                    class="grid grid-cols-1 gap-8 sm:grid-cols-[repeat(auto-fit,minmax(min(100%,400px),1fr))]"
+                    class="grid grid-cols-1 gap-4 sm:grid-cols-[repeat(auto-fit,minmax(min(100%,400px),1fr))]"
                   >
                     <!-- Tour Card 1 -->
                     <div class="tour-card w-full">
@@ -823,7 +823,7 @@
                               >
                               <i
                                 data-lucide="chevron-down"
-                                class="chevron-icon hidden size-5 sm:block"
+                                class="chevron-icon size-5"
                               ></i>
                             </div>
                           </div>
@@ -831,7 +831,352 @@
 
                         <!-- Card Content Container -->
                         <div
-                          class="overflow-hidden transition-[height] duration-500 ease-out sm:h-0 sm:peer-checked/card:h-[var(--card-height)]"
+                          class="h-0 overflow-hidden transition-[height] duration-500 ease-out peer-checked/card:h-[var(--card-height)]"
+                        >
+                          <div class="card-content space-y-4">
+                            <!-- Tour Information Section -->
+                            <div
+                              class="accordion-section relative px-4 pt-4 sm:block"
+                            >
+                              <!-- Section Toggle -->
+                              <input
+                                type="checkbox"
+                                class="card-info-container-input peer hidden"
+                              />
+
+                              <!-- Section Header -->
+                              <label
+                                class="card-info-container-label flex cursor-pointer items-center justify-between text-gray-800 sm:cursor-default"
+                              >
+                                <h3 class="text-lg font-semibold">
+                                  Tur Bilgileri
+                                </h3>
+                                <i
+                                  data-lucide="chevron-down"
+                                  class="size-5 transition-transform peer-checked:rotate-180 sm:hidden"
+                                ></i>
+                              </label>
+
+                              <!-- Section Content -->
+                              <div
+                                class="accordion-content h-0 overflow-hidden transition-[height] duration-500 ease-out peer-checked:h-[var(--content-height)] sm:h-auto sm:overflow-visible sm:transition-none sm:duration-0"
+                              >
+                                <div class="accordion-inner">
+                                  <div
+                                    class="grid grid-cols-1 gap-1 pt-3 sm:grid-cols-2"
+                                  >
+                                    <!-- Departure Date -->
+                                    <div
+                                      class="flex flex-col items-start gap-1.5 rounded p-2"
+                                    >
+                                      <div
+                                        class="flex items-end justify-end gap-1.5"
+                                      >
+                                        <i
+                                          data-lucide="calendar-clock"
+                                          class="size-4 text-primary-500"
+                                        ></i>
+                                        <p
+                                          class="translate-y-[10%] text-xs text-gray-600"
+                                        >
+                                          Gidiş
+                                        </p>
+                                      </div>
+                                      <div>
+                                        <p class="text-sm font-medium">
+                                          dd.mm.yyyy
+                                        </p>
+                                      </div>
+                                    </div>
+
+                                    <!-- Return Date -->
+                                    <div
+                                      class="flex flex-col items-start gap-1.5 rounded p-2 sm:items-end"
+                                    >
+                                      <div
+                                        class="flex items-end justify-end gap-1.5"
+                                      >
+                                        <p
+                                          class="order-2 translate-y-[10%] text-xs text-gray-600 sm:order-1"
+                                        >
+                                          Dönüş
+                                        </p>
+                                        <i
+                                          data-lucide="calendar-check"
+                                          class="order-1 size-4 text-primary-500 sm:order-2"
+                                        ></i>
+                                      </div>
+                                      <div>
+                                        <p class="text-sm font-medium">
+                                          dd.mm.yyyy
+                                        </p>
+                                      </div>
+                                    </div>
+
+                                    <!-- Hotel Information -->
+                                    <div
+                                      class="flex flex-col items-start gap-1.5 rounded p-2"
+                                    >
+                                      <div
+                                        class="flex items-end justify-end gap-1.5"
+                                      >
+                                        <i
+                                          data-lucide="building"
+                                          class="size-4 text-primary-500"
+                                        ></i>
+                                        <p
+                                          class="translate-y-[10%] text-xs text-gray-600"
+                                        >
+                                          Otel
+                                        </p>
+                                      </div>
+                                      <div>
+                                        <p class="text-sm font-medium">
+                                          Lüks Otel
+                                        </p>
+                                      </div>
+                                    </div>
+
+                                    <!-- Transfer Information -->
+                                    <div
+                                      class="flex flex-col items-start gap-1.5 rounded p-2 sm:items-end"
+                                    >
+                                      <div
+                                        class="flex items-end justify-end gap-1.5"
+                                      >
+                                        <p
+                                          class="order-2 translate-y-[10%] text-xs text-gray-600 sm:order-1"
+                                        >
+                                          Transfer
+                                        </p>
+                                        <i
+                                          data-lucide="bus"
+                                          class="order-1 size-4 text-primary-500 sm:order-2"
+                                        ></i>
+                                      </div>
+                                      <div>
+                                        <p class="text-sm font-medium">Evet</p>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+
+                            <!-- Contact Information Section -->
+                            <div
+                              class="accordion-section relative px-4 sm:block"
+                            >
+                              <!-- Section Toggle -->
+                              <input
+                                type="checkbox"
+                                class="card-info-container-input peer hidden"
+                              />
+
+                              <!-- Section Header -->
+                              <label
+                                class="card-info-container-label flex cursor-pointer items-center justify-between text-gray-800 sm:cursor-default"
+                              >
+                                <h3 class="text-lg font-semibold">
+                                  İletişim Bilgileri
+                                </h3>
+                                <i
+                                  data-lucide="chevron-down"
+                                  class="size-5 transition-transform peer-checked:rotate-180 sm:hidden"
+                                ></i>
+                              </label>
+
+                              <!-- Section Content -->
+                              <div
+                                class="accordion-content h-0 overflow-hidden transition-[height] duration-500 ease-out peer-checked:h-[var(--content-height)] sm:h-auto sm:overflow-visible sm:transition-none sm:duration-0"
+                              >
+                                <div class="accordion-inner">
+                                  <div
+                                    class="grid grid-cols-1 gap-1 pt-3 sm:grid-cols-2"
+                                  >
+                                    <!-- Full Name -->
+                                    <div
+                                      class="flex flex-col items-start gap-1.5 rounded p-2"
+                                    >
+                                      <div
+                                        class="flex items-end justify-end gap-1.5"
+                                      >
+                                        <i
+                                          data-lucide="user"
+                                          class="size-4 text-primary-500"
+                                        ></i>
+                                        <p
+                                          class="translate-y-[10%] text-xs text-gray-600"
+                                        >
+                                          İsim Soyisim
+                                        </p>
+                                      </div>
+                                      <div>
+                                        <p class="text-sm font-medium">
+                                          Okan Ay
+                                        </p>
+                                      </div>
+                                    </div>
+
+                                    <!-- ID/Passport -->
+                                    <div
+                                      class="flex flex-col items-start gap-1.5 rounded p-2 sm:items-end"
+                                    >
+                                      <div
+                                        class="flex items-end justify-end gap-1.5"
+                                      >
+                                        <p
+                                          class="order-2 translate-y-[10%] text-xs text-gray-600 sm:order-1"
+                                        >
+                                          Kimlik/Pasaport
+                                        </p>
+                                        <i
+                                          data-lucide="id-card"
+                                          class="order-1 size-4 text-primary-500 sm:order-2"
+                                        ></i>
+                                      </div>
+                                      <div>
+                                        <p class="text-sm font-medium">
+                                          1234567890
+                                        </p>
+                                      </div>
+                                    </div>
+
+                                    <!-- Email -->
+                                    <div
+                                      class="flex flex-col items-start gap-1.5 rounded p-2"
+                                    >
+                                      <div
+                                        class="flex items-end justify-end gap-1.5"
+                                      >
+                                        <i
+                                          data-lucide="mail"
+                                          class="size-4 text-primary-500"
+                                        ></i>
+                                        <p
+                                          class="translate-y-[10%] text-xs text-gray-600"
+                                        >
+                                          E-posta
+                                        </p>
+                                      </div>
+                                      <div>
+                                        <p class="text-sm font-medium">
+                                          johndoe@example.com
+                                        </p>
+                                      </div>
+                                    </div>
+
+                                    <!-- Phone -->
+                                    <div
+                                      class="flex flex-col items-start gap-1.5 rounded p-2 sm:items-end"
+                                    >
+                                      <div
+                                        class="flex items-end justify-end gap-1.5"
+                                      >
+                                        <p
+                                          class="order-2 translate-y-[10%] text-xs text-gray-600 sm:order-1"
+                                        >
+                                          Telefon
+                                        </p>
+                                        <i
+                                          data-lucide="phone"
+                                          class="order-1 size-4 text-primary-500 sm:order-2"
+                                        ></i>
+                                      </div>
+                                      <div>
+                                        <p class="text-sm font-medium">
+                                          +90 555 123 4567
+                                        </p>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+
+                            <!-- Notes Section -->
+                            <div
+                              class="accordion-section relative border-gray-200 px-4 pb-4 sm:block sm:border-t sm:bg-gray-100 sm:pt-4"
+                            >
+                              <!-- Section Toggle -->
+                              <input
+                                type="checkbox"
+                                class="card-info-container-input peer hidden"
+                              />
+
+                              <!-- Section Header -->
+                              <label
+                                class="card-info-container-label flex cursor-pointer items-center justify-between text-gray-800 sm:cursor-default"
+                              >
+                                <h3 class="text-lg font-semibold">Notlar</h3>
+                                <i
+                                  data-lucide="chevron-down"
+                                  class="size-5 transition-transform peer-checked:rotate-180 sm:hidden"
+                                ></i>
+                              </label>
+
+                              <!-- Section Content -->
+                              <div
+                                class="accordion-content h-0 overflow-hidden transition-[height] duration-500 ease-out peer-checked:h-[var(--content-height)] sm:h-auto sm:overflow-visible sm:transition-none sm:duration-0"
+                              >
+                                <div class="accordion-inner">
+                                  <div class="rounded pt-1.5">
+                                    <p class="text-sm text-gray-600">
+                                      Özel istekler veya ek bilgiler buraya
+                                      eklenebilir.
+                                    </p>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <!-- Tour Card 2 -->
+                    <div class="tour-card w-full">
+                      <div
+                        class="overflow-hidden rounded-lg border border-gray-200 bg-white"
+                      >
+                        <!-- Card Toggle Checkbox -->
+                        <input
+                          type="checkbox"
+                          checked
+                          class="peer/card card-input accordion-toggle hidden"
+                        />
+
+                        <!-- Card Header/Label -->
+                        <label
+                          class="card-label block cursor-pointer bg-gradient-to-r from-primary-600 to-primary-500 p-4 text-white"
+                        >
+                          <div
+                            class="flex items-start justify-between lg:gap-8"
+                          >
+                            <!-- Title and Subtitle -->
+                            <div>
+                              <h2 class="text-base font-bold lg:text-xl">
+                                Lüks Safari Platinium Heritage
+                              </h2>
+                              <p class="mt-1 text-xs lg:text-sm">Tur Paketi</p>
+                            </div>
+                            <!-- Badge and Toggle Icon -->
+                            <div class="flex items-center gap-2">
+                              <span
+                                class="rounded-full bg-white/20 px-2 py-1 text-xs font-medium lg:px-3 lg:text-sm"
+                                >Premium</span
+                              >
+                              <i
+                                data-lucide="chevron-down"
+                                class="chevron-icon size-5"
+                              ></i>
+                            </div>
+                          </div>
+                        </label>
+
+                        <!-- Card Content Container -->
+                        <div
+                          class="h-0 overflow-hidden transition-[height] duration-500 ease-out peer-checked/card:h-[var(--card-height)]"
                         >
                           <div class="card-content space-y-4">
                             <!-- Tour Information Section -->

@@ -1,16 +1,14 @@
 interface HeightCalculationConfig {
-  id: string // Benzersiz tanımlayıcı
-  containerSelector: string // Ana container selector
+  id: string
+  containerSelector: string
   toggleConfig?: {
-    // Toggle düğmesi ayarları (opsiyonel)
     inputSelector: string
     labelSelector: string
   }
   contentConfig: {
-    // İçerik ayarları
-    contentSelector: string // İçerik alanı selector
-    innerSelector?: string // İç içerik selector (opsiyonel)
-    heightVariable: string // CSS değişken ismi
+    contentSelector: string
+    innerSelector?: string
+    heightVariable: string
   }
 }
 
@@ -18,22 +16,33 @@ export class DynamicHeightCalculator {
   private resizeTimer: number | null = null
   private observer: MutationObserver
   private configurations: HeightCalculationConfig[]
+  private activeElements: Set<HTMLElement> = new Set()
 
   constructor(configurations: HeightCalculationConfig[]) {
     this.configurations = configurations
-    this.observer = new MutationObserver(() => this.recalculate())
+    this.observer = new MutationObserver(mutations => {
+      // Sadece height değişikliklerini izle
+      const heightChanged = mutations.some(mutation => {
+        const target = mutation.target as HTMLElement
+        return target.style.height !== mutation.oldValue
+      })
+
+      if (heightChanged) {
+        if (this.resizeTimer) {
+          clearTimeout(this.resizeTimer)
+        }
+        this.resizeTimer = window.setTimeout(() => this.recalculateAll(), 50)
+      }
+    })
+
     this.initialize()
   }
 
   public initialize(): void {
     this.initializeToggles()
-    this.calculateHeights()
+    this.calculateAllHeights()
     this.setupEventListeners()
     this.setupObservers()
-  }
-
-  public recalculate(): void {
-    this.calculateHeights()
   }
 
   private initializeToggles(): void {
@@ -46,69 +55,138 @@ export class DynamicHeightCalculator {
           config.toggleConfig!.inputSelector,
         ) as HTMLInputElement
 
-        const label = container.querySelector(
-          config.toggleConfig!.labelSelector,
-        ) as HTMLLabelElement
-
-        if (input && label) {
+        if (input) {
           const uniqueId = `${config.id}-toggle-${index}`
           input.id = uniqueId
-          label.setAttribute('for', uniqueId)
+
+          // Input change event listener
+          input.addEventListener('change', e => {
+            const isChecked = (e.target as HTMLInputElement).checked
+            if (isChecked) {
+              this.activeElements.add(container as HTMLElement)
+            } else {
+              this.activeElements.delete(container as HTMLElement)
+            }
+            this.recalculateAll()
+          })
+
+          // Label için for attribute'u
+          const label = container.querySelector(
+            config.toggleConfig!.labelSelector,
+          ) as HTMLLabelElement
+          if (label) {
+            label.setAttribute('for', uniqueId)
+          }
         }
       })
     })
   }
 
-  private calculateHeights(): void {
-    this.configurations.forEach(config => {
-      const containers = document.querySelectorAll(config.containerSelector)
+  private getExpandedHeight(element: HTMLElement): number {
+    // Geçici olarak visibility:hidden ile göster ve yüksekliği ölç
+    const originalStyles = {
+      position: element.style.position,
+      visibility: element.style.visibility,
+      height: element.style.height,
+      display: element.style.display,
+    }
 
-      containers.forEach(container => {
-        const content = container.querySelector(
-          config.contentConfig.contentSelector,
-        ) as HTMLElement
-
-        if (!content) return
-
-        let height: number
-
-        if (config.contentConfig.innerSelector) {
-          const inner = content.querySelector(
-            config.contentConfig.innerSelector,
-          ) as HTMLElement
-
-          if (!inner) return
-
-          // İç içerik için yükseklik hesaplama
-          const originalStyles = {
-            position: inner.style.position,
-            visibility: inner.style.visibility,
-            zIndex: inner.style.zIndex,
-          }
-
-          Object.assign(inner.style, {
-            position: 'absolute',
-            visibility: 'hidden',
-            zIndex: '-1',
-          })
-
-          height = inner.scrollHeight
-
-          Object.assign(inner.style, originalStyles)
-        } else {
-          // Doğrudan content yüksekliğini hesaplama
-          height = content.scrollHeight
-        }
-
-        // Hesaplanan yüksekliği CSS değişkeni olarak ata
-        if (container instanceof HTMLElement) {
-          container.style.setProperty(
-            config.contentConfig.heightVariable,
-            `${height}px`,
-          )
-        }
-      })
+    Object.assign(element.style, {
+      position: 'absolute',
+      visibility: 'hidden',
+      height: 'auto',
+      display: 'block',
     })
+
+    const height = element.scrollHeight
+
+    // Orijinal stilleri geri yükle
+    Object.assign(element.style, originalStyles)
+
+    return height
+  }
+
+  private async calculateAllHeights() {
+    // Önce tüm container'ları hesapla
+    for (const config of this.configurations) {
+      const containers = document.querySelectorAll(config.containerSelector)
+      containers.forEach(container => {
+        this.calculateContainerHeight(container as HTMLElement, config)
+      })
+    }
+  }
+
+  private calculateContainerHeight(
+    container: HTMLElement,
+    config: HeightCalculationConfig,
+  ) {
+    const content = container.querySelector(
+      config.contentConfig.contentSelector,
+    ) as HTMLElement
+
+    if (!content) return
+
+    let totalHeight = 0
+
+    if (config.contentConfig.innerSelector) {
+      const inner = content.querySelector(
+        config.contentConfig.innerSelector,
+      ) as HTMLElement
+
+      if (inner) {
+        totalHeight = this.getExpandedHeight(inner)
+      }
+    } else {
+      totalHeight = this.getExpandedHeight(content)
+    }
+
+    // CSS değişkenini güncelle
+    container.style.setProperty(
+      config.contentConfig.heightVariable,
+      `${totalHeight}px`,
+    )
+
+    // Parent container varsa onu da güncelle
+    this.updateParentContainer(container)
+  }
+
+  private updateParentContainer(element: HTMLElement) {
+    const parent = this.findParentContainer(element)
+    if (parent) {
+      const parentConfig = this.findConfigForContainer(parent)
+      if (parentConfig) {
+        this.calculateContainerHeight(parent, parentConfig)
+      }
+    }
+  }
+
+  private findParentContainer(element: HTMLElement): HTMLElement | null {
+    let parent = element.parentElement
+    while (parent) {
+      if (
+        this.configurations.some(config =>
+          parent?.matches(config.containerSelector),
+        )
+      ) {
+        return parent
+      }
+      parent = parent.parentElement
+    }
+    return null
+  }
+
+  private findConfigForContainer(
+    container: HTMLElement,
+  ): HeightCalculationConfig | null {
+    return (
+      this.configurations.find(config =>
+        container.matches(config.containerSelector),
+      ) || null
+    )
+  }
+
+  public recalculateAll(): void {
+    this.calculateAllHeights()
   }
 
   private setupEventListeners(): void {
@@ -116,7 +194,7 @@ export class DynamicHeightCalculator {
       if (this.resizeTimer) {
         clearTimeout(this.resizeTimer)
       }
-      this.resizeTimer = window.setTimeout(() => this.calculateHeights(), 100)
+      this.resizeTimer = window.setTimeout(() => this.recalculateAll(), 100)
     })
   }
 
@@ -125,9 +203,11 @@ export class DynamicHeightCalculator {
       const containers = document.querySelectorAll(config.containerSelector)
       containers.forEach(container => {
         this.observer.observe(container, {
+          attributes: true,
           childList: true,
           subtree: true,
-          characterData: true,
+          attributeOldValue: true,
+          attributeFilter: ['style'],
         })
       })
     })

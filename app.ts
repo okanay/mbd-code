@@ -12,11 +12,9 @@ app.use(
     root: './dist/',
     getContent: path => {
       try {
-        // .js uzantılı dosya istendiyse ve dosya bulunamadıysa .ts dosyasını kontrol et
         if (path.endsWith('.js') && !fs.existsSync(path)) {
           const tsPath = path.replace('.js', '.ts')
           if (fs.existsSync(tsPath)) {
-            console.log('Found TypeScript file instead:', tsPath)
             const file = fs.readFileSync(tsPath)
             return file
           }
@@ -29,7 +27,6 @@ app.use(
         if (path === 'dist/main/index.html' || path === 'dist/') {
           return null
         }
-        console.error(`Error reading file at ${path}:`, error)
         return null
       }
     },
