@@ -1,6 +1,7 @@
 interface HeightCalculationConfig {
   id: string
   containerSelector: string
+  parentIndex?: number // Hangi config'in parent olduğunu belirtmek için
   toggleConfig?: {
     inputSelector: string
     labelSelector: string
@@ -12,22 +13,49 @@ interface HeightCalculationConfig {
   }
 }
 
+interface StateConfig {
+  attribute: string // Örn: 'data-state'
+  activeValue: string // Örn: 'open'
+  inactiveValue: string // Örn: 'closed'
+}
+
 export class DynamicHeightCalculator {
   private resizeTimer: number | null = null
   private observer: MutationObserver
   private configurations: HeightCalculationConfig[]
   private activeElements: Set<HTMLElement> = new Set()
+  private heightCache: Map<string, string> = new Map()
+  private stateConfig: StateConfig
 
-  constructor(configurations: HeightCalculationConfig[]) {
+  constructor(
+    configurations: HeightCalculationConfig[],
+    stateConfig: StateConfig,
+  ) {
     this.configurations = configurations
+    this.stateConfig = stateConfig
     this.observer = new MutationObserver(mutations => {
-      // Sadece height değişikliklerini izle
-      const heightChanged = mutations.some(mutation => {
+      const relevantChanges = mutations.some(mutation => {
         const target = mutation.target as HTMLElement
-        return target.style.height !== mutation.oldValue
+
+        if (mutation.type === 'attributes') {
+          if (
+            mutation.attributeName === 'style' &&
+            target.style.height !== mutation.oldValue
+          ) {
+            return true
+          }
+          if (mutation.attributeName === this.stateConfig.attribute) {
+            const newState = target.getAttribute(this.stateConfig.attribute)
+            if (newState === this.stateConfig.activeValue) {
+              this.restoreHeights()
+              return false
+            }
+          }
+        }
+        return false
       })
 
-      if (heightChanged) {
+      if (relevantChanges) {
         if (this.resizeTimer) {
           clearTimeout(this.resizeTimer)
         }
@@ -46,7 +74,7 @@ export class DynamicHeightCalculator {
   }
 
   private initializeToggles(): void {
-    this.configurations.forEach(config => {
+    this.configurations.forEach((config, currentIndex) => {
       if (!config.toggleConfig) return
 
       const containers = document.querySelectorAll(config.containerSelector)
@@ -67,7 +95,23 @@ export class DynamicHeightCalculator {
             } else {
               this.activeElements.delete(container as HTMLElement)
             }
-            this.recalculateAll()
+
+            // Önce kendisini hesapla
+            this.calculateContainerHeight(container as HTMLElement, config)
+
+            // Eğer parent index tanımlıysa, parent container'ı da güncelle
+            if (typeof config.parentIndex === 'number') {
+              const parentConfig = this.configurations[config.parentIndex]
+              if (parentConfig) {
+                // En yakın parent container'ı bul
+                const parentContainer = (container as HTMLElement).closest(
+                  parentConfig.containerSelector,
+                ) as HTMLElement
+                if (parentContainer) {
+                  this.calculateContainerHeight(parentContainer, parentConfig)
+                }
+              }
+            }
           })
 
           // Label için for attribute'u
@@ -76,6 +120,18 @@ export class DynamicHeightCalculator {
           ) as HTMLLabelElement
           if (label) {
             label.setAttribute('for', uniqueId)
+          }
+
+          // Mobil/Desktop davranış kontrolü için
+          if (currentIndex > 0) {
+            // Child elementler için
+            label?.addEventListener('click', e => {
+              if (window.innerWidth >= 640) {
+                // sm breakpoint
+                e.preventDefault()
+                return
+              }
+            })
           }
         }
       })
@@ -126,6 +182,16 @@ export class DynamicHeightCalculator {
 
     if (!content) return
 
+    // Parent view state kontrolü - artık dinamik state kullanıyor
+    const parentView = container.closest(`[${this.stateConfig.attribute}]`)
+    if (
+      parentView &&
+      parentView.getAttribute(this.stateConfig.attribute) ===
+        this.stateConfig.inactiveValue
+    ) {
+      return
+    }
+
     let totalHeight = 0
 
     if (config.contentConfig.innerSelector) {
@@ -140,49 +206,25 @@ export class DynamicHeightCalculator {
       totalHeight = this.getExpandedHeight(content)
     }
 
-    // CSS değişkenini güncelle
+    const cacheKey = this.getCacheKey(container, config)
+    this.heightCache.set(cacheKey, `${totalHeight}px`)
+
     container.style.setProperty(
       config.contentConfig.heightVariable,
       `${totalHeight}px`,
     )
 
-    // Parent container varsa onu da güncelle
-    this.updateParentContainer(container)
-  }
-
-  private updateParentContainer(element: HTMLElement) {
-    const parent = this.findParentContainer(element)
-    if (parent) {
-      const parentConfig = this.findConfigForContainer(parent)
+    if (typeof config.parentIndex === 'number') {
+      const parentConfig = this.configurations[config.parentIndex]
       if (parentConfig) {
-        this.calculateContainerHeight(parent, parentConfig)
+        const parentContainer = container.closest(
+          parentConfig.containerSelector,
+        ) as HTMLElement
+        if (parentContainer) {
+          this.calculateContainerHeight(parentContainer, parentConfig)
+        }
       }
     }
-  }
-
-  private findParentContainer(element: HTMLElement): HTMLElement | null {
-    let parent = element.parentElement
-    while (parent) {
-      if (
-        this.configurations.some(config =>
-          parent?.matches(config.containerSelector),
-        )
-      ) {
-        return parent
-      }
-      parent = parent.parentElement
-    }
-    return null
-  }
-
-  private findConfigForContainer(
-    container: HTMLElement,
-  ): HeightCalculationConfig | null {
-    return (
-      this.configurations.find(config =>
-        container.matches(config.containerSelector),
-      ) || null
-    )
   }
 
   public recalculateAll(): void {
@@ -198,6 +240,32 @@ export class DynamicHeightCalculator {
     })
   }
 
+  private getCacheKey(
+    container: HTMLElement,
+    config: HeightCalculationConfig,
+  ): string {
+    // Benzersiz bir cache key oluştur
+    return `${container.className}-${config.contentConfig.heightVariable}`
+  }
+
+  public restoreHeights(): void {
+    this.configurations.forEach(config => {
+      const containers = document.querySelectorAll(config.containerSelector)
+      containers.forEach(container => {
+        const cacheKey = this.getCacheKey(container as HTMLElement, config)
+        const cachedHeight = this.heightCache.get(cacheKey)
+
+        if (cachedHeight) {
+          // Cache'den height değerini geri yükle
+          ;(container as HTMLElement).style.setProperty(
+            config.contentConfig.heightVariable,
+            cachedHeight,
+          )
+        }
+      })
+    })
+  }
+
   private setupObservers(): void {
     this.configurations.forEach(config => {
       const containers = document.querySelectorAll(config.containerSelector)
@@ -207,8 +275,17 @@ export class DynamicHeightCalculator {
           childList: true,
           subtree: true,
           attributeOldValue: true,
-          attributeFilter: ['style'],
+          attributeFilter: ['style', this.stateConfig.attribute],
         })
+
+        const parentView = container.closest(`[${this.stateConfig.attribute}]`)
+        if (parentView) {
+          this.observer.observe(parentView, {
+            attributes: true,
+            attributeOldValue: true,
+            attributeFilter: [this.stateConfig.attribute],
+          })
+        }
       })
     })
   }
