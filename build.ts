@@ -31,6 +31,9 @@ const DIRECTORIES = {
   get styles() {
     return path.join(this.assets, 'styles')
   },
+  get externals() {
+    return path.join(this.scripts, 'externals') // scripts altına ekledim
+  },
 }
 
 const PAGES = {
@@ -51,6 +54,13 @@ const BUILD_CONFIG = {
   format: 'esm' as const,
   external: ['*'],
   splitting: true,
+}
+
+const EXTERNAL_BUILD_CONFIG = {
+  format: 'esm' as const,
+  external: [], // Hiçbir şeyi external olarak işaretleme
+  splitting: false, // Code splitting'i kapat
+  bundle: true, // Tüm bağımlılıkları bundle et
 }
 
 // Dosya işlem takibi için cache
@@ -202,9 +212,43 @@ async function buildSharedPackages(specificFile?: string) {
   }
 }
 
+async function buildExternals(specificFile?: string) {
+  if (!existsSync(DIRECTORIES.externals)) return
+
+  const outdir = path.join(DIRECTORIES.dist, 'assets/scripts/externals')
+  ensureDirectoryExists(outdir)
+
+  const buildExternal = async (externalFile: string) => {
+    const entrypoint = path.join(DIRECTORIES.externals, externalFile)
+    if (isFileChanged(entrypoint)) {
+      const basename = path.basename(externalFile, '.ts')
+      await build({
+        ...EXTERNAL_BUILD_CONFIG,
+        entrypoints: [entrypoint],
+        outdir,
+        minify: true,
+        naming: `${basename}.js`,
+      })
+      console.log(`External paket güncellendi: ${basename}.js`)
+    }
+  }
+
+  if (specificFile) {
+    await buildExternal(specificFile)
+  } else {
+    const externalFiles = readdirSync(DIRECTORIES.externals).filter(file =>
+      file.endsWith('.ts'),
+    )
+    for (const file of externalFiles) {
+      await buildExternal(file)
+    }
+  }
+}
+
 async function buildAll() {
   fileCache.clear()
-  await buildConstants() // Constants build edilmesi eklendi
+  await buildConstants()
+  await buildExternals() // Externals build'i ekle
   for (const script of PAGES.scripts) {
     await buildPageSpecificTS(script)
   }
@@ -224,8 +268,10 @@ function watchFiles() {
     const relativePath = filename.replace(/\\/g, '/')
     console.log(`Değişiklik algılandı: ${relativePath}`)
 
-    if (relativePath.startsWith('constants/')) {
-      // Constants değişikliklerini yakala
+    if (relativePath.includes('scripts/externals/')) {
+      // External paketler için kontrol
+      await buildExternals(path.basename(relativePath))
+    } else if (relativePath.startsWith('constants/')) {
       await buildConstants()
     } else if (relativePath.endsWith('.ts')) {
       if (relativePath.includes('ui/')) {

@@ -1,8 +1,10 @@
 import { AccordionController } from './packages/accordion.js'
 import { ModalController } from './packages/modal.js'
 import { LazyImageLoadController } from './packages/lazy-load-controller.js'
-
+import { createIcons, icons } from './externals/lucide.js'
 document.addEventListener('DOMContentLoaded', async () => {
+  createIcons({ icons: { ...icons } })
+
   new LazyImageLoadController({
     imageSelector: '.lazy-image',
     dataAttribute: 'data-src',
