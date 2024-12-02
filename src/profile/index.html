@@ -64,7 +64,24 @@
     <script type="module" src="/assets/scripts/profile.js"></script>
     <script type="module" src="/assets/scripts/ui/password-visible.js"></script>
 
-    <script></script>
+    <script>
+      ;(function () {
+        const urlParams = new URLSearchParams(window.location.search)
+        const modalParam = urlParams.get('view')
+
+        if (modalParam) {
+          document.documentElement.classList.add('group/query')
+          document.documentElement.setAttribute('data-query', modalParam)
+        } else {
+          document.documentElement.classList.add('group/query')
+          document.documentElement.setAttribute('data-query', 'reservation')
+        }
+
+        document.addEventListener('DOMContentLoaded', function () {
+          document.documentElement.removeAttribute('data-query')
+        })
+      })()
+    </script>
   </head>
   <body class="bg-white">
     <header class="w-full border-gray-200 lg:h-[80px] lg:border-b">
@@ -624,14 +641,14 @@
           <aside
             id="profile-navigation"
             data-state="closed"
-            class="group/nav min-h-[520px] w-[240px] flex-shrink-0 overflow-hidden border-r border-gray-200 bg-gray-100 transition-all data-[state=closed]:w-[54px] data-[state=open]:translate-x-0 sm:translate-x-0 md:static md:min-h-[800px] md:!w-fit md:!translate-x-0 lg:!min-w-[272.5px] xl:!min-w-[257px]"
+            class="group/nav w-[240px] flex-shrink-0 overflow-hidden border-r border-gray-200 bg-gray-100 transition-all data-[state=closed]:w-[54px] data-[state=open]:translate-x-0 sm:translate-x-0 md:static md:!w-fit md:!translate-x-0 lg:!min-w-[272.5px] xl:!min-w-[257px]"
           >
             <div
               id="profile-navigation-content"
-              class="flex h-fit w-full flex-col border-b border-gray-200 border-b-gray-200"
+              class="flex h-fit w-full flex-col border-b border-gray-200"
             >
               <div
-                class="hidden border-b border-gray-200 bg-gray-100 py-2 lg:block"
+                class="hidden border-b border-gray-200 bg-gray-100 py-1 lg:block"
               ></div>
 
               <!-- Mobile Navigation Extra -->
@@ -768,10 +785,10 @@
 
           <!-- Views -->
           <div
-            class="min-h-fit w-full max-w-[calc(100%-50px)] flex-shrink-0 pb-8 pt-5 md:max-w-full md:flex-shrink md:px-0 md:pt-6 lg:pt-0"
+            class="min-h-fit w-full max-w-[calc(100%-50px)] flex-shrink-0 pb-32 pt-5 md:max-w-full md:flex-shrink md:px-0 md:pt-6 lg:pt-0"
           >
             <div
-              class="hidden border-b border-gray-200 bg-gray-100 py-2 lg:block"
+              class="hidden border-b border-gray-200 bg-white py-1 lg:block"
             ></div>
             <div
               class="h-full min-h-fit w-full bg-white px-3.5 lg:px-8 lg:pt-4"
@@ -780,7 +797,7 @@
               <div
                 data-state="closed"
                 id="reservation"
-                class="flex h-full data-[state=closed]:hidden"
+                class="flex h-full data-[state=closed]:hidden group-data-[query=reservation]/query:!block"
               >
                 <div class="flex h-full w-full flex-col justify-start">
                   <h2 class="mb-4 pl-px text-2xl font-semibold text-gray-800">
@@ -795,7 +812,7 @@
                         class="group overflow-hidden rounded border border-gray-200 bg-white"
                       >
                         <!-- Card Toggle Checkbox -->
-                        <input type="checkbox" class="peer hidden" />
+                        <input type="checkbox" checked class="peer hidden" />
                         <label
                           class="block cursor-n-resize bg-gradient-to-r from-primary-600 to-primary-500 p-4 text-white peer-checked:cursor-s-resize peer-checked:[&_.icon-rotate]:rotate-180"
                         >
@@ -1166,7 +1183,7 @@
               <div
                 data-state="closed"
                 id="favorites"
-                class="flex h-full data-[state=closed]:hidden"
+                class="flex h-full data-[state=closed]:hidden group-data-[query=favorites]/query:!block"
               >
                 <div class="h-full w-full">
                   <h2 class="mb-4 text-2xl font-semibold text-gray-800">
@@ -1198,7 +1215,7 @@
               <div
                 data-state="closed"
                 id="profile-details"
-                class="flex data-[state=closed]:hidden"
+                class="flex data-[state=closed]:hidden group-data-[query=profile-details]/query:!block"
               >
                 <div class="flex h-full w-full flex-col gap-4">
                   <!-- Kişisel Bilgiler -->
@@ -1206,7 +1223,7 @@
                     Kişisel Bilgiler
                   </h2>
 
-                  <form class="flex max-w-[440px] flex-col gap-4">
+                  <form class="flex max-w-[460px] flex-col gap-4">
                     <div
                       class="flex gap-6 !rounded border border-gray-200 px-3 py-2"
                     >
@@ -1273,7 +1290,7 @@
               <div
                 data-state="closed"
                 id="password-email"
-                class="flex data-[state=closed]:hidden"
+                class="flex data-[state=closed]:hidden group-data-[query=password-email]/query:!block"
               >
                 <div class="flex h-full w-full flex-col gap-4">
                   <!-- Kişisel Bilgiler -->
@@ -1281,7 +1298,7 @@
                     Şifre ve E-Posta
                   </h2>
 
-                  <form class="flex max-w-[440px] flex-col gap-4">
+                  <form class="flex max-w-[460px] flex-col gap-4">
                     <input
                       type="email"
                       style="-webkit-border-radius: 0; border-radius: 0"
@@ -1384,7 +1401,7 @@
               <div
                 data-state="closed"
                 id="preferences"
-                class="flex data-[state=closed]:hidden"
+                class="flex data-[state=closed]:hidden group-data-[query=preferences]/query:!block"
               >
                 <div class="flex h-full w-full flex-col gap-4">
                   <!-- Kişisel Bilgiler -->
@@ -1392,7 +1409,7 @@
                     İletişim Tercihleri
                   </h2>
 
-                  <form class="flex max-w-[440px] flex-col gap-4">
+                  <form class="flex max-w-[460px] flex-col gap-4">
                     <div class="flex flex-col gap-4">
                       <!-- E-posta tercihi -->
                       <div
