@@ -31,19 +31,7 @@ document.addEventListener('DOMContentLoaded', () => {
         },
       },
       scrollLock: {
-        enabled: true,
-        styles: {
-          hidden: {
-            overflow: 'hidden',
-            position: 'fixed',
-            width: '100%',
-          },
-          visible: {
-            overflow: 'auto',
-            position: 'static',
-            width: 'auto',
-          },
-        },
+        enabled: false,
       },
     },
   )
