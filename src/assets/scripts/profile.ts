@@ -1,4 +1,3 @@
-import { AccordionManager } from './packages/dynamic-height-calculator.js'
 import { ModalController } from './packages/modal.js'
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -129,5 +128,24 @@ document.addEventListener('DOMContentLoaded', () => {
     },
   )
 
-  new AccordionManager()
+  function generateIds() {
+    // Tüm reservation cardları bul
+    const cards = document.querySelectorAll('.reservation-card')
+
+    // Her card için
+    cards.forEach((card, cardIndex) => {
+      // Input ve labelları bul
+      const inputs = card.querySelectorAll('input[type="checkbox"]')
+      const labels = card.querySelectorAll('label')
+
+      // Her input ve label çiftine ID ver
+      inputs.forEach((input, index) => {
+        const id = `card-${cardIndex}-${index}`
+        input.id = id
+        labels[index].setAttribute('for', id)
+      })
+    })
+  }
+
+  generateIds()
 })

@@ -790,40 +790,33 @@
                   <!-- Tour Card Grid Container -->
                   <div class="grid grid-cols-1 gap-4">
                     <!-- Tour Card 1 -->
-                    <div class="tour-card w-full">
+                    <div class="reservation-card w-full">
                       <div
-                        class="overflow-hidden rounded-lg border border-gray-200 bg-white"
+                        class="group overflow-hidden rounded-lg border border-gray-200 bg-white"
                       >
                         <!-- Card Toggle Checkbox -->
-                        <input
-                          type="checkbox"
-                          checked
-                          class="peer/card card-input accordion-toggle hidden"
-                        />
-
-                        <!-- Card Header/Label -->
+                        <input type="checkbox" class="peer hidden" />
                         <label
-                          class="card-label block cursor-pointer bg-gradient-to-r from-primary-600 to-primary-500 p-4 text-white"
+                          class="block bg-gradient-to-r from-primary-600 to-primary-500 p-4 text-white peer-checked:[&_.icon-rotate]:rotate-180"
                         >
                           <div
                             class="flex items-start justify-between lg:gap-8"
                           >
-                            <!-- Title and Subtitle -->
                             <div>
                               <h2 class="text-base font-bold lg:text-xl">
                                 Lüks Safari Platinium Heritage
                               </h2>
                               <p class="mt-1 text-xs lg:text-sm">Tur Paketi</p>
                             </div>
-                            <!-- Badge and Toggle Icon -->
                             <div class="flex items-center gap-2">
                               <span
                                 class="rounded-full bg-white/20 px-2 py-1 text-xs font-medium lg:px-3 lg:text-sm"
-                                >Premium</span
                               >
+                                Premium
+                              </span>
                               <i
                                 data-lucide="chevron-down"
-                                class="chevron-icon size-5"
+                                class="icon-rotate size-5 transition-transform duration-300"
                               ></i>
                             </div>
                           </div>
@@ -831,37 +824,40 @@
 
                         <!-- Card Content Container -->
                         <div
-                          class="h-0 overflow-hidden transition-[height] duration-500 ease-out peer-checked/card:h-[var(--card-height)]"
+                          class="grid grid-rows-[1fr] transition-[grid-template-rows] duration-500 ease-out peer-checked:grid-rows-[0fr]"
                         >
-                          <div class="card-content space-y-4">
+                          <div
+                            class="space-y-4 overflow-hidden transition-[grid-template-rows] duration-500 ease-out"
+                          >
                             <!-- Tour Information Section -->
-                            <div
-                              class="accordion-section relative px-4 pt-4 sm:block"
-                            >
+                            <div class="relative px-4 pt-4 sm:block">
                               <!-- Section Toggle -->
                               <input
                                 type="checkbox"
-                                class="card-info-container-input peer hidden"
+                                class="peer hidden"
+                                checked
                               />
 
                               <!-- Section Header -->
                               <label
-                                class="card-info-container-label flex cursor-pointer items-center justify-between text-gray-800 sm:cursor-default"
+                                class="flex cursor-pointer items-center justify-between text-gray-800 sm:cursor-default [&_.icon-rotate]:rotate-180 peer-checked:[&_.icon-rotate]:rotate-0"
                               >
                                 <h3 class="text-lg font-semibold">
                                   Tur Bilgileri
                                 </h3>
                                 <i
                                   data-lucide="chevron-down"
-                                  class="size-5 transition-transform peer-checked:rotate-180 sm:hidden"
+                                  class="icon-rotate size-5 transition-transform peer-checked:rotate-180 sm:hidden"
                                 ></i>
                               </label>
 
                               <!-- Section Content -->
                               <div
-                                class="accordion-content h-0 overflow-hidden transition-[height] duration-500 ease-out peer-checked:h-[var(--content-height)] sm:h-auto sm:overflow-visible sm:transition-none sm:duration-0"
+                                class="grid grid-rows-[1fr] transition-[grid-template-rows] duration-500 ease-out peer-checked:grid-rows-[0fr] sm:!grid-rows-[1fr]"
                               >
-                                <div class="accordion-inner">
+                                <div
+                                  class="space-y-4 overflow-hidden transition-[grid-template-rows] duration-500 ease-out"
+                                >
                                   <div
                                     class="grid grid-cols-1 gap-1 pt-3 sm:grid-cols-2"
                                   >
@@ -970,27 +966,30 @@
                               <!-- Section Toggle -->
                               <input
                                 type="checkbox"
-                                class="card-info-container-input peer hidden"
+                                class="peer hidden"
+                                checked
                               />
 
                               <!-- Section Header -->
                               <label
-                                class="card-info-container-label flex cursor-pointer items-center justify-between text-gray-800 sm:cursor-default"
+                                class="flex cursor-pointer items-center justify-between text-gray-800 sm:cursor-default [&_.icon-rotate]:rotate-180 peer-checked:[&_.icon-rotate]:rotate-0"
                               >
                                 <h3 class="text-lg font-semibold">
                                   İletişim Bilgileri
                                 </h3>
                                 <i
                                   data-lucide="chevron-down"
-                                  class="size-5 transition-transform peer-checked:rotate-180 sm:hidden"
+                                  class="icon-rotate size-5 transition-transform peer-checked:rotate-180 sm:hidden"
                                 ></i>
                               </label>
 
                               <!-- Section Content -->
                               <div
-                                class="accordion-content h-0 overflow-hidden transition-[height] duration-500 ease-out peer-checked:h-[var(--content-height)] sm:h-auto sm:overflow-visible sm:transition-none sm:duration-0"
+                                class="grid grid-rows-[1fr] transition-[grid-template-rows] duration-500 ease-out peer-checked:grid-rows-[0fr] sm:!grid-rows-[1fr]"
                               >
-                                <div class="accordion-inner">
+                                <div
+                                  class="space-y-4 overflow-hidden transition-[grid-template-rows] duration-500 ease-out"
+                                >
                                   <div
                                     class="grid grid-cols-1 gap-1 pt-3 sm:grid-cols-2"
                                   >
@@ -1101,25 +1100,28 @@
                               <!-- Section Toggle -->
                               <input
                                 type="checkbox"
-                                class="card-info-container-input peer hidden"
+                                checked
+                                class="peer hidden"
                               />
 
                               <!-- Section Header -->
                               <label
-                                class="card-info-container-label flex cursor-pointer items-center justify-between text-gray-800 sm:cursor-default"
+                                class="flex cursor-pointer items-center justify-between text-gray-800 sm:cursor-default [&_.icon-rotate]:rotate-180 peer-checked:[&_.icon-rotate]:rotate-0"
                               >
                                 <h3 class="text-lg font-semibold">Notlar</h3>
                                 <i
                                   data-lucide="chevron-down"
-                                  class="size-5 transition-transform peer-checked:rotate-180 sm:hidden"
+                                  class="icon-rotate size-5 transition-transform peer-checked:rotate-180 sm:hidden"
                                 ></i>
                               </label>
 
                               <!-- Section Content -->
                               <div
-                                class="accordion-content h-0 overflow-hidden transition-[height] duration-500 ease-out peer-checked:h-[var(--content-height)] sm:h-auto sm:overflow-visible sm:transition-none sm:duration-0"
+                                class="grid grid-rows-[1fr] transition-[grid-template-rows] duration-500 ease-out peer-checked:grid-rows-[0fr] sm:!grid-rows-[1fr]"
                               >
-                                <div class="accordion-inner">
+                                <div
+                                  class="space-y-4 overflow-hidden transition-[grid-template-rows] duration-500 ease-out"
+                                >
                                   <div class="rounded pt-1.5">
                                     <p class="text-sm text-gray-600">
                                       Özel istekler veya ek bilgiler buraya
