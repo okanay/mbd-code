@@ -1,290 +1,206 @@
-interface HeightCalculationConfig {
-  id: string
-  containerSelector: string
-  parentIndex?: number // Hangi config'in parent olduğunu belirtmek için
-  toggleConfig?: {
-    inputSelector: string
-    labelSelector: string
+export class AccordionManager {
+  private readonly accordions: HTMLElement[]
+  private resizeObserver: ResizeObserver
+
+  constructor() {
+    this.accordions = Array.from(document.querySelectorAll('.tour-card'))
+    this.resizeObserver = new ResizeObserver(entries =>
+      this.handleResize(entries),
+    )
+    this.init()
   }
-  contentConfig: {
-    contentSelector: string
-    innerSelector?: string
-    heightVariable: string
+
+  private init(): void {
+    this.setupAccordions()
+    this.observeElements()
   }
-}
 
-interface StateConfig {
-  attribute: string // Örn: 'data-state'
-  activeValue: string // Örn: 'open'
-  inactiveValue: string // Örn: 'closed'
-}
+  private setupAccordions(): void {
+    this.accordions.forEach((accordion, index) => {
+      const uniqueId = `tour-${Date.now()}-${index}`
 
-export class DynamicHeightCalculator {
-  private resizeTimer: number | null = null
-  private observer: MutationObserver
-  private configurations: HeightCalculationConfig[]
-  private activeElements: Set<HTMLElement> = new Set()
-  private heightCache: Map<string, string> = new Map()
-  private stateConfig: StateConfig
+      // Ana accordion setup
+      const cardInput = accordion.querySelector(
+        '.card-input',
+      ) as HTMLInputElement
+      const cardLabel = accordion.querySelector(
+        '.card-label',
+      ) as HTMLLabelElement
 
-  constructor(
-    configurations: HeightCalculationConfig[],
-    stateConfig: StateConfig,
-  ) {
-    this.configurations = configurations
-    this.stateConfig = stateConfig
-    this.observer = new MutationObserver(mutations => {
-      const relevantChanges = mutations.some(mutation => {
-        const target = mutation.target as HTMLElement
-
-        if (mutation.type === 'attributes') {
-          if (
-            mutation.attributeName === 'style' &&
-            target.style.height !== mutation.oldValue
-          ) {
-            return true
-          }
-          if (mutation.attributeName === this.stateConfig.attribute) {
-            const newState = target.getAttribute(this.stateConfig.attribute)
-            if (newState === this.stateConfig.activeValue) {
-              this.restoreHeights()
-              return false
-            }
-          }
-        }
-        return false
-      })
-
-      if (relevantChanges) {
-        if (this.resizeTimer) {
-          clearTimeout(this.resizeTimer)
-        }
-        this.resizeTimer = window.setTimeout(() => this.recalculateAll(), 50)
+      if (cardInput && cardLabel) {
+        cardInput.id = uniqueId
+        cardLabel.htmlFor = uniqueId
       }
-    })
 
-    this.initialize()
-  }
-
-  public initialize(): void {
-    this.initializeToggles()
-    this.calculateAllHeights()
-    this.setupEventListeners()
-    this.setupObservers()
-  }
-
-  private initializeToggles(): void {
-    this.configurations.forEach((config, currentIndex) => {
-      if (!config.toggleConfig) return
-
-      const containers = document.querySelectorAll(config.containerSelector)
-      containers.forEach((container, index) => {
-        const input = container.querySelector(
-          config.toggleConfig!.inputSelector,
+      // İç bölümler için setup
+      const sections = accordion.querySelectorAll('.accordion-section')
+      sections.forEach((section, sectionIndex) => {
+        const sectionInput = section.querySelector(
+          '.card-info-container-input',
         ) as HTMLInputElement
+        const sectionLabel = section.querySelector(
+          '.card-info-container-label',
+        ) as HTMLLabelElement
 
-        if (input) {
-          const uniqueId = `${config.id}-toggle-${index}`
-          input.id = uniqueId
-
-          // Input change event listener
-          input.addEventListener('change', e => {
-            const isChecked = (e.target as HTMLInputElement).checked
-            if (isChecked) {
-              this.activeElements.add(container as HTMLElement)
-            } else {
-              this.activeElements.delete(container as HTMLElement)
-            }
-
-            // Önce kendisini hesapla
-            this.calculateContainerHeight(container as HTMLElement, config)
-
-            // Eğer parent index tanımlıysa, parent container'ı da güncelle
-            if (typeof config.parentIndex === 'number') {
-              const parentConfig = this.configurations[config.parentIndex]
-              if (parentConfig) {
-                // En yakın parent container'ı bul
-                const parentContainer = (container as HTMLElement).closest(
-                  parentConfig.containerSelector,
-                ) as HTMLElement
-                if (parentContainer) {
-                  this.calculateContainerHeight(parentContainer, parentConfig)
-                }
-              }
-            }
-          })
-
-          // Label için for attribute'u
-          const label = container.querySelector(
-            config.toggleConfig!.labelSelector,
-          ) as HTMLLabelElement
-          if (label) {
-            label.setAttribute('for', uniqueId)
-          }
-
-          // Mobil/Desktop davranış kontrolü için
-          if (currentIndex > 0) {
-            // Child elementler için
-            label?.addEventListener('click', e => {
-              if (window.innerWidth >= 640) {
-                // sm breakpoint
-                e.preventDefault()
-                return
-              }
-            })
-          }
+        if (sectionInput && sectionLabel) {
+          const sectionId = `${uniqueId}-section-${sectionIndex}`
+          sectionInput.id = sectionId
+          sectionLabel.htmlFor = sectionId
         }
+
+        // Her section için height observer ekle
+        this.setupSectionObserver(section)
       })
+
+      // Ana accordion için height observer
+      this.setupAccordionObserver(accordion)
     })
   }
 
-  private getExpandedHeight(element: HTMLElement): number {
-    // Geçici olarak visibility:hidden ile göster ve yüksekliği ölç
-    const originalStyles = {
-      position: element.style.position,
-      visibility: element.style.visibility,
-      height: element.style.height,
-      display: element.style.display,
+  private setupAccordionObserver(accordion: HTMLElement): void {
+    const content = accordion.querySelector('.card-content') as HTMLElement
+    if (!content) return
+
+    // Height calculation için clone oluştur
+    const cloneForCalculation = () => {
+      const clone = content.cloneNode(true) as HTMLElement
+      clone.style.position = 'absolute'
+      clone.style.visibility = 'hidden'
+      clone.style.height = 'auto'
+      clone.style.maxHeight = 'none'
+      clone.style.overflow = 'visible'
+      document.body.appendChild(clone)
+
+      const height = clone.offsetHeight
+      document.body.removeChild(clone)
+      return height
     }
 
-    Object.assign(element.style, {
-      position: 'absolute',
-      visibility: 'hidden',
-      height: 'auto',
-      display: 'block',
+    // Input değişikliğini dinle
+    const input = accordion.querySelector('.card-input') as HTMLInputElement
+    if (input) {
+      input.addEventListener('change', () => {
+        const realHeight = cloneForCalculation()
+        accordion.style.setProperty('--card-height', `${realHeight}px`)
+      })
+    }
+
+    // ResizeObserver ekle
+    this.resizeObserver.observe(content)
+  }
+
+  private setupSectionObserver(section: Element): void {
+    const content = section.querySelector('.accordion-content') as HTMLElement
+    const inner = section.querySelector('.accordion-inner') as HTMLElement
+    if (!content || !inner) return
+
+    // Height calculation için clone oluştur
+    const cloneForCalculation = () => {
+      const clone = inner.cloneNode(true) as HTMLElement
+      clone.style.position = 'absolute'
+      clone.style.visibility = 'hidden'
+      clone.style.height = 'auto'
+      clone.style.maxHeight = 'none'
+      clone.style.overflow = 'visible'
+      document.body.appendChild(clone)
+
+      const height = clone.offsetHeight
+      document.body.removeChild(clone)
+      return height
+    }
+
+    // Input değişikliğini dinle
+    const input = section.querySelector(
+      '.card-info-container-input',
+    ) as HTMLInputElement
+    if (input) {
+      input.addEventListener('change', () => {
+        const realHeight = cloneForCalculation()
+        content.style.setProperty('--content-height', `${realHeight}px`)
+      })
+    }
+
+    // ResizeObserver ekle
+    this.resizeObserver.observe(inner)
+  }
+
+  private handleResize(entries: ResizeObserverEntry[]): void {
+    entries.forEach(entry => {
+      const element = entry.target as HTMLElement
+      const isMainContent = element.classList.contains('card-content')
+      const isInnerContent = element.classList.contains('accordion-inner')
+
+      if (isMainContent) {
+        const accordion = element.closest('.tour-card')
+        const height = this.calculateRealHeight(element)
+        if (accordion instanceof HTMLElement) {
+          accordion.style.setProperty('--card-height', `${height}px`)
+        }
+      } else if (isInnerContent) {
+        const section = element.closest('.accordion-section')
+        const content = section?.querySelector(
+          '.accordion-content',
+        ) as HTMLElement
+        const height = this.calculateRealHeight(element)
+        content?.style.setProperty('--content-height', `${height}px`)
+      }
     })
+  }
 
-    const height = element.scrollHeight
+  private calculateRealHeight(element: HTMLElement): number {
+    const clone = element.cloneNode(true) as HTMLElement
+    clone.style.position = 'absolute'
+    clone.style.visibility = 'hidden'
+    clone.style.height = 'auto'
+    clone.style.maxHeight = 'none'
+    clone.style.overflow = 'visible'
+    document.body.appendChild(clone)
 
-    // Orijinal stilleri geri yükle
-    Object.assign(element.style, originalStyles)
-
+    const height = clone.offsetHeight
+    document.body.removeChild(clone)
     return height
   }
 
-  private async calculateAllHeights() {
-    // Önce tüm container'ları hesapla
-    for (const config of this.configurations) {
-      const containers = document.querySelectorAll(config.containerSelector)
-      containers.forEach(container => {
-        this.calculateContainerHeight(container as HTMLElement, config)
+  private observeElements(): void {
+    // MutationObserver ekle - dinamik içerik değişikliklerini yakala
+    const observer = new MutationObserver(mutations => {
+      mutations.forEach(mutation => {
+        if (
+          mutation.type === 'childList' ||
+          mutation.type === 'characterData' ||
+          mutation.type === 'attributes'
+        ) {
+          this.updateHeights()
+        }
       })
-    }
+    })
+
+    this.accordions.forEach(accordion => {
+      observer.observe(accordion, {
+        childList: true,
+        subtree: true,
+        characterData: true,
+      })
+    })
   }
 
-  private calculateContainerHeight(
-    container: HTMLElement,
-    config: HeightCalculationConfig,
-  ) {
-    const content = container.querySelector(
-      config.contentConfig.contentSelector,
-    ) as HTMLElement
-
-    if (!content) return
-
-    // Parent view state kontrolü - artık dinamik state kullanıyor
-    const parentView = container.closest(`[${this.stateConfig.attribute}]`)
-    if (
-      parentView &&
-      parentView.getAttribute(this.stateConfig.attribute) ===
-        this.stateConfig.inactiveValue
-    ) {
-      return
-    }
-
-    let totalHeight = 0
-
-    if (config.contentConfig.innerSelector) {
-      const inner = content.querySelector(
-        config.contentConfig.innerSelector,
-      ) as HTMLElement
-
-      if (inner) {
-        totalHeight = this.getExpandedHeight(inner)
+  private updateHeights(): void {
+    this.accordions.forEach(accordion => {
+      const content = accordion.querySelector('.card-content') as HTMLElement
+      if (content) {
+        const height = this.calculateRealHeight(content)
+        accordion.style.setProperty('--card-height', `${height}px`)
       }
-    } else {
-      totalHeight = this.getExpandedHeight(content)
-    }
 
-    const cacheKey = this.getCacheKey(container, config)
-    this.heightCache.set(cacheKey, `${totalHeight}px`)
-
-    container.style.setProperty(
-      config.contentConfig.heightVariable,
-      `${totalHeight}px`,
-    )
-
-    if (typeof config.parentIndex === 'number') {
-      const parentConfig = this.configurations[config.parentIndex]
-      if (parentConfig) {
-        const parentContainer = container.closest(
-          parentConfig.containerSelector,
+      const sections = accordion.querySelectorAll('.accordion-section')
+      sections.forEach(section => {
+        const inner = section.querySelector('.accordion-inner') as HTMLElement
+        const content = section.querySelector(
+          '.accordion-content',
         ) as HTMLElement
-        if (parentContainer) {
-          this.calculateContainerHeight(parentContainer, parentConfig)
-        }
-      }
-    }
-  }
-
-  public recalculateAll(): void {
-    this.calculateAllHeights()
-  }
-
-  private setupEventListeners(): void {
-    window.addEventListener('resize', () => {
-      if (this.resizeTimer) {
-        clearTimeout(this.resizeTimer)
-      }
-      this.resizeTimer = window.setTimeout(() => this.recalculateAll(), 100)
-    })
-  }
-
-  private getCacheKey(
-    container: HTMLElement,
-    config: HeightCalculationConfig,
-  ): string {
-    // Benzersiz bir cache key oluştur
-    return `${container.className}-${config.contentConfig.heightVariable}`
-  }
-
-  public restoreHeights(): void {
-    this.configurations.forEach(config => {
-      const containers = document.querySelectorAll(config.containerSelector)
-      containers.forEach(container => {
-        const cacheKey = this.getCacheKey(container as HTMLElement, config)
-        const cachedHeight = this.heightCache.get(cacheKey)
-
-        if (cachedHeight) {
-          // Cache'den height değerini geri yükle
-          ;(container as HTMLElement).style.setProperty(
-            config.contentConfig.heightVariable,
-            cachedHeight,
-          )
-        }
-      })
-    })
-  }
-
-  private setupObservers(): void {
-    this.configurations.forEach(config => {
-      const containers = document.querySelectorAll(config.containerSelector)
-      containers.forEach(container => {
-        this.observer.observe(container, {
-          attributes: true,
-          childList: true,
-          subtree: true,
-          attributeOldValue: true,
-          attributeFilter: ['style', this.stateConfig.attribute],
-        })
-
-        const parentView = container.closest(`[${this.stateConfig.attribute}]`)
-        if (parentView) {
-          this.observer.observe(parentView, {
-            attributes: true,
-            attributeOldValue: true,
-            attributeFilter: [this.stateConfig.attribute],
-          })
+        if (inner && content) {
+          const height = this.calculateRealHeight(inner)
+          content.style.setProperty('--content-height', `${height}px`)
         }
       })
     })

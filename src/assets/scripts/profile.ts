@@ -1,6 +1,5 @@
+import { AccordionManager } from './packages/dynamic-height-calculator.js'
 import { ModalController } from './packages/modal.js'
-import { URLMatcher } from './packages/url-matcher.js'
-import { DynamicHeightCalculator } from './packages/dynamic-height-calculator.js'
 
 document.addEventListener('DOMContentLoaded', () => {
   new ModalController(
@@ -130,50 +129,5 @@ document.addEventListener('DOMContentLoaded', () => {
     },
   )
 
-  const height = new DynamicHeightCalculator(
-    [
-      {
-        id: 'tour-card',
-        containerSelector: '.tour-card',
-        toggleConfig: {
-          inputSelector: '.card-input',
-          labelSelector: '.card-label',
-        },
-        contentConfig: {
-          contentSelector: '.card-content',
-          heightVariable: '--card-height',
-        },
-      },
-      {
-        id: 'accordion',
-        containerSelector: '.accordion-section',
-        parentIndex: 0,
-        toggleConfig: {
-          inputSelector: '.card-info-container-input',
-          labelSelector: '.card-info-container-label',
-        },
-        contentConfig: {
-          contentSelector: '.accordion-content',
-          innerSelector: '.accordion-inner',
-          heightVariable: '--content-height',
-        },
-      },
-    ],
-    {
-      attribute: 'data-state',
-      activeValue: 'open',
-      inactiveValue: 'closed',
-    },
-  )
-
-  const urlMatcher = new URLMatcher({
-    queryParam: 'view',
-    targetValues: ['reservation'],
-  })
-
-  // URL eşleşmesi olduğunda bir microtask delay ile hesapla
-  urlMatcher.on('onFirstMatch', 'reservation', () => {
-    // Height'ları hesapla
-    height.recalculateAll()
-  })
+  new AccordionManager()
 })
