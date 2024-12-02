@@ -31,6 +31,11 @@ import {
   Info,
   Eye,
   EyeOff,
+  Banknote,
+  TextSelect,
+  CircleCheck,
+  Binary,
+  Pen,
 } from 'lucide'
 
 const icons = {
@@ -53,6 +58,7 @@ const icons = {
   CircleUser,
   LogOut,
   Check,
+  CircleCheck,
   ChevronRight,
   ChevronLeft,
   ChevronUp,
@@ -65,5 +71,9 @@ const icons = {
   Info,
   Eye,
   EyeOff,
+  Banknote,
+  TextSelect,
+  Binary,
+  Pen,
 }
 export { createIcons, icons }
