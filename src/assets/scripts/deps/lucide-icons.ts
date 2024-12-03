@@ -49,6 +49,7 @@ import {
   Facebook,
   Twitter,
   FileDown,
+  CircleHelp,
 } from 'lucide'
 
 const icons = {
@@ -100,5 +101,6 @@ const icons = {
   Facebook,
   Twitter,
   FileDown,
+  CircleHelp,
 }
 export { createIcons, icons }
