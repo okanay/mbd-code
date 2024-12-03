@@ -12,15 +12,16 @@ export class RTLIconManager {
   constructor(config: RTLIconConfig) {
     this.config = config
 
-    // Erken güvenlik kontrolü
-    if (!document.body) {
-      console.warn('RTLIconManager: document.body not found')
+    // HTML elementini kontrol et
+    const htmlElement = document.documentElement
+    if (!htmlElement) {
+      console.warn('RTLIconManager: document.documentElement not found')
       return
     }
 
-    const direction = document.body.getAttribute('data-direction')
+    const direction = htmlElement.getAttribute('dir')
     if (!direction) {
-      console.warn('RTLIconManager: data-direction attribute not found on body')
+      console.warn('RTLIconManager: dir attribute not found on html element')
       return
     }
 
@@ -32,17 +33,16 @@ export class RTLIconManager {
   }
 
   private setupDirectionObserver(): void {
-    if (!document.body || !this.isInitialized) return
+    const htmlElement = document.documentElement
+    if (!htmlElement || !this.isInitialized) return
 
     this.observer = new MutationObserver(mutations => {
       mutations.forEach(mutation => {
         if (
           mutation.type === 'attributes' &&
-          mutation.attributeName === 'data-direction'
+          mutation.attributeName === 'dir'
         ) {
-          const direction = (mutation.target as HTMLElement).getAttribute(
-            'data-direction',
-          )
+          const direction = (mutation.target as HTMLElement).getAttribute('dir')
           if (!direction) return
 
           this.isRTL = direction === 'rtl'
@@ -51,9 +51,9 @@ export class RTLIconManager {
       })
     })
 
-    this.observer.observe(document.body, {
+    this.observer.observe(htmlElement, {
       attributes: true,
-      attributeFilter: ['data-direction'],
+      attributeFilter: ['dir'],
     })
   }
 
@@ -68,7 +68,7 @@ export class RTLIconManager {
   }
 
   private updateAllIcons(): void {
-    if (!document.body) return
+    if (!this.isInitialized) return
 
     // Handle regular images
     const images = document.querySelectorAll('img')
@@ -92,10 +92,8 @@ export class RTLIconManager {
   }
 
   public checkNewIcons(containerElement?: HTMLElement): void {
-    if (!containerElement) {
-      console.warn(
-        'RTLIconManager: No container element provided for checkNewIcons',
-      )
+    if (!containerElement || !this.isInitialized) {
+      console.warn('RTLIconManager: Invalid container or not initialized')
       return
     }
 
@@ -123,6 +121,7 @@ export class RTLIconManager {
   public destroy(): void {
     if (this.observer) {
       this.observer.disconnect()
+      this.observer = null
     }
   }
 }
