@@ -37,10 +37,17 @@ import {
   Binary,
   Pen,
   ShoppingBag,
+  Image,
   ShoppingCart,
   Search,
   CornerUpLeft,
   CornerUpRight,
+  CircleX,
+  X,
+  Youtube,
+  Instagram,
+  Facebook,
+  Twitter,
 } from 'lucide'
 
 const icons = {
@@ -61,6 +68,9 @@ const icons = {
   Mail,
   Phone,
   CircleUser,
+  CircleX,
+  Image,
+  X,
   LogOut,
   Check,
   CircleCheck,
@@ -84,5 +94,9 @@ const icons = {
   Search,
   CornerUpLeft,
   CornerUpRight,
+  Youtube,
+  Instagram,
+  Facebook,
+  Twitter,
 }
 export { createIcons, icons }

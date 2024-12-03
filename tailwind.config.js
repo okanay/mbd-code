@@ -20,10 +20,7 @@ module.exports = {
     },
   },
   plugins: [],
-  safelist: [
-    'group/query',
-    'sm:grid-cols-[repeat(auto-fit,minmax(min(100%,400px),1fr))]',
-  ],
+  safelist: ['group/query'],
 }
 
 function setColors(color) {

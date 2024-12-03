@@ -23,7 +23,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     ],
   }
 
-  new RTLIconManager(rtlIconConfig)
+  // new RTLIconManager(rtlIconConfig)
 
   new LazyImageLoadController({
     imageSelector: '.lazy-image',
