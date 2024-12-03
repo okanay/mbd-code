@@ -38,15 +38,28 @@ export class Carousel {
     this.prevButton = prevBtn
     this.nextButton = nextBtn
 
-    // RTL kontrolü
-    this.isRTL =
-      document.documentElement.dir === 'rtl' ||
-      document.body.getAttribute('dir') === 'rtl' ||
-      document.body.style.direction === 'rtl'
-    if (this.isRTL) {
+    // Daha güvenli versiyon
+    const htmlDir = document.documentElement.dir
+    this.isRTL = htmlDir === 'rtl'
+
+    if (this.isRTL && this.carouselList) {
       this.carouselList.style.direction = 'rtl'
-      // RTL'de scroll çubuğunu sağda başlat
-      this.carouselList.scrollLeft = -this.carouselList.scrollWidth
+
+      // Initial scroll'u requestAnimationFrame ile geciktir
+      requestAnimationFrame(() => {
+        const maxScroll =
+          this.carouselList.scrollWidth - this.carouselList.clientWidth
+        if (maxScroll > 0) {
+          // Smooth scroll behavior'u geçici olarak devre dışı bırak
+          this.carouselList.style.scrollBehavior = 'auto'
+          this.carouselList.scrollLeft = -maxScroll
+
+          // Smooth scroll'u geri aç
+          requestAnimationFrame(() => {
+            this.carouselList.style.scrollBehavior = 'smooth'
+          })
+        }
+      })
     }
 
     // Initialize options with defaults
