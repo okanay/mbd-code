@@ -63,7 +63,7 @@
     <script type="module" src="/assets/scripts/layout.js"></script>
     <script type="module" src="/assets/scripts/main.js"></script>
   </head>
-  <body class="bg-white">
+  <body class="bg-white" style="direction: rtl" data-direction="rtl">
     <header class="w-full border-gray-200 lg:h-[80px] lg:border-b">
       <!-- Desktop Navigation -->
       <nav
@@ -557,7 +557,7 @@
                 <label
                   id="country-selector-label"
                   for="country-selector"
-                  class="absolute ml-4 -translate-y-1/2 bg-white text-xs"
+                  class="absolute -translate-x-4 -translate-y-1/2 bg-white text-xs"
                 >
                   Ülke
                 </label>
@@ -571,18 +571,22 @@
                   <option value="sa">Suudi Arabistan</option>
                   <option value="om">Umman</option>
                 </select>
-                <img
-                  src="/assets/images/icons/chevron-down.svg"
-                  alt="Arrow Down Icon"
-                  class="absolute right-2 top-1/2 size-[24px] -translate-y-1/2 transform object-cover"
-                />
+                <div
+                  class="pointer-events-none absolute inset-0 flex flex-col items-end justify-center px-2"
+                >
+                  <img
+                    src="/assets/images/icons/chevron-down.svg"
+                    alt="Arrow Down Icon"
+                    class="object-cover"
+                  />
+                </div>
               </div>
               <!-- Language Selector -->
               <div class="relative">
                 <label
                   id="language-selector-label"
                   for="language-selector"
-                  class="absolute ml-4 -translate-y-1/2 bg-white text-xs"
+                  class="absolute -translate-x-4 -translate-y-1/2 bg-white text-xs"
                 >
                   Dil
                 </label>
@@ -594,18 +598,22 @@
                   <option value="tr">Türkçe</option>
                   <option value="en">İngilizce</option>
                 </select>
-                <img
-                  src="/assets/images/icons/chevron-down.svg"
-                  alt="Arrow Down Icon"
-                  class="absolute right-2 top-1/2 size-[24px] -translate-y-1/2 transform object-cover"
-                />
+                <div
+                  class="pointer-events-none absolute inset-0 flex flex-col items-end justify-center px-2"
+                >
+                  <img
+                    src="/assets/images/icons/chevron-down.svg"
+                    alt="Arrow Down Icon"
+                    class="object-cover"
+                  />
+                </div>
               </div>
               <!-- Currency Selector -->
               <div class="relative" aria-labelledby="currency-selector-label">
                 <label
                   id="currency-selector-label"
                   for="currency-selector"
-                  class="absolute ml-4 -translate-y-1/2 bg-white text-xs"
+                  class="absolute -translate-x-4 -translate-y-1/2 bg-white text-xs"
                 >
                   Para Birimi
                 </label>
@@ -618,11 +626,15 @@
                   <option value="euro">EURO</option>
                   <option value="usd">USD</option>
                 </select>
-                <img
-                  src="/assets/images/icons/chevron-down.svg"
-                  alt="Arrow Down Icon"
-                  class="absolute right-2 top-1/2 size-[24px] -translate-y-1/2 transform object-cover"
-                />
+                <div
+                  class="pointer-events-none absolute inset-0 flex flex-col items-end justify-center px-2"
+                >
+                  <img
+                    src="/assets/images/icons/chevron-down.svg"
+                    alt="Arrow Down Icon"
+                    class="object-cover"
+                  />
+                </div>
               </div>
               <!-- Apply Button -->
               <button
@@ -942,7 +954,7 @@
         <!-- Slider Buttons -->
         <nav
           id="hero-slider-btn-list"
-          class="hide-scrollbar pointer-events-auto flex w-full touch-pan-x justify-between space-x-6 overflow-x-auto px-4 lg:px-6"
+          class="hide-scrollbar pointer-events-auto flex w-full touch-pan-x justify-between gap-6 overflow-x-auto px-4 lg:px-6"
           aria-label="Dubai Aktiviteleri"
         >
           <button
@@ -1458,7 +1470,7 @@
         <div class="relative mx-auto w-full overflow-hidden rounded-xl px-3.5">
           <ul
             id="opportunity-list"
-            class="hide-scrollbar pointer-events-auto flex touch-pan-x space-x-6 overflow-x-auto"
+            class="hide-scrollbar pointer-events-auto flex touch-pan-x gap-x-6 overflow-x-auto"
             aria-label="Popüler Tatil Seçenekleri"
             role="region"
           >
@@ -1569,7 +1581,7 @@
           </div>
           <nav
             id="most-popular"
-            class="hide-scrollbar pointer-events-auto flex w-full touch-pan-x justify-start space-x-6 overflow-x-auto px-3.5"
+            class="hide-scrollbar pointer-events-auto flex w-full touch-pan-x justify-between gap-6 overflow-x-auto px-3.5"
             aria-label="Dubai Aktiviteleri"
             role="region"
           >
@@ -1770,7 +1782,7 @@
         <div class="relative mx-auto w-full overflow-hidden rounded-xl px-3.5">
           <nav
             id="popular-list"
-            class="hide-scrollbar pointer-events-auto flex touch-pan-x space-x-2 overflow-x-auto md:space-x-6"
+            class="hide-scrollbar pointer-events-auto flex touch-pan-x justify-between gap-x-2 overflow-x-auto md:gap-x-6"
             aria-label="Popüler Tatil Seçenekleri"
             role="region"
           >
@@ -1951,7 +1963,7 @@
           >
             <nav
               id="holiday-list"
-              class="hide-scrollbar pointer-events-auto relative z-[88] flex w-full touch-pan-x justify-between space-x-2 overflow-x-auto rounded-lg"
+              class="hide-scrollbar pointer-events-auto relative z-[88] flex w-full touch-pan-x justify-start gap-x-2 overflow-x-auto rounded-lg"
               role="region"
             >
               <a

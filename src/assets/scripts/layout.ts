@@ -2,6 +2,7 @@ import { AccordionController } from './packages/accordion.js'
 import { ModalController } from './packages/modal.js'
 import { LazyImageLoadController } from './packages/lazy-load-controller.js'
 import { createIcons, icons } from './deps/lucide-icons.js'
+import { RTLIconManager } from './packages/icon-direction-manager.js'
 document.addEventListener('DOMContentLoaded', async () => {
   createIcons({ icons: { ...icons } })
 
@@ -132,6 +133,25 @@ document.addEventListener('DOMContentLoaded', async () => {
       },
     },
   )
+
+  const rtlIconConfig = {
+    patterns: [
+      'chevron-left.svg',
+      'chevron-right.svg',
+      'arrow-left.svg',
+      'arrow-right.svg',
+    ],
+    lucideIcons: [
+      'chevron-left',
+      'chevron-right',
+      'arrow-left',
+      'arrow-right',
+      'panel-right-close',
+      'panel-right-open',
+    ],
+  }
+
+  new RTLIconManager(rtlIconConfig)
 
   new AccordionController({
     container: '#footer-container',
