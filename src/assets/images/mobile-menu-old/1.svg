@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 24 24">
+  <defs>
+    <style>
+      .cls-1, .cls-2 {
+        fill: none;
+      }
+
+      .cls-2 {
+        stroke: #000;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+      }
+
+      .cls-3 {
+        clip-path: url(#clippath);
+      }
+    </style>
+    <clipPath id="clippath">
+      <rect class="cls-1" x="10.29" y="3.07" width="3.41" height="18.93"/>
+    </clipPath>
+  </defs>
+  <!-- Generator: Adobe Illustrator 28.7.2, SVG Export Plug-In . SVG Version: 1.2.0 Build 154)  -->
+  <g>
+    <g id="Layer_1">
+      <circle class="cls-2" cx="12" cy="12" r="10"/>
+      <g class="cls-3">
+        <path d="M13.64,19.28h-.28v-1.79s-.03-.06-.06-.06h-.4v-2.43s-.03-.06-.06-.06h-.36v-2.34s-.03-.06-.06-.06h-.37V4.02s-.03-.06-.06-.06h-.06v-.82s-.03-.06-.06-.06-.06.03-.06.06v.82h-.06s-.06.03-.06.06v1.7h-.19s-.06.03-.06.06v3.76h-.21s-.06.03-.06.06v3.81h-.27s-.06.03-.06.06v2.45h-.16s-.06.03-.06.06v2.13h-.24s-.06.03-.06.06v3.31h.13v-3.25h.4v3.63h.13v-3.7s-.03-.06-.06-.06h-.16v-2.07h.3v5.83h.13v-5.89s-.03-.06-.06-.06h-.14v-2.39h.47v8.35h.12v-8.41s-.02-.06-.05-.06c0,0,0,0-.01,0h-.2v-3.74h.4v12.21h.13v-12.28s-.03-.06-.06-.06h-.19v-3.69h.38v16.1h.13v-9.27h.3v9.27h.13v-6.87h.3v6.87h.13v-4.38h.33v4.38h.13s-.03.06-.06.06h.34s.06-.03.06-.06v-2.59s-.03-.06-.06-.06M11.8,4.08h.13v1.63h-.13v-1.63ZM13.36,19.41h.22v2.47h-.22v-2.47Z"/>
+      </g>
+    </g>
+  </g>
+</svg>
