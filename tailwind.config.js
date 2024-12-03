@@ -13,6 +13,7 @@ module.exports = {
       },
       colors: {
         primary: setColors('primary'),
+        gray: setColors('gray'),
       },
       fontFamily: {
         custom: ['Fellix', 'Helvetica Neue', 'IBM Plex Sans', 'sans-serif'],

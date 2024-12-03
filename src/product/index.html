@@ -1516,51 +1516,31 @@
             >
               <!-- İçerik -->
               <div class="flex flex-col gap-4">
+                <h2 class="text-base font-bold lg:text-xl">
+                  Sıkça Sorulan Sorular
+                </h2>
                 <details
                   open
-                  class="group overflow-hidden rounded border border-gray-200 bg-white p-2 px-4 transition-colors duration-500 open:border-primary-500 open:bg-primary-50"
+                  class="group overflow-hidden rounded border border-gray-200 bg-white p-2 px-4 transition-colors duration-500 open:border-slate-300 open:bg-slate-50"
                 >
                   <summary
-                    class="flex cursor-pointer list-none items-center justify-between py-1"
+                    class="flex cursor-pointer list-none items-start justify-between py-1"
                   >
                     <span
-                      class="font-semibold text-gray-800 transition-colors duration-500 group-open:text-primary-500"
+                      class="text-pretty text-sm font-semibold text-gray-800 transition-colors duration-500 group-open:text-slate-800 md:text-base"
                     >
                       Lorem ipsum dolor sit amet, consectetur adipiscing elit?
                     </span>
                     <i
                       data-lucide="chevron-down"
-                      class="duration-400 ease size-5 text-gray-600 transition-[colors,transform] duration-500 group-open:rotate-180 group-open:text-primary-500"
+                      class="duration-400 ease size-5 flex-shrink-0 text-gray-800 transition-[colors,transform] duration-500 group-open:rotate-180 group-open:text-slate-800"
                     ></i>
                   </summary>
                   <p
-                    class="py-2 text-gray-800 opacity-0 transition-opacity delay-100 duration-300 group-open:opacity-100"
+                    class="text-pretty py-2 text-sm font-medium text-gray-600 opacity-0 transition-opacity delay-100 duration-300 group-open:opacity-100 md:text-base"
                   >
                     Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed
                     ac nisl lacinia, tincidunt nunc nec, tincidunt nunc.
-                  </p>
-                </details>
-                <details
-                  class="group overflow-hidden rounded border border-gray-200 bg-white px-4 py-2 transition-colors duration-500 open:border-primary-500 open:bg-primary-50"
-                >
-                  <summary
-                    class="flex cursor-pointer list-none items-center justify-between py-1"
-                  >
-                    <span
-                      class="font-semibold text-gray-800 transition-colors duration-500 group-open:text-primary-500"
-                      >Amele nedir?</span
-                    >
-                    <i
-                      data-lucide="chevron-down"
-                      class="duration-400 ease size-5 text-gray-600 transition-[colors,transform] duration-500 group-open:rotate-180 group-open:text-primary-500"
-                    ></i>
-                  </summary>
-                  <p
-                    class="py-2 text-gray-800 opacity-0 transition-opacity delay-200 duration-300 group-open:opacity-100"
-                  >
-                    Arapça dil desteğini kardeşi başta eklemeyip 10 gün sonra
-                    eklendikten sonra bütün sayfaları tekrardan yapması istenen
-                    kişi.
                   </p>
                 </details>
               </div>
@@ -1786,9 +1766,19 @@
                 <div class="mt-4 flex items-center justify-center">
                   <span
                     id="error-message"
-                    class="-mt-1.5 w-full border border-primary-200 bg-primary-50 px-4 py-2 text-xs font-semibold text-primary-600"
+                    class="-mt-1.5 w-full border border-primary-400 bg-primary-50 px-4 py-2 text-xs font-semibold text-primary-600"
                   >
                     Lütfen * ile işaretli tüm alanları doldurun.
+                  </span>
+                </div>
+
+                <!-- Success Message Area -->
+                <div class="mt-4 flex items-center justify-center">
+                  <span
+                    id="error-message"
+                    class="-mt-1.5 w-full border border-lime-400 bg-lime-50 px-4 py-2 text-xs font-semibold text-lime-600"
+                  >
+                    Başarılı! Form başarıyla gönderildi.
                   </span>
                 </div>
 
@@ -2438,7 +2428,7 @@
 
         <!--  Site QR Kodu ve Sosyal Medya Bağlantıları -->
         <div
-          class="order-1 mb-8 flex flex-shrink-0 translate-x-[-6%] flex-col items-center gap-2 md:order-2 md:mb-0 md:w-[50%] md:translate-x-[-0%] md:flex-row md:items-start md:justify-between lg:order-3 lg:w-1/4 lg:flex-col lg:items-center lg:justify-start rtl:translate-x-[6%]"
+          class="order-1 mb-8 flex flex-shrink-0 translate-x-[6%] flex-col items-center gap-2 md:order-2 md:mb-0 md:w-[50%] md:translate-x-[-0%] md:flex-row md:items-start md:justify-between lg:order-3 lg:w-1/4 lg:flex-col lg:items-center lg:justify-start rtl:translate-x-[6%]"
         >
           <img
             src="https://images.project-test.info/footer-qr.webp"

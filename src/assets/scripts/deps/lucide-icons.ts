@@ -48,6 +48,7 @@ import {
   Instagram,
   Facebook,
   Twitter,
+  FileDown,
 } from 'lucide'
 
 const icons = {
@@ -98,5 +99,6 @@ const icons = {
   Instagram,
   Facebook,
   Twitter,
+  FileDown,
 }
 export { createIcons, icons }
