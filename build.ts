@@ -45,8 +45,17 @@ const PAGES = {
     'register',
     'profile',
     'lucide',
+    'terms',
   ],
-  directories: ['main', 'product', 'login', 'register', 'profile'],
+  directories: [
+    'main',
+    'product',
+    'login',
+    'register',
+    'profile',
+    'terms',
+    'about',
+  ],
 }
 
 // Build yapılandırması

@@ -75,6 +75,11 @@ app.get('/profile', c => {
   return c.html(html.text())
 })
 
+app.get('/terms', c => {
+  const html = Bun.file('./dist/terms/index.html')
+  return c.html(html.text())
+})
+
 const secret = 'LHOUwjBFGyori7tltMnRQ2YtanvObPZOenCowk/Cq8c='
 
 app.post('/github-push-event', async c => {
