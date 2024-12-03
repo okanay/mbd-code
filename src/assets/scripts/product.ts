@@ -182,13 +182,21 @@ document.addEventListener('DOMContentLoaded', () => {
         closeElements: [],
         containers: ['#product-info-content-3'],
       },
+      {
+        id: 'faq',
+        toggleElements: [],
+        openElements: ['#product-info-btn-4'],
+        contentElement: '#product-info-content-4',
+        closeElements: [],
+        containers: ['#product-info-content-4'],
+      },
     ],
     {
       initialActiveModal: 'info',
       urlState: {
         enabled: true,
         queryParam: 'view',
-        modals: ['info', 'includes', 'reviews'],
+        modals: ['info', 'includes', 'reviews', 'faq'],
       },
       scrollTo: {
         enabled: true,
