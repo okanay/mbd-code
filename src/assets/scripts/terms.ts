@@ -57,7 +57,7 @@ document.addEventListener('DOMContentLoaded', () => {
   // Mobile Screen Nav Sticky Manager
   new NavStickyManager({
     navId: '#terms-nav',
-    contentId: 'terms-content',
+    contentId: '#terms-content',
     mobileOnly: true,
     mobileBreakpoint: 768,
     threshold: 50,
