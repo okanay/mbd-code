@@ -36,6 +36,11 @@ import {
   CircleCheck,
   Binary,
   Pen,
+  ShoppingBag,
+  ShoppingCart,
+  Search,
+  CornerUpLeft,
+  CornerUpRight,
 } from 'lucide'
 
 const icons = {
@@ -75,5 +80,9 @@ const icons = {
   TextSelect,
   Binary,
   Pen,
+  ShoppingCart,
+  Search,
+  CornerUpLeft,
+  CornerUpRight,
 }
 export { createIcons, icons }

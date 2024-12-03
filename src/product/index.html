@@ -261,13 +261,18 @@
           </button>
 
           <button
-            class="relative z-20 size-[28px] rounded-full border border-gray-200 bg-white p-1 opacity-50"
+            class="relative z-20 size-[28px] rounded-full border border-gray-200 bg-white p-1 opacity-50 transition-opacity duration-500 hover:opacity-75"
           >
-            <img
-              src="/assets/images/icons/exit.svg"
-              alt="Menu Icon"
-              class="size-full brightness-0 group-data-[state=closed]:block group-data-[state=open]:hidden"
-            />
+            <i
+              data-lucide="corner-up-left"
+              class="size-full brightness-0 group-data-[state=closed]:block group-data-[state=open]:hidden rtl:!hidden"
+            ></i>
+
+            <i
+              data-lucide="corner-up-right"
+              class="hidden size-full brightness-0 group-data-[state=open]:block group-data-[state=closed]:hidden rtl:!block"
+            >
+            </i>
           </button>
         </div>
 
@@ -283,32 +288,23 @@
         <!-- Buttons -->
         <div class="flex flex-col gap-4">
           <button
-            class="relative z-20 size-[28px] rounded-full border border-gray-200 bg-white p-1"
+            class="relative z-20 size-[28px] rounded-full border border-gray-200 bg-white p-1 transition-[opacity,transform] duration-500 hover:scale-105 hover:opacity-50"
           >
-            <img
-              src="/assets/images/icons/heart.svg"
-              alt="Menu Icon"
-              class="size-full brightness-0"
-            />
+            <i data-lucide="heart" class="size-full brightness-0"></i>
           </button>
           <button
-            class="relative z-20 size-[28px] rounded-full border border-gray-200 bg-white p-1"
+            class="relative z-20 size-[28px] rounded-full border border-gray-200 bg-white p-1 transition-[opacity,transform] duration-500 hover:scale-105 hover:opacity-50"
           >
-            <img
-              src="/assets/images/icons/shop-bucket.svg"
+            <i
+              data-lucide="shopping-cart"
               style="transform: scaleX(-1)"
-              alt="Menu Icon"
               class="size-full brightness-0"
-            />
+            ></i>
           </button>
           <button
-            class="relative z-20 size-[28px] rounded-full border border-gray-200 bg-white p-1"
+            class="relative z-20 size-[28px] rounded-full border border-gray-200 bg-white p-1 transition-[opacity,transform] duration-500 hover:scale-105 hover:opacity-50"
           >
-            <img
-              src="/assets/images/icons/search.svg"
-              alt="Menu Icon"
-              class="size-full brightness-0"
-            />
+            <i data-lucide="search" class="size-full brightness-0"></i>
           </button>
         </div>
 
@@ -352,6 +348,7 @@
                   alt="Chevron Right Icon"
                   class="size-5"
                 />
+                <i data-lucide="chevron-right" class="size-5 brightness-0"></i>
               </div>
 
               <!-- Language/Currency Button -->
@@ -936,6 +933,27 @@
                 class="h-full text-nowrap border-primary-500 text-sm font-bold data-[state=open]:translate-y-[4%] data-[state=open]:border-b-4 group-data-[query=reviews]/query:!translate-y-[4%] group-data-[query=reviews]/query:!border-b-4 lg:text-base"
               >
                 Yorumlar
+              </button>
+            </div>
+
+            <div class="hidden items-center justify-center gap-4 pb-2 lg:flex">
+              <button
+                class="relative z-20 size-[28px] rounded-full border border-gray-200 bg-white p-1 transition-[opacity,transform] duration-500 hover:scale-105 hover:opacity-50"
+              >
+                <i data-lucide="heart" class="size-full brightness-0"></i>
+              </button>
+              <button
+                class="relative z-20 size-[28px] rounded-full border border-gray-200 bg-white p-1 transition-[opacity,transform] duration-500 hover:scale-105 hover:opacity-50"
+              >
+                <i
+                  data-lucide="shopping-cart"
+                  class="size-full brightness-0"
+                ></i>
+              </button>
+              <button
+                class="relative z-20 size-[28px] rounded-full border border-gray-200 bg-white p-1 transition-[opacity,transform] duration-500 hover:scale-105 hover:opacity-50"
+              >
+                <i data-lucide="search" class="size-full brightness-0"></i>
               </button>
             </div>
           </nav>
@@ -1925,7 +1943,6 @@
           />
         </a>
       </button>
-
       <div class="hidden w-full lg:block">
         <!-- Modals -->
         <div class="mb-6">
@@ -2107,7 +2124,7 @@
             class="group flex w-1/4 items-center justify-center gap-4 transition-opacity duration-300 hover:opacity-75"
           >
             <img
-              src="/assets/images/icons/callender-check.svg?v=0"
+              src="/assets/images/icons/callender-check.svg"
               class="size-7"
             />
             <span class="">Anlaşmalı Oteller</span>
@@ -2141,7 +2158,7 @@
           </button>
           <div
             style="height: 0px"
-            class="footer-content w-full overflow-hidden px-0 pr-4"
+            class="footer-content w-full overflow-hidden px-0 pr-4 rtl:pr-0"
           >
             <div class="flex flex-col gap-2 pt-2">
               <a href="#" class="text-sm font-normal text-gray-600"
@@ -2173,7 +2190,7 @@
           </button>
           <div
             style="height: 0px"
-            class="footer-content w-full overflow-hidden px-0 pr-4"
+            class="footer-content w-full overflow-hidden px-0 pr-4 rtl:pr-0"
           >
             <div class="flex flex-col gap-2 pt-2">
               <a href="#" class="text-sm font-normal text-gray-600"
@@ -2204,7 +2221,7 @@
           </button>
           <div
             style="height: 0px"
-            class="footer-content w-full overflow-hidden px-0 pr-4"
+            class="footer-content w-full overflow-hidden px-0 pr-4 rtl:pr-0"
           >
             <div class="flex flex-col gap-2 pt-2">
               <a href="#" class="text-sm font-normal text-gray-600"
@@ -2235,7 +2252,7 @@
           </button>
           <div
             style="height: 0px"
-            class="footer-content w-full overflow-hidden px-0 pr-4"
+            class="footer-content w-full overflow-hidden px-0 pr-4 rtl:pr-0"
           >
             <div class="flex flex-col gap-2 pt-2">
               <a href="#" class="text-sm font-normal text-gray-600"
@@ -2266,7 +2283,7 @@
           </button>
           <div
             style="height: 0px"
-            class="footer-content w-full overflow-hidden px-0 pr-4"
+            class="footer-content w-full overflow-hidden px-0 pr-4 rtl:pr-0"
           >
             <div class="flex flex-col gap-2 pt-2">
               <a href="#" class="text-sm font-normal text-gray-600"
@@ -2416,7 +2433,7 @@
 
         <!--  Site QR Kodu ve Sosyal Medya Bağlantıları -->
         <div
-          class="order-1 mb-8 flex flex-shrink-0 translate-x-[-6%] flex-col items-center gap-2 md:order-2 md:mb-0 md:w-[50%] md:translate-x-[-0%] md:flex-row md:items-start md:justify-between lg:order-3 lg:w-1/4 lg:flex-col lg:items-center lg:justify-start"
+          class="order-1 mb-8 flex flex-shrink-0 translate-x-[-6%] flex-col items-center gap-2 md:order-2 md:mb-0 md:w-[50%] md:translate-x-[-0%] md:flex-row md:items-start md:justify-between lg:order-3 lg:w-1/4 lg:flex-col lg:items-center lg:justify-start rtl:translate-x-[6%]"
         >
           <img
             src="https://images.project-test.info/footer-qr.webp"
@@ -2507,32 +2524,17 @@
       </div>
 
       <!-- Logo Section with Background -->
-      <div id="contact" class="relative mt-4 w-full overflow-hidden">
+      <div class="relative mt-4 w-full overflow-hidden">
         <!-- Logo Grid -->
         <div
           class="relative w-full space-y-2 bg-primary-500 px-3.5 pb-6 pt-8 lg:space-y-4 xl:scale-x-[105%] xl:rounded-t-[100%] xl:pb-4 xl:pt-12"
         >
           <div
-            class="mx-auto grid max-w-[720px] grid-cols-4 items-center justify-items-center gap-x-8 lg:gap-x-12"
+            class="mx-auto grid max-w-[720px] grid-cols-1 items-center justify-items-center gap-x-8 lg:gap-x-12"
           >
             <img
               src="/assets/images/brand-images/guide_of_dubai_yatay.svg"
               alt="HOI Health logosu"
-              class="h-12 w-auto object-scale-down brightness-0 invert"
-            />
-            <img
-              src="/assets/images/brand-images/guide_of_dubai_yatay.svg"
-              alt="Hair of Istanbul logosu"
-              class="h-12 w-auto object-scale-down brightness-0 invert"
-            />
-            <img
-              src="/assets/images/brand-images/guide_of_dubai_yatay.svg"
-              alt="MBD Travel logosu"
-              class="h-12 w-auto object-scale-down brightness-0 invert"
-            />
-            <img
-              src="/assets/images/brand-images/guide_of_dubai_yatay.svg"
-              alt="Guide of Dubai logosu"
               class="h-12 w-auto object-scale-down brightness-0 invert"
             />
           </div>

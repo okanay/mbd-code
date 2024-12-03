@@ -1,0 +1,40 @@
+    <div class="mx-auto max-w-3xl">
+      <div class="relative mx-auto min-h-[400px] max-w-6xl">
+        <!-- Image Card (Background) -->
+        <div
+          class="absolute -top-[10%] right-0 h-full w-2/3 overflow-hidden rounded-2xl"
+        >
+          <img
+            src="https://images.project-test.info/22.webp"
+            alt="Dubai Tourism"
+            class="h-full w-full object-cover"
+          />
+        </div>
+
+        <!-- Text Card (Foreground) -->
+        <div
+          class="relative z-10 w-3/5 rounded-2xl bg-primary-500 p-8 text-white shadow-lg"
+        >
+          <div class="space-y-6">
+            <p class="text-sm">Biz Kimiz?</p>
+
+            <h1 class="text-4xl font-bold">MBD Travel</h1>
+
+            <div class="h-1 w-12 bg-white"></div>
+
+            <p class="text-base leading-relaxed">
+              Dubai hükümeti Ekonomik Kalkınma Departmanı (DED) tarafından
+              lisanslanan bir turizm şirketidir. Dubai'de faaliyet gösteren
+              turizm şirketimiz, modernizmin ve geleneklerin buluştuğu bu eşsiz
+              şehirde unutulmaz deneyimler sunmaya adamış bir kuruluştur.
+            </p>
+
+            <p class="text-base leading-relaxed">
+              Misafirlerimize, bu ışıltılı metropolün görkemli gökdelenleri,
+              tarihi yapıları ve lüks otelleriyle süslenmiş siluetini keşfetme
+              fırsatı sunuyoruz.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>

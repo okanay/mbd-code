@@ -6,6 +6,25 @@ import { RTLIconManager } from './packages/icon-direction-manager.js'
 document.addEventListener('DOMContentLoaded', async () => {
   createIcons({ icons: { ...icons } })
 
+  const rtlIconConfig = {
+    patterns: [
+      'chevron-left.svg',
+      'chevron-right.svg',
+      'arrow-left.svg',
+      'arrow-right.svg',
+    ],
+    lucideIcons: [
+      'chevron-left',
+      'chevron-right',
+      'arrow-left',
+      'arrow-right',
+      'panel-right-close',
+      'panel-right-open',
+    ],
+  }
+
+  new RTLIconManager(rtlIconConfig)
+
   new LazyImageLoadController({
     imageSelector: '.lazy-image',
     dataAttribute: 'data-src',
@@ -133,25 +152,6 @@ document.addEventListener('DOMContentLoaded', async () => {
       },
     },
   )
-
-  const rtlIconConfig = {
-    patterns: [
-      'chevron-left.svg',
-      'chevron-right.svg',
-      'arrow-left.svg',
-      'arrow-right.svg',
-    ],
-    lucideIcons: [
-      'chevron-left',
-      'chevron-right',
-      'arrow-left',
-      'arrow-right',
-      'panel-right-close',
-      'panel-right-open',
-    ],
-  }
-
-  new RTLIconManager(rtlIconConfig)
 
   new AccordionController({
     container: '#footer-container',

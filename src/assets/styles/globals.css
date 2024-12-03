@@ -66,7 +66,7 @@
 
   /* 5 eleman durumu */
   .grid-container[data-items='5'] {
-    @apply relative grid-cols-8 grid-rows-2 overflow-hidden rounded-l-2xl;
+    @apply relative grid-cols-8 grid-rows-2 overflow-hidden rounded-l-2xl rtl:rounded-l-none rtl:rounded-r-2xl;
   }
   .grid-container[data-items='5'] > *:nth-child(1) {
     @apply col-span-4 row-span-2;
@@ -75,13 +75,13 @@
     @apply col-span-2 col-start-5;
   }
   .grid-container[data-items='5'] > *:nth-child(3) {
-    @apply relative col-span-2 col-start-7 overflow-hidden rounded-tr-2xl;
+    @apply relative col-span-2 col-start-7 overflow-hidden rounded-tr-2xl rtl:rounded-tl-2xl rtl:rounded-tr-none;
   }
   .grid-container[data-items='5'] > *:nth-child(4) {
     @apply col-span-2 col-start-5 row-start-2;
   }
   .grid-container[data-items='5'] > *:nth-child(5) {
-    @apply relative col-span-2 col-start-7 row-start-2 overflow-hidden rounded-br-2xl;
+    @apply relative col-span-2 col-start-7 row-start-2 overflow-hidden rounded-br-2xl rtl:rounded-bl-2xl rtl:rounded-br-none;
   }
 
   /* 4 eleman durumu */
@@ -89,16 +89,16 @@
     @apply grid-cols-8 grid-rows-4;
   }
   .grid-container[data-items='4'] > *:nth-child(1) {
-    @apply relative col-span-4 row-span-4 overflow-hidden rounded-l-2xl;
+    @apply relative col-span-4 row-span-4 overflow-hidden rounded-l-2xl rtl:rounded-l-none rtl:rounded-r-2xl;
   }
   .grid-container[data-items='4'] > *:nth-child(2) {
     @apply col-span-2 col-start-5 row-span-2;
   }
   .grid-container[data-items='4'] > *:nth-child(3) {
-    @apply relative col-span-2 col-start-7 row-span-2 overflow-hidden rounded-tr-2xl;
+    @apply relative col-span-2 col-start-7 row-span-2 overflow-hidden rounded-tr-2xl rtl:rounded-tl-2xl rtl:rounded-tr-none;
   }
   .grid-container[data-items='4'] > *:nth-child(4) {
-    @apply relative col-span-4 col-start-5 row-span-2 row-start-3 overflow-hidden rounded-br-2xl;
+    @apply relative col-span-4 col-start-5 row-span-2 row-start-3 overflow-hidden rounded-br-2xl rtl:rounded-bl-2xl rtl:rounded-br-none;
   }
 
   /* 3 eleman durumu */
@@ -106,13 +106,13 @@
     @apply grid-cols-8 grid-rows-2;
   }
   .grid-container[data-items='3'] > *:nth-child(1) {
-    @apply relative col-span-4 row-span-2 overflow-hidden rounded-l-2xl;
+    @apply relative col-span-4 row-span-2 overflow-hidden rounded-l-2xl rtl:rounded-l-none rtl:rounded-r-2xl;
   }
   .grid-container[data-items='3'] > *:nth-child(2) {
-    @apply relative col-span-4 col-start-5 overflow-hidden rounded-tr-2xl;
+    @apply relative col-span-4 col-start-5 overflow-hidden rounded-tr-2xl rtl:rounded-tl-2xl rtl:rounded-tr-none;
   }
   .grid-container[data-items='3'] > *:nth-child(3) {
-    @apply relative col-span-4 col-start-5 row-start-2 overflow-hidden rounded-br-2xl;
+    @apply relative col-span-4 col-start-5 row-start-2 overflow-hidden rounded-br-2xl rtl:rounded-bl-2xl rtl:rounded-br-none;
   }
 
   /* 2 eleman durumu */
@@ -120,10 +120,10 @@
     @apply grid-cols-2 grid-rows-2;
   }
   .grid-container[data-items='2'] > *:nth-child(1) {
-    @apply relative row-span-2 overflow-hidden rounded-l-2xl;
+    @apply relative row-span-2 overflow-hidden rounded-l-2xl rtl:rounded-l-none rtl:rounded-r-2xl;
   }
   .grid-container[data-items='2'] > *:nth-child(2) {
-    @apply relative row-span-2 overflow-hidden rounded-r-2xl;
+    @apply relative row-span-2 overflow-hidden rounded-r-2xl rtl:rounded-l-2xl rtl:rounded-r-none;
   }
 
   /* 1 eleman durumu */
