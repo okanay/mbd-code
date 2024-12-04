@@ -51,9 +51,9 @@ document.addEventListener('DOMContentLoaded', () => {
     },
     options: {
       zIndex: {
-        clone: 40,
-        selected: 30,
-        notSelected: 20,
+        clone: 3,
+        selected: 2,
+        notSelected: 1,
       },
     },
   })

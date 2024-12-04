@@ -196,8 +196,13 @@ class ImageGalleryTracker {
 
     this.images = Array.from(sourceImages).map((img, index) => {
       const image = img as HTMLImageElement
+      const imageSrc = image.getAttribute(this.dataSrcAttribute) || image.src
+
+      // Debug için kontrol edelim
+      console.log('Image source:', imageSrc)
+
       return {
-        src: image.getAttribute(this.dataSrcAttribute) || image.src,
+        src: imageSrc,
         dataSrc: image.getAttribute(this.dataSrcAttribute) || '',
         alt: image.alt,
         index: index,
