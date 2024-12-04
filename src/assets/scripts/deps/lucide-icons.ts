@@ -50,6 +50,10 @@ import {
   Twitter,
   FileDown,
   CircleHelp,
+  Tag,
+  Clock,
+  TrendingUp,
+  SearchX,
 } from 'lucide'
 
 const icons = {
@@ -92,6 +96,10 @@ const icons = {
   TextSelect,
   Binary,
   Pen,
+  Tag,
+  Clock,
+  TrendingUp,
+  SearchX,
   ShoppingCart,
   Search,
   CornerUpLeft,

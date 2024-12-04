@@ -106,6 +106,14 @@ document.addEventListener('DOMContentLoaded', () => {
         closeElements: ['#close-image-gallery'],
         containers: ['#gallery-modal-content'],
       },
+      {
+        id: 'search-modal',
+        toggleElements: [], // Toggle elementi yok, sadece açma kapama
+        openElements: ['#search-button', '#search-button-mobile'],
+        contentElement: '#search-modal', // Modal'ın kendisi
+        closeElements: ['#search-modal-close-button'], // Kapatma butonu
+        containers: ['#search-modal-content'], // Modal içeriği
+      },
     ],
     {
       outsideClickClose: true,
