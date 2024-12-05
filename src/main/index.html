@@ -288,9 +288,22 @@
         >
           <!-- Mobile Menu Logo -->
           <div
-            style="padding-top: 16px"
-            class="pointer-events-none absolute left-0 top-0 flex w-full max-w-[28rem] justify-center"
+            style="padding-top: 12px"
+            class="pointer-events-none absolute left-0 top-0 flex w-full max-w-[28rem] justify-between"
           >
+            <div class="pl-[52px] pt-1.5">
+              <button
+                id="language-currency-selector-button-mobile"
+                class="flex items-center gap-3 bg-white text-gray-700 transition hover:text-gray-900"
+              >
+                <img
+                  src="/assets/images/flags/tr.svg"
+                  alt="Phone Icon"
+                  class="size-6 rounded-full"
+                />
+                <span> USD </span>
+              </button>
+            </div>
             <a
               href="/"
               class="pointer-events-auto"
@@ -302,6 +315,13 @@
                 class="h-auto w-[96px] object-scale-down"
               />
             </a>
+            <div
+              class="flex items-start justify-center gap-2 pr-6 pt-1.5 font-semibold"
+            >
+              <a href="/login" class=""> Kayıt </a>
+              <span> / </span>
+              <a href="/register" class=""> Giriş </a>
+            </div>
           </div>
           <aside
             id="mobile-navigation-content"
@@ -310,55 +330,8 @@
           >
             <!-- Header Section -->
             <section
-              class="flex w-full flex-col items-start justify-between gap-4 bg-white px-4 pt-28"
-            >
-              <a href="#" class="flex w-full items-center justify-between">
-                <span class="flex items-start gap-3">
-                  <i
-                    data-lucide="circle-user"
-                    class="size-[22px] text-black"
-                  ></i>
-                  <span class="flex flex-col gap-1.5">
-                    <span
-                      class="font-semibold text-primary-500 transition hover:text-primary-800"
-                      >Kayıt Ol</span
-                    >
-                  </span>
-                </span>
-                <i
-                  data-lucide="chevron-right"
-                  class="size-5 brightness-0 rtl:scale-x-[-1]"
-                ></i>
-              </a>
-              <a href="#" class="flex w-full items-center justify-between">
-                <span class="flex items-start gap-3">
-                  <i data-lucide="log-in" class="size-[22px] text-black"></i>
-                  <span class="flex flex-col gap-1.5">
-                    <span
-                      class="font-semibold text-gray-800 transition hover:text-gray-600"
-                      >Giriş Yap</span
-                    >
-                  </span>
-                </span>
-                <i
-                  data-lucide="chevron-right"
-                  class="size-5 brightness-0 rtl:scale-x-[-1]"
-                ></i>
-              </a>
-
-              <!-- Language/Currency Button -->
-              <button
-                id="language-currency-selector-button-mobile"
-                class="flex items-center gap-3 bg-white text-gray-700 transition hover:text-gray-900"
-              >
-                <img
-                  src="/assets/images/flags/tr.svg"
-                  alt="Phone Icon"
-                  class="size-6 rounded-full"
-                />
-                <span>Dil/Para Birimi</span>
-              </button>
-            </section>
+              class="flex w-full flex-col items-start justify-between gap-4 bg-white px-4 pt-16"
+            ></section>
 
             <!-- Navigation Section -->
             <nav
