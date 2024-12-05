@@ -54,6 +54,7 @@ import {
   Clock,
   TrendingUp,
   SearchX,
+  LogIn,
 } from 'lucide'
 
 const icons = {
@@ -64,6 +65,8 @@ const icons = {
   Calendar,
   User,
   Lock,
+  LogIn,
+  LogOut,
   Settings,
   ChevronDown,
   CalendarClock,
@@ -77,7 +80,6 @@ const icons = {
   CircleX,
   Image,
   X,
-  LogOut,
   Check,
   CircleCheck,
   ChevronRight,

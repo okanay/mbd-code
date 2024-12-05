@@ -244,7 +244,7 @@
       <!--  Mobile Navigation -->
       <nav
         data-state="closed"
-        class="group absolute left-0 top-0 z-[1001] mx-auto flex h-fit w-full items-start justify-between bg-transparent px-3.5 py-8 data-[state=closed]:pointer-events-none lg:hidden"
+        class="group absolute left-0 top-0 z-[1001] mx-auto flex h-fit w-full items-start justify-between bg-transparent px-3.5 py-4 data-[state=closed]:pointer-events-none lg:hidden"
         id="mobile-navigation"
       >
         <!-- Hamburger Button -->
@@ -295,7 +295,10 @@
           <button
             class="pointer-events-auto relative z-20 size-[28px] rounded-full border border-gray-200 bg-white p-1 transition-[opacity,transform] duration-500 hover:scale-105 hover:opacity-50"
           >
-            <i data-lucide="heart" class="size-full brightness-0"></i>
+            <i
+              data-lucide="heart"
+              class="size-full fill-primary-600 stroke-primary-500/10"
+            ></i>
           </button>
           <button
             class="pointer-events-auto relative z-20 size-[28px] rounded-full border border-gray-200 bg-white p-1 transition-[opacity,transform] duration-500 hover:scale-105 hover:opacity-50"
@@ -796,7 +799,7 @@
                     >
                       <i
                         data-lucide="trending-up"
-                        class="size-4 text-primary-500"
+                        class="size-4 text-primary-500 rtl:scale-x-[-1]"
                       ></i>
                       <span class="text-sm">Dubai Mall Alışveriş Turu</span>
                     </button>
@@ -805,7 +808,7 @@
                     >
                       <i
                         data-lucide="trending-up"
-                        class="size-4 text-primary-500"
+                        class="size-4 text-primary-500 rtl:scale-x-[-1]"
                       ></i>
                       <span class="text-sm">Desert Safari Dubai</span>
                     </button>
@@ -864,7 +867,7 @@
                     </div>
                     <i
                       data-lucide="chevron-right"
-                      class="size-5 text-gray-400"
+                      class="size-5 text-gray-400 rtl:scale-x-[-1]"
                     ></i>
                   </div>
                 </div>
@@ -891,7 +894,7 @@
                     </div>
                     <i
                       data-lucide="chevron-right"
-                      class="ml-auto size-5 text-gray-400"
+                      class="ml-auto size-5 text-gray-400 rtl:scale-x-[-1]"
                     ></i>
                   </div>
                 </a>
@@ -912,7 +915,10 @@
                       gelecek. İki satıra kadar uzayabilir.
                     </p>
                     <div class="flex items-center gap-2 text-xs text-gray-500">
-                      <i data-lucide="clock" class="size-4"></i>
+                      <i
+                        data-lucide="clock"
+                        class="size-4 rtl:scale-x-[-1]"
+                      ></i>
                       <span>Son güncelleme: 2 saat önce</span>
                     </div>
                   </div>
@@ -929,7 +935,7 @@
                     </div>
                     <i
                       data-lucide="chevron-right"
-                      class="size-5 text-gray-400"
+                      class="size-5 text-gray-400 rtl:scale-x-[-1]"
                     ></i>
                   </div>
                 </div>
@@ -939,9 +945,6 @@
                 id="no-results-state"
                 class="flex-col items-center justify-center gap-4 p-4"
               >
-                <div class="rounded-full bg-gray-100 p-4">
-                  <i data-lucide="search-x" class="size-8 text-gray-400"></i>
-                </div>
                 <div class="pt-4 text-center">
                   <h4 class="font-medium">Sonuç Bulunamadı</h4>
                   <p class="text-balance text-sm text-gray-500">
@@ -1212,14 +1215,17 @@
               <button
                 class="relative z-20 size-[28px] rounded-full border border-gray-200 bg-white p-1 transition-[opacity,transform] duration-500 hover:scale-105 hover:opacity-50"
               >
-                <i data-lucide="heart" class="size-full brightness-0"></i>
+                <i
+                  data-lucide="heart"
+                  class="size-full fill-primary-600 stroke-primary-500/10"
+                ></i>
               </button>
               <button
                 class="relative z-20 size-[28px] rounded-full border border-gray-200 bg-white p-1 transition-[opacity,transform] duration-500 hover:scale-105 hover:opacity-50"
               >
                 <i
                   data-lucide="shopping-cart"
-                  class="size-full brightness-0"
+                  class="size-full scale-x-[-1] brightness-0"
                 ></i>
               </button>
             </div>

@@ -28,6 +28,14 @@ document.addEventListener('DOMContentLoaded', async () => {
         containers: ['#language-currency-selector-options-content'],
       },
       {
+        id: 'search-modal',
+        toggleElements: [],
+        openElements: ['#search-button', '#search-button-mobile'],
+        contentElement: '#search-modal',
+        closeElements: ['#search-modal-close-button'],
+        containers: ['#search-modal-content'],
+      },
+      {
         id: 'mobile-menu',
         toggleElements: ['#mobile-menu-button'],
         openElements: [],
