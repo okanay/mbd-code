@@ -226,7 +226,7 @@
       <!--  Mobile Navigation -->
       <nav
         data-state="closed"
-        class="group pointer-events-none absolute left-0 top-0 z-[1001] mx-auto flex h-fit w-full items-start justify-between bg-transparent px-3.5 py-8 lg:hidden"
+        class="group pointer-events-none fixed left-0 top-0 z-[1001] mx-auto flex h-fit w-full items-start justify-between bg-transparent px-3.5 py-8 lg:hidden"
         id="mobile-navigation"
       >
         <!-- Hamburger Button -->
@@ -301,6 +301,7 @@
           class="fixed left-0 top-0 z-[1000] h-full w-full overflow-y-auto bg-gray-500/40 group-data-[state=closed]:hidden"
           aria-hidden="true"
           role="dialog"
+          style="touch-action: pan-y pinch-zoom"
         >
           <!-- Mobile Menu Logo -->
           <div
@@ -322,8 +323,11 @@
 
           <aside
             id="mobile-navigation-content"
-            class="pointer-events-auto flex h-full max-h-[100vh] min-h-fit w-full max-w-[28rem] flex-col justify-start overflow-y-auto border-r border-neutral-200 bg-slate-100 shadow-lg"
-            style="scrollbar-width: none"
+            class="pointer-events-auto h-full max-h-[100vh] min-h-fit w-full max-w-[28rem] overflow-y-auto border-r border-neutral-200 bg-slate-100 shadow-lg"
+            style="
+              touch-action: pan-y pinch-zoom;
+              -webkit-overflow-scrolling: touch;
+            "
           >
             <!-- Header Section -->
             <section
