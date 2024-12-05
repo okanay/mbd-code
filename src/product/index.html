@@ -325,11 +325,14 @@
           role="dialog"
         >
           <!-- Mobile Options -->
+          <!-- Mobile Options -->
           <div
             style="padding-top: 12px"
-            class="pointer-events-none absolute left-0 top-0 flex w-full max-w-[28rem] justify-between"
+            class="pointer-events-none absolute left-0 top-0 flex w-full max-w-[28rem] justify-between rtl:left-auto rtl:right-0"
           >
-            <div class="pointer-events-auto pl-[52px] pt-[5px]">
+            <div
+              class="pointer-events-auto pl-[52px] pt-[5px] rtl:pl-0 rtl:pr-[52px]"
+            >
               <button
                 id="language-currency-selector-button-mobile"
                 class="flex size-[25px] items-center gap-2 bg-white text-gray-700 transition hover:text-gray-900"
@@ -354,7 +357,7 @@
               />
             </a>
             <div
-              class="pointer-events-auto flex items-start justify-center gap-2 pr-6 pt-1.5 text-sm font-semibold"
+              class="pointer-events-auto flex items-start justify-center gap-2 pr-6 pt-1.5 text-sm font-semibold rtl:pl-4 rtl:pr-0"
             >
               <a href="/login" class=""> Kayıt </a>
               <span> / </span>

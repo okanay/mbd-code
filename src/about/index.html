@@ -6,7 +6,7 @@
       name="viewport"
       content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
     />
-    <title>Örnek Profile Sayfası</title>
+    <title>Örnek Product Sayfası</title>
 
     <!-- Project Fonts -->
     <link rel="stylesheet" href="/assets/fonts/custom/font.css" />
@@ -58,11 +58,10 @@
       href="/assets/images/brand-images/guide_of_dubai_yatay.svg"
       as="image"
     />
-    <link rel="stylesheet" href="/assets/styles/globals-out.css" />
 
+    <link rel="stylesheet" href="/assets/styles/globals-out.css" />
     <script type="module" src="/assets/scripts/layout.js"></script>
-    <script type="module" src="/assets/scripts/profile.js"></script>
-    <script type="module" src="/assets/scripts/ui/password-visible.js"></script>
+    <script type="module" src="/assets/scripts/about.js"></script>
 
     <script>
       ;(function () {
@@ -74,7 +73,7 @@
           document.documentElement.setAttribute('data-query', modalParam)
         } else {
           document.documentElement.classList.add('group/query')
-          document.documentElement.setAttribute('data-query', 'reservation')
+          document.documentElement.setAttribute('data-query', 'about')
         }
 
         document.addEventListener('DOMContentLoaded', function () {
@@ -353,36 +352,8 @@
           >
             <!-- Header Section -->
             <section
-              class="flex w-full flex-col items-start justify-between gap-4 bg-white px-4 pt-28"
-            >
-              <a href="#" class="flex w-full items-center justify-between">
-                <span class="flex items-start gap-3">
-                  <i data-lucide="log-out" class="size-[22px] text-black"></i>
-                  <span class="flex flex-col gap-1.5">
-                    <span
-                      class="font-semibold text-primary-500 transition hover:text-primary-800"
-                      >Çıkış Yap</span
-                    >
-                  </span>
-                </span>
-                <i
-                  data-lucide="chevron-right"
-                  class="size-5 brightness-0 rtl:scale-x-[-1]"
-                ></i>
-              </a>
-              <!-- Language/Currency Button -->
-              <button
-                id="language-currency-selector-button-mobile"
-                class="flex items-center gap-3 bg-white text-gray-700 transition hover:text-gray-900"
-              >
-                <img
-                  src="/assets/images/flags/tr.svg"
-                  alt="Phone Icon"
-                  class="size-6 rounded-full"
-                />
-                <span>Dil/Para Birimi</span>
-              </button>
-            </section>
+              class="flex w-full flex-col items-start justify-between gap-4 bg-white px-4 pt-16"
+            ></section>
 
             <!-- Navigation Section -->
             <nav
@@ -964,874 +935,410 @@
       </div>
     </header>
 
-    <main class="bg-white pb-8 pt-[64px] lg:pb-0 lg:pt-0">
-      <div
-        class="flex min-h-fit border-t lg:mb-0 lg:border-b-0 lg:border-t-0 lg:pl-3.5 xl:pl-7"
+    <main>
+      <!-- Breadcrumb -->
+      <nav
+        class="mx-auto my-4 hidden max-w-5xl items-center gap-0 overflow-hidden text-xs lg:flex lg:px-6"
       >
-        <div class="mx-auto flex w-full max-w-7xl">
-          <!-- Navigation -->
-          <aside
-            id="profile-navigation"
-            data-state="closed"
-            class="group/nav w-[240px] flex-shrink-0 overflow-hidden border-b border-r bg-gray-100 transition-all data-[state=closed]:w-[54px] data-[state=open]:translate-x-0 sm:translate-x-0 md:static md:!w-fit md:!translate-x-0 lg:w-[260px] lg:min-w-[260px] lg:max-w-[260px]"
-          >
-            <div
-              id="profile-navigation-content"
-              class="flex h-fit w-full flex-col border-b border-gray-200"
-            >
-              <!-- Mobile Navigation Extra -->
-              <ul
-                class="flex h-fit flex-grow flex-col space-y-[5px] overflow-hidden overflow-y-auto border-b border-gray-200 px-2 pb-2.5 pr-0 pt-4 font-medium md:space-y-2.5 md:pl-2 md:pr-12 md:pt-5 lg:hidden lg:pb-3 lg:pl-3.5 lg:pr-12 lg:pt-0"
-              >
-                <a
-                  href="#"
-                  class="group flex items-center rounded-lg p-2 font-medium transition-all duration-300 hover:opacity-75 lg:hidden"
-                >
-                  <span class="size-[22px] flex-shrink-0">
-                    <i
-                      data-lucide="home"
-                      class="size-full group-data-[state=open]:hidden"
-                    ></i>
-                  </span>
-                  <span
-                    class="ms-3 text-nowrap group-data-[state=closed]/nav:opacity-0 md:!opacity-100"
-                    >Anasayfa</span
-                  >
-                </a>
-                <button
-                  id="profile-menu-button"
-                  data-state="closed"
-                  class="group flex items-center rounded-lg p-2 font-medium transition-all duration-300 hover:opacity-75 md:hidden"
-                >
-                  <span class="size-[22px] flex-shrink-0">
-                    <i
-                      data-lucide="panel-right-close"
-                      class="size-full group-data-[state=open]:scale-x-[1] rtl:scale-x-[-1]"
-                    ></i>
-                  </span>
-                  <span
-                    class="ms-3 text-nowrap group-data-[state=closed]/nav:opacity-0 md:!opacity-100"
-                    >Gizle</span
-                  >
-                </button>
-              </ul>
-              <ul
-                class="flex h-fit flex-grow flex-col overflow-hidden overflow-y-auto px-2 pb-2.5 pr-0 pt-4 font-medium md:space-y-2.5 md:pl-2 md:pr-12 md:pt-5 lg:pb-3 lg:pl-3.5 lg:pr-12 lg:pt-3.5"
-              >
-                <li class="group">
-                  <button
-                    id="profile-view-control-1"
-                    data-state="closed"
-                    class="group flex items-center rounded-lg p-2 font-medium transition-all duration-300 hover:opacity-75 data-[state=open]:hover:!opacity-100"
-                  >
-                    <span
-                      class="size-[22px] flex-shrink-0 transition-all duration-300 group-hover:text-primary-600 group-data-[state=open]:text-primary-500"
-                    >
-                      <i data-lucide="calendar" class="size-full"></i>
-                    </span>
-                    <span
-                      class="ms-3 text-nowrap group-data-[state=open]:font-semibold group-data-[state=open]:text-gray-800 group-data-[state=closed]/nav:opacity-0 md:!opacity-100"
-                      >Rezervasyonlarım</span
-                    >
-                  </button>
-                </li>
-                <li class="group">
-                  <button
-                    id="profile-view-control-2"
-                    data-state="closed"
-                    class="group flex items-center rounded-lg p-2 font-medium transition-all duration-300 hover:opacity-75 data-[state=open]:hover:!opacity-100"
-                  >
-                    <span
-                      class="size-[22px] flex-shrink-0 transition-all duration-300 group-hover:text-primary-600 group-data-[state=open]:text-primary-500"
-                    >
-                      <i data-lucide="heart" class="size-full"></i>
-                    </span>
-                    <span
-                      class="ms-3 text-nowrap group-data-[state=open]:font-semibold group-data-[state=open]:text-gray-800 group-data-[state=closed]/nav:opacity-0 md:!opacity-100"
-                      >Favorilerim</span
-                    >
-                  </button>
-                </li>
-                <li class="group">
-                  <button
-                    id="profile-view-control-3"
-                    data-state="closed"
-                    class="group flex items-center rounded-lg p-2 font-medium transition-all duration-300 hover:opacity-75 data-[state=open]:hover:!opacity-100"
-                  >
-                    <span
-                      class="size-[22px] flex-shrink-0 transition-all duration-300 group-hover:text-primary-600 group-data-[state=open]:text-primary-500"
-                    >
-                      <i data-lucide="user" class="size-full"></i>
-                    </span>
-                    <span
-                      class="ms-3 text-nowrap group-data-[state=open]:font-semibold group-data-[state=open]:text-gray-800 group-data-[state=closed]/nav:opacity-0 md:!opacity-100"
-                      >Profil Detayları</span
-                    >
-                  </button>
-                </li>
-                <li class="group">
-                  <button
-                    id="profile-view-control-4"
-                    data-state="closed"
-                    class="group flex items-center rounded-lg p-2 font-medium transition-all duration-300 hover:opacity-75 data-[state=open]:hover:!opacity-100"
-                  >
-                    <span
-                      class="size-[22px] flex-shrink-0 transition-all duration-300 group-hover:text-primary-600 group-data-[state=open]:text-primary-500"
-                    >
-                      <i data-lucide="lock" class="size-full"></i>
-                    </span>
-                    <span
-                      class="ms-3 text-nowrap group-data-[state=open]:font-semibold group-data-[state=open]:text-gray-800 group-data-[state=closed]/nav:opacity-0 md:!opacity-100"
-                      >Şifre ve E-Posta</span
-                    >
-                  </button>
-                </li>
-                <li class="group">
-                  <button
-                    id="profile-view-control-5"
-                    data-state="closed"
-                    class="group flex items-center rounded-lg p-2 font-medium transition-all duration-300 hover:opacity-75 data-[state=open]:hover:!opacity-100"
-                  >
-                    <span
-                      class="size-[22px] flex-shrink-0 transition-all duration-300 group-hover:text-primary-600 group-data-[state=open]:text-primary-500"
-                    >
-                      <i data-lucide="settings" class="size-full"></i>
-                    </span>
-                    <span
-                      class="ms-3 text-nowrap group-data-[state=open]:font-semibold group-data-[state=open]:text-gray-800 group-data-[state=closed]/nav:opacity-0 md:!opacity-100"
-                      >Tercihler</span
-                    >
-                  </button>
-                </li>
-              </ul>
-            </div>
-          </aside>
-
-          <!-- Views -->
+        <a href="#" class="hover:underline"> MBD Travel </a>
+        <i data-lucide="chevron-right" class="size-4 rtl:scale-x-[-1]"></i>
+        <a href="#" class="hover:underline"> MBD Travel Sözleşmeler </a>
+      </nav>
+      <section>
+        <div class="relative z-10 h-64 w-full bg-gray-100">
           <div
-            class="min-h-fit w-full max-w-[calc(100%-50px)] flex-shrink-0 pb-16 pt-5 md:max-w-full md:flex-shrink md:px-0 md:pb-32 md:pt-6 lg:pt-0"
+            class="absolute left-[50%] top-0 z-[61] flex h-full w-full max-w-5xl -translate-x-1/2 flex-col items-start justify-center px-3.5 lg:px-4"
+          >
+            <h1
+              class="max-w-[360px] py-6 text-3xl font-bold text-gray-800 sm:text-4xl"
+            >
+              Türkiye’nin Dubai’ye Açılan Kapısı
+            </h1>
+          </div>
+
+          <img
+            src="https://images.project-test.info/22.webp"
+            alt="Dubai'de Balayı Tatili"
+            class="h-full w-full object-cover rtl:scale-x-[-1]"
+            style="transition: filter 0.3s ease"
+          />
+          <div
+            class="absolute inset-0 z-[60] bg-gradient-to-r from-gray-50/75 to-transparent rtl:from-transparent rtl:to-gray-50/75"
+          ></div>
+        </div>
+      </section>
+
+      <!-- About -->
+      <div id="about-content">
+        <!-- Navigation Tabs -->
+        <div
+          id="about-nav"
+          class="mx-auto flex h-12 w-full max-w-5xl items-center justify-between bg-white px-3.5 pt-1.5 lg:px-4"
+        >
+          <nav
+            class="flex h-12 w-full items-center justify-between border-b bg-white pt-1.5"
           >
             <div
-              class="h-full min-h-fit w-full bg-white px-3.5 lg:px-8 lg:pt-4"
+              class="flex h-full w-3/4 items-start justify-start gap-8 px-3.5 lg:gap-16 lg:px-0"
             >
-              <!-- Reservations -->
-              <div
+              <button
+                id="about-btn"
                 data-state="closed"
-                id="reservation"
-                class="flex h-full data-[state=closed]:hidden group-data-[query=reservation]/query:!block"
+                class="h-full text-nowrap border-primary-500 text-sm font-bold data-[state=open]:translate-y-[4%] data-[state=open]:border-b-4 group-data-[query=about]/query:!translate-y-[4%] group-data-[query=about]/query:!border-b-4 lg:text-base"
               >
-                <div class="flex h-full w-full flex-col justify-start">
-                  <h2 class="mb-4 pl-px text-2xl font-semibold text-gray-800">
-                    Rezervasyonlarım
-                  </h2>
-
-                  <!-- Tour Card Grid Container -->
-                  <div class="grid grid-cols-1 gap-4">
-                    <!-- Tour Card 1 -->
-                    <div class="reservation-card w-full">
-                      <div
-                        class="group overflow-hidden rounded border border-gray-200 bg-white"
-                      >
-                        <!-- Card Toggle Checkbox -->
-                        <input type="checkbox" checked class="peer hidden" />
-                        <label
-                          class="block cursor-n-resize gap-4 bg-gradient-to-r from-primary-600 to-primary-500 p-4 text-white peer-checked:cursor-s-resize peer-checked:[&_.icon-rotate]:rotate-180 peer-checked:[&_.title]:truncate"
-                        >
-                          <div class="flex items-start justify-between gap-4">
-                            <div class="min-w-0">
-                              <!-- min-w-0 ekledik -->
-                              <h2 class="title text-base font-bold lg:text-xl">
-                                Lüks Safari Platinium Heritage
-                              </h2>
-                              <p class="mt-1 text-xs lg:text-sm">Tur Paketi</p>
-                            </div>
-                            <div class="flex flex-shrink-0 items-center gap-2">
-                              <!-- flex-shrink-0 ekledik -->
-                              <span
-                                class="rounded-full bg-white/20 px-2 py-1 text-xs font-medium lg:px-3 lg:text-sm"
-                              >
-                                Premium
-                              </span>
-                              <i
-                                data-lucide="chevron-down"
-                                class="icon-rotate size-5 transition-transform duration-300"
-                              ></i>
-                            </div>
-                          </div>
-                        </label>
-
-                        <!-- Card Content Container -->
-                        <div
-                          class="grid grid-rows-[1fr] transition-[grid-template-rows] duration-500 ease-out peer-checked:grid-rows-[0fr]"
-                        >
-                          <div
-                            class="space-y-4 overflow-hidden transition-[grid-template-rows] duration-500 ease-out"
-                          >
-                            <!-- Tour Information Section -->
-                            <div class="relative px-4 pt-4 sm:block">
-                              <!-- Section Toggle -->
-                              <input
-                                type="checkbox"
-                                class="peer hidden"
-                                checked
-                              />
-
-                              <!-- Section Header -->
-                              <label
-                                class="flex cursor-pointer items-start justify-between gap-4 text-gray-800 sm:cursor-default [&_.icon-rotate]:rotate-180 peer-checked:[&_.icon-rotate]:rotate-0 peer-checked:[&_.title]:truncate"
-                              >
-                                <h3 class="title text-lg font-semibold">
-                                  Tur Bilgileri
-                                </h3>
-                                <i
-                                  data-lucide="chevron-down"
-                                  class="icon-rotate size-5 transition-transform peer-checked:rotate-180 sm:hidden"
-                                ></i>
-                              </label>
-
-                              <!-- Section Content -->
-                              <div
-                                class="grid grid-rows-[1fr] transition-[grid-template-rows] duration-500 ease-out peer-checked:grid-rows-[0fr] sm:!grid-rows-[1fr]"
-                              >
-                                <div
-                                  class="space-y-4 overflow-hidden transition-[grid-template-rows] duration-500 ease-out"
-                                >
-                                  <div
-                                    class="grid grid-cols-1 gap-1 pt-3 sm:grid-cols-2"
-                                  >
-                                    <!-- Departure Date -->
-                                    <div
-                                      class="flex flex-col items-start gap-1.5 rounded p-2"
-                                    >
-                                      <div
-                                        class="flex items-end justify-end gap-1.5"
-                                      >
-                                        <i
-                                          data-lucide="calendar-clock"
-                                          class="size-4 text-primary-500"
-                                        ></i>
-                                        <p
-                                          class="translate-y-[10%] text-xs text-gray-600"
-                                        >
-                                          Gidiş
-                                        </p>
-                                      </div>
-                                      <div>
-                                        <p class="text-sm font-medium">
-                                          dd.mm.yyyy
-                                        </p>
-                                      </div>
-                                    </div>
-
-                                    <!-- Return Date -->
-                                    <div
-                                      class="flex flex-col items-start gap-1.5 rounded p-2 sm:items-end"
-                                    >
-                                      <div
-                                        class="flex items-end justify-end gap-1.5"
-                                      >
-                                        <p
-                                          class="order-2 translate-y-[10%] text-xs text-gray-600 sm:order-1"
-                                        >
-                                          Dönüş
-                                        </p>
-                                        <i
-                                          data-lucide="calendar-check"
-                                          class="order-1 size-4 text-primary-500 sm:order-2"
-                                        ></i>
-                                      </div>
-                                      <div>
-                                        <p class="text-sm font-medium">
-                                          dd.mm.yyyy
-                                        </p>
-                                      </div>
-                                    </div>
-
-                                    <!-- Hotel Information -->
-                                    <div
-                                      class="flex flex-col items-start gap-1.5 rounded p-2"
-                                    >
-                                      <div
-                                        class="flex items-end justify-end gap-1.5"
-                                      >
-                                        <i
-                                          data-lucide="building"
-                                          class="size-4 text-primary-500"
-                                        ></i>
-                                        <p
-                                          class="translate-y-[10%] text-xs text-gray-600"
-                                        >
-                                          Otel
-                                        </p>
-                                      </div>
-                                      <div>
-                                        <p class="text-sm font-medium">
-                                          Lüks Otel
-                                        </p>
-                                      </div>
-                                    </div>
-
-                                    <!-- Transfer Information -->
-                                    <div
-                                      class="flex flex-col items-start gap-1.5 rounded p-2 sm:items-end"
-                                    >
-                                      <div
-                                        class="flex items-end justify-end gap-1.5"
-                                      >
-                                        <p
-                                          class="order-2 translate-y-[10%] text-xs text-gray-600 sm:order-1"
-                                        >
-                                          Transfer
-                                        </p>
-                                        <i
-                                          data-lucide="bus"
-                                          class="order-1 size-4 text-primary-500 sm:order-2"
-                                        ></i>
-                                      </div>
-                                      <div>
-                                        <p class="text-sm font-medium">Evet</p>
-                                      </div>
-                                    </div>
-                                  </div>
-                                </div>
-                              </div>
-                            </div>
-
-                            <!-- Contact Information Section -->
-                            <div
-                              class="accordion-section relative px-4 sm:block"
-                            >
-                              <!-- Section Toggle -->
-                              <input
-                                type="checkbox"
-                                class="peer hidden"
-                                checked
-                              />
-
-                              <!-- Section Header -->
-                              <label
-                                class="flex cursor-pointer items-start justify-between gap-4 text-gray-800 sm:cursor-default [&_.icon-rotate]:rotate-180 peer-checked:[&_.icon-rotate]:rotate-0 peer-checked:[&_.title]:truncate"
-                              >
-                                <h3 class="title text-lg font-semibold">
-                                  İletişim Bilgileri
-                                </h3>
-                                <i
-                                  data-lucide="chevron-down"
-                                  class="icon-rotate size-5 flex-shrink-0 transition-transform peer-checked:rotate-180 sm:hidden"
-                                ></i>
-                              </label>
-
-                              <!-- Section Content -->
-                              <div
-                                class="grid grid-rows-[1fr] transition-[grid-template-rows] duration-500 ease-out peer-checked:grid-rows-[0fr] sm:!grid-rows-[1fr]"
-                              >
-                                <div
-                                  class="space-y-4 overflow-hidden transition-[grid-template-rows] duration-500 ease-out"
-                                >
-                                  <div
-                                    class="grid grid-cols-1 gap-1 pt-3 sm:grid-cols-2"
-                                  >
-                                    <!-- Full Name -->
-                                    <div
-                                      class="flex flex-col items-start gap-1.5 rounded p-2"
-                                    >
-                                      <div
-                                        class="flex items-end justify-end gap-1.5"
-                                      >
-                                        <i
-                                          data-lucide="user"
-                                          class="size-4 text-primary-500"
-                                        ></i>
-                                        <p
-                                          class="translate-y-[10%] text-xs text-gray-600"
-                                        >
-                                          İsim Soyisim
-                                        </p>
-                                      </div>
-                                      <div>
-                                        <p class="text-sm font-medium">
-                                          Okan Ay
-                                        </p>
-                                      </div>
-                                    </div>
-
-                                    <!-- ID/Passport -->
-                                    <div
-                                      class="flex flex-col items-start gap-1.5 rounded p-2 sm:items-end"
-                                    >
-                                      <div
-                                        class="flex items-end justify-end gap-1.5"
-                                      >
-                                        <p
-                                          class="order-2 translate-y-[10%] text-xs text-gray-600 sm:order-1"
-                                        >
-                                          Kimlik/Pasaport
-                                        </p>
-                                        <i
-                                          data-lucide="id-card"
-                                          class="order-1 size-4 text-primary-500 sm:order-2"
-                                        ></i>
-                                      </div>
-                                      <div>
-                                        <p class="text-sm font-medium">
-                                          1234567890
-                                        </p>
-                                      </div>
-                                    </div>
-
-                                    <!-- Email -->
-                                    <div
-                                      class="flex flex-col items-start gap-1.5 rounded p-2"
-                                    >
-                                      <div
-                                        class="flex items-end justify-end gap-1.5"
-                                      >
-                                        <i
-                                          data-lucide="mail"
-                                          class="size-4 text-primary-500"
-                                        ></i>
-                                        <p
-                                          class="translate-y-[10%] text-xs text-gray-600"
-                                        >
-                                          E-posta
-                                        </p>
-                                      </div>
-                                      <div>
-                                        <p class="text-sm font-medium">
-                                          johndoe@example.com
-                                        </p>
-                                      </div>
-                                    </div>
-
-                                    <!-- Phone -->
-                                    <div
-                                      class="flex flex-col items-start gap-1.5 rounded p-2 sm:items-end"
-                                    >
-                                      <div
-                                        class="flex items-end justify-end gap-1.5"
-                                      >
-                                        <p
-                                          class="order-2 translate-y-[10%] text-xs text-gray-600 sm:order-1"
-                                        >
-                                          Telefon
-                                        </p>
-                                        <i
-                                          data-lucide="phone"
-                                          class="order-1 size-4 text-primary-500 sm:order-2"
-                                        ></i>
-                                      </div>
-                                      <div>
-                                        <p class="text-sm font-medium">
-                                          +90 555 123 4567
-                                        </p>
-                                      </div>
-                                    </div>
-
-                                    <!-- Download Button  -->
-                                    <div
-                                      class="col-2 mt-4 flex w-full justify-start"
-                                    >
-                                      <button
-                                        class="flex h-[48px] items-center justify-center gap-2 rounded border border-primary-400 bg-primary-500 px-6 font-semibold text-white"
-                                      >
-                                        <span>Download</span>
-                                        <i
-                                          data-lucide="file-down"
-                                          class="size-4"
-                                        ></i>
-                                      </button>
-                                    </div>
-                                  </div>
-                                </div>
-                              </div>
-                            </div>
-
-                            <!-- Notes Section -->
-                            <div
-                              class="accordion-section relative border-gray-200 px-4 pb-4 sm:block sm:border-t sm:bg-gray-100 sm:pt-4"
-                            >
-                              <!-- Section Toggle -->
-                              <input
-                                type="checkbox"
-                                checked
-                                class="peer hidden"
-                              />
-
-                              <!-- Section Header -->
-                              <label
-                                class="flex cursor-pointer items-start justify-between gap-4 text-gray-800 sm:cursor-default [&_.icon-rotate]:rotate-180 peer-checked:[&_.icon-rotate]:rotate-0 peer-checked:[&_.title]:truncate"
-                              >
-                                <h3 class="title text-lg font-semibold">
-                                  Lorem ipsum dolor sit amet consectetur
-                                  adipisicing elit.
-                                </h3>
-                                <i
-                                  data-lucide="chevron-down"
-                                  class="icon-rotate size-5 flex-shrink-0 transition-transform peer-checked:rotate-180 sm:hidden"
-                                ></i>
-                              </label>
-
-                              <!-- Section Content -->
-                              <div
-                                class="grid grid-rows-[1fr] transition-[grid-template-rows] duration-500 ease-out peer-checked:grid-rows-[0fr] sm:!grid-rows-[1fr]"
-                              >
-                                <div
-                                  class="space-y-4 overflow-hidden transition-[grid-template-rows] duration-500 ease-out"
-                                >
-                                  <div class="rounded pt-1.5">
-                                    <p class="text-sm text-gray-600">
-                                      Özel istekler veya ek bilgiler buraya
-                                      eklenebilir.
-                                    </p>
-                                  </div>
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <!-- Hic Etkinlik Yok Durumu -->
+                Sözleşmeler
+              </button>
+              <button
+                id="visions-btn"
+                data-state="closed"
+                class="h-full text-nowrap border-primary-500 text-sm font-bold data-[state=open]:translate-y-[4%] data-[state=open]:border-b-4 group-data-[query=visions]/query:!translate-y-[4%] group-data-[query=visions]/query:!border-b-4 lg:text-base"
+              >
+                Sözleşme Şartları
+              </button>
+              <button
+                id="contact-btn"
+                data-state="closed"
+                class="h-full text-nowrap border-primary-500 text-sm font-bold data-[state=open]:translate-y-[4%] data-[state=open]:border-b-4 group-data-[query=contact]/query:!translate-y-[4%] group-data-[query=contact]/query:!border-b-4 lg:text-base"
+              >
+                Bize Ulaş
+              </button>
+            </div>
+          </nav>
+        </div>
+        <!-- Product Information Content and Form -->
+        <article>
+          <section
+            id="about"
+            data-state="closed"
+            class="mb-12 mt-9 hidden data-[state=open]:block group-data-[query=about]/query:!block lg:mt-10"
+          >
+            <div class="mx-auto max-w-5xl px-3.5 py-8 lg:px-4">
+              <div class="mx-auto max-w-3xl">
+                <div class="relative mx-auto h-auto max-w-6xl lg:min-h-[400px]">
+                  <!-- Image Card (Background) -->
                   <div
-                    class="flex h-full flex-col items-center justify-start gap-2"
+                    class="absolute -top-[10%] right-[-0%] h-full w-4/5 overflow-hidden rounded-2xl lg:w-3/5 rtl:left-[-0%] rtl:right-auto"
                   >
                     <img
-                      src="/assets/images/illustrations/empty-reservation.png"
-                      alt="Empty Reservation Illustration"
-                      class="h-[160px] w-[240px] object-contain"
+                      src="https://images.project-test.info/22.webp"
+                      alt="Dubai Tourism"
+                      class="h-full w-full object-cover"
                     />
-
-                    <p class="text-center font-medium text-gray-600">
-                      Herhangi bir tatil rezervasyonunuz bulunmuyor.
-                    </p>
-
-                    <button
-                      class="h-[52px] rounded bg-primary-500 px-8 text-lg font-semibold text-white transition-colors duration-200 hover:bg-primary-600"
-                    >
-                      Şimdi Planla
-                    </button>
                   </div>
-                </div>
-              </div>
-              <!-- Favorites -->
-              <div
-                data-state="closed"
-                id="favorites"
-                class="flex h-full data-[state=closed]:hidden group-data-[query=favorites]/query:!block"
-              >
-                <div class="h-full w-full">
-                  <h2 class="mb-4 text-2xl font-semibold text-gray-800">
-                    Favorilerim
-                  </h2>
 
+                  <!-- Text Card (Foreground) -->
                   <div
-                    class="flex h-full flex-col items-center justify-start gap-2"
+                    class="relative z-10 w-4/5 rounded-2xl bg-primary-500 p-8 text-white shadow-lg lg:w-3/5"
                   >
-                    <img
-                      src="/assets/images/illustrations/empty-favorites.png"
-                      alt="Empty Favorites Illustration"
-                      class="h-auto w-[240px] object-contain"
-                    />
+                    <div class="space-y-4">
+                      <p class="text-xs lg:text-sm">Biz Kimiz?</p>
 
-                    <p class="text-center font-medium text-gray-600">
-                      Favori listeniz boş
-                    </p>
+                      <h1 class="text-xl font-bold lg:text-4xl">MBD Travel</h1>
 
-                    <button
-                      class="h-[52px] rounded bg-primary-500 px-8 text-lg font-semibold text-white transition-colors duration-200 hover:bg-primary-600"
-                    >
-                      Tatilinizi Planlayın
-                    </button>
-                  </div>
-                </div>
-              </div>
-              <!-- Profile Details -->
-              <div
-                data-state="closed"
-                id="profile-details"
-                class="flex data-[state=closed]:hidden group-data-[query=profile-details]/query:!block"
-              >
-                <div class="flex h-full w-full flex-col gap-4">
-                  <!-- Kişisel Bilgiler -->
-                  <h2 class="text-2xl font-semibold text-gray-800">
-                    Kişisel Bilgiler
-                  </h2>
+                      <div class="h-1 w-12 bg-white"></div>
 
-                  <form class="flex max-w-[460px] flex-col gap-4">
-                    <div
-                      class="flex gap-6 !rounded border border-gray-200 px-3 py-2"
-                    >
-                      <label
-                        class="relative flex cursor-pointer items-center gap-2"
-                      >
-                        <input
-                          type="radio"
-                          name="gender"
-                          checked
-                          value="male"
-                          class="peer sr-only"
-                        />
-                        <span
-                          class="relative block h-4 w-4 rounded-full border-2 border-gray-300 after:absolute after:left-[-1px] after:top-[-2px] after:h-[15px] after:w-[15px] after:rounded-full after:bg-gray-200 after:content-[''] peer-checked:border-primary-500 peer-checked:after:bg-primary-500"
-                        >
-                        </span>
-                        <span class="text-gray-700">Erkek</span>
-                      </label>
+                      <p class="text-sm leading-relaxed lg:text-base">
+                        Dubai hükümeti Ekonomik Kalkınma Departmanı (DED)
+                        tarafından lisanslanan bir turizm şirketidir. Dubai'de
+                        faaliyet gösteren turizm şirketimiz, modernizmin ve
+                        geleneklerin buluştuğu bu eşsiz şehirde unutulmaz
+                        deneyimler sunmaya adamış bir kuruluştur.
+                      </p>
 
-                      <label
-                        class="relative flex cursor-pointer items-center gap-2"
-                      >
-                        <input
-                          type="radio"
-                          name="gender"
-                          value="female"
-                          class="peer sr-only"
-                        />
-                        <span
-                          class="relative block h-4 w-4 rounded-full border-2 border-gray-300 after:absolute after:left-[-1px] after:top-[-2px] after:h-[15px] after:w-[15px] after:rounded-full after:bg-gray-200 after:content-[''] peer-checked:border-primary-500 peer-checked:after:bg-primary-500"
-                        >
-                        </span>
-                        <span class="text-gray-700">Kadın</span>
-                      </label>
-                    </div>
-
-                    <input
-                      type="text"
-                      style="-webkit-border-radius: 0; border-radius: 0"
-                      id="name"
-                      class="h-12 !rounded border border-gray-200 px-3 py-2 outline-none focus:border-primary-200"
-                      placeholder="Adınız"
-                    />
-
-                    <input
-                      type="text"
-                      style="-webkit-border-radius: 0; border-radius: 0"
-                      id="surname"
-                      class="h-12 !rounded border border-gray-200 px-3 py-2 outline-none focus:border-primary-200"
-                      placeholder="Soyadınız"
-                    />
-
-                    <button
-                      type="submit"
-                      class="h-[52px] rounded bg-primary-500 px-8 text-lg font-semibold text-white"
-                    >
-                      Bilgileri Güncelle
-                    </button>
-                  </form>
-                </div>
-              </div>
-              <!-- Password and Email -->
-              <div
-                data-state="closed"
-                id="password-email"
-                class="flex data-[state=closed]:hidden group-data-[query=password-email]/query:!block"
-              >
-                <div class="flex h-full w-full flex-col gap-4">
-                  <!-- Kişisel Bilgiler -->
-                  <h2 class="text-2xl font-semibold text-gray-800">
-                    Şifre ve E-Posta
-                  </h2>
-
-                  <form class="flex max-w-[460px] flex-col gap-4">
-                    <input
-                      type="email"
-                      style="-webkit-border-radius: 0; border-radius: 0"
-                      id="email"
-                      class="h-12 !rounded border border-gray-200 px-3 py-2 outline-none focus:border-primary-200"
-                      placeholder="E-Posta Adresiniz"
-                    />
-
-                    <!-- Eski Şifre -->
-                    <div class="group relative" data-visible="false">
-                      <input
-                        type="password"
-                        style="-webkit-border-radius: 0; border-radius: 0"
-                        id="password-old"
-                        class="h-12 w-full !rounded border border-gray-200 px-3 py-2 outline-none focus:border-primary-200"
-                        placeholder="Eski Şifreniz"
-                      />
-                      <button
-                        type="button"
-                        class="visible-control-btn absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 hover:text-gray-700 rtl:left-3 rtl:right-auto"
-                      >
-                        <!-- Kapalı göz ikonu -->
-                        <span class="group-data-[visible=true]:hidden">
-                          <img
-                            src="/assets/images/icons/eye.svg"
-                            class="size-4"
-                            alt="eye"
-                          />
-                        </span>
-                        <!-- Açık göz ikonu -->
-                        <span class="hidden group-data-[visible=true]:block">
-                          <img
-                            src="/assets/images/icons/eye-off.svg"
-                            class="size-4"
-                            alt="eye"
-                          />
-                        </span>
-                      </button>
-                    </div>
-
-                    <!-- Yeni Şifre -->
-                    <div class="group relative" data-visible="false">
-                      <input
-                        type="password"
-                        style="-webkit-border-radius: 0; border-radius: 0"
-                        id="password-new"
-                        class="h-12 w-full !rounded border border-gray-200 px-3 py-2 outline-none focus:border-primary-200"
-                        placeholder="Yeni Şifreniz"
-                      />
-                      <button
-                        type="button"
-                        class="visible-control-btn absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 hover:text-gray-700 rtl:left-3 rtl:right-auto"
-                      >
-                        <!-- Kapalı göz ikonu -->
-                        <span class="group-data-[visible=true]:hidden">
-                          <img
-                            src="/assets/images/icons/eye.svg"
-                            class="size-4"
-                            alt="eye"
-                          />
-                        </span>
-                        <!-- Açık göz ikonu -->
-                        <span class="hidden group-data-[visible=true]:block">
-                          <img
-                            src="/assets/images/icons/eye-off.svg"
-                            class="size-4"
-                            alt="eye"
-                          />
-                        </span>
-                      </button>
-                    </div>
-
-                    <!--  Sifre Bilgilendirme -->
-                    <div class="-mt-1 flex items-start gap-2">
-                      <div
-                        class="flex size-4 items-center justify-center !rounded-full bg-primary-500 p-1"
-                      >
-                        <img
-                          src="/assets/images/icons/circle-alert.svg"
-                          class="size-4 brightness-0 invert"
-                          alt="eye"
-                        />
-                      </div>
-                      <p class="text-xs text-gray-500">
-                        Minimum 6 karakterden oluşmalı, en az 1 harf ve rakam
-                        içermelidir.
+                      <p class="text-sm leading-relaxed lg:text-base">
+                        Misafirlerimize, bu ışıltılı metropolün görkemli
+                        gökdelenleri, tarihi yapıları ve lüks otelleriyle
+                        süslenmiş siluetini keşfetme fırsatı sunuyoruz.
                       </p>
                     </div>
-
-                    <button
-                      type="submit"
-                      class="h-[52px] rounded bg-primary-500 px-8 text-lg font-semibold text-white"
-                    >
-                      Bilgileri Güncelle
-                    </button>
-                  </form>
-                </div>
-              </div>
-              <!--  Preferences -->
-              <div
-                data-state="closed"
-                id="preferences"
-                class="flex data-[state=closed]:hidden group-data-[query=preferences]/query:!block"
-              >
-                <div class="flex h-full w-full flex-col gap-4">
-                  <!-- Kişisel Bilgiler -->
-                  <h2 class="text-2xl font-semibold text-gray-800">
-                    İletişim Tercihleri
-                  </h2>
-
-                  <form class="flex max-w-[460px] flex-col gap-4">
-                    <div class="flex flex-col gap-4">
-                      <!-- E-posta tercihi -->
-                      <div
-                        class="flex items-center justify-between !rounded border border-gray-200 px-3 py-2"
-                      >
-                        <div>
-                          <h3 class="text-base font-medium">E-posta</h3>
-                          <p class="text-sm text-gray-600">
-                            E-posta yoluyla iletilmesini istiyorum.
-                          </p>
-                        </div>
-                        <label
-                          class="relative inline-flex cursor-pointer items-center"
-                        >
-                          <input
-                            type="checkbox"
-                            checked
-                            class="peer sr-only"
-                            name="email_preference"
-                          />
-                          <div
-                            class="h-6 w-11 rounded-full bg-gray-200 after:absolute after:left-[2px] after:top-[2px] after:h-5 after:w-5 after:rounded-full after:bg-white after:transition-all after:content-[''] peer-checked:bg-primary-500 peer-checked:after:translate-x-full"
-                          ></div>
-                        </label>
-                      </div>
-
-                      <!-- SMS tercihi -->
-                      <div
-                        class="flex items-center justify-between !rounded border border-gray-200 px-3 py-2"
-                      >
-                        <div>
-                          <h3 class="text-base font-medium">SMS</h3>
-                          <p class="text-sm text-gray-600">
-                            Telefon ile iletişim kurulmasını istiyorum.
-                          </p>
-                        </div>
-                        <label
-                          class="relative inline-flex cursor-pointer items-center"
-                        >
-                          <input
-                            type="checkbox"
-                            class="peer sr-only"
-                            name="sms_preference"
-                          />
-                          <div
-                            class="h-6 w-11 rounded-full bg-gray-200 after:absolute after:left-[2px] after:top-[2px] after:h-5 after:w-5 after:rounded-full after:bg-white after:transition-all after:content-[''] peer-checked:bg-primary-500 peer-checked:after:translate-x-full"
-                          ></div>
-                        </label>
-                      </div>
-
-                      <!-- Çağrı Merkezi tercihi -->
-                      <div
-                        class="flex items-center justify-between !rounded border border-gray-200 px-3 py-2"
-                      >
-                        <div>
-                          <h3 class="text-base font-medium">Çağrı Merkezi</h3>
-                          <p class="text-sm text-gray-600">
-                            Telefon ile aranarak iletişim kurulmasını istiyorum.
-                          </p>
-                        </div>
-                        <label
-                          class="relative inline-flex cursor-pointer items-center"
-                        >
-                          <input
-                            type="checkbox"
-                            class="peer sr-only"
-                            name="call_preference"
-                          />
-                          <div
-                            class="h-6 w-11 rounded-full bg-gray-200 after:absolute after:left-[2px] after:top-[2px] after:h-5 after:w-5 after:rounded-full after:bg-white after:transition-all after:content-[''] peer-checked:bg-primary-500 peer-checked:after:translate-x-full"
-                          ></div>
-                        </label>
-                      </div>
-                    </div>
-
-                    <button
-                      type="submit"
-                      class="h-[52px] rounded bg-primary-500 px-8 text-lg font-semibold text-white"
-                    >
-                      Bilgileri Güncelle
-                    </button>
-                  </form>
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
-        </div>
+            <hr />
+            <div class="mx-auto flex max-w-5xl flex-col px-3.5 py-8 lg:px-4">
+              <div class="mb-4 space-y-4">
+                <h2 class="text-2xl font-bold text-gray-900 lg:text-4xl">
+                  Neden MBD Travel?
+                </h2>
+                <div class="h-1 w-16 bg-primary-500"></div>
+              </div>
+              <ul
+                class="flex flex-col gap-4 leading-5 tracking-wide text-gray-800"
+              >
+                <li>
+                  MBD Travel, seyahatlerinizi unutulmaz kılmak için yanınızda.
+                  Kişiye özel hizmet anlayışımızla Dubai, Zanzibar ve Abu Dhabi
+                  gibi popüler yerlerde uzmanız. Vize işlemlerinden otel
+                  rezervasyonlarına, şehir turlarından özel etkinliklere kadar
+                  her detayı sizin için planlıyoruz. Her yolculuk bir hikaye,
+                  biz de sizin hikayenizi en güzel şekilde yazmanıza yardımcı
+                  oluyoruz. MBD Travel ile seyahat, sadece bir tatil değil,
+                  unutulmaz bir deneyimdir.
+                </li>
+              </ul>
+            </div>
+
+            <div
+              class="mx-auto grid max-w-5xl grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-4"
+            >
+              <!-- Feature 1 -->
+              <div
+                class="flex flex-col items-start gap-2 text-pretty p-4 text-start"
+              >
+                <img
+                  src="/assets/images/about-icons/1.svg"
+                  alt="Otel & Uçuş"
+                  class="size-14"
+                />
+                <h3 class="text-lg font-semibold text-gray-800">
+                  Otel & Uçuş Bir Arada
+                </h3>
+                <p class="text-sm leading-relaxed text-gray-600">
+                  Konforlu otel konaklamaları ve ulaşım hizmetlerini tek bir
+                  pakette sunuyoruz.
+                </p>
+              </div>
+
+              <!-- Feature 2 -->
+              <div
+                class="flex flex-col items-start gap-2 text-pretty p-4 text-start"
+              >
+                <img
+                  src="/assets/images/about-icons/2.svg"
+                  alt="Keyifli Tatil"
+                  class="size-14"
+                />
+                <h3 class="text-lg font-semibold text-gray-800">
+                  Her Yerde Keyifli Tatil
+                </h3>
+                <p class="text-sm leading-relaxed text-gray-600">
+                  Dünyanın dört bir yanında hayalinizdeki tatili yaşamanız için
+                  buradayız.
+                </p>
+              </div>
+
+              <!-- Feature 3 -->
+              <div
+                class="flex flex-col items-start gap-2 text-pretty p-4 text-start"
+              >
+                <img
+                  src="/assets/images/about-icons/3.svg"
+                  alt="Avantaj"
+                  class="size-14"
+                />
+                <h3 class="text-lg font-semibold text-gray-800">
+                  Daha Fazla Avantaj
+                </h3>
+                <p class="text-sm leading-relaxed text-gray-600">
+                  Paketlerimizle özel indirimler ve ekstra ayrıcalıklar kazanın.
+                </p>
+              </div>
+
+              <!-- Feature 4 -->
+              <div
+                class="flex flex-col items-start gap-2 text-pretty p-4 text-start"
+              >
+                <img
+                  src="/assets/images/about-icons/4.svg"
+                  alt="Hizmet"
+                  class="size-14"
+                />
+                <h3 class="text-lg font-semibold text-gray-800">
+                  Ayrıcalıklı Hizmet
+                </h3>
+                <p class="text-sm leading-relaxed text-gray-600">
+                  Nerede olursanız olun, seyahatinizin her aşamasında
+                  yanınızdayız.
+                </p>
+              </div>
+
+              <!-- Feature 5 -->
+              <div
+                class="flex flex-col items-start gap-2 text-pretty p-4 text-start"
+              >
+                <img
+                  src="/assets/images/about-icons/5.svg"
+                  alt="İptal"
+                  class="size-14"
+                />
+                <h3 class="text-lg font-semibold text-gray-800">
+                  İptal Garantisi
+                </h3>
+                <p class="text-sm leading-relaxed text-gray-600">
+                  Planlarınız değişirse üzülmeyin, kolay iptal ve değişiklik
+                  imkanı sunuyoruz.
+                </p>
+              </div>
+
+              <!-- Feature 6 -->
+              <div
+                class="flex flex-col items-start gap-2 text-pretty p-4 text-start"
+              >
+                <img
+                  src="/assets/images/about-icons/6.svg"
+                  alt="Keşif"
+                  class="size-14"
+                />
+                <h3 class="text-lg font-semibold text-gray-800">
+                  Keşiflere Açılı
+                </h3>
+                <p class="text-sm leading-relaxed text-gray-600">
+                  Dünyanın en özel noktalarında benzersiz seyahat deneyimleri
+                  yaşayın.
+                </p>
+              </div>
+
+              <!-- Feature 7 -->
+              <div
+                class="flex flex-col items-start gap-2 text-pretty p-4 text-start"
+              >
+                <img
+                  src="/assets/images/about-icons/7.svg"
+                  alt="Güven"
+                  class="size-14"
+                />
+                <h3 class="text-lg font-semibold text-gray-800">
+                  Hizmette Güven
+                </h3>
+                <p class="text-sm leading-relaxed text-gray-600">
+                  Yılların tecrübesiyle, kusursuz bir tatil için sizi
+                  bekliyoruz.
+                </p>
+              </div>
+
+              <!-- Feature 8 -->
+              <div
+                class="flex flex-col items-start gap-2 text-pretty p-4 text-start"
+              >
+                <img
+                  src="/assets/images/about-icons/8.svg"
+                  alt="Gizli Maliyet"
+                  class="size-14"
+                />
+                <h3 class="text-lg font-semibold text-gray-800">
+                  Gizli Maliyet Yok
+                </h3>
+                <p class="text-sm leading-relaxed text-gray-600">
+                  Sadece kullandığınız hizmetler için ödeme yapın, sürpriz
+                  masraflarla karşılaşmayın.
+                </p>
+              </div>
+            </div>
+          </section>
+
+          <section
+            id="visions"
+            data-state="closed"
+            class="mb-8 hidden data-[state=open]:block group-data-[query=visions]/query:!block"
+          >
+            <div class="mx-auto mb-20 max-w-5xl px-3.5 py-8 md:mb-12 lg:px-4">
+              <div
+                class="relative h-[250px] rounded-2xl md:h-[300px] lg:h-[400px]"
+              >
+                <!-- Background image -->
+                <img
+                  src="https://images.project-test.info/22.webp"
+                  alt="Luxury Pool View"
+                  class="h-full w-full rounded object-cover"
+                />
+                <!-- Text box -->
+                <div
+                  class="absolute bottom-[-80px] left-4 right-4 rounded-lg bg-primary-500 p-6 md:bottom-[-50px] md:left-8 md:w-[80%] md:p-8 lg:bottom-[-60px] lg:left-14 lg:w-[600px] lg:p-12"
+                >
+                  <div class="space-y-4 text-white md:space-y-6">
+                    <p
+                      class="text-sm leading-relaxed md:text-base lg:text-base"
+                    >
+                      Kişiye özel tur planlamalarından VIP ulaşım hizmetlerine,
+                      konaklama ve aktivite seçeneklerine kadar tatilinizin her
+                      aşamasında yanınızdayız. Tatilinizi sizin ihtiyaçlarınıza
+                      ve beklentilerinize göre planlıyor, her detayın kusursuz
+                      olması için özenle çalışıyoruz. Alanında uzman ekibimiz,
+                      size sadece keyif alacağınız bir tatil deneyimi yaşatmayı
+                      değil, aynı zamanda unutulmaz anılar biriktirmenizi de
+                      hedefliyor.
+                    </p>
+                    <p class="text-sm font-medium md:text-base lg:text-base">
+                      MBD Travel, sıradan tatillerin ötesinde, size özel bir
+                      yolculuk ve benzersiz bir deneyim sunuyor.
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <hr />
+            <div class="mx-auto flex max-w-5xl flex-col px-3.5 py-8 lg:px-4">
+              <div class="mb-4 space-y-4">
+                <h2 class="text-2xl font-bold text-gray-900 lg:text-4xl">
+                  MBD Travel ile Tatilde Ayrıcalık Yaşayın
+                </h2>
+                <div class="h-1 w-16 bg-primary-500"></div>
+              </div>
+              <ul
+                class="flex flex-col gap-4 leading-5 tracking-wide text-gray-800"
+              >
+                <li>
+                  MBD Travel olarak tatilinizi planlarken her detayı sizin için
+                  düşünüyoruz. Tüm tatil sürecinizi sorunsuz hale getirmek için
+                  kişiye özel hizmetler sunuyor, en iyi deneyimi yaşamanız için
+                  size özel çözümler üretiyoruz. Global iş birliklerimiz ve
+                  yerel uzmanlarımız sayesinde tatiliniz boyunca her an
+                  yanınızdayız. Hayalinizdeki tatili gerçeğe dönüştürmek için
+                  buradayız.
+                </li>
+              </ul>
+            </div>
+          </section>
+
+          <section
+            id="contact"
+            data-state="closed"
+            class="mb-8 hidden data-[state=open]:block group-data-[query=contact]/query:!block"
+          >
+            <div class="mx-auto max-w-5xl">
+              <!-- Image and Content Container -->
+              <div
+                class="mx-auto flex max-w-6xl flex-col px-4 py-8 lg:flex-row lg:items-center lg:gap-12"
+              >
+                <!-- Left Content -->
+                <div class="flex flex-col space-y-6 lg:w-1/2">
+                  <div class="space-y-4">
+                    <h2 class="text-2xl font-bold text-gray-900 lg:text-4xl">
+                      MBD Travel Güvencesi ile Her Zaman Yanınızdayız
+                    </h2>
+                    <div class="h-1 w-16 bg-primary-500"></div>
+                  </div>
+                  <p class="text-sm leading-relaxed text-gray-600 lg:text-base">
+                    MBD Travel olarak, seyahatinizin her aşamasında yanınızda
+                    olmayı taahhüt ediyoruz. Misafir memnuniyetini esas alan
+                    kurumsal yaklaşımımızla, dünyanın neresinde olursanız olun,
+                    ihtiyaçlarınıza hızlı ve etkili çözümler sunuyoruz. Seyahat
+                    öncesinde, sırasında veya sonrasında karşılaşabileceğiniz
+                    her durumda, 7/24 ulaşabileceğiniz uzman ekibimiz,
+                    sorunlarınıza en uygun çözümleri sağlamak için daima
+                    hazırdır. MBD Travel güvencesiyle, tatilinizin her detayında
+                    kendinizi güvende hissedersiniz.
+                  </p>
+                  <button
+                    class="w-fit rounded bg-primary-500 px-8 py-3 font-semibold text-white transition-colors hover:bg-primary-600"
+                  >
+                    Bize Ulaşın
+                  </button>
+                </div>
+
+                <!-- Right Image -->
+                <div class="mt-8 lg:mt-0 lg:w-1/2">
+                  <img
+                    src="https://images.project-test.info/22.webp"
+                    alt="MBD Travel Müşteri Hizmetleri"
+                    class="h-auto w-full rounded-lg shadow-lg"
+                  />
+                </div>
+              </div>
+            </div>
+          </section>
+        </article>
       </div>
     </main>
 
@@ -2045,7 +1552,7 @@
             <h5 class="text-start text-gray-950">Hızlı Menü</h5>
             <i
               data-lucide="chevron-down"
-              class="footer-icon size-[24px] flex-shrink-0 transition-transform duration-300 group-data-[state=open]:rotate-180"
+              class="footer-icon size-[24px] transition-transform duration-300 group-data-[state=open]:rotate-180"
             ></i>
           </button>
           <div
@@ -2076,7 +1583,7 @@
             <h5 class="text-start text-gray-950">Keşfet</h5>
             <i
               data-lucide="chevron-down"
-              class="footer-icon size-[24px] flex-shrink-0 transition-transform duration-300 group-data-[state=open]:rotate-180"
+              class="footer-icon size-[24px] transition-transform duration-300 group-data-[state=open]:rotate-180"
             ></i>
           </button>
           <div
@@ -2106,7 +1613,7 @@
             </h5>
             <i
               data-lucide="chevron-down"
-              class="footer-icon size-[24px] flex-shrink-0 transition-transform duration-300 group-data-[state=open]:rotate-180"
+              class="footer-icon size-[24px] transition-transform duration-300 group-data-[state=open]:rotate-180"
             ></i>
           </button>
           <div
@@ -2136,7 +1643,7 @@
             </h5>
             <i
               data-lucide="chevron-down"
-              class="footer-icon size-[24px] flex-shrink-0 transition-transform duration-300 group-data-[state=open]:rotate-180"
+              class="footer-icon size-[24px] transition-transform duration-300 group-data-[state=open]:rotate-180"
             ></i>
           </button>
           <div
@@ -2166,7 +1673,7 @@
             </h5>
             <i
               data-lucide="chevron-down"
-              class="footer-icon size-[24px] flex-shrink-0 transition-transform duration-300 group-data-[state=open]:rotate-180"
+              class="footer-icon size-[24px] transition-transform duration-300 group-data-[state=open]:rotate-180"
             ></i>
           </button>
           <div

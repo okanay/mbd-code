@@ -46,6 +46,7 @@ const PAGES = {
     'profile',
     'lucide',
     'terms',
+    'about',
   ],
   directories: [
     'main',

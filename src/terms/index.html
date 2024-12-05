@@ -309,9 +309,11 @@
           <!-- Mobile Options -->
           <div
             style="padding-top: 12px"
-            class="pointer-events-none absolute left-0 top-0 flex w-full max-w-[28rem] justify-between"
+            class="pointer-events-none absolute left-0 top-0 flex w-full max-w-[28rem] justify-between rtl:left-auto rtl:right-0"
           >
-            <div class="pointer-events-auto pl-[52px] pt-[5px]">
+            <div
+              class="pointer-events-auto pl-[52px] pt-[5px] rtl:pl-0 rtl:pr-[52px]"
+            >
               <button
                 id="language-currency-selector-button-mobile"
                 class="flex size-[25px] items-center gap-2 bg-white text-gray-700 transition hover:text-gray-900"
@@ -336,7 +338,7 @@
               />
             </a>
             <div
-              class="pointer-events-auto flex items-start justify-center gap-2 pr-6 pt-1.5 text-sm font-semibold"
+              class="pointer-events-auto flex items-start justify-center gap-2 pr-6 pt-1.5 text-sm font-semibold rtl:pl-4 rtl:pr-0"
             >
               <a href="/login" class=""> Kayıt </a>
               <span> / </span>
@@ -1020,7 +1022,12 @@
             </div>
             <hr />
             <div class="mx-auto flex max-w-5xl flex-col px-3.5 py-8 lg:px-4">
-              <h2 class="mb-3 text-base font-bold lg:text-xl">Sözleşmeler</h2>
+              <div class="mb-4 space-y-4">
+                <h2 class="text-2xl font-bold text-gray-900 lg:text-4xl">
+                  Sözleşmeler
+                </h2>
+                <div class="h-1 w-16 bg-primary-500"></div>
+              </div>
               <ul
                 class="flex flex-col gap-4 leading-5 tracking-wide text-gray-800"
               >
@@ -1082,9 +1089,12 @@
             </div>
             <hr />
             <div class="mx-auto flex max-w-5xl flex-col px-3.5 py-8 lg:px-4">
-              <h2 class="mb-3 text-base font-bold lg:text-xl">
-                Sözleşme Şartları
-              </h2>
+              <div class="mb-4 space-y-4">
+                <h2 class="text-2xl font-bold text-gray-900 lg:text-4xl">
+                  Sözleşme Şartları
+                </h2>
+                <div class="h-1 w-16 bg-primary-500"></div>
+              </div>
               <ul
                 class="flex flex-col gap-4 leading-5 tracking-wide text-gray-800"
               >
@@ -1136,39 +1146,46 @@
             data-state="closed"
             class="mb-8 hidden data-[state=open]:block group-data-[query=contact]/query:!block"
           >
-            <div class="mx-auto max-w-5xl px-3.5 py-8 lg:px-4">
-              <img
-                src="https://images.project-test.info/22.webp"
-                alt="Dubai'de Balayı Tatili"
-                class="lazy-image h-64 w-full rounded object-cover lg:h-96 rtl:scale-x-[-1]"
-                style="transition: filter 0.3s ease"
-              />
-            </div>
-            <hr />
-            <div class="mx-auto flex max-w-5xl flex-col px-4 py-8">
-              <h2 class="mb-3 text-base font-bold lg:text-xl">
-                MBD Travel Güvencesi ile Her Zaman Yanınızdayız
-              </h2>
-              <ul
-                class="flex flex-col gap-4 leading-5 tracking-wide text-gray-800"
+            <div class="mx-auto max-w-5xl">
+              <!-- Image and Content Container -->
+              <div
+                class="mx-auto flex max-w-6xl flex-col px-4 py-8 lg:flex-row lg:items-center lg:gap-12"
               >
-                <li>
-                  MBD Travel olarak, seyahatinizin her aşamasında yanınızda
-                  olmayı taahhüt ediyoruz. Misafir memnuniyetini esas alan
-                  kurumsal yaklaşımımızla, dünyanın neresinde olursanız olun,
-                  ihtiyaçlarınıza hızlı ve etkili çözümler sunuyoruz. Seyahat
-                  öncesinde, sırasında veya sonrasında karşılaşabileceğiniz her
-                  durumda, 7/24 ulaşabileceğiniz uzman ekibimiz, sorunlarınıza
-                  en uygun çözümleri sağlamak için daima hazırdır. MBD Travel
-                  güvencesiyle, tatilinizin her detayında kendinizi güvende
-                  hissedersiniz.
-                </li>
-              </ul>
-              <button
-                class="mt-4 h-12 w-fit rounded bg-primary-500 px-6 text-base font-semibold text-white"
-              >
-                Bize Ulaşın
-              </button>
+                <!-- Left Content -->
+                <div class="flex flex-col space-y-6 lg:w-1/2">
+                  <div class="space-y-4">
+                    <h2 class="text-2xl font-bold text-gray-900 lg:text-4xl">
+                      MBD Travel Güvencesi ile Her Zaman Yanınızdayız
+                    </h2>
+                    <div class="h-1 w-16 bg-primary-500"></div>
+                  </div>
+                  <p class="text-sm leading-relaxed text-gray-600 lg:text-base">
+                    MBD Travel olarak, seyahatinizin her aşamasında yanınızda
+                    olmayı taahhüt ediyoruz. Misafir memnuniyetini esas alan
+                    kurumsal yaklaşımımızla, dünyanın neresinde olursanız olun,
+                    ihtiyaçlarınıza hızlı ve etkili çözümler sunuyoruz. Seyahat
+                    öncesinde, sırasında veya sonrasında karşılaşabileceğiniz
+                    her durumda, 7/24 ulaşabileceğiniz uzman ekibimiz,
+                    sorunlarınıza en uygun çözümleri sağlamak için daima
+                    hazırdır. MBD Travel güvencesiyle, tatilinizin her detayında
+                    kendinizi güvende hissedersiniz.
+                  </p>
+                  <button
+                    class="w-fit rounded bg-primary-500 px-8 py-3 font-semibold text-white transition-colors hover:bg-primary-600"
+                  >
+                    Bize Ulaşın
+                  </button>
+                </div>
+
+                <!-- Right Image -->
+                <div class="mt-8 lg:mt-0 lg:w-1/2">
+                  <img
+                    src="https://images.project-test.info/22.webp"
+                    alt="MBD Travel Müşteri Hizmetleri"
+                    class="h-auto w-full rounded-lg shadow-lg"
+                  />
+                </div>
+              </div>
             </div>
           </section>
         </article>

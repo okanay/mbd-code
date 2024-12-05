@@ -80,6 +80,11 @@ app.get('/terms', c => {
   return c.html(html.text())
 })
 
+app.get('/about', c => {
+  const html = Bun.file('./dist/about/index.html')
+  return c.html(html.text())
+})
+
 const secret = 'LHOUwjBFGyori7tltMnRQ2YtanvObPZOenCowk/Cq8c='
 
 app.post('/github-push-event', async c => {
