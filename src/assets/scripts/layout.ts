@@ -2,6 +2,39 @@ import { AccordionController } from './packages/accordion.js'
 import { ModalController } from './packages/modal.js'
 import { LazyImageLoadController } from './packages/lazy-load-controller.js'
 import { createIcons, icons } from './deps/lucide-icons.js'
+
+document.addEventListener('DOMContentLoaded', async () => {
+  function formatUserName(name: string) {
+    // Boşlukları temizle ve birden fazla boşluğu tek boşluğa indir
+    const cleanName = name.trim().replace(/\s+/g, ' ')
+
+    // İsmi boşluklardan böl
+    const nameParts = cleanName.split(' ')
+
+    // Son ismin ilk harfi
+    const lastInitial = nameParts[nameParts.length - 1][0]
+
+    // İlk isim 4 harften uzunsa
+    if (nameParts[0].length > 4) {
+      return `${nameParts[0][0]}. ${lastInitial}.`
+    } else {
+      // İlk isim 4 harf veya daha kısaysa
+      return `${nameParts[0]} ${lastInitial}.`
+    }
+  }
+
+  // DOM yüklendikten sonra çalışacak kod
+  const userNameElement = document.getElementById('user-name')
+  if (userNameElement && userNameElement.textContent) {
+    const originalName = userNameElement.textContent.trim()
+    const formattedName = formatUserName(originalName)
+    userNameElement.textContent = formattedName
+
+    // Hover durumunda orijinal ismi göstermek için title attribute'u ekle
+    userNameElement.title = originalName
+  }
+})
+
 document.addEventListener('DOMContentLoaded', async () => {
   createIcons({ icons: { ...icons } })
 
@@ -129,6 +162,14 @@ document.addEventListener('DOMContentLoaded', async () => {
         contentElement: '#desktop-nav-2-content',
         closeElements: [],
         containers: ['#desktop-nav-2'],
+      },
+      {
+        id: 'desktop-nav-3',
+        openElements: [],
+        toggleElements: ['#desktop-nav-3-btn'],
+        contentElement: '#desktop-nav-3-content',
+        closeElements: [],
+        containers: ['#desktop-nav-3'],
       },
     ],
     {
