@@ -224,21 +224,24 @@
           </div>
 
           <div class="flex items-center gap-4">
-            <!-- Login Link -->
-            <a
-              href="/register"
-              class="text-sm font-semibold transition-opacity duration-300 hover:opacity-75"
-              aria-label="Giriş Yap"
-            >
-              Giriş Yap
-            </a>
             <!-- Sign Up Button -->
             <a
               href="/login"
-              class="flex h-[40px] items-center rounded-full border border-gray-200 bg-gray-100 px-7 text-center text-sm font-semibold transition-opacity duration-300 hover:opacity-75"
+              class="flex h-[40px] items-center gap-2 rounded-full border border-gray-200 bg-gray-100 px-5 text-center text-sm font-semibold transition-opacity duration-300 hover:opacity-75"
               aria-label="Üye Ol"
             >
-              <span> Üye Ol </span>
+              <i data-lucide="circle-user" class="size-5"></i>
+              <span id="user-name" class="w-[48px] truncate">
+                John Michael Andrew Richardson
+              </span>
+            </a>
+            <!-- Logout Link -->
+            <a
+              href="/logout"
+              class="text-sm font-semibold transition-opacity duration-300 hover:opacity-75"
+              aria-label="Giriş Yap"
+            >
+              Çıkış Yap
             </a>
           </div>
         </div>
