@@ -95,6 +95,11 @@ app.get('/faq', c => {
   return c.html(html.text())
 })
 
+app.get('/activities', c => {
+  const html = Bun.file('./dist/activities/index.html')
+  return c.html(html.text())
+})
+
 const secret = 'LHOUwjBFGyori7tltMnRQ2YtanvObPZOenCowk/Cq8c='
 
 app.post('/github-push-event', async c => {

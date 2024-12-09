@@ -55,6 +55,7 @@ import {
   TrendingUp,
   SearchX,
   LogIn,
+  Filter,
 } from 'lucide'
 
 const icons = {
@@ -106,6 +107,7 @@ const icons = {
   Search,
   CornerUpLeft,
   CornerUpRight,
+  Filter,
   Youtube,
   Instagram,
   Facebook,
