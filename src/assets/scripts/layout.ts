@@ -1,6 +1,7 @@
 import { AccordionController } from './packages/accordion.js'
 import { ModalController } from './packages/modal.js'
-import { LazyImageLoadController } from './packages/lazy-load-controller.js'
+import { PictureLazyLoadController } from './packages/picture-lazy-load.js'
+import { LazyImageLoadController } from './packages/lazy-load.js'
 import { createIcons, icons } from './deps/lucide-icons.js'
 
 document.addEventListener('DOMContentLoaded', async () => {
@@ -38,11 +39,18 @@ document.addEventListener('DOMContentLoaded', async () => {
 document.addEventListener('DOMContentLoaded', async () => {
   createIcons({ icons: { ...icons } })
 
+  new PictureLazyLoadController({
+    imageSelector: '.lazy-picture',
+    rootMargin: '50px 0px',
+    threshold: 0.1,
+    filterStyle: 'blur(5px)',
+    maxConcurrentLoads: 3,
+  })
+
   new LazyImageLoadController({
     imageSelector: '.lazy-image',
-    dataAttribute: 'data-src',
-    rootMargin: '100px 0px',
-    threshold: 0.2,
+    rootMargin: '50px 0px',
+    threshold: 0.1,
     filterStyle: 'blur(5px)',
     maxConcurrentLoads: 3,
   })
