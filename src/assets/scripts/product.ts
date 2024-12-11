@@ -309,7 +309,9 @@ document.addEventListener('DOMContentLoaded', () => {
       margin: '0 auto',
     },
   })
+})
 
+document.addEventListener('DOMContentLoaded', () => {
   // Mobile Package Slider Instance
   const config = {
     auto: true,
