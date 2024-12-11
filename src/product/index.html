@@ -966,7 +966,6 @@
         class="mx-auto hidden max-w-7xl items-center gap-0 py-6 text-xs lg:flex"
       >
         <a href="#" class="hover:underline"> MBD Travel </a>
-
         <i data-lucide="chevron-right" class="size-4 rtl:scale-x-[-1]"></i>
         <a href="#" class="hover:underline"> Lüks Safari Platinium Heritage </a>
       </nav>
@@ -1283,13 +1282,14 @@
               </div>
             </div>
 
+            <!-- Introduction -->
             <section
               id="product-info-content-1"
               data-state="closed"
               class="mb-8 hidden data-[state=open]:block group-data-[query=info]/query:!block"
               aria-labelledby="main-title"
             >
-              <div itemscope itemtype="http://schema.org/Description">
+              <div>
                 <h2 class="mb-3 text-base font-bold lg:text-xl">
                   Genel Tanıtım
                 </h2>
@@ -1297,8 +1297,7 @@
                   class="flex flex-col gap-4 text-sm tracking-wide text-gray-600"
                 >
                   <div class="flex items-start gap-2">
-                    <p itemprop="description">
-                      <meta itemprop="location" content="Dubai Çölü" />
+                    <p>
                       Platinum Heritage, Dubai çölünde benzersiz bir lüks safari
                       deneyimi sunar. Çölün eşsiz güzelliklerini keşfederken,
                       kültürel ve çevresel sorumluluklarla hazırlanan bu
@@ -1308,7 +1307,7 @@
                     </p>
                   </div>
                   <div class="flex items-start gap-2">
-                    <p itemprop="additionalDescription">
+                    <p>
                       Safariler, Bedevi kültürünü yakından tanıma, geleneksel
                       yemeklerin tadını çıkarma ve yıldızların altında çöl
                       atmosferini yaşama fırsatı sunar. Sürdürülebilirlik odaklı
@@ -1318,10 +1317,443 @@
                     </p>
                   </div>
                   <div class="flex items-start gap-2">
-                    <p itemprop="additionalDescription">
+                    <p>
                       Lüksü ve doğayı harmanlayan bu deneyim, unutulmaz bir
                       yolculuk vaat ediyor.
                     </p>
+                  </div>
+                </div>
+                <!--  Desktop Package Information -->
+                <div
+                  data-active="1"
+                  id="desktop-gallery-controller"
+                  class="group hidden lg:block"
+                >
+                  <div
+                    class="mt-6 hidden flex-col gap-5 lg:hidden lg:group-data-[active=1]:flex"
+                  >
+                    <h2 class="text-base font-bold lg:text-xl">Silver Kamp</h2>
+                    <div class="relative h-80">
+                      <!-- Images -->
+                      <div
+                        id="slider-container-1-desktop"
+                        class="relative z-[103] h-full overflow-hidden rounded-lg"
+                      >
+                        <ul
+                          id="slider-1-desktop"
+                          class="slider-1-desktop relative"
+                        >
+                          <li
+                            data-index="0"
+                            class="slide-1-desktop absolute left-0 top-0 cursor-pointer"
+                          >
+                            <img
+                              data-src="https://images.project-test.info/15.webp"
+                              src="https://images.project-test.info/15-blur.webp"
+                              alt="Dubai'de Balayı Tatili"
+                              class="lazy-image h-full w-full object-cover"
+                            />
+                          </li>
+                          <li
+                            data-index="1"
+                            class="slide-1-desktop absolute left-0 top-0 cursor-pointer"
+                          >
+                            <img
+                              data-src="https://images.project-test.info/17.webp"
+                              src="https://images.project-test.info/17-blur.webp"
+                              alt="Dubai'de Balayı Tatili"
+                              class="lazy-image h-full w-full object-cover"
+                            />
+                          </li>
+                        </ul>
+                      </div>
+                      <!-- Buttons -->
+                      <div
+                        class="pointer-events-none absolute left-0 top-0 z-[2000] flex h-full w-full flex-col items-center justify-end pb-4"
+                      >
+                        <div
+                          class="pointer-events-auto flex items-center gap-1"
+                        >
+                          <button
+                            class="slide-1-btn-desktop size-2.5 rounded-full border border-gray-950 bg-gray-200 transition-all duration-300"
+                            data-target="0"
+                            type="button"
+                          ></button>
+                          <button
+                            class="slide-1-btn-desktop size-2.5 rounded-full border border-gray-950 bg-gray-200 transition-all duration-300"
+                            data-target="1"
+                            type="button"
+                          ></button>
+                        </div>
+                      </div>
+                      <!-- Next & Prev Buttons -->
+                      <div
+                        class="pointer-events-none absolute inset-1 z-[200] flex items-center justify-between px-2.5 pt-8"
+                      >
+                        <button
+                          type="button"
+                          id="slider-1-prev-desktop"
+                          class="pointer-events-auto relative size-[28px] rounded-full border border-gray-200 bg-white p-1 opacity-50 transition-opacity duration-300 hover:opacity-100"
+                        >
+                          <i
+                            data-lucide="chevron-left"
+                            class="size-full brightness-0 rtl:scale-x-[-1]"
+                          ></i>
+                        </button>
+                        <button
+                          type="button"
+                          id="slider-1-next-desktop"
+                          class="pointer-events-auto relative size-[28px] rounded-full border border-gray-200 bg-white p-1 opacity-50 transition-opacity duration-300 hover:opacity-100"
+                        >
+                          <i
+                            data-lucide="chevron-right"
+                            class="size-full brightness-0 rtl:scale-x-[-1]"
+                          ></i>
+                        </button>
+                      </div>
+                    </div>
+                    <div
+                      class="flex flex-col gap-4 text-sm tracking-wide text-gray-600"
+                    >
+                      <div class="flex items-start gap-2">
+                        <p>
+                          Lorem Ipsum is simply dummy text of the printing and
+                          typesetting industry. Lorem Ipsum has been the
+                          industry's standard dummy text ever since the 1500s,
+                          when an unknown printer took a galley of type and
+                          scrambled it to make a type specimen book.
+                        </p>
+                      </div>
+                      <div class="flex items-start gap-2">
+                        <p>
+                          It is a long established fact that a reader will be
+                          distracted by the readable content of a page when
+                          looking at its layout. The point of using Lorem Ipsum
+                          is that it has a more-or-less normal distribution of
+                          letters, as opposed to using
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                  <div
+                    class="mt-6 hidden flex-col gap-5 lg:hidden lg:group-data-[active=2]:flex"
+                  >
+                    <h2 class="text-base font-bold lg:text-xl">Gold Kamp</h2>
+                    <div class="relative h-80">
+                      <!-- Images -->
+                      <div
+                        id="slider-container-2-desktop"
+                        class="relative z-[103] h-full overflow-hidden rounded-lg"
+                      >
+                        <ul
+                          id="slider-2-desktop"
+                          class="slider-2-desktop relative"
+                        >
+                          <li
+                            data-index="0"
+                            class="slide-2-desktop absolute left-0 top-0 cursor-pointer"
+                          >
+                            <img
+                              data-src="https://images.project-test.info/15.webp"
+                              src="https://images.project-test.info/15-blur.webp"
+                              alt="Dubai'de Balayı Tatili"
+                              class="lazy-image h-full w-full object-cover"
+                            />
+                          </li>
+                          <li
+                            data-index="1"
+                            class="slide-2-desktop absolute left-0 top-0 cursor-pointer"
+                          >
+                            <img
+                              data-src="https://images.project-test.info/17.webp"
+                              src="https://images.project-test.info/17-blur.webp"
+                              alt="Dubai'de Balayı Tatili"
+                              class="lazy-image h-full w-full object-cover"
+                            />
+                          </li>
+                        </ul>
+                      </div>
+                      <!-- Buttons -->
+                      <div
+                        class="pointer-events-none absolute left-0 top-0 z-[2000] flex h-full w-full flex-col items-center justify-end pb-4"
+                      >
+                        <div
+                          class="pointer-events-auto flex items-center gap-1"
+                        >
+                          <button
+                            class="slide-2-btn-desktop size-2.5 rounded-full border border-gray-950 bg-gray-200 transition-all duration-300"
+                            data-target="0"
+                            type="button"
+                          ></button>
+                          <button
+                            class="slide-2-btn-desktop size-2.5 rounded-full border border-gray-950 bg-gray-200 transition-all duration-300"
+                            data-target="1"
+                            type="button"
+                          ></button>
+                        </div>
+                      </div>
+                      <!-- Next & Prev Buttons -->
+                      <div
+                        class="pointer-events-none absolute inset-1 z-[200] flex items-center justify-between px-2.5 pt-8"
+                      >
+                        <button
+                          type="button"
+                          id="slider-2-prev-desktop"
+                          class="pointer-events-auto relative size-[28px] rounded-full border border-gray-200 bg-white p-1 opacity-50 transition-opacity duration-300 hover:opacity-100"
+                        >
+                          <i
+                            data-lucide="chevron-left"
+                            class="size-full brightness-0 rtl:scale-x-[-1]"
+                          ></i>
+                        </button>
+                        <button
+                          type="button"
+                          id="slider-2-next-desktop"
+                          class="pointer-events-auto relative size-[28px] rounded-full border border-gray-200 bg-white p-1 opacity-50 transition-opacity duration-300 hover:opacity-100"
+                        >
+                          <i
+                            data-lucide="chevron-right"
+                            class="size-full brightness-0 rtl:scale-x-[-1]"
+                          ></i>
+                        </button>
+                      </div>
+                    </div>
+                    <div
+                      class="flex flex-col gap-4 text-sm tracking-wide text-gray-600"
+                    >
+                      <div class="flex items-start gap-2">
+                        <p>
+                          Lorem Ipsum is simply dummy text of the printing and
+                          typesetting industry. Lorem Ipsum has been the
+                          industry's standard dummy text ever since the 1500s,
+                          when an unknown printer took a galley of type and
+                          scrambled it to make a type specimen book.
+                        </p>
+                      </div>
+                      <div class="flex items-start gap-2">
+                        <p>
+                          It is a long established fact that a reader will be
+                          distracted by the readable content of a page when
+                          looking at its layout. The point of using Lorem Ipsum
+                          is that it has a more-or-less normal distribution of
+                          letters, as opposed to using
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                  <div
+                    class="mt-6 hidden flex-col gap-5 lg:hidden lg:group-data-[active=3]:flex"
+                  >
+                    <h2 class="text-base font-bold lg:text-xl">Premium Kamp</h2>
+                    <div class="relative h-80">
+                      <!-- Images -->
+                      <div
+                        id="slider-container-3-desktop"
+                        class="relative z-[103] h-full overflow-hidden rounded-lg"
+                      >
+                        <ul
+                          id="slider-3-desktop"
+                          class="slider-3-desktop relative"
+                        >
+                          <li
+                            data-index="0"
+                            class="slide-3-desktop absolute left-0 top-0 cursor-pointer"
+                          >
+                            <img
+                              data-src="https://images.project-test.info/15.webp"
+                              src="https://images.project-test.info/15-blur.webp"
+                              alt="Dubai'de Balayı Tatili"
+                              class="lazy-image h-full w-full object-cover"
+                            />
+                          </li>
+                          <li
+                            data-index="1"
+                            class="slide-3-desktop absolute left-0 top-0 cursor-pointer"
+                          >
+                            <img
+                              data-src="https://images.project-test.info/17.webp"
+                              src="https://images.project-test.info/17-blur.webp"
+                              alt="Dubai'de Balayı Tatili"
+                              class="lazy-image h-full w-full object-cover"
+                            />
+                          </li>
+                        </ul>
+                      </div>
+                      <!-- Buttons -->
+                      <div
+                        class="pointer-events-none absolute left-0 top-0 z-[2000] flex h-full w-full flex-col items-center justify-end pb-4"
+                      >
+                        <div
+                          class="pointer-events-auto flex items-center gap-1"
+                        >
+                          <button
+                            class="slide-3-btn-desktop size-2.5 rounded-full border border-gray-950 bg-gray-200 transition-all duration-300"
+                            data-target="0"
+                            type="button"
+                          ></button>
+                          <button
+                            class="slide-3-btn-desktop size-2.5 rounded-full border border-gray-950 bg-gray-200 transition-all duration-300"
+                            data-target="1"
+                            type="button"
+                          ></button>
+                        </div>
+                      </div>
+                      <!-- Next & Prev Buttons -->
+                      <div
+                        class="pointer-events-none absolute inset-1 z-[200] flex items-center justify-between px-2.5 pt-8"
+                      >
+                        <button
+                          type="button"
+                          id="slider-3-prev-desktop"
+                          class="pointer-events-auto relative size-[28px] rounded-full border border-gray-200 bg-white p-1 opacity-50 transition-opacity duration-300 hover:opacity-100"
+                        >
+                          <i
+                            data-lucide="chevron-left"
+                            class="size-full brightness-0 rtl:scale-x-[-1]"
+                          ></i>
+                        </button>
+                        <button
+                          type="button"
+                          id="slider-3-next-desktop"
+                          class="pointer-events-auto relative size-[28px] rounded-full border border-gray-200 bg-white p-1 opacity-50 transition-opacity duration-300 hover:opacity-100"
+                        >
+                          <i
+                            data-lucide="chevron-right"
+                            class="size-full brightness-0 rtl:scale-x-[-1]"
+                          ></i>
+                        </button>
+                      </div>
+                    </div>
+                    <div
+                      class="flex flex-col gap-4 text-sm tracking-wide text-gray-600"
+                    >
+                      <div class="flex items-start gap-2">
+                        <p>
+                          Lorem Ipsum is simply dummy text of the printing and
+                          typesetting industry. Lorem Ipsum has been the
+                          industry's standard dummy text ever since the 1500s,
+                          when an unknown printer took a galley of type and
+                          scrambled it to make a type specimen book.
+                        </p>
+                      </div>
+                      <div class="flex items-start gap-2">
+                        <p>
+                          It is a long established fact that a reader will be
+                          distracted by the readable content of a page when
+                          looking at its layout. The point of using Lorem Ipsum
+                          is that it has a more-or-less normal distribution of
+                          letters, as opposed to using
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                  <div
+                    class="mt-6 hidden flex-col gap-5 lg:hidden lg:group-data-[active=4]:flex"
+                  >
+                    <h2 class="text-base font-bold lg:text-xl">
+                      Platinium Kamp
+                    </h2>
+                    <div class="relative h-80">
+                      <!-- Images -->
+                      <div
+                        id="slider-container-4-desktop"
+                        class="relative z-[103] h-full overflow-hidden rounded-lg"
+                      >
+                        <ul
+                          id="slider-4-desktop"
+                          class="slider-4-desktop relative"
+                        >
+                          <li
+                            data-index="0"
+                            class="slide-4-desktop absolute left-0 top-0 cursor-pointer"
+                          >
+                            <img
+                              data-src="https://images.project-test.info/15.webp"
+                              src="https://images.project-test.info/15-blur.webp"
+                              alt="Dubai'de Balayı Tatili"
+                              class="lazy-image h-full w-full object-cover"
+                            />
+                          </li>
+                          <li
+                            data-index="1"
+                            class="slide-4-desktop absolute left-0 top-0 cursor-pointer"
+                          >
+                            <img
+                              data-src="https://images.project-test.info/17.webp"
+                              src="https://images.project-test.info/17-blur.webp"
+                              alt="Dubai'de Balayı Tatili"
+                              class="lazy-image h-full w-full object-cover"
+                            />
+                          </li>
+                        </ul>
+                      </div>
+                      <!-- Buttons -->
+                      <div
+                        class="pointer-events-none absolute left-0 top-0 z-[2000] flex h-full w-full flex-col items-center justify-end pb-4"
+                      >
+                        <div
+                          class="pointer-events-auto flex items-center gap-1"
+                        >
+                          <button
+                            class="slide-4-btn-desktop size-2.5 rounded-full border border-gray-950 bg-gray-200 transition-all duration-300"
+                            data-target="0"
+                            type="button"
+                          ></button>
+                          <button
+                            class="slide-4-btn-desktop size-2.5 rounded-full border border-gray-950 bg-gray-200 transition-all duration-300"
+                            data-target="1"
+                            type="button"
+                          ></button>
+                        </div>
+                      </div>
+                      <!-- Next & Prev Buttons -->
+                      <div
+                        class="pointer-events-none absolute inset-1 z-[200] flex items-center justify-between px-2.5 pt-8"
+                      >
+                        <button
+                          type="button"
+                          id="slider-4-prev-desktop"
+                          class="pointer-events-auto relative size-[28px] rounded-full border border-gray-200 bg-white p-1 opacity-50 transition-opacity duration-300 hover:opacity-100"
+                        >
+                          <i
+                            data-lucide="chevron-left"
+                            class="size-full brightness-0 rtl:scale-x-[-1]"
+                          ></i>
+                        </button>
+                        <button
+                          type="button"
+                          id="slider-4-next-desktop"
+                          class="pointer-events-auto relative size-[28px] rounded-full border border-gray-200 bg-white p-1 opacity-50 transition-opacity duration-300 hover:opacity-100"
+                        >
+                          <i
+                            data-lucide="chevron-right"
+                            class="size-full brightness-0 rtl:scale-x-[-1]"
+                          ></i>
+                        </button>
+                      </div>
+                    </div>
+                    <div
+                      class="flex flex-col gap-4 text-sm tracking-wide text-gray-600"
+                    >
+                      <div class="flex items-start gap-2">
+                        <p>
+                          Lorem Ipsum is simply dummy text of the printing and
+                          typesetting industry. Lorem Ipsum has been the
+                          industry's standard dummy text ever since the 1500s,
+                          when an unknown printer took a galley of type and
+                          scrambled it to make a type specimen book.
+                        </p>
+                      </div>
+                      <div class="flex items-start gap-2">
+                        <p>
+                          It is a long established fact that a reader will be
+                          distracted by the readable content of a page when
+                          looking at its layout. The point of using Lorem Ipsum
+                          is that it has a more-or-less normal distribution of
+                          letters, as opposed to using
+                        </p>
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -1450,7 +1882,6 @@
             </section>
 
             <!-- Product Reviews -->
-
             <section
               id="product-info-content-3"
               data-state="closed"
@@ -1819,7 +2250,7 @@
               </div>
             </section>
 
-            <!-- Product Reviews -->
+            <!-- FAQ -->
             <section
               id="product-info-content-4"
               data-state="closed"
@@ -1963,7 +2394,7 @@
                         />
                         <label
                           for="morning"
-                          class="flex h-11 cursor-pointer items-center justify-start gap-3 rounded-sm border border-gray-200 bg-gray-100 px-2 text-center transition-colors hover:bg-gray-200 peer-checked:border-primary-400 peer-checked:bg-primary-500 peer-checked:text-white peer-checked:[&>.size-6]:brightness-100"
+                          class="flex h-11 cursor-pointer items-center justify-start gap-3 rounded-sm border border-gray-200 bg-gray-100 px-2 text-center transition-colors hover:bg-gray-200 peer-checked:border-primary-400 peer-checked:bg-primary-500 peer-checked:text-white peer-disabled:cursor-not-allowed peer-disabled:border-gray-400 peer-disabled:bg-gray-400 peer-disabled:text-gray-800 peer-disabled:opacity-50 peer-checked:[&>.size-6]:brightness-100 peer-disabled:[&>.size-6]:brightness-0"
                         >
                           <img
                             src="/assets/images/form-icons/1.svg"
@@ -1980,10 +2411,11 @@
                           id="evening"
                           name="safari-time"
                           class="peer hidden"
+                          disabled
                         />
                         <label
                           for="evening"
-                          class="flex h-11 cursor-pointer items-center justify-start gap-3 rounded-sm border border-gray-200 bg-gray-100 px-2 text-center transition-colors hover:bg-gray-200 peer-checked:border-primary-400 peer-checked:bg-primary-500 peer-checked:text-white peer-checked:[&>.size-6]:brightness-100"
+                          class="flex h-11 cursor-pointer items-center justify-start gap-3 rounded-sm border border-gray-200 bg-gray-100 px-2 text-center transition-colors hover:bg-gray-200 peer-checked:border-primary-400 peer-checked:bg-primary-500 peer-checked:text-white peer-disabled:cursor-not-allowed peer-disabled:border-gray-400 peer-disabled:bg-gray-400 peer-disabled:text-gray-800 peer-disabled:opacity-50 peer-checked:[&>.size-6]:brightness-100 peer-disabled:[&>.size-6]:brightness-0"
                         >
                           <img
                             src="/assets/images/form-icons/2.svg"
@@ -1998,6 +2430,317 @@
 
                   <!-- Camp Selection -->
                   <div class="flex flex-col gap-1">
+                    <!-- Image Gallery Mobile -->
+                    <div
+                      data-active="4"
+                      id="mobile-gallery-controller"
+                      class="group relative w-full lg:hidden"
+                    >
+                      <div class="hidden group-data-[active=1]:block">
+                        <!-- Images -->
+                        <div
+                          id="slider-container-1"
+                          class="relative z-[103] h-40 overflow-hidden rounded"
+                        >
+                          <ul id="slider-1" class="slider-1 relative">
+                            <li
+                              data-index="0"
+                              class="slide-1 absolute left-0 top-0 cursor-pointer"
+                            >
+                              <img
+                                data-src="https://images.project-test.info/15.webp"
+                                src="https://images.project-test.info/15-blur.webp"
+                                alt="Dubai'de Balayı Tatili"
+                                class="lazy-image h-full w-full object-cover"
+                              />
+                            </li>
+                            <li
+                              data-index="1"
+                              class="slide-1 absolute left-0 top-0 cursor-pointer"
+                            >
+                              <img
+                                data-src="https://images.project-test.info/17.webp"
+                                src="https://images.project-test.info/17-blur.webp"
+                                alt="Dubai'de Balayı Tatili"
+                                class="lazy-image h-full w-full object-cover"
+                              />
+                            </li>
+                          </ul>
+                        </div>
+                        <!-- Buttons -->
+                        <div
+                          class="pointer-events-none absolute left-0 top-0 z-[2000] flex h-full w-full flex-col items-center justify-end pb-4"
+                        >
+                          <div
+                            class="pointer-events-auto flex items-center gap-1"
+                          >
+                            <button
+                              class="slide-1-btn size-2.5 rounded-full border border-gray-950 bg-gray-200 transition-all duration-300"
+                              data-target="0"
+                              type="button"
+                            ></button>
+                            <button
+                              class="slide-1-btn size-2.5 rounded-full border border-gray-950 bg-gray-200 transition-all duration-300"
+                              data-target="1"
+                              type="button"
+                            ></button>
+                          </div>
+                        </div>
+                        <!-- Next & Prev Buttons -->
+                        <div
+                          class="pointer-events-none absolute inset-1 z-[200] flex items-end justify-between px-2.5 pb-12"
+                        >
+                          <button
+                            type="button"
+                            id="slider-1-prev"
+                            class="pointer-events-auto relative size-[28px] rounded-full border border-gray-200 bg-white p-1 opacity-50 transition-opacity duration-300 hover:opacity-100"
+                          >
+                            <i
+                              data-lucide="chevron-left"
+                              class="size-full brightness-0 rtl:scale-x-[-1]"
+                            ></i>
+                          </button>
+                          <button
+                            type="button"
+                            id="slider-1-next"
+                            class="pointer-events-auto relative size-[28px] rounded-full border border-gray-200 bg-white p-1 opacity-50 transition-opacity duration-300 hover:opacity-100"
+                          >
+                            <i
+                              data-lucide="chevron-right"
+                              class="size-full brightness-0 rtl:scale-x-[-1]"
+                            ></i>
+                          </button>
+                        </div>
+                      </div>
+                      <div class="hidden group-data-[active=2]:block">
+                        <!-- Images -->
+                        <div
+                          id="slider-container-2"
+                          class="relative z-[103] h-40 overflow-hidden rounded"
+                        >
+                          <ul id="slider-2" class="slider-2 relative">
+                            <li
+                              data-index="0"
+                              class="slide-2 absolute left-0 top-0 cursor-pointer"
+                            >
+                              <img
+                                data-src="https://images.project-test.info/22.webp"
+                                src="https://images.project-test.info/22-blur.webp"
+                                alt="Dubai'de Balayı Tatili"
+                                class="lazy-image h-full w-full object-scale-down"
+                              />
+                            </li>
+                            <li
+                              data-index="1"
+                              class="slide-2 absolute left-0 top-0 cursor-pointer"
+                            >
+                              <img
+                                data-src="https://images.project-test.info/25.webp"
+                                src="https://images.project-test.info/25-blur.webp"
+                                alt="Dubai'de Balayı Tatili"
+                                class="lazy-image h-full w-full object-cover"
+                              />
+                            </li>
+                          </ul>
+                        </div>
+                        <!-- Buttons -->
+                        <div
+                          class="pointer-events-none absolute left-0 top-0 z-[2000] flex h-full w-full flex-col items-center justify-end pb-4"
+                        >
+                          <div
+                            class="pointer-events-auto flex items-center gap-1"
+                          >
+                            <button
+                              class="slide-2-btn size-2.5 rounded-full border border-gray-950 bg-gray-200 transition-all duration-300"
+                              data-target="0"
+                              type="button"
+                            ></button>
+                            <button
+                              class="slide-2-btn size-2.5 rounded-full border border-gray-950 bg-gray-200 transition-all duration-300"
+                              data-target="1"
+                              type="button"
+                            ></button>
+                          </div>
+                        </div>
+                        <!-- Next & Prev Buttons -->
+                        <div
+                          class="pointer-events-none absolute inset-1 z-[200] flex items-end justify-between px-2.5 pb-12"
+                        >
+                          <button
+                            type="button"
+                            id="slider-2-prev"
+                            class="pointer-events-auto relative size-[28px] rounded-full border border-gray-200 bg-white p-1 opacity-50 transition-opacity duration-300 hover:opacity-100"
+                          >
+                            <i
+                              data-lucide="chevron-left"
+                              class="size-full brightness-0 rtl:scale-x-[-1]"
+                            ></i>
+                          </button>
+                          <button
+                            type="button"
+                            id="slider-2-next"
+                            class="pointer-events-auto relative size-[28px] rounded-full border border-gray-200 bg-white p-1 opacity-50 transition-opacity duration-300 hover:opacity-100"
+                          >
+                            <i
+                              data-lucide="chevron-right"
+                              class="size-full brightness-0 rtl:scale-x-[-1]"
+                            ></i>
+                          </button>
+                        </div>
+                      </div>
+                      <div class="hidden group-data-[active=3]:block">
+                        <!-- Images -->
+                        <div
+                          id="slider-container-3"
+                          class="relative z-[103] h-40 overflow-hidden rounded"
+                        >
+                          <ul id="slider-3" class="slider-3 relative">
+                            <li
+                              data-index="0"
+                              class="slide-3 absolute left-0 top-0 cursor-pointer"
+                            >
+                              <img
+                                data-src="https://images.project-test.info/11.webp"
+                                src="https://images.project-test.info/11-blur.webp"
+                                alt="Dubai'de Balayı Tatili"
+                                class="lazy-image h-full w-full object-cover"
+                              />
+                            </li>
+                            <li
+                              data-index="1"
+                              class="slide-3 absolute left-0 top-0 cursor-pointer"
+                            >
+                              <img
+                                data-src="https://images.project-test.info/10.webp"
+                                src="https://images.project-test.info/10-blur.webp"
+                                alt="Dubai'de Balayı Tatili"
+                                class="lazy-image h-full w-full object-cover"
+                              />
+                            </li>
+                          </ul>
+                        </div>
+                        <!-- Buttons -->
+                        <div
+                          class="pointer-events-none absolute left-0 top-0 z-[2000] flex h-full w-full flex-col items-center justify-end pb-4"
+                        >
+                          <div
+                            class="pointer-events-auto flex items-center gap-1"
+                          >
+                            <button
+                              class="slide-3-btn size-2.5 rounded-full border border-gray-950 bg-gray-200 transition-all duration-300"
+                              data-target="0"
+                              type="button"
+                            ></button>
+                            <button
+                              class="slide-3-btn size-2.5 rounded-full border border-gray-950 bg-gray-200 transition-all duration-300"
+                              data-target="1"
+                              type="button"
+                            ></button>
+                          </div>
+                        </div>
+                        <!-- Next & Prev Buttons -->
+                        <div
+                          class="pointer-events-none absolute inset-1 z-[200] flex items-end justify-between px-2.5 pb-12"
+                        >
+                          <button
+                            type="button"
+                            id="slider-3-prev"
+                            class="pointer-events-auto relative size-[28px] rounded-full border border-gray-200 bg-white p-1 opacity-50 transition-opacity duration-300 hover:opacity-100"
+                          >
+                            <i
+                              data-lucide="chevron-left"
+                              class="size-full brightness-0 rtl:scale-x-[-1]"
+                            ></i>
+                          </button>
+                          <button
+                            type="button"
+                            id="slider-3-next"
+                            class="pointer-events-auto relative size-[28px] rounded-full border border-gray-200 bg-white p-1 opacity-50 transition-opacity duration-300 hover:opacity-100"
+                          >
+                            <i
+                              data-lucide="chevron-right"
+                              class="size-full brightness-0 rtl:scale-x-[-1]"
+                            ></i>
+                          </button>
+                        </div>
+                      </div>
+                      <div class="hidden group-data-[active=4]:block">
+                        <!-- Images -->
+                        <div
+                          id="slider-container-4"
+                          class="relative z-[103] h-40 overflow-hidden rounded"
+                        >
+                          <ul id="slider-4" class="slider-4 relative">
+                            <li
+                              data-index="0"
+                              class="slide-4 absolute left-0 top-0 cursor-pointer"
+                            >
+                              <img
+                                data-src="https://images.project-test.info/13.webp"
+                                src="https://images.project-test.info/13-blur.webp"
+                                alt="Dubai'de Balayı Tatili"
+                                class="lazy-image h-full w-full object-cover"
+                              />
+                            </li>
+                            <li
+                              data-index="1"
+                              class="slide-4 absolute left-0 top-0 cursor-pointer"
+                            >
+                              <img
+                                data-src="https://images.project-test.info/12.webp"
+                                src="https://images.project-test.info/12-blur.webp"
+                                alt="Dubai'de Balayı Tatili"
+                                class="lazy-image h-full w-full object-cover"
+                              />
+                            </li>
+                          </ul>
+                        </div>
+                        <!-- Buttons -->
+                        <div
+                          class="pointer-events-none absolute left-0 top-0 z-[2000] flex h-full w-full flex-col items-center justify-end pb-4"
+                        >
+                          <div
+                            class="pointer-events-auto flex items-center gap-1"
+                          >
+                            <button
+                              class="slide-4-btn size-2.5 rounded-full border border-gray-950 bg-gray-200 transition-all duration-300"
+                              data-target="0"
+                              type="button"
+                            ></button>
+                            <button
+                              class="slide-4-btn size-2.5 rounded-full border border-gray-950 bg-gray-200 transition-all duration-300"
+                              data-target="1"
+                              type="button"
+                            ></button>
+                          </div>
+                        </div>
+                        <!-- Next & Prev Buttons -->
+                        <div
+                          class="pointer-events-none absolute inset-1 z-[200] flex items-end justify-between px-2.5 pb-12"
+                        >
+                          <button
+                            type="button"
+                            id="slider-4-prev"
+                            class="pointer-events-auto relative size-[28px] rounded-full border border-gray-200 bg-white p-1 opacity-50 transition-opacity duration-300 hover:opacity-100"
+                          >
+                            <i
+                              data-lucide="chevron-left"
+                              class="size-full brightness-0 rtl:scale-x-[-1]"
+                            ></i>
+                          </button>
+                          <button
+                            type="button"
+                            id="slider-4-next"
+                            class="pointer-events-auto relative size-[28px] rounded-full border border-gray-200 bg-white p-1 opacity-50 transition-opacity duration-300 hover:opacity-100"
+                          >
+                            <i
+                              data-lucide="chevron-right"
+                              class="size-full brightness-0 rtl:scale-x-[-1]"
+                            ></i>
+                          </button>
+                        </div>
+                      </div>
+                    </div>
                     <h2 class="text-sm font-semibold text-gray-950">
                       Kamp Seçimi
                     </h2>
@@ -2012,7 +2755,7 @@
                         />
                         <label
                           for="silver"
-                          class="flex h-11 cursor-pointer items-center justify-start gap-3 rounded-sm border border-gray-200 bg-gray-100 px-2 text-center transition-colors hover:bg-gray-200 peer-checked:border-primary-400 peer-checked:bg-primary-500 peer-checked:text-white peer-checked:[&>.size-6]:brightness-100"
+                          class="flex h-11 cursor-pointer items-center justify-start gap-3 rounded-sm border border-gray-200 bg-gray-100 px-2 text-center transition-colors hover:bg-gray-200 peer-checked:border-primary-400 peer-checked:bg-primary-500 peer-checked:text-white peer-disabled:cursor-not-allowed peer-disabled:border-gray-400 peer-disabled:bg-gray-400 peer-disabled:text-gray-800 peer-disabled:opacity-50 peer-checked:[&>.size-6]:brightness-100 peer-disabled:[&>.size-6]:brightness-0"
                         >
                           <img
                             src="/assets/images/form-icons/3.svg"
@@ -2032,7 +2775,7 @@
                         />
                         <label
                           for="gold"
-                          class="flex h-11 cursor-pointer items-center justify-start gap-3 rounded-sm border border-gray-200 bg-gray-100 px-2 text-center transition-colors hover:bg-gray-200 peer-checked:border-primary-400 peer-checked:bg-primary-500 peer-checked:text-white peer-checked:[&>.size-6]:brightness-100"
+                          class="flex h-11 cursor-pointer items-center justify-start gap-3 rounded-sm border border-gray-200 bg-gray-100 px-2 text-center transition-colors hover:bg-gray-200 peer-checked:border-primary-400 peer-checked:bg-primary-500 peer-checked:text-white peer-disabled:cursor-not-allowed peer-disabled:border-gray-400 peer-disabled:bg-gray-400 peer-disabled:text-gray-800 peer-disabled:opacity-50 peer-checked:[&>.size-6]:brightness-100 peer-disabled:[&>.size-6]:brightness-0"
                         >
                           <img
                             src="/assets/images/form-icons/4.svg"
@@ -2052,7 +2795,7 @@
                         />
                         <label
                           for="premium"
-                          class="flex h-11 cursor-pointer items-center justify-start gap-3 rounded-sm border border-gray-200 bg-gray-100 px-2 text-center transition-colors hover:bg-gray-200 peer-checked:border-primary-400 peer-checked:bg-primary-500 peer-checked:text-white peer-checked:[&>.size-6]:brightness-100"
+                          class="flex h-11 cursor-pointer items-center justify-start gap-3 rounded-sm border border-gray-200 bg-gray-100 px-2 text-center transition-colors hover:bg-gray-200 peer-checked:border-primary-400 peer-checked:bg-primary-500 peer-checked:text-white peer-disabled:cursor-not-allowed peer-disabled:border-gray-400 peer-disabled:bg-gray-400 peer-disabled:text-gray-800 peer-disabled:opacity-50 peer-checked:[&>.size-6]:brightness-100 peer-disabled:[&>.size-6]:brightness-0"
                         >
                           <img
                             src="/assets/images/form-icons/5.svg"
@@ -2072,7 +2815,7 @@
                         />
                         <label
                           for="platinum"
-                          class="flex h-11 cursor-pointer items-center justify-start gap-3 rounded-sm border border-gray-200 bg-gray-100 px-2 text-center transition-colors hover:bg-gray-200 peer-checked:border-primary-400 peer-checked:bg-primary-500 peer-checked:text-white peer-checked:[&>.size-6]:brightness-100"
+                          class="flex h-11 cursor-pointer items-center justify-start gap-3 rounded-sm border border-gray-200 bg-gray-100 px-2 text-center transition-colors hover:bg-gray-200 peer-checked:border-primary-400 peer-checked:bg-primary-500 peer-checked:text-white peer-disabled:cursor-not-allowed peer-disabled:border-gray-400 peer-disabled:bg-gray-400 peer-disabled:text-gray-800 peer-disabled:opacity-50 peer-checked:[&>.size-6]:brightness-100 peer-disabled:[&>.size-6]:brightness-0"
                         >
                           <img
                             src="/assets/images/form-icons/6.svg"
@@ -2101,7 +2844,7 @@
                         />
                         <label
                           for="private"
-                          class="flex h-11 cursor-pointer items-center justify-start gap-3 rounded-sm border border-gray-200 bg-gray-100 px-2 text-center transition-colors hover:bg-gray-200 peer-checked:border-primary-400 peer-checked:bg-primary-500 peer-checked:text-white peer-checked:[&>.size-6]:brightness-100"
+                          class="flex h-11 cursor-pointer items-center justify-start gap-3 rounded-sm border border-gray-200 bg-gray-100 px-2 text-center transition-colors hover:bg-gray-200 peer-checked:border-primary-400 peer-checked:bg-primary-500 peer-checked:text-white peer-disabled:cursor-not-allowed peer-disabled:border-gray-400 peer-disabled:bg-gray-400 peer-disabled:text-gray-800 peer-disabled:opacity-50 peer-checked:[&>.size-6]:brightness-100 peer-disabled:[&>.size-6]:brightness-0"
                         >
                           <img
                             src="/assets/images/form-icons/7.svg"
@@ -2121,7 +2864,7 @@
                         />
                         <label
                           for="shared"
-                          class="flex h-11 cursor-pointer items-center justify-start gap-3 rounded-sm border border-gray-200 bg-gray-100 px-2 text-center transition-colors hover:bg-gray-200 peer-checked:border-primary-400 peer-checked:bg-primary-500 peer-checked:text-white peer-checked:[&>.size-6]:brightness-100"
+                          class="flex h-11 cursor-pointer items-center justify-start gap-3 rounded-sm border border-gray-200 bg-gray-100 px-2 text-center transition-colors hover:bg-gray-200 peer-checked:border-primary-400 peer-checked:bg-primary-500 peer-checked:text-white peer-disabled:cursor-not-allowed peer-disabled:border-gray-400 peer-disabled:bg-gray-400 peer-disabled:text-gray-800 peer-disabled:opacity-50 peer-checked:[&>.size-6]:brightness-100 peer-disabled:[&>.size-6]:brightness-0"
                         >
                           <img
                             src="/assets/images/form-icons/8.svg"
@@ -2409,6 +3152,80 @@
             <!-- Thumbnails - DONT EDIT THIS -->
             <div
               id="gallery-modal-thumbnails"
+              class="custom-scrollbar flex gap-x-4 overflow-x-auto px-2 py-2"
+            >
+              <img src="#" alt="Thumbnail 1" class="thumbnail" />
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Multi Group Image Gallery - DONT EDIT THIS ** AUTO -->
+      <div
+        id="multi-gallery"
+        data-state="closed"
+        class="fixed inset-0 z-[9001] flex items-center justify-center bg-black/90 p-4 backdrop-blur-md data-[state=closed]:hidden"
+        aria-hidden="true"
+        role="dialog"
+      >
+        <div
+          id="multi-gallery-content"
+          class="relative w-full max-w-5xl overflow-hidden rounded-xl bg-neutral-900 shadow-2xl"
+        >
+          <!-- Main image - DONT EDIT THIS -->
+          <div
+            id="multi-gallery-main-image-container"
+            class="relative bg-neutral-950 py-4"
+          >
+            <img
+              src="#"
+              alt="Gallery Main Image"
+              class="mx-auto aspect-video h-auto w-full object-contain lg:max-h-[70vh]"
+            />
+
+            <!-- Gallery Control Buttons - DONT EDIT THIS -->
+            <div
+              class="pointer-events-none absolute inset-0 flex items-center justify-between px-2"
+            >
+              <button
+                id="close-multi-gallery"
+                class="pointer-events-auto absolute right-2 top-2 isolate z-40 rounded-full border border-white/20 bg-neutral-900 p-1.5 transition-all duration-300 active:scale-90 md:hover:opacity-60 lg:p-2"
+                aria-label="Close Gallery"
+              >
+                <i
+                  data-lucide="x"
+                  class="size-4 brightness-0 invert lg:size-6"
+                ></i>
+              </button>
+
+              <button
+                id="prev-multi-gallery"
+                class="pointer-events-auto rounded-full border border-white/20 bg-neutral-900 p-1.5 transition-all duration-300 md:hover:opacity-60 md:active:scale-90 lg:p-2"
+              >
+                <i
+                  data-lucide="chevron-left"
+                  class="size-4 text-white lg:size-6 rtl:scale-x-[-1]"
+                ></i>
+              </button>
+              <button
+                id="next-multi-gallery"
+                class="pointer-events-auto rounded-full border border-white/20 bg-neutral-900 p-1.5 transition-all duration-300 md:hover:opacity-60 md:active:scale-90 lg:p-2"
+              >
+                <i
+                  data-lucide="chevron-right"
+                  class="size-4 text-white lg:size-6 rtl:scale-x-[-1]"
+                ></i>
+              </button>
+            </div>
+          </div>
+
+          <!-- Thumbnails container -->
+          <div
+            class="relative rounded-b-xl border border-neutral-800 bg-neutral-900 px-4 py-2 lg:py-2"
+          >
+            <!-- Thumbnails - DONT EDIT THIS -->
+            <div
+              id="multi-gallery-thumbnails"
               class="custom-scrollbar flex gap-x-4 overflow-x-auto px-2 py-2"
             >
               <img src="#" alt="Thumbnail 1" class="thumbnail" />
