@@ -389,7 +389,7 @@ document.addEventListener('DOMContentLoaded', () => {
     ...config,
   })
 
-  new Slider({
+  const mobileSlider1 = new Slider({
     container: '#slider-container-1',
     slideSelector: '.slide-1',
     buttonSelector: '.slide-1-btn',
@@ -401,7 +401,7 @@ document.addEventListener('DOMContentLoaded', () => {
     ...config,
   })
 
-  new Slider({
+  const mobileSlider2 = new Slider({
     container: '#slider-container-2',
     slideSelector: '.slide-2',
     buttonSelector: '.slide-2-btn',
@@ -413,7 +413,7 @@ document.addEventListener('DOMContentLoaded', () => {
     ...config,
   })
 
-  new Slider({
+  const mobileSlider3 = new Slider({
     container: '#slider-container-3',
     slideSelector: '.slide-3',
     buttonSelector: '.slide-3-btn',
@@ -425,7 +425,7 @@ document.addEventListener('DOMContentLoaded', () => {
     ...config,
   })
 
-  new Slider({
+  const mobileSlider4 = new Slider({
     container: '#slider-container-4',
     slideSelector: '.slide-4',
     buttonSelector: '.slide-4-btn',
@@ -437,7 +437,7 @@ document.addEventListener('DOMContentLoaded', () => {
     ...config,
   })
 
-  new MultiGroupImageGallery({
+  const multiGroupGallery = new MultiGroupImageGallery({
     elements: {
       modalId: 'multi-gallery',
       modalContentId: 'multi-gallery-content',
@@ -483,5 +483,65 @@ document.addEventListener('DOMContentLoaded', () => {
     ],
     thumbnailClass: 'thumbnail',
     activeThumbnailClass: 'thumbnail-active',
+  })
+
+  new TouchDirectionDetector('multi-gallery-main-image-container', {
+    threshold: 50,
+    onSwipe: direction => {
+      if (direction === 'right') {
+        return multiGroupGallery.navigateGallery('prev')
+      }
+      if (direction === 'left') {
+        return multiGroupGallery.navigateGallery('next')
+      }
+    },
+  })
+
+  new TouchDirectionDetector('slider-container-1', {
+    threshold: 50,
+    onSwipe: direction => {
+      if (direction === 'right') {
+        return mobileSlider1.prev()
+      }
+      if (direction === 'left') {
+        return mobileSlider1.next()
+      }
+    },
+  })
+
+  new TouchDirectionDetector('slider-container-2', {
+    threshold: 50,
+    onSwipe: direction => {
+      if (direction === 'right') {
+        return mobileSlider2.prev()
+      }
+      if (direction === 'left') {
+        return mobileSlider2.next()
+      }
+    },
+  })
+
+  new TouchDirectionDetector('slider-container-3', {
+    threshold: 50,
+    onSwipe: direction => {
+      if (direction === 'right') {
+        return mobileSlider3.prev()
+      }
+      if (direction === 'left') {
+        return mobileSlider3.next()
+      }
+    },
+  })
+
+  new TouchDirectionDetector('slider-container-4', {
+    threshold: 50,
+    onSwipe: direction => {
+      if (direction === 'right') {
+        return mobileSlider4.prev()
+      }
+      if (direction === 'left') {
+        return mobileSlider4.next()
+      }
+    },
   })
 })

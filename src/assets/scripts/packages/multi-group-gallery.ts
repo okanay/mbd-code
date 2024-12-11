@@ -289,7 +289,7 @@ class MultiGroupImageGallery {
     })
   }
 
-  private navigateGallery(direction: 'next' | 'prev'): void {
+  public navigateGallery(direction: 'next' | 'prev'): void {
     if (!this.currentGroup) return
 
     const images = this.groups.get(this.currentGroup)
