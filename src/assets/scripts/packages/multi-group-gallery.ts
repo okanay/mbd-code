@@ -313,8 +313,40 @@ class MultiGroupImageGallery {
   }
 }
 
+function UpdateProductSliderDataItems(
+  sliderId: string,
+  options: {
+    min: number
+    max: number
+    childElements: number
+    dataItems: string
+  },
+) {
+  const productSlider = document.getElementById(sliderId)
+  if (productSlider) {
+    const dataItems = productSlider.getAttribute('data-items')
+
+    if (dataItems === options.dataItems) {
+      const newItemsValue = Math.max(
+        options.min,
+        Math.min(options.childElements, options.max),
+      )
+      productSlider.setAttribute('data-items', newItemsValue.toString())
+    }
+  }
+}
+
+function UpdateElementInnerHTMLById(elementId: string, newValue: string): void {
+  const element = document.getElementById(elementId)
+  if (element) {
+    element.innerHTML = newValue
+  }
+}
+
 export {
   MultiGroupImageGallery,
+  UpdateProductSliderDataItems,
+  UpdateElementInnerHTMLById,
   type GalleryOptions,
   type GalleryElements,
   type GalleryGroup,

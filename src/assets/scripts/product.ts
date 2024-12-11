@@ -1,5 +1,4 @@
 // prettier-ignore
-import { ImageGalleryTracker, UpdateProductSliderDataItems, UpdateElementInnerHTMLById} from "./packages/image-gallery.js";
 import { Slider } from './packages/slider.js'
 import { TouchDirectionDetector } from './packages/touch-event.js'
 import { ModalController } from './packages/modal.js'
@@ -9,151 +8,12 @@ import { ScrollManager } from './packages/floating-elements.js'
 import { NavStickyManager } from './packages/scroll-style.js'
 import { DatePickerManager } from './packages/date-picker.js'
 import { MultiGroupImageGallery } from './packages/multi-group-gallery.js'
+import { UpdateElementInnerHTMLById } from './packages/multi-group-gallery.js'
+import { UpdateProductSliderDataItems } from './packages/multi-group-gallery.js'
 
 document.addEventListener('DOMContentLoaded', () => {
   new DatePickerManager({
     containerSelector: '.date-input-container',
-  })
-
-  // Product Slider Instance
-  const MainSlider = new Slider({
-    container: '#product-slider-container',
-    slideSelector: '.product-slide',
-    buttonSelector: '.product-slider-btn',
-    nextButtonSelector: '#slider-next',
-    prevButtonSelector: '#slider-prev',
-    defaultActiveIndex: 0,
-    activeButtonClass: 'product-slider-active-btn',
-    activeButtonClassTarget: '.product-slider-btn-item',
-    auto: true,
-    autoInterval: 6000,
-    animationConfig: {
-      duration: 400,
-      timingFunction: 'cubic-bezier(0.4, 0, 0.2, 1)',
-      transforms: {
-        fromLeft: {
-          enter: 'translate(-120%, 0%)',
-          exit: 'translate(20%, 0%)',
-        },
-        fromRight: {
-          enter: 'translate(120%, 0%)',
-          exit: 'translate(-20%, 0%)',
-        },
-      },
-      opacitySelected: 1,
-      opacityNotSelected: 0.75,
-      scaleSelected: 1,
-      scaleNotSelected: 1,
-    },
-    responsive: {
-      enabled: true,
-      minWidth: 0,
-      maxWidth: 1024,
-    },
-    options: {
-      zIndex: {
-        clone: 3,
-        selected: 2,
-        notSelected: 1,
-      },
-    },
-  })
-
-  // Slider touch event detector
-  new TouchDirectionDetector('product-slider-container', {
-    threshold: 50,
-    onSwipe: direction => {
-      if (direction === 'right') {
-        return MainSlider.prev()
-      }
-      if (direction === 'left') {
-        return MainSlider.next()
-      }
-    },
-  })
-
-  // Image Gallery Instance for Product Slider
-  const gallery = new ImageGalleryTracker({
-    elements: {
-      modalId: 'gallery-modal',
-      mainImageContainerId: 'gallery-modal-main-image-container',
-      thumbnailsContainerId: 'gallery-modal-thumbnails',
-      sourceContainerId: 'product-slider',
-      prevButtonId: 'prev-image-gallery',
-      nextButtonId: 'next-image-gallery',
-    },
-    activeThumbnailClass: 'thumbnail-active',
-    thumbnailClass: 'thumbnail',
-    dataSrcAttribute: 'data-src',
-    sourceImageSelector: '.product-slide img',
-    onImageCount: count => {
-      UpdateProductSliderDataItems('product-slider', {
-        min: 1,
-        max: 5,
-        childElements: count,
-        dataItems: 'auto-detected',
-      })
-      UpdateElementInnerHTMLById('product-slider-image-count', count.toString())
-    },
-  })
-
-  // Image Gallery Modal Controller
-  new ModalController(
-    [
-      {
-        id: 'gallery-modal',
-        toggleElements: ['.product-slide', '#close-image-gallery'],
-        contentElement: '#gallery-modal',
-        closeElements: ['#close-image-gallery'],
-        containers: ['#gallery-modal-content'],
-      },
-    ],
-    {
-      outsideClickClose: true,
-      escapeClose: true,
-      preserveModalHistory: true,
-      attributes: {
-        stateAttribute: 'data-state',
-        values: {
-          open: 'open',
-          preserved: 'open',
-          hidden: 'closed',
-        },
-      },
-      scrollLock: {
-        enabled: true,
-        styles: {
-          hidden: {
-            overflow: 'hidden',
-            position: 'fixed',
-            width: '100%',
-          },
-          visible: {
-            overflow: 'auto',
-            position: 'static',
-            width: 'auto',
-          },
-        },
-      },
-      onToggle: (_, __, trigger) => {
-        const index = trigger?.getAttribute('data-index')
-        const indexNumber = index ? parseInt(index, 10) : 0
-        gallery.openGallery(indexNumber)
-      },
-    },
-  )
-
-  // Image Gallery Modal Touch Event Detector
-  new TouchDirectionDetector('gallery-modal-main-image-container', {
-    threshold: 50,
-    onSwipe: direction => {
-      if (direction === 'right') {
-        return gallery.prevImage()
-      }
-      if (direction === 'left') {
-        return gallery.nextImage()
-      }
-    },
   })
 
   // Product Info Modal Controller
@@ -312,6 +172,67 @@ document.addEventListener('DOMContentLoaded', () => {
 })
 
 document.addEventListener('DOMContentLoaded', () => {
+  // Product Slider Instance
+  const mainSlider = new Slider({
+    container: '#product-slider-container',
+    slideSelector: '.product-slide',
+    buttonSelector: '.product-slider-btn',
+    nextButtonSelector: '#slider-next',
+    prevButtonSelector: '#slider-prev',
+    defaultActiveIndex: 0,
+    activeButtonClass: 'product-slider-active-btn',
+    activeButtonClassTarget: '.product-slider-btn-item',
+    auto: true,
+    autoInterval: 6000,
+    animationConfig: {
+      duration: 400,
+      timingFunction: 'cubic-bezier(0.4, 0, 0.2, 1)',
+      transforms: {
+        fromLeft: {
+          enter: 'translate(-120%, 0%)',
+          exit: 'translate(20%, 0%)',
+        },
+        fromRight: {
+          enter: 'translate(120%, 0%)',
+          exit: 'translate(-20%, 0%)',
+        },
+      },
+      opacitySelected: 1,
+      opacityNotSelected: 0.75,
+      scaleSelected: 1,
+      scaleNotSelected: 1,
+    },
+    responsive: {
+      enabled: true,
+      minWidth: 0,
+      maxWidth: 1024,
+    },
+    options: {
+      zIndex: {
+        clone: 3,
+        selected: 2,
+        notSelected: 1,
+      },
+    },
+  })
+
+  // #product-slider
+  const productSliderElement = document.getElementById('product-slider')
+  const childCount = productSliderElement
+    ? productSliderElement.children.length
+    : 0
+
+  UpdateProductSliderDataItems('product-slider', {
+    min: 1,
+    max: 5,
+    childElements: childCount,
+    dataItems: 'auto-detected',
+  })
+  UpdateElementInnerHTMLById(
+    'product-slider-image-count',
+    childCount.toString(),
+  )
+
   // Mobile Package Slider Instance
   const config = {
     auto: true,
@@ -451,6 +372,10 @@ document.addEventListener('DOMContentLoaded', () => {
     },
     groups: [
       {
+        containerId: 'product-slider',
+        slideItemClass: 'product-slide',
+      },
+      {
         containerId: 'slider-1-desktop',
         slideItemClass: 'slide-1-desktop',
       },
@@ -485,6 +410,19 @@ document.addEventListener('DOMContentLoaded', () => {
     ],
     thumbnailClass: 'thumbnail',
     activeThumbnailClass: 'thumbnail-active',
+  })
+
+  // Slider touch event detector
+  new TouchDirectionDetector('product-slider-container', {
+    threshold: 50,
+    onSwipe: direction => {
+      if (direction === 'right') {
+        return mainSlider.prev()
+      }
+      if (direction === 'left') {
+        return mainSlider.next()
+      }
+    },
   })
 
   new TouchDirectionDetector('multi-gallery-main-image-container', {

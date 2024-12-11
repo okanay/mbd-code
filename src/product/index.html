@@ -1099,7 +1099,7 @@
         </div>
 
         <div
-          class="lg:hidde4 pointer-events-none absolute inset-1 z-[200] flex items-center justify-between px-2.5 pt-8"
+          class="pointer-events-none absolute inset-1 z-[200] flex items-center justify-between px-2.5 pt-8 lg:hidden"
         >
           <button
             id="slider-prev"
@@ -2290,7 +2290,7 @@
           </div>
 
           <!--  Form -->
-          <div class="w-full flex-shrink-0 lg:w-[420px]">
+          <div class="-mt-1 w-full flex-shrink-0 lg:w-[420px]">
             <h2 class="mb-2 px-3 text-xl font-bold lg:text-center lg:text-2xl">
               Rezervasyon Formu
             </h2>
@@ -3084,80 +3084,6 @@
             </form>
           </div>
         </article>
-      </div>
-
-      <!-- Modal/Image Gallery - DONT EDIT THIS ** AUTO -->
-      <div
-        id="gallery-modal"
-        data-state="closed"
-        class="fixed inset-0 z-[9001] flex items-center justify-center bg-black/90 p-4 backdrop-blur-md data-[state=closed]:hidden"
-        aria-hidden="true"
-        role="dialog"
-      >
-        <div
-          id="gallery-modal-content"
-          class="relative w-full max-w-5xl overflow-hidden rounded-xl bg-neutral-900 shadow-2xl"
-        >
-          <!-- Main image - DONT EDIT THIS -->
-          <div
-            id="gallery-modal-main-image-container"
-            class="relative bg-neutral-950 py-4"
-          >
-            <img
-              src="#"
-              alt="Gallery Main Image"
-              class="mx-auto aspect-video h-auto w-full object-contain lg:max-h-[70vh]"
-            />
-
-            <!-- Gallery Control Buttons - DONT EDIT THIS -->
-            <div
-              class="pointer-events-none absolute inset-0 flex items-center justify-between px-2"
-            >
-              <button
-                id="close-image-gallery"
-                class="pointer-events-auto absolute right-2 top-2 isolate z-40 rounded-full border border-white/20 bg-neutral-900 p-1.5 transition-all duration-300 active:scale-90 md:hover:opacity-60 lg:p-2"
-                aria-label="Close Gallery"
-              >
-                <i
-                  data-lucide="x"
-                  class="size-4 brightness-0 invert lg:size-6"
-                ></i>
-              </button>
-
-              <button
-                id="prev-image-gallery"
-                class="pointer-events-auto rounded-full border border-white/20 bg-neutral-900 p-1.5 transition-all duration-300 md:hover:opacity-60 md:active:scale-90 lg:p-2"
-              >
-                <i
-                  data-lucide="chevron-left"
-                  class="size-4 text-white lg:size-6 rtl:scale-x-[-1]"
-                ></i>
-              </button>
-              <button
-                id="next-image-gallery"
-                class="pointer-events-auto rounded-full border border-white/20 bg-neutral-900 p-1.5 transition-all duration-300 md:hover:opacity-60 md:active:scale-90 lg:p-2"
-              >
-                <i
-                  data-lucide="chevron-right"
-                  class="size-4 text-white lg:size-6 rtl:scale-x-[-1]"
-                ></i>
-              </button>
-            </div>
-          </div>
-
-          <!-- Thumbnails container -->
-          <div
-            class="relative rounded-b-xl border border-neutral-800 bg-neutral-900 px-4 py-2 lg:py-2"
-          >
-            <!-- Thumbnails - DONT EDIT THIS -->
-            <div
-              id="gallery-modal-thumbnails"
-              class="custom-scrollbar flex gap-x-4 overflow-x-auto px-2 py-2"
-            >
-              <img src="#" alt="Thumbnail 1" class="thumbnail" />
-            </div>
-          </div>
-        </div>
       </div>
 
       <!-- Multi Group Image Gallery - DONT EDIT THIS ** AUTO -->
