@@ -15,87 +15,9 @@ document.addEventListener('DOMContentLoaded', () => {
     defaultActiveIndex: 0,
     activeButtonClass: 'product-slider-active-btn',
     activeButtonClassTarget: '.product-slider-btn-item',
-    auto: true,
-    autoInterval: 6000,
-    animationConfig: {
-      duration: 400,
-      timingFunction: 'cubic-bezier(0.4, 0, 0.2, 1)',
-      transforms: {
-        fromLeft: {
-          enter: 'translate(-120%, 0%)',
-          exit: 'translate(20%, 0%)',
-        },
-        fromRight: {
-          enter: 'translate(120%, 0%)',
-          exit: 'translate(-20%, 0%)',
-        },
-      },
-      opacitySelected: 1,
-      opacityNotSelected: 0.75,
-      scaleSelected: 1,
-      scaleNotSelected: 1,
-    },
-    responsive: {
-      enabled: true,
-      minWidth: 0,
-      maxWidth: 1024,
-    },
-    options: {
-      zIndex: {
-        clone: 3,
-        selected: 2,
-        notSelected: 1,
-      },
-    },
+    ...mainConfig,
+    ...config,
   })
-
-  // #product-slider
-  const productSliderElement = document.getElementById('product-slider')
-  const childCount = productSliderElement
-    ? productSliderElement.children.length
-    : 0
-
-  UpdateProductSliderDataItems('product-slider', {
-    min: 1,
-    max: 5,
-    childElements: childCount,
-    dataItems: 'auto-detected',
-  })
-  UpdateElementInnerHTMLById(
-    'product-slider-image-count',
-    childCount.toString(),
-  )
-
-  // Mobile Package Slider Instance
-  const config = {
-    auto: true,
-    autoInterval: 6000,
-    animationConfig: {
-      duration: 400,
-      timingFunction: 'cubic-bezier(0.4, 0, 0.2, 1)',
-      transforms: {
-        fromLeft: {
-          enter: 'translate(-120%, 0%)',
-          exit: 'translate(20%, 0%)',
-        },
-        fromRight: {
-          enter: 'translate(120%, 0%)',
-          exit: 'translate(-20%, 0%)',
-        },
-      },
-      opacitySelected: 1,
-      opacityNotSelected: 0.75,
-      scaleSelected: 1,
-      scaleNotSelected: 1,
-    },
-    options: {
-      zIndex: {
-        clone: 3,
-        selected: 2,
-        notSelected: 1,
-      },
-    },
-  }
 
   new Slider({
     container: '#slider-container-1-desktop',
@@ -318,3 +240,59 @@ document.addEventListener('DOMContentLoaded', () => {
     },
   })
 })
+
+document.addEventListener('DOMContentLoaded', () => {
+  const productSliderElement = document.getElementById('product-slider')
+  const childCount = productSliderElement
+    ? productSliderElement.children.length
+    : 0
+
+  UpdateProductSliderDataItems('product-slider', {
+    min: 1,
+    max: 5,
+    childElements: childCount,
+    dataItems: 'auto-detected',
+  })
+  UpdateElementInnerHTMLById(
+    'product-slider-image-count',
+    childCount.toString(),
+  )
+})
+
+const config = {
+  auto: true,
+  autoInterval: 6000,
+  animationConfig: {
+    duration: 400,
+    timingFunction: 'cubic-bezier(0.4, 0, 0.2, 1)',
+    transforms: {
+      fromLeft: {
+        enter: 'translate(-120%, 0%)',
+        exit: 'translate(20%, 0%)',
+      },
+      fromRight: {
+        enter: 'translate(120%, 0%)',
+        exit: 'translate(-20%, 0%)',
+      },
+    },
+    opacitySelected: 1,
+    opacityNotSelected: 0.75,
+    scaleSelected: 1,
+    scaleNotSelected: 1,
+  },
+  options: {
+    zIndex: {
+      clone: 3,
+      selected: 2,
+      notSelected: 1,
+    },
+  },
+}
+
+const mainConfig = {
+  responsive: {
+    enabled: true,
+    minWidth: 0,
+    maxWidth: 1024,
+  },
+}
