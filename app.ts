@@ -100,6 +100,11 @@ app.get('/activities', c => {
   return c.html(html.text())
 })
 
+app.get('/visa', c => {
+  const html = Bun.file('./dist/visa/index.html')
+  return c.html(html.text())
+})
+
 const secret = 'LHOUwjBFGyori7tltMnRQ2YtanvObPZOenCowk/Cq8c='
 
 app.post('/github-push-event', async c => {

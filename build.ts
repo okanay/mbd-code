@@ -50,6 +50,7 @@ const PAGES = {
     'contact',
     'faq',
     'activities',
+    'visa',
   ],
   directories: [
     'main',
@@ -62,6 +63,7 @@ const PAGES = {
     'contact',
     'faq',
     'activities',
+    'visa',
   ],
 }
 

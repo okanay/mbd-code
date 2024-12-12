@@ -1,25 +1,14 @@
-  new MultiGroupImageGallery({
-    elements: {
-      modalId: 'gallery-modal',
-      mainImageContainerId: 'gallery-modal-main-image-container',
-      thumbnailsContainerId: 'gallery-modal-thumbnails',
-      prevButtonId: 'prev-image-gallery',
-      nextButtonId: 'next-image-gallery',
-    },
-    groups: [
-      {
-        containerId: 'group-2',
-        slideItemClass: 'gallery-group-2',
-      },
-      {
-        containerId: 'product-slider',
-        slideItemClass: 'product-slide',
-      },
-    ],
-    thumbnailClass: 'thumbnail',
-    activeThumbnailClass: 'thumbnail-active',
-    // Her grubun görsel sayısını almak için callback
-    onImageCount: (groupId, count) => {
-      console.log(`Group ${groupId} has ${count} images`)
-    },
-  })
+    <div class="flex flex-col">
+      <input
+        type="time"
+        name="time"
+        id="time"
+        class="peer order-2 h-[44px] max-w-[120px] appearance-none border border-gray-200 bg-white px-3 py-2 focus:outline-none"
+      />
+      <label
+        for="time"
+        class="order-1 block text-sm font-semibold transition-colors duration-300 peer-focus:text-primary-500"
+      >
+        Time</label
+      >
+    </div>
