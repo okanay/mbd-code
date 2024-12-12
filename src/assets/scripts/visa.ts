@@ -16,7 +16,7 @@ document.addEventListener('DOMContentLoaded', () => {
             // PDF için özel görsel
             preview.innerHTML = `
               <div class="flex flex-col items-center justify-center gap-2">
-                <img src="/assets/images/icons/pdf-icon.png" class="h-12 w-auto" alt="PDF File" />
+                <img src="https://images.project-test.info/pdf-icon.png" class="h-12 w-auto" alt="PDF File" />
                 <span class="text-xs text-gray-500 truncate max-w-[90%]">${file.name}</span>
               </div>
             `
