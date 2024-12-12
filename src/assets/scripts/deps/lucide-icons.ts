@@ -56,6 +56,7 @@ import {
   SearchX,
   LogIn,
   Filter,
+  Upload,
 } from 'lucide'
 
 const icons = {
@@ -100,6 +101,7 @@ const icons = {
   Binary,
   Pen,
   Tag,
+  Upload,
   Clock,
   TrendingUp,
   SearchX,
