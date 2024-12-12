@@ -170,14 +170,21 @@
 
               <!-- Fotoğraf Upload Alanları -->
               <div class="grid grid-cols-2 gap-4 md:grid-cols-4">
-                <!-- Pasaport Fotoğrafı -->
                 <div class="space-y-2">
                   <div class="flex items-center gap-2">
                     <span class="text-sm font-medium">Pasaport Fotoğrafı</span>
-                    <i
-                      data-lucide="info"
-                      class="size-4 text-gray-400 hover:text-gray-600"
-                    ></i>
+                    <div class="group/info relative">
+                      <i
+                        data-lucide="info"
+                        class="size-4 text-gray-400 hover:text-gray-600"
+                      ></i>
+                      <!-- Tooltip -->
+                      <div
+                        class="absolute left-1/2 top-6 z-50 hidden min-w-[220px] -translate-x-1/2 text-pretty rounded bg-gray-900 px-2 py-1 text-xs text-white before:absolute before:left-1/2 before:top-0 before:h-0 before:w-0 before:-translate-x-1/2 before:-translate-y-full before:border-8 before:border-transparent before:border-b-gray-900 before:content-[''] group-hover/info:block"
+                      >
+                        Pasaport fotoğrafı son 6 ay içinde çekilmiş olmalıdır
+                      </div>
+                    </div>
                   </div>
                   <div
                     class="image-input relative flex h-44 cursor-pointer items-center justify-center rounded border border-gray-200 bg-gray-50 transition-colors duration-300 hover:bg-gray-100"
@@ -201,10 +208,18 @@
                 <div class="space-y-2">
                   <div class="flex items-center gap-2">
                     <span class="text-sm font-medium">Biyometrik Fotoğraf</span>
-                    <i
-                      data-lucide="info"
-                      class="size-4 text-gray-400 hover:text-gray-600"
-                    ></i>
+                    <div class="group/info relative">
+                      <i
+                        data-lucide="info"
+                        class="size-4 text-gray-400 hover:text-gray-600"
+                      ></i>
+                      <!-- Tooltip -->
+                      <div
+                        class="absolute left-1/2 top-6 z-50 hidden min-w-[220px] -translate-x-1/2 text-pretty rounded bg-gray-900 px-2 py-1 text-xs text-white before:absolute before:left-1/2 before:top-0 before:h-0 before:w-0 before:-translate-x-1/2 before:-translate-y-full before:border-8 before:border-transparent before:border-b-gray-900 before:content-[''] group-hover/info:block"
+                      >
+                        Beyaz fonda, 35x45mm ölçülerinde biyometrik fotoğraf
+                      </div>
+                    </div>
                   </div>
                   <div
                     class="image-input relative flex h-44 cursor-pointer items-center justify-center rounded border border-gray-200 bg-gray-50 transition-colors duration-300 hover:bg-gray-100"
@@ -228,10 +243,19 @@
                 <div class="space-y-2">
                   <div class="flex items-center gap-2">
                     <span class="text-sm font-medium">Otel Rezervasyonu</span>
-                    <i
-                      data-lucide="info"
-                      class="size-4 text-gray-400 hover:text-gray-600"
-                    ></i>
+                    <div class="group/info relative">
+                      <i
+                        data-lucide="info"
+                        class="size-4 text-gray-400 hover:text-gray-600"
+                      ></i>
+                      <!-- Tooltip -->
+                      <div
+                        class="absolute left-1/2 top-6 z-50 hidden min-w-[220px] -translate-x-1/2 text-pretty rounded bg-gray-900 px-2 py-1 text-xs text-white before:absolute before:left-1/2 before:top-0 before:h-0 before:w-0 before:-translate-x-1/2 before:-translate-y-full before:border-8 before:border-transparent before:border-b-gray-900 before:content-[''] group-hover/info:block"
+                      >
+                        Otel rezervasyonu, Dubai vizesi başvurusu için
+                        gereklidir.
+                      </div>
+                    </div>
                   </div>
                   <div
                     class="image-input relative flex h-44 cursor-pointer items-center justify-center rounded border border-gray-200 bg-gray-50 transition-colors duration-300 hover:bg-gray-100"
@@ -255,10 +279,19 @@
                 <div class="space-y-2">
                   <div class="flex items-center gap-2">
                     <span class="text-sm font-medium">Uçak Bileti</span>
-                    <i
-                      data-lucide="info"
-                      class="size-4 text-gray-400 hover:text-gray-600"
-                    ></i>
+                    <div class="group/info relative">
+                      <i
+                        data-lucide="info"
+                        class="size-4 text-gray-400 hover:text-gray-600"
+                      ></i>
+                      <!-- Tooltip -->
+                      <div
+                        class="absolute left-1/2 top-6 z-50 hidden min-w-[220px] -translate-x-1/2 text-pretty rounded bg-gray-900 px-2 py-1 text-xs text-white before:absolute before:left-1/2 before:top-0 before:h-0 before:w-0 before:-translate-x-1/2 before:-translate-y-full before:border-8 before:border-transparent before:border-b-gray-900 before:content-[''] group-hover/info:block"
+                      >
+                        Uçak bileti, Dubai'ye giriş ve çıkış tarihlerinizi
+                        gösteren bir belgedir.
+                      </div>
+                    </div>
                   </div>
                   <div
                     class="image-input relative flex h-44 cursor-pointer items-center justify-center rounded border border-gray-200 bg-gray-50 transition-colors duration-300 hover:bg-gray-100"
@@ -378,7 +411,7 @@
                   <div class="relative flex w-full items-center">
                     <select
                       id="visa-type"
-                      class="h-12 w-full appearance-none rounded border border-gray-200 px-3 py-2 outline-none focus:border-primary-200"
+                      class="h-12 w-full appearance-none rounded border border-gray-200 bg-white px-3 py-2 outline-none focus:border-primary-200"
                       style="-webkit-border-radius: 0; border-radius: 0"
                     >
                       <option value="30-days">30 gün tek giriş ($125)</option>
@@ -400,7 +433,7 @@
                   <div class="relative flex w-full items-center">
                     <select
                       id="express-service"
-                      class="h-12 w-full appearance-none rounded border border-gray-200 px-3 py-2 outline-none focus:border-primary-200"
+                      class="h-12 w-full appearance-none rounded border border-gray-200 bg-white px-3 py-2 outline-none focus:border-primary-200"
                       style="-webkit-border-radius: 0; border-radius: 0"
                     >
                       <option value="no">Hayır</option>
@@ -423,7 +456,7 @@
                   <div class="relative flex w-full items-center">
                     <select
                       id="insurance"
-                      class="h-12 w-full appearance-none rounded border border-gray-200 px-3 py-2 outline-none focus:border-primary-200"
+                      class="h-12 w-full appearance-none rounded border border-gray-200 bg-white px-3 py-2 outline-none focus:border-primary-200"
                       style="-webkit-border-radius: 0; border-radius: 0"
                     >
                       <option value="no">Hayır</option>
