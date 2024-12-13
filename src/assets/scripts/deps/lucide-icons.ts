@@ -57,6 +57,7 @@ import {
   LogIn,
   Filter,
   Upload,
+  FolderKanban,
 } from 'lucide'
 
 const icons = {
@@ -75,6 +76,7 @@ const icons = {
   CalendarCheck,
   Building,
   Bus,
+  FolderKanban,
   IdCard,
   Mail,
   Phone,
