@@ -2435,11 +2435,96 @@
 
                   <!-- Camp Selection -->
                   <div class="flex flex-col gap-1">
+                    <h2 class="text-sm font-semibold text-gray-950">
+                      Kamp Seçimi
+                    </h2>
+                    <div class="grid grid-cols-1 gap-2 md:grid-cols-2">
+                      <div class="relative">
+                        <input
+                          type="radio"
+                          id="silver"
+                          name="camp-type"
+                          class="peer hidden"
+                          checked
+                        />
+                        <label
+                          for="silver"
+                          class="flex h-11 cursor-pointer items-center justify-start gap-3 rounded-sm border border-gray-200 bg-gray-100 px-2 text-center transition-colors hover:bg-gray-200 peer-checked:border-primary-400 peer-checked:bg-primary-500 peer-checked:text-white peer-disabled:cursor-not-allowed peer-disabled:border-gray-400 peer-disabled:bg-gray-400 peer-disabled:text-gray-800 peer-disabled:opacity-50 peer-checked:[&>.size-6]:brightness-100 peer-disabled:[&>.size-6]:brightness-0"
+                        >
+                          <img
+                            src="/assets/images/form-icons/3.svg"
+                            alt=""
+                            class="size-6 brightness-0"
+                          />
+                          <span class="text-sm">Silver Kamp</span>
+                        </label>
+                      </div>
+
+                      <div class="relative">
+                        <input
+                          type="radio"
+                          id="gold"
+                          name="camp-type"
+                          class="peer hidden"
+                        />
+                        <label
+                          for="gold"
+                          class="flex h-11 cursor-pointer items-center justify-start gap-3 rounded-sm border border-gray-200 bg-gray-100 px-2 text-center transition-colors hover:bg-gray-200 peer-checked:border-primary-400 peer-checked:bg-primary-500 peer-checked:text-white peer-disabled:cursor-not-allowed peer-disabled:border-gray-400 peer-disabled:bg-gray-400 peer-disabled:text-gray-800 peer-disabled:opacity-50 peer-checked:[&>.size-6]:brightness-100 peer-disabled:[&>.size-6]:brightness-0"
+                        >
+                          <img
+                            src="/assets/images/form-icons/4.svg"
+                            alt=""
+                            class="size-6 brightness-0"
+                          />
+                          <span class="text-sm">Gold Kamp</span>
+                        </label>
+                      </div>
+
+                      <div class="relative">
+                        <input
+                          type="radio"
+                          id="premium"
+                          name="camp-type"
+                          class="peer hidden"
+                        />
+                        <label
+                          for="premium"
+                          class="flex h-11 cursor-pointer items-center justify-start gap-3 rounded-sm border border-gray-200 bg-gray-100 px-2 text-center transition-colors hover:bg-gray-200 peer-checked:border-primary-400 peer-checked:bg-primary-500 peer-checked:text-white peer-disabled:cursor-not-allowed peer-disabled:border-gray-400 peer-disabled:bg-gray-400 peer-disabled:text-gray-800 peer-disabled:opacity-50 peer-checked:[&>.size-6]:brightness-100 peer-disabled:[&>.size-6]:brightness-0"
+                        >
+                          <img
+                            src="/assets/images/form-icons/5.svg"
+                            alt=""
+                            class="size-6 brightness-0"
+                          />
+                          <span class="text-sm">Premium Kamp</span>
+                        </label>
+                      </div>
+
+                      <div class="relative">
+                        <input
+                          type="radio"
+                          id="platinum"
+                          name="camp-type"
+                          class="peer hidden"
+                        />
+                        <label
+                          for="platinum"
+                          class="flex h-11 cursor-pointer items-center justify-start gap-3 rounded-sm border border-gray-200 bg-gray-100 px-2 text-center transition-colors hover:bg-gray-200 peer-checked:border-primary-400 peer-checked:bg-primary-500 peer-checked:text-white peer-disabled:cursor-not-allowed peer-disabled:border-gray-400 peer-disabled:bg-gray-400 peer-disabled:text-gray-800 peer-disabled:opacity-50 peer-checked:[&>.size-6]:brightness-100 peer-disabled:[&>.size-6]:brightness-0"
+                        >
+                          <img
+                            src="/assets/images/form-icons/6.svg"
+                            alt=""
+                            class="size-6 brightness-0"
+                          />
+                          <span class="text-sm">Platinium Kamp</span>
+                        </label>
+                      </div>
+                    </div>
                     <!-- Image Gallery Mobile -->
                     <div
                       data-active="1"
                       id="mobile-gallery-controller"
-                      class="group relative w-full lg:hidden"
+                      class="group relative mt-1 w-full lg:hidden"
                     >
                       <!-- Silver -->
                       <div class="hidden group-data-[active=1]:block">
@@ -2748,91 +2833,6 @@
                             ></i>
                           </button>
                         </div>
-                      </div>
-                    </div>
-                    <h2 class="text-sm font-semibold text-gray-950">
-                      Kamp Seçimi
-                    </h2>
-                    <div class="grid grid-cols-1 gap-2 md:grid-cols-2">
-                      <div class="relative">
-                        <input
-                          type="radio"
-                          id="silver"
-                          name="camp-type"
-                          class="peer hidden"
-                          checked
-                        />
-                        <label
-                          for="silver"
-                          class="flex h-11 cursor-pointer items-center justify-start gap-3 rounded-sm border border-gray-200 bg-gray-100 px-2 text-center transition-colors hover:bg-gray-200 peer-checked:border-primary-400 peer-checked:bg-primary-500 peer-checked:text-white peer-disabled:cursor-not-allowed peer-disabled:border-gray-400 peer-disabled:bg-gray-400 peer-disabled:text-gray-800 peer-disabled:opacity-50 peer-checked:[&>.size-6]:brightness-100 peer-disabled:[&>.size-6]:brightness-0"
-                        >
-                          <img
-                            src="/assets/images/form-icons/3.svg"
-                            alt=""
-                            class="size-6 brightness-0"
-                          />
-                          <span class="text-sm">Silver Kamp</span>
-                        </label>
-                      </div>
-
-                      <div class="relative">
-                        <input
-                          type="radio"
-                          id="gold"
-                          name="camp-type"
-                          class="peer hidden"
-                        />
-                        <label
-                          for="gold"
-                          class="flex h-11 cursor-pointer items-center justify-start gap-3 rounded-sm border border-gray-200 bg-gray-100 px-2 text-center transition-colors hover:bg-gray-200 peer-checked:border-primary-400 peer-checked:bg-primary-500 peer-checked:text-white peer-disabled:cursor-not-allowed peer-disabled:border-gray-400 peer-disabled:bg-gray-400 peer-disabled:text-gray-800 peer-disabled:opacity-50 peer-checked:[&>.size-6]:brightness-100 peer-disabled:[&>.size-6]:brightness-0"
-                        >
-                          <img
-                            src="/assets/images/form-icons/4.svg"
-                            alt=""
-                            class="size-6 brightness-0"
-                          />
-                          <span class="text-sm">Gold Kamp</span>
-                        </label>
-                      </div>
-
-                      <div class="relative">
-                        <input
-                          type="radio"
-                          id="premium"
-                          name="camp-type"
-                          class="peer hidden"
-                        />
-                        <label
-                          for="premium"
-                          class="flex h-11 cursor-pointer items-center justify-start gap-3 rounded-sm border border-gray-200 bg-gray-100 px-2 text-center transition-colors hover:bg-gray-200 peer-checked:border-primary-400 peer-checked:bg-primary-500 peer-checked:text-white peer-disabled:cursor-not-allowed peer-disabled:border-gray-400 peer-disabled:bg-gray-400 peer-disabled:text-gray-800 peer-disabled:opacity-50 peer-checked:[&>.size-6]:brightness-100 peer-disabled:[&>.size-6]:brightness-0"
-                        >
-                          <img
-                            src="/assets/images/form-icons/5.svg"
-                            alt=""
-                            class="size-6 brightness-0"
-                          />
-                          <span class="text-sm">Premium Kamp</span>
-                        </label>
-                      </div>
-
-                      <div class="relative">
-                        <input
-                          type="radio"
-                          id="platinum"
-                          name="camp-type"
-                          class="peer hidden"
-                        />
-                        <label
-                          for="platinum"
-                          class="flex h-11 cursor-pointer items-center justify-start gap-3 rounded-sm border border-gray-200 bg-gray-100 px-2 text-center transition-colors hover:bg-gray-200 peer-checked:border-primary-400 peer-checked:bg-primary-500 peer-checked:text-white peer-disabled:cursor-not-allowed peer-disabled:border-gray-400 peer-disabled:bg-gray-400 peer-disabled:text-gray-800 peer-disabled:opacity-50 peer-checked:[&>.size-6]:brightness-100 peer-disabled:[&>.size-6]:brightness-0"
-                        >
-                          <img
-                            src="/assets/images/form-icons/6.svg"
-                            alt=""
-                            class="size-6 brightness-0"
-                          />
-                          <span class="text-sm">Platinium Kamp</span>
-                        </label>
                       </div>
                     </div>
                   </div>

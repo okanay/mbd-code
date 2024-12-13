@@ -197,7 +197,7 @@
                     class="flex h-full w-full items-center justify-center"
                   >
                     <div
-                      class="rounded-full border border-gray-200/75 bg-gray-100 p-2 opacity-50"
+                      class="pointer-events-none rounded-full border border-gray-200/75 bg-gray-100 p-2 opacity-50"
                     >
                       <i data-lucide="upload" class="size-6 text-gray-500"></i>
                     </div>
@@ -236,7 +236,7 @@
                     class="flex h-full w-full items-center justify-center"
                   >
                     <div
-                      class="rounded-full border border-gray-200/75 bg-gray-100 p-2 opacity-50"
+                      class="pointer-events-none rounded-full border border-gray-200/75 bg-gray-100 p-2 opacity-50"
                     >
                       <i data-lucide="upload" class="size-6 text-gray-500"></i>
                     </div>
@@ -275,7 +275,7 @@
                     class="flex h-full w-full items-center justify-center"
                   >
                     <div
-                      class="rounded-full border border-gray-200/75 bg-gray-100 p-2 opacity-50"
+                      class="pointer-events-none rounded-full border border-gray-200/75 bg-gray-100 p-2 opacity-50"
                     >
                       <i data-lucide="upload" class="size-6 text-gray-500"></i>
                     </div>
@@ -315,7 +315,7 @@
                     class="flex h-full w-full items-center justify-center"
                   >
                     <div
-                      class="rounded-full border border-gray-200/75 bg-gray-100 p-2 opacity-50"
+                      class="pointer-events-none rounded-full border border-gray-200/75 bg-gray-100 p-2 opacity-50"
                     >
                       <i data-lucide="upload" class="size-6 text-gray-500"></i>
                     </div>
@@ -358,7 +358,7 @@
                   </select>
                   <i
                     data-lucide="chevron-down"
-                    class="absolute right-2 size-4 text-gray-400"
+                    class="absolute right-2 size-4 text-gray-400 rtl:left-2 rtl:right-auto"
                   ></i>
                 </div>
               </div>
@@ -388,32 +388,41 @@
                 <div class="flex">
                   <div class="relative">
                     <div
-                      class="flex h-12 cursor-pointer items-center gap-1 rounded-l border border-r-0 border-gray-200 bg-white px-3 text-xs hover:bg-gray-50"
+                      class="flex h-12 cursor-pointer items-center gap-1 rounded-l border border-r-0 border-gray-200 bg-white px-3 text-xs hover:bg-gray-50 rtl:rounded-l-none rtl:rounded-r rtl:border-l-0 rtl:border-r"
                     >
                       <img
-                        src="https://flagcdn.com/tr.svg"
-                        alt="TR"
-                        class="h-4 w-5 rounded object-cover"
+                        id="country-flag"
+                        src="https://flagcdn.com/us.svg"
+                        alt="flag"
+                        class="h-4 w-5 !rounded object-cover"
                       />
-                      <span>+90</span>
+                      <span id="country-prefix">+1</span>
                     </div>
+                    <select
+                      id="country-code"
+                      style="-webkit-border-radius: 0; border-radius: 0"
+                      class="absolute inset-0 h-full w-full cursor-pointer opacity-0"
+                    >
+                      <option value="US" data-prefix="+1" data-flag="us">
+                        United States (+1)
+                      </option>
+                    </select>
                   </div>
                   <input
                     type="tel"
-                    id="phone"
-                    class="h-12 flex-1 rounded-r border border-gray-200 px-3 py-2 outline-none focus:border-primary-200"
-                    placeholder="Telefon Numarası"
                     style="-webkit-border-radius: 0; border-radius: 0"
+                    class="h-12 flex-1 !rounded-r border border-gray-200 px-3 py-2 outline-none focus:border-primary-200 rtl:!rounded-l rtl:!rounded-r-none rtl:text-end"
+                    placeholder="Telefon numarası giriniz"
                   />
                 </div>
               </div>
             </div>
 
             <!-- Vize Bilgileri -->
-            <div class="grid grid-cols-2 gap-4 md:grid-cols-3">
+            <div class="grid grid-cols-2 gap-4 md:grid-cols-4">
               <!-- Vize Tipi -->
               <div
-                class="order-3 col-span-2 space-y-2 sm:order-1 sm:col-span-1"
+                class="order-3 col-span-2 space-y-2 sm:order-1 sm:col-span-2"
               >
                 <label for="visa-type" class="text-sm font-medium text-gray-700"
                   >Vize Tipi</label
@@ -428,7 +437,7 @@
                   </select>
                   <i
                     data-lucide="chevron-down"
-                    class="absolute right-2 size-4 text-gray-400"
+                    class="absolute right-2 size-4 text-gray-400 rtl:left-2 rtl:right-auto"
                   ></i>
                 </div>
               </div>
@@ -451,7 +460,7 @@
                   </select>
                   <i
                     data-lucide="chevron-down"
-                    class="absolute right-2 size-4 text-gray-400"
+                    class="absolute right-2 size-4 text-gray-400 rtl:left-2 rtl:right-auto"
                   ></i>
                 </div>
               </div>
@@ -472,7 +481,7 @@
                   </select>
                   <i
                     data-lucide="chevron-down"
-                    class="absolute right-2 size-4 text-gray-400"
+                    class="absolute right-2 size-4 text-gray-400 rtl:left-2 rtl:right-auto"
                   ></i>
                 </div>
               </div>
