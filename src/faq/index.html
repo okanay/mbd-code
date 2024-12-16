@@ -84,6 +84,7 @@
             </a>
           </div>
           <!-- Navigation Links -->
+          <!-- Navigation Links -->
           <div class="hidden text-wrap lg:block">
             <ul class="flex gap-5 text-xs font-medium min-[1080px]:text-sm">
               <li>
@@ -94,60 +95,78 @@
                   >Çöl Safari</a
                 >
               </li>
-              <li class="relative" id="desktop-nav-1">
-                <button
-                  id="desktop-nav-1-btn"
-                  href="#"
+              <li class="group relative" id="desktop-nav-1">
+                <!-- Ana link -->
+                <a
+                  href="/sehir-turlari"
                   class="flex items-center gap-0.5 transition-colors duration-300 hover:text-primary-500"
-                  aria-label="Dubai Çölde Safari"
+                  aria-label="Şehir Turları"
                 >
-                  <span> Şehir Turları </span>
+                  <span>Şehir Turları</span>
                   <i
                     data-lucide="chevron-down"
-                    class="size-[16px] object-cover"
+                    class="size-[16px] object-cover transition-transform duration-300 group-hover:rotate-180"
                   ></i>
-                </button>
+                </a>
 
+                <!-- Görünmez köprü -->
+                <div
+                  class="invisible absolute left-0 h-4 w-full group-hover:visible"
+                ></div>
+
+                <!-- Dropdown menü -->
                 <ul
-                  id="desktop-nav-1-content"
-                  data-state="closed"
-                  class="-tran*-x-1/2 pointer-events-auto absolute bottom-0 left-[50%] flex h-fit w-fit translate-y-[110%] flex-col gap-2 rounded border border-gray-200 bg-white px-3 py-3 text-xs opacity-100 transition-all duration-300 data-[state=closed]:pointer-events-none data-[state=closed]:translate-y-[90%] data-[state=closed]:opacity-0"
+                  class="invisible absolute bottom-0 left-[50%] flex h-fit w-fit -translate-x-1/2 translate-y-[110%] flex-col gap-2 rounded border border-gray-200 bg-white px-3 py-3 text-xs opacity-0 transition-all duration-300 group-hover:visible group-hover:opacity-100"
                 >
                   <li class="transition-opacity duration-300 hover:opacity-75">
-                    <a href="#" class="text-nowrap">Dubai Şehir Turu </a>
+                    <a href="/sehir-turlari/dubai" class="text-nowrap"
+                      >Dubai Şehir Turu</a
+                    >
                   </li>
                   <li class="transition-opacity duration-300 hover:opacity-75">
-                    <a href="#" class="text-nowrap">Abu Dhabi Şehir Turu </a>
+                    <a href="/sehir-turlari/abu-dhabi" class="text-nowrap"
+                      >Abu Dhabi Şehir Turu</a
+                    >
                   </li>
                 </ul>
               </li>
-              <li class="relative" id="desktop-nav-2">
-                <button
-                  id="desktop-nav-2-btn"
-                  href="#"
+              <li class="group relative" id="desktop-nav-2">
+                <!-- Ana link -->
+                <a
+                  href="/activities"
                   class="flex items-center gap-0.5 transition-colors duration-300 hover:text-primary-500"
-                  aria-label="Dubai Çölde Safari"
+                  aria-label="Dubai Aktiviteleri"
                 >
-                  <span> Aktiviteler </span>
+                  <span>Aktiviteler</span>
                   <i
                     data-lucide="chevron-down"
-                    class="size-[16px] object-cover"
+                    class="size-[16px] object-cover transition-transform duration-300 group-hover:rotate-180"
                   ></i>
-                </button>
+                </a>
 
+                <!-- Görünmez köprü -->
+                <div
+                  class="invisible absolute left-0 h-4 w-full group-hover:visible"
+                ></div>
+
+                <!-- Dropdown menü -->
                 <ul
-                  id="desktop-nav-2-content"
-                  data-state="closed"
-                  class="pointer-events-auto absolute bottom-0 left-[50%] flex h-fit w-fit -translate-x-1/2 translate-y-[110%] flex-col gap-2 rounded border border-gray-200 bg-white px-3 py-3 text-xs opacity-100 transition-all duration-300 data-[state=closed]:pointer-events-none data-[state=closed]:translate-y-[90%] data-[state=closed]:opacity-0"
+                  class="invisible absolute bottom-0 left-[50%] flex h-fit w-fit -translate-x-1/2 translate-y-[110%] flex-col gap-2 rounded border border-gray-200 bg-white px-3 py-3 text-xs opacity-0 transition-all duration-300 group-hover:visible group-hover:opacity-100"
                 >
                   <li class="transition-opacity duration-300 hover:opacity-75">
-                    <a href="#" class="text-nowrap"> Burj Khalifa </a>
+                    <a href="/aktiviteler/burj-khalifa" class="text-nowrap"
+                      >Burj Khalifa</a
+                    >
                   </li>
                   <li class="transition-opacity duration-300 hover:opacity-75">
-                    <a href="#" class="text-nowrap">Museum of the Future </a>
+                    <a href="/aktiviteler/museum-of-future" class="text-nowrap"
+                      >Museum of the Future</a
+                    >
                   </li>
                   <li class="transition-opacity duration-300 hover:opacity-75">
-                    <a href="#" class="text-nowrap">Miracle Garden </a>
+                    <a href="/aktiviteler/miracle-garden" class="text-nowrap"
+                      >Miracle Garden</a
+                    >
                   </li>
                 </ul>
               </li>
@@ -159,35 +178,42 @@
                   >Dubai Vizesi</a
                 >
               </li>
-              <li class="relative" id="desktop-nav-3">
-                <button
-                  id="desktop-nav-3-btn"
+              <li class="group relative" id="desktop-nav-3">
+                <!-- Ana link -->
+                <a
+                  href="/corporate"
                   class="flex items-center gap-0.5 transition-colors duration-300 hover:text-primary-500"
-                  aria-label="Dubai Çölde Safari"
+                  aria-label="Corporate"
                 >
-                  <span> Corporate </span>
+                  <span>Corporate</span>
                   <i
                     data-lucide="chevron-down"
-                    class="size-[16px] object-cover"
+                    class="size-[16px] object-cover transition-transform duration-300 group-hover:rotate-180"
                   ></i>
-                </button>
+                </a>
 
+                <!-- Görünmez köprü -->
+                <div
+                  class="invisible absolute left-0 h-4 w-full group-hover:visible"
+                ></div>
+
+                <!-- Dropdown menü -->
                 <ul
-                  id="desktop-nav-3-content"
-                  data-state="closed"
-                  class="pointer-events-auto absolute bottom-0 left-[50%] flex h-fit w-fit -translate-x-1/2 translate-y-[110%] flex-col gap-2 rounded border border-gray-200 bg-white px-3 py-3 text-xs opacity-100 transition-all duration-300 data-[state=closed]:pointer-events-none data-[state=closed]:translate-y-[90%] data-[state=closed]:opacity-0"
+                  class="invisible absolute bottom-0 left-[50%] flex h-fit w-fit -translate-x-1/2 translate-y-[110%] flex-col gap-2 rounded border border-gray-200 bg-white px-3 py-3 text-xs opacity-0 transition-all duration-300 group-hover:visible group-hover:opacity-100"
                 >
                   <li class="transition-opacity duration-300 hover:opacity-75">
-                    <a href="#" class="text-nowrap">About Us</a>
+                    <a href="/corporate/about-us" class="text-nowrap"
+                      >About Us</a
+                    >
                   </li>
                   <li class="transition-opacity duration-300 hover:opacity-75">
-                    <a href="#" class="text-nowrap">Contact </a>
+                    <a href="/corporate/contact" class="text-nowrap">Contact</a>
                   </li>
                   <li class="transition-opacity duration-300 hover:opacity-75">
-                    <a href="#" class="text-nowrap">Career</a>
+                    <a href="/corporate/career" class="text-nowrap">Career</a>
                   </li>
                   <li class="transition-opacity duration-300 hover:opacity-75">
-                    <a href="#" class="text-nowrap">F.A.Q</a>
+                    <a href="/corporate/faq" class="text-nowrap">F.A.Q</a>
                   </li>
                 </ul>
               </li>
