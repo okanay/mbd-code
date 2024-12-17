@@ -63,6 +63,7 @@
     <script type="module" src="/assets/scripts/layout.js"></script>
     <script type="module" src="/assets/scripts/product.js"></script>
     <script type="module" src="/assets/scripts/ui/product-sliders.js"></script>
+    <script type="module" src="/assets/scripts/ui/test-lazy-slider.js"></script>
 
     <script>
       ;(function () {
@@ -104,7 +105,6 @@
               />
             </a>
           </div>
-          <!-- Navigation Links -->
           <!-- Navigation Links -->
           <div class="hidden text-wrap lg:block">
             <ul class="flex gap-5 text-xs font-medium min-[1080px]:text-sm">
@@ -1020,9 +1020,10 @@
               data-index="0"
             >
               <img
-                src="https://cdn.dojoin.com/dj/iJgVl5te3W2Xsw7chPTlU3QN0xTgwlhMnc2OmkORbehbdEL.jpg"
+                data-src="https://images.project-test.info/9.webp"
+                src="/assets/images/gray-placeholder.webp"
                 alt="Dubai'de Balayı Tatili"
-                class="h-full w-full object-cover"
+                class="lazy-slider h-full w-full object-cover"
                 style="transition: filter 0.3s ease"
               />
 
@@ -1037,10 +1038,10 @@
               data-index="1"
             >
               <img
-                src="https://images.project-test.info/10-blur.webp"
                 data-src="https://images.project-test.info/10.webp"
+                src="/assets/images/gray-placeholder.webp"
                 alt="Dubai'de Balayı Tatili"
-                class="lazy-image h-full w-full object-cover"
+                class="lazy-slider h-full w-full object-cover"
                 style="transition: filter 0.3s ease"
               />
 
@@ -1055,10 +1056,10 @@
               data-index="2"
             >
               <img
-                src="https://images.project-test.info/16-blur.webp"
                 data-src="https://images.project-test.info/16.webp"
+                src="/assets/images/gray-placeholder.webp"
                 alt="Dubai'de Balayı Tatili"
-                class="lazy-image h-full w-full object-cover"
+                class="lazy-slider h-full w-full object-cover"
                 style="transition: filter 0.3s ease"
               />
 
@@ -1073,10 +1074,10 @@
               data-index="3"
             >
               <img
-                src="https://images.project-test.info/9-blur.webp"
                 data-src="https://images.project-test.info/9.webp"
+                src="/assets/images/gray-placeholder.webp"
                 alt="Dubai'de Balayı Tatili"
-                class="lazy-image h-full w-full object-cover"
+                class="lazy-slider h-full w-full object-cover"
                 style="transition: filter 0.3s ease"
               />
 
@@ -1091,10 +1092,10 @@
               data-index="4"
             >
               <img
-                src="https://images.project-test.info/21-blur.webp"
                 data-src="https://images.project-test.info/21.webp"
+                src="/assets/images/gray-placeholder.webp"
                 alt="Dubai'de Balayı Tatili"
-                class="lazy-image h-full w-full object-cover"
+                class="lazy-slider h-full w-full object-cover"
                 style="transition: filter 0.3s ease"
               />
 
@@ -1109,10 +1110,10 @@
               data-index="5"
             >
               <img
-                src="https://images.project-test.info/23-blur.webp"
                 data-src="https://images.project-test.info/23.webp"
+                src="/assets/images/gray-placeholder.webp"
                 alt="Dubai'de Balayı Tatili"
-                class="lazy-image h-full w-full object-cover"
+                class="lazy-slider h-full w-full object-cover"
                 style="transition: filter 0.3s ease"
               />
 
@@ -1352,7 +1353,7 @@
                 </div>
                 <!--  Desktop Package Information -->
                 <div
-                  data-active="1"
+                  data-active="0"
                   id="desktop-gallery-controller"
                   class="group hidden lg:block"
                 >
@@ -1369,6 +1370,7 @@
                       >
                         <ul
                           id="slider-1-desktop"
+                          data-status="disable"
                           class="slider-1-desktop relative"
                         >
                           <li
@@ -1376,10 +1378,11 @@
                             class="slide-1-desktop absolute left-0 top-0 cursor-pointer"
                           >
                             <img
-                              data-src="https://images.project-test.info/15.webp"
-                              src="https://images.project-test.info/15-blur.webp"
+                              data-src="https://images.project-test.info/silver_1.webp"
+                              src="/assets/images/gray-placeholder.webp"
                               alt="Dubai'de Balayı Tatili"
-                              class="lazy-image h-full w-full object-cover"
+                              class="lazy-slider h-full w-full object-cover"
+                              style="transition: filter 0.3s ease"
                             />
                           </li>
                           <li
@@ -1387,10 +1390,11 @@
                             class="slide-1-desktop absolute left-0 top-0 cursor-pointer"
                           >
                             <img
-                              data-src="https://images.project-test.info/17.webp"
-                              src="https://images.project-test.info/17-blur.webp"
+                              data-src="https://images.project-test.info/silver_2.webp"
+                              src="/assets/images/gray-placeholder.webp"
                               alt="Dubai'de Balayı Tatili"
-                              class="lazy-image h-full w-full object-cover"
+                              class="lazy-slider h-full w-full object-cover"
+                              style="transition: filter 0.3s ease"
                             />
                           </li>
                         </ul>
@@ -1476,6 +1480,7 @@
                       >
                         <ul
                           id="slider-2-desktop"
+                          data-status="disable"
                           class="slider-2-desktop relative"
                         >
                           <li
@@ -1483,10 +1488,11 @@
                             class="slide-2-desktop absolute left-0 top-0 cursor-pointer"
                           >
                             <img
-                              data-src="https://images.project-test.info/15.webp"
-                              src="https://images.project-test.info/15-blur.webp"
+                              data-src="https://images.project-test.info/gold_1.webp"
+                              src="/assets/images/gray-placeholder.webp"
                               alt="Dubai'de Balayı Tatili"
-                              class="lazy-image h-full w-full object-cover"
+                              class="lazy-slider h-full w-full object-cover"
+                              style="transition: filter 0.3s ease"
                             />
                           </li>
                           <li
@@ -1494,10 +1500,11 @@
                             class="slide-2-desktop absolute left-0 top-0 cursor-pointer"
                           >
                             <img
-                              data-src="https://images.project-test.info/17.webp"
-                              src="https://images.project-test.info/17-blur.webp"
+                              data-src="https://images.project-test.info/gold_2.webp"
+                              src="/assets/images/gray-placeholder.webp"
                               alt="Dubai'de Balayı Tatili"
-                              class="lazy-image h-full w-full object-cover"
+                              class="lazy-slider h-full w-full object-cover"
+                              style="transition: filter 0.3s ease"
                             />
                           </li>
                         </ul>
@@ -1583,6 +1590,7 @@
                       >
                         <ul
                           id="slider-3-desktop"
+                          data-status="disable"
                           class="slider-3-desktop relative"
                         >
                           <li
@@ -1590,10 +1598,11 @@
                             class="slide-3-desktop absolute left-0 top-0 cursor-pointer"
                           >
                             <img
-                              data-src="https://images.project-test.info/15.webp"
-                              src="https://images.project-test.info/15-blur.webp"
+                              data-src="https://images.project-test.info/premium_1.webp"
+                              src="/assets/images/gray-placeholder.webp"
                               alt="Dubai'de Balayı Tatili"
-                              class="lazy-image h-full w-full object-cover"
+                              class="lazy-slider h-full w-full object-cover"
+                              style="transition: filter 0.3s ease"
                             />
                           </li>
                           <li
@@ -1601,10 +1610,11 @@
                             class="slide-3-desktop absolute left-0 top-0 cursor-pointer"
                           >
                             <img
-                              data-src="https://images.project-test.info/17.webp"
-                              src="https://images.project-test.info/17-blur.webp"
+                              data-src="https://images.project-test.info/premium_2.webp"
+                              src="/assets/images/gray-placeholder.webp"
                               alt="Dubai'de Balayı Tatili"
-                              class="lazy-image h-full w-full object-cover"
+                              class="lazy-slider h-full w-full object-cover"
+                              style="transition: filter 0.3s ease"
                             />
                           </li>
                         </ul>
@@ -1692,6 +1702,7 @@
                       >
                         <ul
                           id="slider-4-desktop"
+                          data-status="disable"
                           class="slider-4-desktop relative"
                         >
                           <li
@@ -1699,10 +1710,11 @@
                             class="slide-4-desktop absolute left-0 top-0 cursor-pointer"
                           >
                             <img
-                              data-src="https://images.project-test.info/15.webp"
-                              src="https://images.project-test.info/15-blur.webp"
+                              data-src="https://images.project-test.info/platinium_1.webp"
+                              src="/assets/images/gray-placeholder.webp"
                               alt="Dubai'de Balayı Tatili"
-                              class="lazy-image h-full w-full object-cover"
+                              class="lazy-slider h-full w-full object-cover"
+                              style="transition: filter 0.3s ease"
                             />
                           </li>
                           <li
@@ -1710,10 +1722,11 @@
                             class="slide-4-desktop absolute left-0 top-0 cursor-pointer"
                           >
                             <img
-                              data-src="https://images.project-test.info/17.webp"
-                              src="https://images.project-test.info/17-blur.webp"
+                              data-src="https://images.project-test.info/platinium_2.webp"
+                              src="/assets/images/gray-placeholder.webp"
                               alt="Dubai'de Balayı Tatili"
-                              class="lazy-image h-full w-full object-cover"
+                              class="lazy-slider h-full w-full object-cover"
+                              style="transition: filter 0.3s ease"
                             />
                           </li>
                         </ul>
@@ -2559,16 +2572,21 @@
                           id="slider-container-1"
                           class="relative z-[103] h-52 overflow-hidden rounded"
                         >
-                          <ul id="slider-1" class="slider-1 relative">
+                          <ul
+                            id="slider-1"
+                            data-status="disable"
+                            class="slider-1 relative"
+                          >
                             <li
                               data-index="0"
                               class="slide-1 absolute left-0 top-0 cursor-pointer"
                             >
                               <img
-                                data-src="https://images.project-test.info/15.webp"
-                                src="https://images.project-test.info/15-blur.webp"
+                                data-src="https://images.project-test.info/silver_1.webp"
+                                src="/assets/images/gray-placeholder.webp"
                                 alt="Dubai'de Balayı Tatili"
-                                class="lazy-image h-full w-full object-cover"
+                                class="lazy-slider h-full w-full object-cover"
+                                style="transition: filter 0.3s ease"
                               />
                             </li>
                             <li
@@ -2576,10 +2594,11 @@
                               class="slide-1 absolute left-0 top-0 cursor-pointer"
                             >
                               <img
-                                data-src="https://images.project-test.info/17.webp"
-                                src="https://images.project-test.info/17-blur.webp"
+                                data-src="https://images.project-test.info/silver_2.webp"
+                                src="/assets/images/gray-placeholder.webp"
                                 alt="Dubai'de Balayı Tatili"
-                                class="lazy-image h-full w-full object-cover"
+                                class="lazy-slider h-full w-full object-cover"
+                                style="transition: filter 0.3s ease"
                               />
                             </li>
                           </ul>
@@ -2636,16 +2655,20 @@
                           id="slider-container-2"
                           class="relative z-[103] h-52 overflow-hidden rounded"
                         >
-                          <ul id="slider-2" class="slider-2 relative">
+                          <ul
+                            id="slider-2"
+                            data-status="disable"
+                            class="slider-2 relative"
+                          >
                             <li
                               data-index="0"
                               class="slide-2 absolute left-0 top-0 cursor-pointer"
                             >
                               <img
-                                data-src="https://images.project-test.info/22.webp"
-                                src="https://images.project-test.info/22-blur.webp"
+                                data-src="https://images.project-test.info/gold_1.webp"
+                                src="/assets/images/gray-placeholder.webp"
                                 alt="Dubai'de Balayı Tatili"
-                                class="lazy-image h-full w-full object-scale-down"
+                                class="lazy-slider h-full w-full object-scale-down"
                               />
                             </li>
                             <li
@@ -2653,10 +2676,11 @@
                               class="slide-2 absolute left-0 top-0 cursor-pointer"
                             >
                               <img
-                                data-src="https://images.project-test.info/25.webp"
-                                src="https://images.project-test.info/25-blur.webp"
+                                data-src="https://images.project-test.info/gold_2.webp"
+                                src="/assets/images/gray-placeholder.webp"
                                 alt="Dubai'de Balayı Tatili"
-                                class="lazy-image h-full w-full object-cover"
+                                class="lazy-slider h-full w-full object-cover"
+                                style="transition: filter 0.3s ease"
                               />
                             </li>
                           </ul>
@@ -2713,16 +2737,21 @@
                           id="slider-container-3"
                           class="relative z-[103] h-52 overflow-hidden rounded"
                         >
-                          <ul id="slider-3" class="slider-3 relative">
+                          <ul
+                            id="slider-3"
+                            data-status="disable"
+                            class="slider-3 relative"
+                          >
                             <li
                               data-index="0"
                               class="slide-3 absolute left-0 top-0 cursor-pointer"
                             >
                               <img
-                                data-src="https://images.project-test.info/11.webp"
-                                src="https://images.project-test.info/11-blur.webp"
+                                data-src="https://images.project-test.info/premium_1.webp"
+                                src="/assets/images/gray-placeholder.webp"
                                 alt="Dubai'de Balayı Tatili"
-                                class="lazy-image h-full w-full object-cover"
+                                class="lazy-slider h-full w-full object-cover"
+                                style="transition: filter 0.3s ease"
                               />
                             </li>
                             <li
@@ -2730,10 +2759,11 @@
                               class="slide-3 absolute left-0 top-0 cursor-pointer"
                             >
                               <img
-                                data-src="https://images.project-test.info/10.webp"
-                                src="https://images.project-test.info/10-blur.webp"
+                                data-src="https://images.project-test.info/premium_2.webp"
+                                src="/assets/images/gray-placeholder.webp"
                                 alt="Dubai'de Balayı Tatili"
-                                class="lazy-image h-full w-full object-cover"
+                                class="lazy-slider h-full w-full object-cover"
+                                style="transition: filter 0.3s ease"
                               />
                             </li>
                           </ul>
@@ -2790,16 +2820,21 @@
                           id="slider-container-4"
                           class="relative z-[103] h-52 overflow-hidden rounded"
                         >
-                          <ul id="slider-4" class="slider-4 relative">
+                          <ul
+                            id="slider-4"
+                            data-status="disable"
+                            class="slider-4 relative"
+                          >
                             <li
                               data-index="0"
                               class="slide-4 absolute left-0 top-0 cursor-pointer"
                             >
                               <img
-                                data-src="https://images.project-test.info/13.webp"
-                                src="https://images.project-test.info/13-blur.webp"
+                                data-src="https://images.project-test.info/platinum_1.webp"
+                                src="/assets/images/gray-placeholder.webp"
                                 alt="Dubai'de Balayı Tatili"
-                                class="lazy-image h-full w-full object-cover"
+                                class="lazy-slider h-full w-full object-cover"
+                                style="transition: filter 0.3s ease"
                               />
                             </li>
                             <li
@@ -2807,10 +2842,11 @@
                               class="slide-4 absolute left-0 top-0 cursor-pointer"
                             >
                               <img
-                                data-src="https://images.project-test.info/12.webp"
-                                src="https://images.project-test.info/12-blur.webp"
+                                data-src="https://images.project-test.info/platinum_2.webp"
+                                src="/assets/images/gray-placeholder.webp"
                                 alt="Dubai'de Balayı Tatili"
-                                class="lazy-image h-full w-full object-cover"
+                                class="lazy-slider h-full w-full object-cover"
+                                style="transition: filter 0.3s ease"
                               />
                             </li>
                           </ul>

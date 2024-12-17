@@ -37,6 +37,12 @@ interface SliderConfig {
   autoInterval?: number
   responsive?: ResponsiveConfig
   onIndexChange?: (index?: number) => void
+  lazyLoading?: {
+    enabled: boolean
+    dataSrcAttribute?: string
+    loadedClass?: string
+    lazyClass?: string
+  }
   options: {
     zIndex: {
       clone: number
@@ -51,8 +57,8 @@ class Slider {
   private slider: HTMLElement
   private slides: NodeListOf<HTMLElement>
   private buttons: NodeListOf<HTMLButtonElement>
-  private nextButton: HTMLElement | null // Yeni eklendi
-  private prevButton: HTMLElement | null // Yeni eklendi
+  private nextButton: HTMLElement | null
+  private prevButton: HTMLElement | null
   private activeIndex: number
   private isAnimating: boolean
   private activeButtonClass: string
@@ -62,6 +68,13 @@ class Slider {
   private autoTimer: NodeJS.Timeout | null
   private onIndexChange?: (index?: number) => void
   private lastDirection: 'left' | 'right' = 'right'
+  private lazyLoadConfig: {
+    enabled: boolean
+    dataSrcAttribute: string
+    loadedClass: string
+    lazyClass: string
+  }
+  private intersectionObserver: IntersectionObserver | null = null
   private options: {
     zIndex: {
       clone: number
@@ -72,11 +85,16 @@ class Slider {
   private animationConfig: SliderAnimationConfig
   private responsiveConfig: ResponsiveConfig
   private resizeObserver: ResizeObserver | null
+  private mutationObserver: MutationObserver | null = null
 
   private initialConfig: SliderConfig
   private queuedTransition: boolean = false
+  private loadedImages: Set<string> = new Set()
+  private loadedElements: WeakSet<HTMLElement> = new WeakSet()
+  private isEnabled: boolean = false
 
   constructor(config: SliderConfig) {
+    // Initialize container element
     this.container =
       typeof config.container === 'string'
         ? (document.querySelector(config.container) as HTMLElement)
@@ -86,14 +104,17 @@ class Slider {
       throw new Error('Container element not found')
     }
 
+    // Initialize slider element
     this.slider = this.container.querySelector('ul') as HTMLElement
     if (!this.slider) {
       throw new Error('Slider element not found')
     }
 
+    // Initialize slides and buttons
     this.slides = this.container.querySelectorAll(config.slideSelector)
     this.buttons = document.querySelectorAll(config.buttonSelector)
 
+    // Initialize navigation buttons
     this.nextButton = config.nextButtonSelector
       ? document.querySelector(config.nextButtonSelector)
       : null
@@ -105,8 +126,10 @@ class Slider {
       throw new Error('Slides or buttons not found')
     }
 
+    // Store initial config
     this.initialConfig = { ...config }
 
+    // Initialize animation config
     this.animationConfig = {
       duration: config.animationConfig?.duration || 500,
       timingFunction: config.animationConfig?.timingFunction || 'ease-in-out',
@@ -134,12 +157,14 @@ class Slider {
       scaleNotSelected: config.animationConfig?.scaleNotSelected ?? 0.85,
     }
 
+    // Initialize responsive config
     this.responsiveConfig = {
       enabled: config.responsive?.enabled ?? false,
       minWidth: config.responsive?.minWidth ?? 0,
       maxWidth: config.responsive?.maxWidth ?? 9999,
     }
 
+    // Initialize slider state
     this.activeIndex = config.defaultActiveIndex || 0
     this.isAnimating = false
     this.activeButtonClass = config.activeButtonClass || 'slider-active-btn'
@@ -148,6 +173,8 @@ class Slider {
     this.autoEnabled = config.auto || false
     this.autoInterval = config.autoInterval || 5000
     this.autoTimer = null
+
+    // Initialize z-index options
     this.options = config.options || {
       zIndex: {
         clone: 60,
@@ -155,14 +182,44 @@ class Slider {
         notSelected: -10,
       },
     }
+
+    // Initialize lazy loading config
+    this.lazyLoadConfig = {
+      enabled: config.lazyLoading?.enabled ?? true,
+      dataSrcAttribute: config.lazyLoading?.dataSrcAttribute ?? 'data-src',
+      loadedClass: config.lazyLoading?.loadedClass ?? 'loaded',
+      lazyClass: config.lazyLoading?.lazyClass ?? 'lazy-slider',
+    }
+
+    // Initialize loading tracking
+    this.loadedImages = new Set()
+
+    // Check slider status from data attribute
+    const status = this.slider.getAttribute('data-status')
+    // Eğer data-status yoksa veya geçersiz bir değerse 'enable' olarak varsay
+    this.isEnabled = status ? status === 'enable' : true
+
+    // Initialize change handler and observer
     this.onIndexChange = config.onIndexChange
     this.resizeObserver = null
+    this.intersectionObserver = null
+
+    // Apply initial styles and initialize slider
     this.applyInitialStyles()
     this.init()
+    this.setupMutationObserver()
   }
 
   private init(): void {
-    if (this.slides.length > 0) {
+    if (this.slides.length > 0 && this.isEnabled) {
+      // Sadece slider enable ise lazy loading'i başlat
+      if (this.lazyLoadConfig.enabled) {
+        if (this.isSliderEnabled()) {
+          this.loadSlideImages(this.activeIndex)
+        } else {
+          this.setupGridLazyLoading()
+        }
+      }
     }
 
     this.updateActiveButton(this.activeIndex)
@@ -201,6 +258,103 @@ class Slider {
     this.initResizeObserver()
   }
 
+  private isImageLazy(img: HTMLElement): boolean {
+    // Slider disabled ise hiç yükleme yapma
+    if (!this.isEnabled) {
+      return false
+    }
+
+    // Eğer bu element daha önce yüklendiyse lazy loading yapma
+    if (this.loadedElements.has(img)) return false
+
+    // Lazy loading class kontrolü
+    if (!img.classList.contains(this.lazyLoadConfig.lazyClass)) return false
+
+    // data-src attribute kontrolü
+    const dataSrc = img.getAttribute(this.lazyLoadConfig.dataSrcAttribute)
+    if (!dataSrc) return false
+
+    // Şu anki src ile data-src karşılaştırması
+    if (dataSrc === img.getAttribute('src')) return false
+
+    return true
+  }
+
+  private loadImage(img: HTMLElement): void {
+    if (this.isImageLazy(img)) {
+      const dataSrc = img.getAttribute(this.lazyLoadConfig.dataSrcAttribute)
+      if (dataSrc) {
+        img.setAttribute('src', dataSrc)
+        img.classList.add(this.lazyLoadConfig.loadedClass)
+        // Element'i yüklenmiş olarak işaretle
+        this.loadedElements.add(img)
+      }
+    }
+  }
+
+  private loadSlideImages(currentIndex: number): void {
+    // Aktif slide'ın görselini yükle
+    if (!this.isEnabled) {
+      return
+    }
+
+    const activeSlide = this.slides[currentIndex]
+    const activeImg = activeSlide.querySelector('img')
+    if (activeImg && this.isImageLazy(activeImg)) {
+      this.loadImage(activeImg)
+    }
+
+    // Bir sonraki slide'ın görselini yükle
+    const nextIndex = (currentIndex + 1) % this.slides.length
+    const nextSlide = this.slides[nextIndex]
+    const nextImg = nextSlide.querySelector('img')
+    if (nextImg && this.isImageLazy(nextImg)) {
+      this.loadImage(nextImg)
+    }
+
+    // Bir önceki slide'ın görselini yükle
+    const prevIndex =
+      (currentIndex - 1 + this.slides.length) % this.slides.length
+    const prevSlide = this.slides[prevIndex]
+    const prevImg = prevSlide.querySelector('img')
+    if (prevImg && this.isImageLazy(prevImg)) {
+      this.loadImage(prevImg)
+    }
+  }
+
+  private setupGridLazyLoading(): void {
+    if (this.intersectionObserver) {
+      this.intersectionObserver.disconnect()
+    }
+
+    this.intersectionObserver = new IntersectionObserver(
+      entries => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            const slide = entry.target as HTMLElement
+            const img = slide.querySelector('img')
+            if (img && this.isImageLazy(img)) {
+              this.loadImage(img)
+            }
+          }
+        })
+      },
+      {
+        root: null,
+        rootMargin: '50px',
+        threshold: 0.1,
+      },
+    )
+
+    // Sadece lazy-slider class'ı olan ve henüz yüklenmemiş görselleri observe et
+    this.slides.forEach(slide => {
+      const img = slide.querySelector('img')
+      if (img && this.isImageLazy(img)) {
+        this.intersectionObserver!.observe(slide)
+      }
+    })
+  }
+
   private applyInitialStyles(): void {
     // Tüm slide'lara önce temel stiller uygula
     this.slides.forEach((slide: HTMLElement) => {
@@ -226,6 +380,62 @@ class Slider {
     })
   }
 
+  private setupMutationObserver(): void {
+    // data-status ve data-active değişikliklerini izle
+    this.mutationObserver = new MutationObserver(mutations => {
+      mutations.forEach(mutation => {
+        if (mutation.type === 'attributes') {
+          const target = mutation.target as HTMLElement
+
+          // data-status değişikliği
+          if (mutation.attributeName === 'data-status') {
+            const newStatus = target.getAttribute('data-status') as
+              | 'enable'
+              | 'disable'
+            this.updateStatus(newStatus)
+          }
+
+          // data-active değişikliği
+          if (mutation.attributeName === 'data-active') {
+            const parentElement = target.closest('#desktop-gallery-controller')
+            if (parentElement) {
+              const allSliders =
+                parentElement.querySelectorAll('[id^="slider-"]')
+              allSliders.forEach(sliderElement => {
+                const status = sliderElement.getAttribute('data-status')
+                if (status === 'enable') {
+                  // Aktif slider'ın görsellerini yükle
+                  const sliderId = sliderElement.id
+                  const sliderIndex = parseInt(sliderId.split('-')[1])
+                  this.preloadImagesForSlider(sliderElement as HTMLElement)
+                }
+              })
+            }
+          }
+        }
+      })
+    })
+
+    // Slider elementini observe et
+    if (this.slider) {
+      this.mutationObserver.observe(this.slider, {
+        attributes: true,
+        attributeFilter: ['data-status'],
+      })
+
+      // Gallery controller'ı da observe et
+      const galleryController = document.getElementById(
+        'desktop-gallery-controller',
+      )
+      if (galleryController) {
+        this.mutationObserver.observe(galleryController, {
+          attributes: true,
+          attributeFilter: ['data-active'],
+        })
+      }
+    }
+  }
+
   private initResizeObserver(): void {
     if (this.responsiveConfig.enabled) {
       this.resizeObserver = new ResizeObserver(() => {
@@ -247,35 +457,44 @@ class Slider {
 
   private checkResponsiveState(): void {
     const wasEnabled = this.isSliderEnabled()
-    const windowWidth = window.innerWidth
-    const isNowEnabled =
-      windowWidth >= this.responsiveConfig.minWidth &&
-      windowWidth <= this.responsiveConfig.maxWidth
+    const isNowEnabled = this.isSliderEnabled()
 
     if (wasEnabled !== isNowEnabled) {
       if (isNowEnabled) {
+        // Grid modundan slider moduna geçiş
         this.enableSlider()
-        // Config'i tekrar uygula
         this.updateAnimationConfig(this.initialConfig.animationConfig || {})
         if (this.initialConfig.auto) {
           this.enableAutoPlay()
         }
+
+        // Grid modundan çıkınca observer'ı temizle
+        if (this.intersectionObserver) {
+          this.intersectionObserver.disconnect()
+          this.intersectionObserver = null
+        }
+
+        // Slider modunda aktif ve komşu slide'ları yükle
+        if (this.lazyLoadConfig.enabled) {
+          this.loadSlideImages(this.activeIndex)
+        }
       } else {
+        // Slider modundan grid moduna geçiş
         this.disableSlider()
-        // Animasyonları sıfırla
         this.resetAllAnimations()
+
+        // Grid moduna geçince IntersectionObserver başlat
+        if (this.lazyLoadConfig.enabled) {
+          this.setupGridLazyLoading()
+        }
       }
-    } else if (!isNowEnabled && this.isAnimating) {
-      // Eğer zaten disabled durumunda ise ve animasyon devam ediyorsa
-      this.resetAllAnimations()
     }
 
-    // Her resize durumunda animasyonları geçici olarak devre dışı bırak
+    // Diğer stil işlemleri...
     this.slides.forEach((slide: HTMLElement) => {
       slide.style.transition = 'none'
     })
 
-    // RequestAnimationFrame ile transition'ı geri getir
     requestAnimationFrame(() => {
       requestAnimationFrame(() => {
         if (isNowEnabled) {
@@ -432,16 +651,23 @@ class Slider {
     direction?: 'left' | 'right',
   ): Promise<void> {
     if (
+      !this.isEnabled ||
       !this.isSliderEnabled() ||
       this.isAnimating ||
       targetIndex === this.activeIndex
-    )
+    ) {
       return
-    if (targetIndex < 0 || targetIndex >= this.slides.length) return
+    }
+
     this.onIndexChange && this.onIndexChange(targetIndex)
 
-    // prettier-ignore
-    const slideDirection = direction || (targetIndex > this.activeIndex ? "right" : targetIndex < this.activeIndex ? "left" : this.lastDirection);
+    const slideDirection =
+      direction ||
+      (targetIndex > this.activeIndex
+        ? 'right'
+        : targetIndex < this.activeIndex
+          ? 'left'
+          : this.lastDirection)
     this.lastDirection = slideDirection
 
     this.resetAutoPlayTimer()
@@ -472,6 +698,11 @@ class Slider {
 
     this.activeIndex = targetIndex
     this.isAnimating = false
+
+    // Yeni slide'lar için görselleri yükle
+    if (this.lazyLoadConfig.enabled) {
+      this.loadSlideImages(this.activeIndex)
+    }
   }
 
   public updateAnimationConfig(config: SliderAnimationConfig): void {
@@ -550,6 +781,71 @@ class Slider {
     this.goToSlide(prevIndex, 'left')
   }
 
+  private preloadImagesForSlider(sliderElement: HTMLElement): void {
+    const images = sliderElement.querySelectorAll(
+      'img.lazy-slider',
+    ) as NodeListOf<HTMLImageElement>
+    images.forEach(img => {
+      if (this.isImageLazy(img)) {
+        const dataSrc = img.getAttribute(this.lazyLoadConfig.dataSrcAttribute)
+        if (dataSrc && !this.loadedImages.has(dataSrc)) {
+          this.loadImage(img)
+          this.loadedImages.add(dataSrc)
+        }
+      }
+    })
+  }
+
+  public updateStatus(status: 'enable' | 'disable'): void {
+    const oldStatus = this.isEnabled
+    this.isEnabled = status === 'enable'
+
+    if (!oldStatus && this.isEnabled) {
+      // Slider'ı enable durumuna getirdiğimizde
+      if (this.activeIndex !== 0) {
+        this.activeIndex = 0
+        this.updateActiveButton(0)
+
+        // Tüm slide'ların stillerini sıfırla
+        this.slides.forEach((slide: HTMLElement) => {
+          slide.style.zIndex = this.options.zIndex.notSelected.toString()
+          slide.style.transform = 'translate(0%, 0%)'
+          slide.style.transition = 'none'
+          slide.style.opacity = `${this.animationConfig.opacityNotSelected}`
+          slide.style.scale = `${this.animationConfig.scaleNotSelected}`
+        })
+
+        // Aktif slide'ı ayarla
+        const activeSlide = this.slides[0]
+        activeSlide.style.zIndex = this.options.zIndex.selected.toString()
+        activeSlide.style.opacity = `${this.animationConfig.opacitySelected}`
+        activeSlide.style.scale = `${this.animationConfig.scaleSelected}`
+
+        // Varolan cloneları temizle
+        const clones = this.slider.querySelectorAll('[data-clone="true"]')
+        clones.forEach(clone => clone.remove())
+      }
+
+      // Lazy loading kontrolü ve görsel yükleme
+      if (this.lazyLoadConfig.enabled) {
+        if (this.isSliderEnabled()) {
+          this.preloadImagesForSlider(this.slider)
+        } else {
+          this.setupGridLazyLoading()
+        }
+      }
+
+      if (this.autoEnabled) {
+        this.resetAutoPlayTimer()
+      }
+    }
+
+    if (oldStatus && !this.isEnabled && this.intersectionObserver) {
+      this.intersectionObserver.disconnect()
+      this.intersectionObserver = null
+    }
+  }
+
   public enableAutoPlay(): void {
     this.autoEnabled = true
     this.startAutoPlay()
@@ -562,12 +858,17 @@ class Slider {
 
   public destroy(): void {
     this.pauseAutoPlay()
+
     if (this.resizeObserver) {
       this.resizeObserver.disconnect()
       this.resizeObserver = null
     }
 
-    // Next/Prev buton event listener'larını temizle
+    if (this.intersectionObserver) {
+      this.intersectionObserver.disconnect()
+      this.intersectionObserver = null
+    }
+
     if (this.nextButton) {
       this.nextButton.removeEventListener('click', () => this.next())
     }
