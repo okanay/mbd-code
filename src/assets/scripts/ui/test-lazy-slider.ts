@@ -1,56 +1,108 @@
 document.addEventListener('DOMContentLoaded', () => {
-  const galleryController = document.getElementById(
+  const desktopGalleryController = document.getElementById(
     'desktop-gallery-controller',
   )
-  if (galleryController) {
-    // Başlangıçta data-active'i 0 yap
-    galleryController.setAttribute('data-active', '0')
+  const mobileGalleryController = document.getElementById(
+    'mobile-gallery-controller',
+  )
 
-    // Tüm sliderları disable yap
+  if (desktopGalleryController && mobileGalleryController) {
+    // Başlangıçta hepsini disable yap
+    desktopGalleryController.setAttribute('data-active', '0')
+    mobileGalleryController.setAttribute('data-active', '0')
+
     for (let i = 1; i <= 4; i++) {
-      const slider = document.getElementById(`slider-${i}-desktop`)
-      if (slider) {
-        slider.setAttribute('data-status', 'disable')
-      }
+      const desktopSlider = document.getElementById(`slider-${i}-desktop`)
+      const mobileSlider = document.getElementById(`slider-${i}`)
+
+      if (desktopSlider) desktopSlider.setAttribute('data-status', 'disable')
+      if (mobileSlider) mobileSlider.setAttribute('data-status', 'disable')
     }
-  }
-})
 
-// E tuşu ile slider değiştirme
-document.addEventListener('keydown', event => {
-  if (event.key === 'e') {
-    const galleryController = document.getElementById(
-      'desktop-gallery-controller',
-    )
-    if (galleryController) {
-      // Mevcut aktif slider'ı al
-      const currentActive = parseInt(
-        galleryController.getAttribute('data-active') || '0',
-      )
+    // Input değişikliklerini dinle
+    const inputs = document.querySelectorAll('input[name="camp-type"]')
+    inputs.forEach(input => {
+      input.addEventListener('change', e => {
+        const target = e.target as HTMLInputElement
+        let activeIndex = 0
 
-      // Önceki aktif slider'ı disable yap (eğer varsa)
-      if (currentActive > 0) {
-        const currentSlider = document.getElementById(
-          `slider-${currentActive}-desktop`,
+        // Input ID'sine göre aktif index'i belirle
+        switch (target.id) {
+          case 'silver':
+            activeIndex = 1
+            break
+          case 'gold':
+            activeIndex = 2
+            break
+          case 'premium':
+            activeIndex = 3
+            break
+          case 'platinum':
+            activeIndex = 4
+            break
+        }
+
+        // Önceki aktif slider'ları disable et
+        const currentDesktopActive = parseInt(
+          desktopGalleryController.getAttribute('data-active') || '0',
         )
-        if (currentSlider) {
-          currentSlider.setAttribute('data-status', 'disable')
+        const currentMobileActive = parseInt(
+          mobileGalleryController.getAttribute('data-active') || '0',
+        )
+
+        if (currentDesktopActive > 0) {
+          const currentDesktopSlider = document.getElementById(
+            `slider-${currentDesktopActive}-desktop`,
+          )
+          if (currentDesktopSlider) {
+            currentDesktopSlider.setAttribute('data-status', 'disable')
+          }
         }
-      }
 
-      // Yeni aktif slider'ı belirle (1-4 arasında döngü)
-      const newActive = currentActive >= 4 ? 0 : currentActive + 1
-
-      // Gallery controller'ın data-active'ini güncelle
-      galleryController.setAttribute('data-active', newActive.toString())
-
-      // Yeni slider'ı enable yap (eğer 0 değilse)
-      if (newActive > 0) {
-        const newSlider = document.getElementById(`slider-${newActive}-desktop`)
-        if (newSlider) {
-          newSlider.setAttribute('data-status', 'enable')
+        if (currentMobileActive > 0) {
+          const currentMobileSlider = document.getElementById(
+            `slider-${currentMobileActive}`,
+          )
+          if (currentMobileSlider) {
+            currentMobileSlider.setAttribute('data-status', 'disable')
+          }
         }
-      }
+
+        // Gallery controller'ların data-active'lerini güncelle
+        desktopGalleryController.setAttribute(
+          'data-active',
+          activeIndex.toString(),
+        )
+        mobileGalleryController.setAttribute(
+          'data-active',
+          activeIndex.toString(),
+        )
+
+        // Yeni slider'ları enable et
+        if (activeIndex > 0) {
+          const newDesktopSlider = document.getElementById(
+            `slider-${activeIndex}-desktop`,
+          )
+          const newMobileSlider = document.getElementById(
+            `slider-${activeIndex}`,
+          )
+
+          if (newDesktopSlider) {
+            newDesktopSlider.setAttribute('data-status', 'enable')
+          }
+          if (newMobileSlider) {
+            newMobileSlider.setAttribute('data-status', 'enable')
+          }
+        }
+      })
+    })
+
+    // Sayfa yüklendiğinde checked olan input'u tetikle
+    const checkedInput = document.querySelector(
+      'input[name="camp-type"]:checked',
+    ) as HTMLInputElement
+    if (checkedInput) {
+      checkedInput.dispatchEvent(new Event('change'))
     }
   }
 })
