@@ -1056,58 +1056,39 @@
             </div>
           </div>
         </div>
+      </div>
 
-        <!-- Active Filters Container -->
-        <div class="mt-4 px-3.5">
-          <div
-            class="flex flex-col gap-4 md:flex-row md:items-center md:justify-between"
-          >
-            <!-- Active Filters Group -->
-            <div class="flex flex-wrap items-center gap-2">
-              <span class="text-sm font-medium text-gray-500"
-                >Aktif Filtreler:</span
-              >
-              <div class="flex flex-wrap gap-2">
-                <button
-                  class="inline-flex items-center gap-1.5 rounded-full bg-primary-50 px-3 py-1.5 text-sm font-medium text-primary-600 transition-colors duration-300 hover:bg-primary-100"
-                >
-                  Su Aktiviteleri
-                  <i data-lucide="x" class="size-4"></i>
-                </button>
-                <button
-                  class="inline-flex items-center gap-1.5 rounded-full bg-primary-50 px-3 py-1.5 text-sm font-medium text-primary-600 transition-colors duration-300 hover:bg-primary-100"
-                >
-                  En Popüler
-                  <i data-lucide="x" class="size-4"></i>
-                </button>
-              </div>
-            </div>
-
-            <!-- Action Buttons Group -->
-            <div class="flex items-center gap-3">
-              <button
-                class="text-sm font-medium text-gray-500 transition-colors duration-300 hover:text-primary-600"
-              >
-                Filtreleri Temizle
-              </button>
-              <div class="h-4 w-px bg-gray-200"></div>
-              <button
-                class="inline-flex items-center justify-center gap-2 rounded-lg bg-primary-500 px-4 py-2 text-sm font-medium text-white transition-colors duration-300 hover:bg-primary-600"
-              >
-                <i data-lucide="filter" class="size-4"></i>
-                Filtrele
-              </button>
-            </div>
-          </div>
+      <!-- Mobil Filter Icons -->
+      <div
+        class="flex items-center justify-start gap-4 px-3.5 text-gray-700 lg:hidden lg:px-4"
+      >
+        <div class="flex items-center gap-1">
+          <i data-lucide="arrow-up-down" class="size-6"></i>
+          <span class="text-sm font-semibold">Sırala</span>
+        </div>
+        <button
+          type="button"
+          id="filter-modal-button"
+          data-state="closed"
+          class="flex items-center gap-1 data-[state=closed]:text-gray-700 data-[state=open]:text-primary-500"
+        >
+          <i data-lucide="sliders-horizontal" class="size-6"></i>
+          <span class="text-sm font-semibold">Filtrele</span>
+        </button>
+        <div class="flex items-center gap-1">
+          <i data-lucide="map-pinned" class="size-6"></i>
+          <span class="text-sm font-semibold">Harita</span>
         </div>
       </div>
 
-      <div class="relative mx-auto flex max-w-7xl items-start lg:px-4">
+      <div class="relative mx-auto flex max-w-7xl items-start px-3.5 lg:px-4">
         <div
-          data-status="closed"
-          class="absolute left-0 top-0 min-h-[600px] w-[320px] flex-shrink-0 data-[status=closed]:translate-x-[-100%] data-[status=open]:translate-x-0 lg:static lg:!translate-x-0"
+          data-state="closed"
+          id="filter-modal"
+          class="absolute left-0 top-0 min-h-[600px] w-[320px] flex-shrink-0 transition-transform duration-300 data-[state=closed]:translate-x-[-100%] data-[state=open]:translate-x-0 lg:static lg:!translate-x-0"
         >
           <div
+            id="filter-container"
             class="flex w-full max-w-md flex-col rounded-l-lg border border-gray-100 bg-white py-6 shadow-sm"
           >
             <!-- Header -->

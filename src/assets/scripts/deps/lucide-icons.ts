@@ -58,6 +58,10 @@ import {
   Filter,
   Upload,
   FolderKanban,
+  MapPin,
+  SlidersHorizontal,
+  ArrowUpDown,
+  MapPinned,
 } from 'lucide'
 
 const icons = {
@@ -78,6 +82,9 @@ const icons = {
   Bus,
   FolderKanban,
   IdCard,
+  MapPin,
+  SlidersHorizontal,
+  ArrowUpDown,
   Mail,
   Phone,
   CircleUser,
@@ -89,6 +96,7 @@ const icons = {
   ChevronRight,
   ChevronLeft,
   ChevronUp,
+  MapPinned,
   Menu,
   Star,
   Group,
