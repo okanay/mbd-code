@@ -85,7 +85,6 @@
             </a>
           </div>
           <!-- Navigation Links -->
-          <!-- Navigation Links -->
           <div class="hidden text-wrap lg:block">
             <ul class="flex gap-5 text-xs font-medium min-[1080px]:text-sm">
               <li>
@@ -1082,16 +1081,16 @@
       </div>
 
       <!-- Filter and Results Container -->
-      <div class="relative mx-auto flex max-w-7xl items-start lg:px-4">
+      <div class="mx-auto flex max-w-7xl items-start lg:px-4">
         <!--  Filter Modal -->
         <div
           data-state="closed"
           id="filter-modal"
-          class="absolute left-0 top-0 z-30 min-h-[600px] w-full flex-shrink-0 transition-transform duration-300 data-[state=closed]:translate-x-[-100%] data-[state=open]:translate-x-0 sm:w-[320px] lg:static lg:!translate-x-0"
+          class="group fixed left-0 top-0 z-[8000] h-full w-full flex-shrink-0 overflow-hidden transition-transform duration-300 data-[state=closed]:translate-x-[-100%] data-[state=open]:translate-x-0 lg:static lg:h-auto lg:w-[320px] lg:!translate-x-0"
         >
           <div
             id="filter-container"
-            class="flex w-full max-w-md flex-col rounded-l-lg border-gray-100 bg-white py-6 shadow-sm sm:border"
+            class="hide-scrollbar h-full w-full max-w-md overflow-y-auto bg-white py-6 lg:min-h-fit lg:rounded-lg lg:shadow-sm"
           >
             <!-- Header -->
             <div class="mb-4">
@@ -1257,6 +1256,7 @@
             </div>
           </div>
         </div>
+
         <!--  Results Container -->
         <div
           class="flex min-h-[600px] w-full flex-col gap-8 bg-white px-3.5 lg:px-4"
@@ -1415,7 +1415,7 @@
             >
               <!-- Image Container -->
               <div
-                class="relative h-[200px] w-full flex-shrink-0 overflow-hidden sm:w-[200px]"
+                class="relative h-[200px] w-full flex-shrink-0 overflow-hidden sm:h-auto sm:w-[200px]"
               >
                 <img
                   src="https://images.project-test.info/22.webp"
@@ -1425,7 +1425,7 @@
               </div>
 
               <!-- Info Container -->
-              <div class="flex flex-col gap-1 sm:gap-1.5">
+              <div class="flex w-full flex-col gap-1 sm:gap-1.5">
                 <!-- Hotel Name -->
                 <h3 class="text-xl font-semibold text-gray-900">
                   Jood Hotel Apartments
