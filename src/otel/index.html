@@ -967,7 +967,7 @@
     <!-- Referans Grid -->
     <i class="hidden md:grid-cols-3"></i>
 
-    <main class="space-y-6 py-6 lg:space-y-4">
+    <main class="space-y-6 py-10 lg:space-y-4 lg:py-6">
       <!-- Filter Container -->
       <div class="mx-auto max-w-7xl">
         <!-- Filter Form -->
@@ -1081,16 +1081,16 @@
       </div>
 
       <!-- Filter and Results Container -->
-      <div class="mx-auto flex max-w-7xl items-start lg:px-4">
+      <div class="mx-auto flex max-w-7xl items-start">
         <!--  Filter Modal -->
         <div
           data-state="closed"
           id="filter-modal"
-          class="group fixed left-0 top-0 z-[8000] h-full w-full flex-shrink-0 overflow-hidden transition-transform duration-300 data-[state=closed]:translate-x-[-100%] data-[state=open]:translate-x-0 lg:static lg:h-auto lg:w-[320px] lg:!translate-x-0"
+          class="group fixed left-0 top-0 z-[8000] h-full w-screen flex-shrink-0 overflow-hidden transition-transform duration-300 data-[state=closed]:translate-x-[-100%] data-[state=open]:translate-x-0 lg:static lg:h-auto lg:w-[320px] lg:!translate-x-0"
         >
           <div
             id="filter-container"
-            class="hide-scrollbar h-full w-full max-w-md overflow-y-auto bg-white py-6 lg:min-h-fit lg:rounded-lg lg:shadow-sm"
+            class="hide-scrollbar h-full w-screen max-w-lg overflow-y-auto border border-gray-100 bg-white py-4 lg:min-h-fit lg:w-full lg:rounded-lg lg:shadow-sm"
           >
             <!-- Header -->
             <div
