@@ -51,6 +51,7 @@ const PAGES = {
     'faq',
     'activities',
     'visa',
+    'otel',
   ],
   directories: [
     'main',
@@ -64,6 +65,7 @@ const PAGES = {
     'faq',
     'activities',
     'visa',
+    'otel',
   ],
 }
 
