@@ -1258,9 +1258,11 @@
           </div>
         </div>
         <!--  Results Container -->
-        <div class="flex min-h-[600px] w-full flex-col bg-white px-3.5 lg:px-4">
+        <div
+          class="flex min-h-[600px] w-full flex-col gap-8 bg-white px-3.5 lg:px-4"
+        >
           <!-- Card Container -->
-          <div class="group md:h-[140px]">
+          <div class="group">
             <!-- Card Wrapper - Main Row Layout -->
             <div
               class="flex h-fit w-full gap-4 rounded-2xl transition-all md:items-start md:justify-between"
@@ -1400,6 +1402,142 @@
                       <span>Rezervasyon Yap</span>
                     </button>
                   </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Card Container -->
+          <div class="group">
+            <!-- Card Wrapper - Main Row Layout -->
+            <div
+              class="flex h-fit w-full flex-col gap-4 rounded-2xl transition-all sm:flex-row md:items-start md:justify-between"
+            >
+              <!-- Image Container -->
+              <div
+                class="relative h-[200px] w-full flex-shrink-0 overflow-hidden sm:w-[200px]"
+              >
+                <img
+                  src="https://images.project-test.info/22.webp"
+                  alt="Hotel Image"
+                  class="h-full w-full rounded object-cover sm:rounded-br-[3rem]"
+                />
+              </div>
+
+              <!-- Info Container -->
+              <div class="flex flex-col gap-1 sm:gap-1.5">
+                <!-- Hotel Name -->
+                <h3 class="text-xl font-semibold text-gray-900">
+                  Jood Hotel Apartments
+                </h3>
+
+                <!-- Rating Section -->
+                <div class="mb-1.5 flex items-center gap-2">
+                  <div
+                    class="flex items-center justify-center rounded-lg bg-green-500 px-2 py-1 text-center"
+                  >
+                    <span class="text-sm font-bold text-white">4.9 / 5</span>
+                  </div>
+                  <div class="flex flex-col">
+                    <div class="flex gap-0.5">
+                      <i
+                        data-lucide="star"
+                        class="size-4 fill-yellow-400 text-yellow-400"
+                      ></i>
+                      <i
+                        data-lucide="star"
+                        class="size-4 fill-yellow-400 text-yellow-400"
+                      ></i>
+                      <i
+                        data-lucide="star"
+                        class="size-4 fill-yellow-400 text-yellow-400"
+                      ></i>
+                      <i
+                        data-lucide="star"
+                        class="size-4 fill-yellow-400 text-yellow-400"
+                      ></i>
+                      <i
+                        data-lucide="star"
+                        class="size-4 fill-yellow-400 text-yellow-400"
+                      ></i>
+                    </div>
+                    <span class="text-sm font-semibold text-green-500"
+                      >Mükemmel</span
+                    >
+                  </div>
+                </div>
+
+                <!-- Location and Distance -->
+                <div class="flex flex-wrap items-center gap-2 text-sm">
+                  <a href="#" class="text-red-500 hover:underline"
+                    >Deyra, Dubai</a
+                  >
+                  <a href="#" class="text-red-500 hover:underline"
+                    >Haritada Göster</a
+                  >
+                  <span class="text-gray-500">Merkez 9,3 KM</span>
+                </div>
+
+                <!-- Feature Tags -->
+                <div class="flex flex-wrap gap-2">
+                  <span
+                    class="rounded-full bg-red-100 px-3 py-1 text-sm text-red-600"
+                  >
+                    Ücretsiz Havaalanı Taksi
+                  </span>
+                  <span
+                    class="rounded-full bg-red-100 px-3 py-1 text-sm text-red-600"
+                  >
+                    Sınırlı Süre Fırsat
+                  </span>
+                </div>
+              </div>
+
+              <!-- Room Details and Booking -->
+              <div
+                class="flex flex-col gap-3 md:h-fit md:w-full md:max-w-[240px] md:items-end md:justify-between"
+              >
+                <!-- Room Details -->
+                <div class="text-sm text-gray-600 md:text-right">
+                  <h4 class="font-semibold text-gray-900">
+                    Deluxe İki Yatak Odalı Daire
+                  </h4>
+                  <ul
+                    class="flex flex-wrap gap-x-2 gap-y-1 text-nowrap text-xs"
+                  >
+                    <li>2 yatak odası</li>
+                    <li>1 oturma odası</li>
+                    <li>1 banyo</li>
+                  </ul>
+                </div>
+
+                <!-- Button and Price Section -->
+                <div
+                  class="flex w-full flex-col gap-1 sm:gap-2 md:items-end md:justify-end md:text-end"
+                >
+                  <!--  Price Section -->
+                  <div class="flex-shrink-0">
+                    <div class="flex flex-shrink-0 items-center gap-1.5">
+                      <span
+                        class="text-xs text-gray-400 line-through sm:text-sm"
+                        >1500 AED</span
+                      >
+                      <div
+                        class="text-xs font-medium text-primary-600 sm:text-sm"
+                      >
+                        %20 İndirim
+                      </div>
+                    </div>
+                    <span class="text-lg font-bold text-primary-600 md:text-2xl"
+                      >1300 AED</span
+                    >
+                  </div>
+                  <!--  Button Section -->
+                  <button
+                    class="flex h-11 w-full flex-shrink-0 items-center justify-center gap-1.5 rounded-lg bg-primary-500 px-5 text-sm font-semibold text-white transition-colors hover:bg-primary-600 md:text-base"
+                  >
+                    <span>Rezervasyon Yap</span>
+                  </button>
                 </div>
               </div>
             </div>
