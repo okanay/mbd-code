@@ -1059,42 +1059,50 @@
 
       <!-- Mobil Filter Icons -->
       <div
-        class="flex items-center justify-start gap-4 px-3.5 text-gray-700 lg:hidden lg:px-4"
+        class="flex items-center justify-start gap-4 px-3.5 text-gray-900 lg:hidden lg:px-4"
       >
-        <div class="flex items-center gap-1">
+        <button
+          type="button"
+          id="sort-modal-button"
+          class="flex items-center gap-1 transition-colors duration-300 hover:!text-primary-500"
+        >
           <i data-lucide="arrow-up-down" class="size-6"></i>
           <span class="text-sm font-semibold">Sırala</span>
-        </div>
+        </button>
         <button
           type="button"
           id="filter-modal-button"
           data-state="closed"
-          class="flex items-center gap-1 data-[state=closed]:text-gray-700 data-[state=open]:text-primary-500"
+          class="flex items-center gap-1 transition-colors duration-300 hover:!text-primary-500 data-[state=closed]:text-gray-900 data-[state=open]:text-primary-500"
         >
           <i data-lucide="sliders-horizontal" class="size-6"></i>
           <span class="text-sm font-semibold">Filtrele</span>
         </button>
-        <div class="flex items-center gap-1">
+        <button
+          type="button"
+          id="filter-map-button"
+          class="flex items-center gap-1 transition-colors duration-300 hover:!text-primary-500"
+        >
           <i data-lucide="map-pinned" class="size-6"></i>
           <span class="text-sm font-semibold">Harita</span>
-        </div>
+        </button>
       </div>
 
       <!-- Filter and Results Container -->
-      <div class="mx-auto flex max-w-7xl items-start">
+      <div class="mx-auto flex max-w-7xl items-start pt-2 lg:px-4">
         <!--  Filter Modal -->
         <div
           data-state="closed"
           id="filter-modal"
-          class="group fixed left-0 top-0 z-[8000] h-full w-screen flex-shrink-0 overflow-hidden transition-transform duration-300 data-[state=closed]:translate-x-[-100%] data-[state=open]:translate-x-0 lg:static lg:h-auto lg:w-[320px] lg:!translate-x-0"
+          class="group fixed left-0 top-0 z-[8000] h-full w-screen flex-shrink-0 overflow-hidden transition-transform duration-300 data-[state=closed]:translate-x-[-100%] data-[state=open]:translate-x-0 lg:static lg:h-auto lg:w-[260px] lg:!translate-x-0"
         >
           <div
             id="filter-container"
-            class="hide-scrollbar h-full w-screen max-w-lg overflow-y-auto border-gray-100 bg-white py-5 sm:border lg:min-h-fit lg:w-full lg:rounded-lg lg:shadow-sm"
+            class="hide-scrollbar h-full w-screen max-w-lg overflow-y-auto border-gray-200 bg-white py-5 sm:border sm:pb-4 lg:min-h-fit lg:w-full lg:pt-4"
           >
             <!-- Header -->
             <div
-              class="mb-4 flex items-center justify-between border-b border-gray-100 px-4 pb-5"
+              class="mb-4 flex items-center justify-between border-b border-gray-200 px-4 pb-4"
             >
               <h2 class="text-2xl font-semibold text-gray-900">Filtre Seçin</h2>
 
@@ -1108,8 +1116,8 @@
             </div>
 
             <!-- Budget Range -->
-            <div class="mb-8 px-4">
-              <h3 class="mb-3 text-base font-medium text-gray-700">
+            <div class="mb-6 px-4 sm:mb-8">
+              <h3 class="mb-3 text-base font-medium text-gray-900">
                 Bütçeniz (Gecelik)
               </h3>
 
@@ -1174,8 +1182,8 @@
             </div>
 
             <!-- Popular Filters -->
-            <div class="mb-8 px-4">
-              <h3 class="mb-4 text-base font-medium text-gray-700">
+            <div class="mb-6 px-4 sm:mb-8">
+              <h3 class="mb-3 text-base font-medium text-gray-900">
                 Dubai'de En Çok Kullanılan Filtreler
               </h3>
               <div class="space-y-3">
@@ -1210,8 +1218,8 @@
             </div>
 
             <!-- Amenities -->
-            <div class="mb-8 px-4">
-              <h3 class="mb-4 text-base font-medium text-gray-700">
+            <div class="mb-6 px-4 sm:mb-8">
+              <h3 class="mb-3 text-base font-medium text-gray-900">
                 Olanaklar
               </h3>
               <div class="space-y-3">
@@ -1246,10 +1254,10 @@
             </div>
 
             <!-- Filter Actions -->
-            <div class="flex gap-4 px-4">
+            <div class="flex gap-2 px-4">
               <button
                 type="button"
-                class="h-12 flex-1 rounded bg-gray-100 px-4 py-2 text-sm font-semibold text-gray-700 transition-colors duration-200 hover:bg-gray-200"
+                class="h-12 flex-1 rounded border border-gray-200 bg-gray-100 px-4 py-2 text-sm font-semibold text-gray-700 transition-colors duration-200 hover:bg-gray-200"
               >
                 Temizle
               </button>
@@ -1265,175 +1273,28 @@
 
         <!--  Results Container -->
         <div
-          class="flex min-h-[600px] w-full flex-col gap-8 bg-white px-3.5 lg:px-4"
+          class="flex min-h-[600px] w-full flex-col gap-8 bg-white px-3.5 lg:pl-4 lg:pr-0"
         >
-          <!-- Card Container -->
-          <div class="group">
-            <!-- Card Wrapper - Main Row Layout -->
+          <!-- Card Wrapper - Design 1 -->
+          <div
+            class="group flex h-fit w-full gap-4 rounded-2xl bg-white transition-all md:items-start md:justify-between"
+          >
+            <!-- Image Container -->
             <div
-              class="flex h-fit w-full gap-4 rounded-2xl transition-all md:items-start md:justify-between"
+              class="relative aspect-[4/3] w-[152px] flex-shrink-0 overflow-hidden sm:w-[200px]"
             >
-              <!-- Image Container -->
-              <div
-                class="relative aspect-[4/3] w-[152px] flex-shrink-0 overflow-hidden sm:w-[200px]"
-              >
-                <img
-                  src="https://images.project-test.info/22.webp"
-                  alt="Hotel Image"
-                  class="h-full w-full rounded rounded-br-[3rem] object-cover"
-                />
-              </div>
-
-              <div
-                class="flex w-full flex-col justify-between gap-4 md:flex-row"
-              >
-                <!-- Info Container -->
-                <div class="flex flex-col gap-1 sm:gap-1.5">
-                  <!-- Hotel Name -->
-                  <h3 class="text-sm font-semibold text-gray-900 sm:text-xl">
-                    Jood Hotel Apartments
-                  </h3>
-
-                  <!-- Rating Section -->
-                  <div class="mb-1.5 flex items-center gap-2">
-                    <div
-                      class="flex items-center justify-center rounded-lg bg-green-500 px-2 py-1 text-center"
-                    >
-                      <span class="text-xs font-bold text-white sm:text-sm"
-                        >4.9 / 5</span
-                      >
-                    </div>
-                    <div class="flex flex-col">
-                      <div class="flex gap-0.5">
-                        <i
-                          data-lucide="star"
-                          class="size-2.5 fill-yellow-400 text-yellow-400 sm:size-4"
-                        ></i>
-                        <i
-                          data-lucide="star"
-                          class="size-2.5 fill-yellow-400 text-yellow-400 sm:size-4"
-                        ></i>
-                        <i
-                          data-lucide="star"
-                          class="size-2.5 fill-yellow-400 text-yellow-400 sm:size-4"
-                        ></i>
-                        <i
-                          data-lucide="star"
-                          class="size-2.5 fill-yellow-400 text-yellow-400 sm:size-4"
-                        ></i>
-                        <i
-                          data-lucide="star"
-                          class="size-2.5 fill-yellow-400 text-yellow-400 sm:size-4"
-                        ></i>
-                      </div>
-                      <span
-                        class="text-xs font-semibold text-green-500 sm:text-sm"
-                        >Mükemmel</span
-                      >
-                    </div>
-                  </div>
-
-                  <!-- Location and Distance -->
-                  <div
-                    class="flex flex-wrap items-center gap-2 text-xs sm:text-sm"
-                  >
-                    <a href="#" class="text-red-500 hover:underline"
-                      >Deyra, Dubai</a
-                    >
-                    <a href="#" class="text-red-500 hover:underline"
-                      >Haritada Göster</a
-                    >
-                    <span class="text-gray-500">Merkez 9,3 KM</span>
-                  </div>
-
-                  <!-- Feature Tags -->
-                  <div class="flex flex-wrap gap-2">
-                    <span
-                      class="rounded-full bg-red-100 px-3 py-1 text-xs text-red-600 sm:text-sm"
-                    >
-                      Ücretsiz Havaalanı Taksi
-                    </span>
-                    <span
-                      class="rounded-full bg-red-100 px-3 py-1 text-xs text-red-600 sm:text-sm"
-                    >
-                      Sınırlı Süre Fırsat
-                    </span>
-                  </div>
-                </div>
-
-                <!-- Room Details and Booking -->
-                <div
-                  class="flex w-full flex-col gap-3 md:h-fit md:w-full md:max-w-[240px] md:items-end md:justify-between"
-                >
-                  <!-- Room Details -->
-                  <div class="text-xs text-gray-600 sm:text-sm md:text-right">
-                    <h4 class="font-semibold text-gray-900">
-                      Deluxe İki Yatak Odalı Daire
-                    </h4>
-                    <ul
-                      class="flex flex-wrap gap-0.5 gap-x-2 text-nowrap text-xs"
-                    >
-                      <li>2 yatak odası</li>
-                      <li>1 oturma odası</li>
-                      <li>1 banyo</li>
-                    </ul>
-                  </div>
-
-                  <!-- Button and Price Section -->
-                  <div
-                    class="flex w-full flex-col gap-2 md:items-end md:justify-end md:text-end"
-                  >
-                    <!--  Price Section -->
-                    <div class="flex-shrink-0">
-                      <div class="flex flex-shrink-0 items-center gap-1.5">
-                        <span
-                          class="text-xs text-gray-400 line-through sm:text-sm"
-                          >1500 AED</span
-                        >
-                        <div
-                          class="text-xs font-medium text-primary-600 sm:text-sm"
-                        >
-                          %20 İndirim
-                        </div>
-                      </div>
-                      <span
-                        class="text-base font-bold text-primary-600 md:text-2xl"
-                        >1300 AED</span
-                      >
-                    </div>
-                    <!--  Button Section -->
-                    <button
-                      class="flex h-9 w-full items-center justify-center gap-1.5 rounded-lg bg-primary-500 px-5 text-xs font-semibold text-white transition-colors hover:bg-primary-600 sm:h-11 md:text-base"
-                    >
-                      <span>Rezervasyon Yap</span>
-                    </button>
-                  </div>
-                </div>
-              </div>
+              <img
+                src="https://images.project-test.info/22.webp"
+                alt="Hotel Image"
+                class="h-full w-full rounded rounded-br-[3rem] object-cover"
+              />
             </div>
-          </div>
 
-          <!-- Card Container -->
-          <div class="group">
-            <!-- Card Wrapper - Main Row Layout -->
-            <div
-              class="flex h-fit w-full flex-col gap-4 rounded-2xl transition-all sm:flex-row md:items-start md:justify-between"
-            >
-              <!-- Image Container -->
-              <div
-                class="relative h-[200px] w-full flex-shrink-0 overflow-hidden sm:h-auto sm:w-[200px]"
-              >
-                <img
-                  src="https://images.project-test.info/22.webp"
-                  alt="Hotel Image"
-                  class="h-full w-full rounded object-cover sm:rounded-br-[3rem]"
-                />
-              </div>
-
+            <div class="flex w-full flex-col justify-between gap-4 md:flex-row">
               <!-- Info Container -->
-              <div class="flex w-full flex-col gap-1 sm:gap-1.5">
+              <div class="flex flex-col gap-1 sm:gap-1.5">
                 <!-- Hotel Name -->
-                <h3 class="text-xl font-semibold text-gray-900">
+                <h3 class="text-sm font-semibold text-gray-900 sm:text-xl">
                   Jood Hotel Apartments
                 </h3>
 
@@ -1442,39 +1303,44 @@
                   <div
                     class="flex items-center justify-center rounded-lg bg-green-500 px-2 py-1 text-center"
                   >
-                    <span class="text-sm font-bold text-white">4.9 / 5</span>
+                    <span class="text-xs font-bold text-white sm:text-sm"
+                      >4.9 / 5</span
+                    >
                   </div>
                   <div class="flex flex-col">
                     <div class="flex gap-0.5">
                       <i
                         data-lucide="star"
-                        class="size-4 fill-yellow-400 text-yellow-400"
+                        class="size-2.5 fill-yellow-400 text-yellow-400 sm:size-4"
                       ></i>
                       <i
                         data-lucide="star"
-                        class="size-4 fill-yellow-400 text-yellow-400"
+                        class="size-2.5 fill-yellow-400 text-yellow-400 sm:size-4"
                       ></i>
                       <i
                         data-lucide="star"
-                        class="size-4 fill-yellow-400 text-yellow-400"
+                        class="size-2.5 fill-yellow-400 text-yellow-400 sm:size-4"
                       ></i>
                       <i
                         data-lucide="star"
-                        class="size-4 fill-yellow-400 text-yellow-400"
+                        class="size-2.5 fill-yellow-400 text-yellow-400 sm:size-4"
                       ></i>
                       <i
                         data-lucide="star"
-                        class="size-4 fill-yellow-400 text-yellow-400"
+                        class="size-2.5 fill-yellow-400 text-yellow-400 sm:size-4"
                       ></i>
                     </div>
-                    <span class="text-sm font-semibold text-green-500"
+                    <span
+                      class="text-xs font-semibold text-green-500 sm:text-sm"
                       >Mükemmel</span
                     >
                   </div>
                 </div>
 
                 <!-- Location and Distance -->
-                <div class="flex flex-wrap items-center gap-2 text-sm">
+                <div
+                  class="flex flex-wrap items-center gap-2 text-xs sm:text-sm"
+                >
                   <a href="#" class="text-red-500 hover:underline"
                     >Deyra, Dubai</a
                   >
@@ -1487,12 +1353,12 @@
                 <!-- Feature Tags -->
                 <div class="flex flex-wrap gap-2">
                   <span
-                    class="rounded-full bg-red-100 px-3 py-1 text-sm text-red-600"
+                    class="rounded-full bg-red-100 px-3 py-1 text-xs text-red-600 sm:text-sm"
                   >
                     Ücretsiz Havaalanı Taksi
                   </span>
                   <span
-                    class="rounded-full bg-red-100 px-3 py-1 text-sm text-red-600"
+                    class="rounded-full bg-red-100 px-3 py-1 text-xs text-red-600 sm:text-sm"
                   >
                     Sınırlı Süre Fırsat
                   </span>
@@ -1501,15 +1367,15 @@
 
               <!-- Room Details and Booking -->
               <div
-                class="flex flex-col gap-3 md:h-fit md:w-full md:max-w-[240px] md:items-end md:justify-between"
+                class="flex w-full flex-col gap-3 md:h-fit md:w-full md:max-w-[240px] md:items-end md:justify-between"
               >
                 <!-- Room Details -->
-                <div class="text-sm text-gray-600 md:text-right">
+                <div class="text-xs text-gray-600 sm:text-sm md:text-right">
                   <h4 class="font-semibold text-gray-900">
                     Deluxe İki Yatak Odalı Daire
                   </h4>
                   <ul
-                    class="flex flex-wrap gap-x-2 gap-y-1 text-nowrap text-xs"
+                    class="flex flex-wrap gap-0.5 gap-x-2 text-nowrap text-xs"
                   >
                     <li>2 yatak odası</li>
                     <li>1 oturma odası</li>
@@ -1519,7 +1385,7 @@
 
                 <!-- Button and Price Section -->
                 <div
-                  class="flex w-full flex-col gap-1 sm:gap-2 md:items-end md:justify-end md:text-end"
+                  class="flex w-full flex-col gap-2 md:items-end md:justify-end md:text-end"
                 >
                   <!--  Price Section -->
                   <div class="flex-shrink-0">
@@ -1534,17 +1400,148 @@
                         %20 İndirim
                       </div>
                     </div>
-                    <span class="text-lg font-bold text-primary-600 md:text-2xl"
+                    <span
+                      class="text-base font-bold text-primary-600 md:text-2xl"
                       >1300 AED</span
                     >
                   </div>
                   <!--  Button Section -->
                   <button
-                    class="flex h-11 w-full flex-shrink-0 items-center justify-center gap-1.5 rounded-lg bg-primary-500 px-5 text-sm font-semibold text-white transition-colors hover:bg-primary-600 md:text-base"
+                    class="flex h-9 w-full items-center justify-center gap-1.5 rounded-lg bg-primary-500 px-5 text-xs font-semibold text-white transition-colors hover:bg-primary-600 sm:h-11 md:text-base"
                   >
                     <span>Rezervasyon Yap</span>
                   </button>
                 </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Card Wrapper - Design 2 -->
+          <div
+            class="group flex h-fit w-full flex-col gap-4 rounded-2xl transition-all sm:flex-row md:items-start md:justify-between"
+          >
+            <!-- Image Container -->
+            <div
+              class="relative h-[200px] w-full flex-shrink-0 overflow-hidden sm:h-auto sm:w-[200px]"
+            >
+              <img
+                src="https://images.project-test.info/22.webp"
+                alt="Hotel Image"
+                class="h-full w-full rounded object-cover sm:rounded-br-[3rem]"
+              />
+            </div>
+
+            <!-- Info Container -->
+            <div class="flex w-full flex-col gap-1 sm:gap-1.5">
+              <!-- Hotel Name -->
+              <h3 class="text-xl font-semibold text-gray-900">
+                Jood Hotel Apartments
+              </h3>
+
+              <!-- Rating Section -->
+              <div class="mb-1.5 flex items-center gap-2">
+                <div
+                  class="flex items-center justify-center rounded-lg bg-green-500 px-2 py-1 text-center"
+                >
+                  <span class="text-sm font-bold text-white">4.9 / 5</span>
+                </div>
+                <div class="flex flex-col">
+                  <div class="flex gap-0.5">
+                    <i
+                      data-lucide="star"
+                      class="size-4 fill-yellow-400 text-yellow-400"
+                    ></i>
+                    <i
+                      data-lucide="star"
+                      class="size-4 fill-yellow-400 text-yellow-400"
+                    ></i>
+                    <i
+                      data-lucide="star"
+                      class="size-4 fill-yellow-400 text-yellow-400"
+                    ></i>
+                    <i
+                      data-lucide="star"
+                      class="size-4 fill-yellow-400 text-yellow-400"
+                    ></i>
+                    <i
+                      data-lucide="star"
+                      class="size-4 fill-yellow-400 text-yellow-400"
+                    ></i>
+                  </div>
+                  <span class="text-sm font-semibold text-green-500"
+                    >Mükemmel</span
+                  >
+                </div>
+              </div>
+
+              <!-- Location and Distance -->
+              <div class="flex flex-wrap items-center gap-2 text-sm">
+                <a href="#" class="text-red-500 hover:underline"
+                  >Deyra, Dubai</a
+                >
+                <a href="#" class="text-red-500 hover:underline"
+                  >Haritada Göster</a
+                >
+                <span class="text-gray-500">Merkez 9,3 KM</span>
+              </div>
+
+              <!-- Feature Tags -->
+              <div class="flex flex-wrap gap-2">
+                <span
+                  class="rounded-full bg-red-100 px-3 py-1 text-sm text-red-600"
+                >
+                  Ücretsiz Havaalanı Taksi
+                </span>
+                <span
+                  class="rounded-full bg-red-100 px-3 py-1 text-sm text-red-600"
+                >
+                  Sınırlı Süre Fırsat
+                </span>
+              </div>
+            </div>
+
+            <!-- Room Details and Booking -->
+            <div
+              class="flex flex-col gap-3 md:h-fit md:w-full md:max-w-[240px] md:items-end md:justify-between"
+            >
+              <!-- Room Details -->
+              <div class="text-sm text-gray-600 md:text-right">
+                <h4 class="font-semibold text-gray-900">
+                  Deluxe İki Yatak Odalı Daire
+                </h4>
+                <ul class="flex flex-wrap gap-x-2 gap-y-1 text-nowrap text-xs">
+                  <li>2 yatak odası</li>
+                  <li>1 oturma odası</li>
+                  <li>1 banyo</li>
+                </ul>
+              </div>
+
+              <!-- Button and Price Section -->
+              <div
+                class="flex w-full flex-col gap-1 sm:gap-2 md:items-end md:justify-end md:text-end"
+              >
+                <!--  Price Section -->
+                <div class="flex-shrink-0">
+                  <div class="flex flex-shrink-0 items-center gap-1.5">
+                    <span class="text-xs text-gray-400 line-through sm:text-sm"
+                      >1500 AED</span
+                    >
+                    <div
+                      class="text-xs font-medium text-primary-600 sm:text-sm"
+                    >
+                      %20 İndirim
+                    </div>
+                  </div>
+                  <span class="text-lg font-bold text-primary-600 md:text-2xl"
+                    >1300 AED</span
+                  >
+                </div>
+                <!--  Button Section -->
+                <button
+                  class="flex h-11 w-full flex-shrink-0 items-center justify-center gap-1.5 rounded-lg bg-primary-500 px-5 text-sm font-semibold text-white transition-colors hover:bg-primary-600 md:text-base"
+                >
+                  <span>Rezervasyon Yap</span>
+                </button>
               </div>
             </div>
           </div>
@@ -1563,7 +1560,7 @@
       >
         <!-- Araç ipucu (tooltip) -->
         <span
-          class="absolute right-full mr-3 text-nowrap rounded-lg border border-gray-200 bg-white px-4 py-2 text-sm text-gray-700 opacity-0 shadow-lg transition-all duration-300 ease-out before:absolute before:-right-2 before:top-1/2 before:-translate-y-1/2 before:border-8 before:border-transparent before:border-l-white before:content-[''] group-hover:-translate-x-1 group-hover:scale-100 group-hover:opacity-100"
+          class="pointer-events-none absolute right-full mr-3 text-nowrap rounded-lg border border-gray-200 bg-white px-4 py-2 text-sm text-gray-700 opacity-0 shadow-lg transition-all duration-300 ease-out before:absolute before:-right-2 before:top-1/2 before:-translate-y-1/2 before:border-8 before:border-transparent before:border-l-white before:content-[''] group-hover:-translate-x-1 group-hover:scale-100 group-hover:opacity-100"
         >
           Bize WhatsApp'tan ulaşın
         </span>
