@@ -20,7 +20,7 @@ document.addEventListener('DOMContentLoaded', () => {
         openElements: [],
         toggleElements: ['#filter-modal-button'],
         contentElement: '#filter-modal',
-        closeElements: [],
+        closeElements: ['#filter-modal-close-button'],
         containers: ['#filter-container'],
       },
     ],

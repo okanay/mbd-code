@@ -1093,12 +1093,20 @@
             class="hide-scrollbar h-full w-full max-w-md overflow-y-auto bg-white py-6 lg:min-h-fit lg:rounded-lg lg:shadow-sm"
           >
             <!-- Header -->
-            <div class="mb-4">
-              <h2
-                class="border-b border-gray-100 px-6 pb-4 text-2xl font-semibold text-gray-900"
-              >
+            <div
+              class="mb-4 flex items-center justify-between border-b border-gray-100 pb-4 pr-6"
+            >
+              <h2 class="px-6 text-2xl font-semibold text-gray-900">
                 Filtre Seçin
               </h2>
+
+              <!-- Close Button -->
+              <button
+                id="filter-modal-close-button"
+                class="transition-all duration-300 hover:opacity-75 active:scale-95 lg:hidden"
+              >
+                <i data-lucide="x" class="size-7"></i>
+              </button>
             </div>
 
             <!-- Budget Range -->
