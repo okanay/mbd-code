@@ -44,32 +44,59 @@ export class RangeSlider {
     this.min = Number(this.container.dataset.min || '0')
     this.max = Number(this.container.dataset.max || '30000')
 
+    // Get initial values from inputs and clamp them to valid range
+    let initialMinValue = Number(this.minInput.value) || this.min
+    let initialMaxValue = Number(this.maxInput.value) || this.max
+
+    // Değerleri min-max aralığına sınırla
+    initialMinValue = Math.max(this.min, Math.min(initialMinValue, this.max))
+    initialMaxValue = Math.max(this.min, Math.min(initialMaxValue, this.max))
+
+    // Min değer max değerden büyükse, max değere eşitle
+    if (initialMinValue > initialMaxValue) {
+      initialMinValue = initialMaxValue
+    }
+
+    // Max değer min değerden küçükse, min değere eşitle
+    if (initialMaxValue < initialMinValue) {
+      initialMaxValue = initialMinValue
+    }
+
     // Step hesaplama
     const numberOfSteps = Number(this.container.dataset.step || '100')
     const range = this.max - this.min
     this.step = range / numberOfSteps
 
-    this.init()
+    // Step'e göre yuvarla
+    initialMinValue = Math.round(initialMinValue / this.step) * this.step
+    initialMaxValue = Math.round(initialMaxValue / this.step) * this.step
+
+    // Input değerlerini güncelle (sınırlanmış değerlerle)
+    this.minInput.value = initialMinValue.toString()
+    this.maxInput.value = initialMaxValue.toString()
+
+    this.init(initialMinValue, initialMaxValue)
   }
 
-  private init(): void {
-    // İlk yüklemede max değeri tam olarak ayarla
-    const maxPercentage = 100
-    const minPercentage = 0
+  private init(initialMinValue: number, initialMaxValue: number): void {
+    // İlk yüklemede değerleri ayarla
+    const range = this.max - this.min
+    const minPercentage = ((initialMinValue - this.min) / range) * 100
+    const maxPercentage = ((initialMaxValue - this.min) / range) * 100
 
     this.maxHandle.style.left = `${maxPercentage}%`
     this.minHandle.style.left = `${minPercentage}%`
 
-    // Input ve display değerlerini doğrudan ayarla
-    this.minInput.value = this.min.toString()
-    this.maxInput.value = this.max.toString()
+    // Input ve display değerlerini ayarla
+    this.minInput.value = initialMinValue.toString()
+    this.maxInput.value = initialMaxValue.toString()
 
-    this.minDisplay.textContent = this.min.toLocaleString()
-    this.maxDisplay.textContent = this.max.toLocaleString()
+    this.minDisplay.textContent = initialMinValue.toLocaleString()
+    this.maxDisplay.textContent = initialMaxValue.toLocaleString()
 
     this.updateRangeTrack()
 
-    // Event listeners (aynı)
+    // Event listeners
     this.minHandle.addEventListener('mousedown', e =>
       this.startDragging(e, this.minHandle),
     )

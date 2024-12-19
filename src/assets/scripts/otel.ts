@@ -25,7 +25,7 @@ document.addEventListener('DOMContentLoaded', () => {
       },
     ],
     {
-      outsideClickClose: false,
+      outsideClickClose: true,
       escapeClose: true,
       preserveModalHistory: true,
       attributes: {
