@@ -62,6 +62,7 @@ import {
   SlidersHorizontal,
   ArrowUpDown,
   MapPinned,
+  Frown,
 } from 'lucide'
 
 const icons = {
@@ -94,6 +95,7 @@ const icons = {
   Check,
   CircleCheck,
   ChevronRight,
+  Frown,
   ChevronLeft,
   ChevronUp,
   MapPinned,

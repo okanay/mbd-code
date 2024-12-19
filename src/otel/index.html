@@ -977,25 +977,25 @@
                 id="destination-input"
                 name="destination"
                 style="-webkit-border-radius: 0; border-radius: 0"
-                class="peer h-12 w-full !rounded border border-gray-200 px-3 py-2 pl-10 outline-none focus:border-primary-200"
+                class="peer h-12 w-full !rounded border border-gray-200 px-3 py-2 pl-10 outline-none focus:border-primary-200 rtl:pl-0 rtl:pr-10"
                 placeholder="Nereye Gidiyorsunuz?"
                 value="Dubai"
               />
               <label
                 for="destination-input"
-                class="absolute -top-2 left-3 bg-white px-1 text-xs text-gray-500"
+                class="absolute -top-2 left-3 bg-white px-1 text-xs text-gray-500 rtl:left-auto rtl:right-3"
               >
                 Nereye Gidiyorsunuz?
               </label>
               <!-- Search Icon -->
               <i
                 data-lucide="search"
-                class="absolute left-3 top-1/2 size-4 -translate-y-1/2 text-gray-400"
+                class="absolute left-3 top-1/2 size-4 -translate-y-1/2 text-gray-400 rtl:left-auto rtl:right-3"
               ></i>
               <!-- Clear Button -->
               <button
                 type="button"
-                class="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600"
+                class="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 rtl:left-3 rtl:right-auto"
               >
                 <i data-lucide="x" class="size-4"></i>
               </button>
@@ -1015,12 +1015,12 @@
               </select>
               <label
                 for="date-select"
-                class="absolute -top-2 left-3 bg-white px-1 text-xs text-gray-500"
+                class="absolute -top-2 left-3 bg-white px-1 text-xs text-gray-500 rtl:left-auto rtl:right-3"
               >
                 Tarih
               </label>
               <div
-                class="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2"
+                class="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 rtl:left-3 rtl:right-auto"
               >
                 <i data-lucide="chevron-down" class="size-4 text-gray-500"></i>
               </div>
@@ -1040,12 +1040,12 @@
               </select>
               <label
                 for="people-select"
-                class="absolute -top-2 left-3 bg-white px-1 text-xs text-gray-500"
+                class="absolute -top-2 left-3 bg-white px-1 text-xs text-gray-500 rtl:left-auto rtl:right-3"
               >
                 Kişi Sayısı
               </label>
               <div
-                class="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2"
+                class="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 rtl:left-3 rtl:right-auto"
               >
                 <i data-lucide="chevron-down" class="size-4 text-gray-500"></i>
               </div>
@@ -1268,11 +1268,13 @@
           </div>
         </div>
 
+        <!--  Results Pagination Login  -->
         <div class="flex w-full flex-col space-y-4">
+          <!--  Results and Pagination -->
           <div class="flex w-full flex-col space-y-4">
             <!--  Results Container -->
             <div
-              class="flex h-fit w-full flex-col gap-8 divide-y divide-gray-200 bg-white px-3.5 lg:pl-4 lg:pr-0 [&>*:not(:first-child)]:pt-7"
+              class="flex h-fit w-full flex-col gap-8 divide-y divide-gray-200 bg-white px-3.5 lg:pl-4 lg:pr-0 rtl:lg:pr-4 [&>*:not(:first-child)]:pt-7"
             >
               <!-- Card - Design 1 -->
               <div
@@ -1283,9 +1285,11 @@
                   class="relative aspect-[4/3] w-[152px] flex-shrink-0 sm:w-[200px]"
                 >
                   <!-- Ribbon -->
-                  <div class="absolute -left-1.5 top-1.5 z-10">
+                  <div
+                    class="absolute -left-1.5 top-1.5 z-10 rtl:-right-1.5 rtl:left-auto"
+                  >
                     <div
-                      class="relative before:absolute before:bottom-[-5px] before:left-0 before:border-l-[5px] before:border-t-[5px] before:border-l-transparent before:border-t-primary-500"
+                      class="relative before:absolute before:bottom-[-5px] before:left-0 before:border-l-[5px] before:border-t-[5px] before:border-l-transparent before:border-t-primary-500 rtl:before:left-auto"
                     >
                       <span
                         class="relative block bg-primary-500 px-3 py-1 text-xs font-semibold text-white"
@@ -1297,7 +1301,7 @@
                   <img
                     src="https://images.project-test.info/22.webp"
                     alt="Hotel Image"
-                    class="h-full w-full rounded-xl rounded-br-[3rem] object-cover"
+                    class="h-full w-full rounded-xl rounded-br-[3rem] object-cover rtl:rounded-bl-[3rem] rtl:rounded-br-xl"
                   />
                 </div>
 
@@ -1383,7 +1387,9 @@
                     class="flex w-full flex-col gap-3 md:h-fit md:w-full md:max-w-[240px] md:items-end md:justify-between"
                   >
                     <!-- Room Details -->
-                    <div class="text-xs text-gray-600 sm:text-sm md:text-right">
+                    <div
+                      class="text-xs text-gray-600 sm:text-sm md:text-right rtl:text-left"
+                    >
                       <h4 class="font-semibold text-gray-900">
                         Deluxe İki Yatak Odalı Daire
                       </h4>
@@ -1438,9 +1444,11 @@
                   class="relative h-[200px] w-full flex-shrink-0 sm:aspect-[4/3] sm:h-full sm:w-[200px]"
                 >
                   <!-- Ribbon -->
-                  <div class="absolute -left-1.5 top-1.5 z-10">
+                  <div
+                    class="absolute -left-1.5 top-1.5 z-10 rtl:-right-1.5 rtl:left-auto"
+                  >
                     <div
-                      class="relative before:absolute before:bottom-[-5px] before:left-0 before:border-l-[5px] before:border-t-[5px] before:border-l-transparent before:border-t-primary-500"
+                      class="relative before:absolute before:bottom-[-5px] before:left-0 before:border-l-[5px] before:border-t-[5px] before:border-l-transparent before:border-t-primary-500 rtl:before:left-auto"
                     >
                       <span
                         class="relative block bg-primary-500 px-3 py-1 text-xs font-semibold text-white"
@@ -1452,7 +1460,7 @@
                   <img
                     src="https://images.project-test.info/28.webp"
                     alt="Hotel Image"
-                    class="h-full w-full rounded-xl object-cover sm:rounded-br-[3rem]"
+                    class="h-full w-full rounded-xl object-cover sm:rounded-br-[3rem] rtl:rounded-bl-[3rem] rtl:rounded-br-xl"
                   />
                 </div>
 
@@ -1530,7 +1538,9 @@
                   class="flex flex-col gap-3 md:h-fit md:w-full md:max-w-[240px] md:items-end md:justify-between"
                 >
                   <!-- Room Details -->
-                  <div class="text-sm text-gray-600 md:text-right">
+                  <div
+                    class="text-sm text-gray-600 md:text-right rtl:text-left"
+                  >
                     <h4 class="font-semibold text-gray-900">
                       Deluxe İki Yatak Odalı Daire
                     </h4>
@@ -1575,248 +1585,164 @@
                 </div>
               </div>
 
-              <!-- Card - Design 1 -->
+              <!-- Loading Skeleton Design 1 -->
               <div
-                class="group flex h-fit w-full gap-4 bg-white transition-all md:items-start md:justify-between"
+                class="group flex h-fit w-full animate-pulse gap-4 bg-white transition-all md:items-start md:justify-between"
               >
-                <!-- Image Container -->
+                <!-- Image Skeleton -->
                 <div
-                  class="relative aspect-[4/3] w-[152px] flex-shrink-0 sm:w-[200px]"
-                >
-                  <img
-                    src="https://images.project-test.info/22.webp"
-                    alt="Hotel Image"
-                    class="h-full w-full rounded-xl rounded-br-[3rem] object-cover"
-                  />
-                </div>
+                  class="relative aspect-[4/3] w-[152px] flex-shrink-0 rounded-xl rounded-br-[3rem] bg-gray-200 sm:w-[200px] rtl:rounded-bl-[3rem] rtl:rounded-br-xl"
+                ></div>
 
                 <div
                   class="flex w-full flex-col justify-between gap-4 md:flex-row"
                 >
                   <!-- Info Container -->
                   <div class="flex flex-col gap-1 sm:gap-1.5">
-                    <!-- Hotel Name -->
-                    <h3 class="text-sm font-semibold text-gray-900 sm:text-xl">
-                      Jood Hotel Apartments
-                    </h3>
+                    <!-- Hotel Name Skeleton -->
+                    <div class="h-5 w-48 rounded-lg bg-gray-200"></div>
 
-                    <!-- Rating Section -->
+                    <!-- Rating Section Skeleton -->
                     <div class="mb-1.5 flex items-center gap-2">
+                      <div class="h-5 w-8 rounded-lg bg-gray-200"></div>
                       <div
-                        class="flex items-center justify-center rounded-lg bg-green-500 px-2 py-1 text-center"
-                      >
-                        <span class="text-xs font-bold text-white sm:text-sm"
-                          >4.9 / 5</span
-                        >
-                      </div>
-                      <div class="flex flex-col">
-                        <div class="flex gap-0.5">
-                          <i
-                            data-lucide="star"
-                            class="size-2.5 fill-yellow-400 text-yellow-400 sm:size-4"
-                          ></i>
-                          <i
-                            data-lucide="star"
-                            class="size-2.5 fill-yellow-400 text-yellow-400 sm:size-4"
-                          ></i>
-                          <i
-                            data-lucide="star"
-                            class="size-2.5 fill-yellow-400 text-yellow-400 sm:size-4"
-                          ></i>
-                          <i
-                            data-lucide="star"
-                            class="size-2.5 fill-yellow-400 text-yellow-400 sm:size-4"
-                          ></i>
-                          <i
-                            data-lucide="star"
-                            class="size-2.5 fill-yellow-400 text-yellow-400 sm:size-4"
-                          ></i>
-                        </div>
-                        <span
-                          class="text-xs font-semibold text-green-500 sm:text-sm"
-                          >Mükemmel</span
-                        >
-                      </div>
+                        class="hidden h-5 w-16 rounded-lg bg-gray-200 sm:block"
+                      ></div>
                     </div>
 
-                    <!-- Location and Distance -->
-                    <div
-                      class="flex flex-wrap items-center gap-2 text-xs sm:text-sm"
-                    >
-                      <a href="#" class="text-primary-500 hover:underline"
-                        >Deyra, Dubai</a
-                      >
-                      <a href="#" class="text-primary-500 hover:underline"
-                        >Haritada Göster</a
-                      >
-                      <span class="text-gray-500">Merkez 9,3 KM</span>
+                    <!-- Location Skeleton -->
+                    <div class="flex gap-2">
+                      <div class="h-5 w-16 rounded-lg bg-gray-200"></div>
+                      <div
+                        class="hidden h-5 w-24 rounded-lg bg-gray-200 sm:block"
+                      ></div>
+                      <div class="h-5 w-16 rounded-lg bg-gray-200"></div>
                     </div>
 
-                    <!-- Feature Tags -->
-                    <div class="flex flex-wrap gap-2"></div>
+                    <!-- Feature Tags Skeleton -->
+                    <div class="flex flex-wrap gap-2">
+                      <div class="h-5 w-32 rounded-full bg-gray-200"></div>
+                    </div>
                   </div>
 
-                  <!-- Room Details and Booking -->
+                  <!-- Room Details and Booking Skeleton -->
                   <div
-                    class="flex w-full flex-col gap-3 md:h-fit md:w-full md:max-w-[240px] md:items-end md:justify-between"
+                    class="flex w-full flex-col gap-3 md:h-fit md:w-full md:max-w-[240px] md:items-end"
                   >
-                    <!-- Room Details -->
-                    <div class="text-xs text-gray-600 sm:text-sm md:text-right">
-                      <h4 class="font-semibold text-gray-900">
-                        Deluxe İki Yatak Odalı Daire
-                      </h4>
-                      <ul
-                        class="flex flex-wrap gap-0.5 gap-x-2 text-nowrap text-xs"
-                      >
-                        <li>2 yatak odası</li>
-                        <li>1 oturma odası</li>
-                        <li>1 banyo</li>
-                      </ul>
+                    <!-- Room Details Skeleton -->
+                    <div class="hidden flex-col gap-2 sm:flex">
+                      <div class="h-5 w-full rounded-lg bg-gray-200"></div>
+                      <div class="h-4 w-3/4 rounded-lg bg-gray-200"></div>
                     </div>
 
-                    <!-- Button and Price Section -->
-                    <div
-                      class="flex w-full flex-col gap-2 md:items-end md:justify-end md:text-end"
-                    >
-                      <!--  Price Section -->
-                      <div class="flex-shrink-0">
-                        <div
-                          class="flex flex-shrink-0 items-center gap-1.5"
-                        ></div>
-                        <span
-                          class="text-base font-bold text-primary-600 md:text-2xl"
-                          >1300 AED</span
-                        >
-                      </div>
-                      <!--  Button Section -->
-                      <button
-                        class="flex h-9 w-full items-center justify-center gap-1.5 rounded-lg bg-primary-500 px-5 text-xs font-semibold text-white transition-colors hover:bg-primary-600 sm:h-11 md:text-base"
-                      >
-                        <span>Rezervasyon Yap</span>
-                      </button>
+                    <!-- Price and Button Skeleton -->
+                    <div class="flex w-full flex-col gap-2">
+                      <div
+                        class="ml-auto h-8 w-20 rounded-lg bg-gray-200 rtl:ml-0 rtl:mr-auto"
+                      ></div>
+                      <div
+                        class="h-9 w-full rounded-lg bg-gray-200 sm:h-11"
+                      ></div>
                     </div>
                   </div>
                 </div>
               </div>
 
-              <!-- Card - Design 2 -->
+              <!-- Loading Skeleton Design 2  -->
               <div
-                class="group flex h-fit w-full flex-col gap-4 transition-all sm:flex-row md:items-start md:justify-between"
+                class="group flex h-fit w-full animate-pulse flex-col gap-4 transition-all sm:flex-row md:items-start md:justify-between"
               >
                 <!-- Image Container -->
                 <div
                   class="relative h-[200px] w-full flex-shrink-0 sm:aspect-[4/3] sm:h-full sm:w-[200px]"
                 >
-                  <img
-                    src="https://images.project-test.info/28.webp"
-                    alt="Hotel Image"
-                    class="h-full w-full rounded-xl object-cover sm:rounded-br-[3rem]"
-                  />
+                  <div
+                    class="h-full w-full rounded-xl bg-gray-200 object-cover sm:rounded-br-[3rem] rtl:rounded-bl-[3rem] rtl:rounded-br-xl"
+                  ></div>
                 </div>
 
                 <!-- Info Container -->
                 <div class="flex w-full flex-col gap-1 sm:gap-1.5">
                   <!-- Hotel Name -->
-                  <h3 class="text-xl font-semibold text-gray-900">
-                    Jood Hotel Apartments
-                  </h3>
+                  <div class="h-5 w-48 rounded-lg bg-gray-200"></div>
 
-                  <!-- Rating Section -->
+                  <!-- Rating Section Skeleton (Simplified) -->
                   <div class="mb-1.5 flex items-center gap-2">
+                    <div class="h-5 w-8 rounded-lg bg-gray-200"></div>
                     <div
-                      class="-mt-0.5 flex items-center justify-center rounded-lg bg-green-500 px-2 py-1.5 text-center"
-                    >
-                      <span class="text-sm font-bold text-white">4.9 / 5</span>
-                    </div>
-                    <div class="flex flex-col">
-                      <div class="flex gap-0.5">
-                        <i
-                          data-lucide="star"
-                          class="size-4 fill-yellow-400 text-yellow-400"
-                        ></i>
-                        <i
-                          data-lucide="star"
-                          class="size-4 fill-yellow-400 text-yellow-400"
-                        ></i>
-                        <i
-                          data-lucide="star"
-                          class="size-4 fill-yellow-400 text-yellow-400"
-                        ></i>
-                        <i
-                          data-lucide="star"
-                          class="size-4 fill-yellow-400 text-yellow-400"
-                        ></i>
-                        <i
-                          data-lucide="star"
-                          class="size-4 fill-yellow-400 text-yellow-400"
-                        ></i>
-                      </div>
-                      <span class="text-sm font-semibold text-green-500"
-                        >Mükemmel</span
-                      >
-                    </div>
+                      class="hidden h-5 w-16 rounded-lg bg-gray-200 sm:block"
+                    ></div>
                   </div>
 
-                  <!-- Location and Distance -->
-                  <div class="flex flex-wrap items-center gap-2 text-sm">
-                    <a href="#" class="text-primary-500 hover:underline"
-                      >Deyra, Dubai</a
-                    >
-                    <a href="#" class="text-primary-500 hover:underline"
-                      >Haritada Göster</a
-                    >
-                    <span class="text-gray-500">Merkez 9,3 KM</span>
+                  <!-- Location Skeleton -->
+                  <div class="flex gap-2">
+                    <div class="h-5 w-16 rounded-lg bg-gray-200"></div>
+                    <div
+                      class="hidden h-5 w-24 rounded-lg bg-gray-200 sm:block"
+                    ></div>
+                    <div class="h-5 w-16 rounded-lg bg-gray-200"></div>
                   </div>
 
                   <!-- Feature Tags -->
-                  <div class="flex flex-wrap gap-2"></div>
+                  <div class="flex flex-wrap gap-2">
+                    <div class="h-5 w-32 rounded-full bg-gray-200"></div>
+                  </div>
                 </div>
 
-                <!-- Room Details and Booking -->
                 <div
-                  class="flex flex-col gap-3 md:h-fit md:w-full md:max-w-[240px] md:items-end md:justify-between"
+                  class="flex w-full flex-col gap-3 md:h-fit md:w-full md:max-w-[240px] md:items-end"
                 >
-                  <!-- Room Details -->
-                  <div class="text-sm text-gray-600 md:text-right">
-                    <h4 class="font-semibold text-gray-900">
-                      Deluxe İki Yatak Odalı Daire
-                    </h4>
-                    <ul
-                      class="flex flex-wrap gap-x-2 gap-y-1 text-nowrap text-xs"
-                    >
-                      <li>2 yatak odası</li>
-                      <li>1 oturma odası</li>
-                      <li>1 banyo</li>
-                    </ul>
+                  <!-- Room Details Skeleton -->
+                  <div class="hidden flex-col gap-2 sm:flex">
+                    <div class="h-5 w-full rounded-lg bg-gray-200"></div>
+                    <div class="h-4 w-3/4 rounded-lg bg-gray-200"></div>
                   </div>
 
-                  <!-- Button and Price Section -->
-                  <div
-                    class="flex w-full flex-col gap-1 sm:gap-2 md:items-end md:justify-end md:text-end"
-                  >
-                    <!--  Price Section -->
-                    <div class="flex-shrink-0">
-                      <div
-                        class="flex flex-shrink-0 items-center gap-1.5"
-                      ></div>
-                      <span
-                        class="text-lg font-bold text-primary-600 md:text-2xl"
-                        >1300 AED</span
-                      >
-                    </div>
-                    <!--  Button Section -->
-                    <button
-                      class="flex h-11 w-full flex-shrink-0 items-center justify-center gap-1.5 rounded-lg bg-primary-500 px-5 text-base font-semibold text-white transition-colors hover:bg-primary-600 md:text-base"
-                    >
-                      <span>Rezervasyon Yap</span>
-                    </button>
+                  <!-- Price and Button Skeleton -->
+                  <div class="flex w-full flex-col gap-2">
+                    <div
+                      class="ml-auto h-8 w-20 rounded-lg bg-gray-200 rtl:ml-0 rtl:mr-auto"
+                    ></div>
+                    <div
+                      class="h-9 w-full rounded-lg bg-gray-200 sm:h-11"
+                    ></div>
                   </div>
                 </div>
+              </div>
+
+              <!-- Not Found State -->
+              <div
+                class="flex flex-col items-center justify-center gap-4 px-4 py-16"
+              >
+                <!-- Icon -->
+                <div
+                  class="flex h-20 w-20 items-center justify-center rounded-full bg-gray-100"
+                >
+                  <i data-lucide="frown" class="h-10 w-10 text-gray-400"></i>
+                </div>
+
+                <!-- Text Content -->
+                <div class="text-center">
+                  <h3 class="text-lg font-semibold text-gray-900">
+                    Sonuç Bulunamadı
+                  </h3>
+                  <p class="mt-1 text-sm text-gray-500">
+                    Arama kriterlerinize uygun otel bulunamadı. Lütfen farklı
+                    tarih veya konum seçerek tekrar deneyin.
+                  </p>
+                </div>
+
+                <!-- Action Button -->
+                <button
+                  class="mt-4 flex h-11 items-center justify-center rounded-lg bg-primary-500 px-6 text-base font-semibold text-white transition-colors hover:bg-primary-600"
+                >
+                  Aramayı Temizle
+                </button>
               </div>
             </div>
             <!-- Pagination -->
             <div
-              class="flex items-center justify-between gap-4 border-t border-gray-200 px-3.5 py-4 lg:px-0 lg:pl-4"
+              class="flex items-center justify-between gap-4 border-t border-gray-200 px-3.5 py-4"
             >
               <div class="hidden text-sm text-gray-700 sm:block">
                 <span>Toplam 50 sonuçtan 1-10 arası gösteriliyor</span>
@@ -1827,51 +1753,62 @@
               >
                 <button
                   class="inline-flex h-8 w-8 items-center justify-center rounded border border-gray-300 bg-white text-gray-500 transition-colors hover:bg-gray-50 disabled:cursor-not-allowed disabled:opacity-50"
-                  disabled
+                  data-page="prev"
                 >
-                  <i data-lucide="chevron-left" class="size-4"></i>
+                  <i
+                    data-lucide="chevron-left"
+                    class="size-4 rtl:rotate-180"
+                  ></i>
                 </button>
 
-                <div
-                  class="flex items-center gap-2 [&>*:last-child]:!flex [&>*:not(:first-child):not(:last-child):not([data-active=true])]:hidden [&>*:nth-child(-n+3)]:!flex [&>[data-active=true]+*+*]:!flex [&>[data-active=true]+*]:!flex"
-                >
-                  <button
-                    class="inline-flex h-8 min-w-8 items-center justify-center rounded border border-gray-300 bg-white px-3 text-sm text-gray-600 transition-colors hover:bg-gray-50 data-[active=true]:border-primary-500 data-[active=true]:bg-primary-50 data-[active=true]:font-semibold data-[active=true]:text-primary-600"
+                <div class="flex items-center gap-2" id="pagination-container">
+                  <div
+                    class="flex items-center gap-2"
+                    id="pagination-container"
                   >
-                    1
-                  </button>
-                  <button
-                    class="inline-flex h-8 min-w-8 items-center justify-center rounded border border-gray-300 bg-white px-3 text-sm text-gray-600 transition-colors hover:bg-gray-50 data-[active=true]:border-primary-500 data-[active=true]:bg-primary-50 data-[active=true]:font-semibold data-[active=true]:text-primary-600"
-                    data-active="true"
-                  >
-                    2
-                  </button>
-                  <button
-                    class="inline-flex h-8 min-w-8 items-center justify-center rounded border border-gray-300 bg-white px-3 text-sm text-gray-600 transition-colors hover:bg-gray-50 data-[active=true]:border-primary-500 data-[active=true]:bg-primary-50 data-[active=true]:font-semibold data-[active=true]:text-primary-600"
-                  >
-                    3
-                  </button>
-                  <button
-                    class="inline-flex h-8 min-w-8 items-center justify-center rounded border border-gray-300 bg-white px-3 text-sm text-gray-600 transition-colors hover:bg-gray-50 data-[active=true]:border-primary-500 data-[active=true]:bg-primary-50 data-[active=true]:font-semibold data-[active=true]:text-primary-600"
-                  >
-                    4
-                  </button>
-                  <button
-                    class="inline-flex h-8 min-w-8 items-center justify-center rounded border border-gray-300 bg-white px-3 text-sm text-gray-600 transition-colors hover:bg-gray-50 data-[active=true]:border-primary-500 data-[active=true]:bg-primary-50 data-[active=true]:font-semibold data-[active=true]:text-primary-600"
-                  >
-                    5
-                  </button>
-                  <button
-                    class="inline-flex h-8 min-w-8 items-center justify-center rounded border border-gray-300 bg-white px-3 text-sm text-gray-600 transition-colors hover:bg-gray-50 data-[active=true]:border-primary-500 data-[active=true]:bg-primary-50 data-[active=true]:font-semibold data-[active=true]:text-primary-600"
-                  >
-                    20
-                  </button>
+                    <a
+                      href="#"
+                      class="inline-flex h-8 min-w-8 items-center justify-center rounded border border-gray-300 bg-white px-3 text-sm text-gray-600 transition-colors hover:bg-gray-50 data-[active=true]:border-primary-500 data-[active=true]:bg-primary-50 data-[active=true]:font-semibold data-[active=true]:text-primary-600"
+                      data-page="1"
+                      data-active="true"
+                    >
+                      1
+                    </a>
+                    <a
+                      href="#"
+                      class="inline-flex h-8 min-w-8 items-center justify-center rounded border border-gray-300 bg-white px-3 text-sm text-gray-600 transition-colors hover:bg-gray-50 data-[active=true]:border-primary-500 data-[active=true]:bg-primary-50 data-[active=true]:font-semibold data-[active=true]:text-primary-600"
+                      data-page="2"
+                      data-active="false"
+                    >
+                      2
+                    </a>
+                    <a
+                      href="#"
+                      class="inline-flex h-8 min-w-8 items-center justify-center rounded border border-gray-300 bg-white px-3 text-sm text-gray-600 transition-colors hover:bg-gray-50 data-[active=true]:border-primary-500 data-[active=true]:bg-primary-50 data-[active=true]:font-semibold data-[active=true]:text-primary-600"
+                      data-page="3"
+                      data-active="false"
+                    >
+                      3
+                    </a>
+                    <a
+                      href="#"
+                      class="inline-flex h-8 min-w-8 items-center justify-center rounded border border-gray-300 bg-white px-3 text-sm text-gray-600 transition-colors hover:bg-gray-50 data-[active=true]:border-primary-500 data-[active=true]:bg-primary-50 data-[active=true]:font-semibold data-[active=true]:text-primary-600"
+                      data-page="4"
+                      data-active="false"
+                    >
+                      4
+                    </a>
+                  </div>
                 </div>
 
                 <button
                   class="inline-flex h-8 w-8 items-center justify-center rounded border border-gray-300 bg-white text-gray-500 transition-colors hover:bg-gray-50"
+                  data-page="next"
                 >
-                  <i data-lucide="chevron-right" class="size-4"></i>
+                  <i
+                    data-lucide="chevron-right"
+                    class="size-4 rtl:rotate-180"
+                  ></i>
                 </button>
               </div>
             </div>
