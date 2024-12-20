@@ -964,11 +964,44 @@
       </div>
     </header>
 
-    <main class="my-8 space-y-6">
+    <main class="mb-8 lg:mt-4">
+      <!-- Breadcrumb -->
+      <nav
+        class="mx-auto my-4 hidden max-w-7xl items-center gap-0 overflow-hidden text-xs lg:flex lg:px-6"
+      >
+        <a href="#" class="hover:underline"> Guide of Dubai </a>
+        <i data-lucide="chevron-right" class="size-4 rtl:scale-x-[-1]"></i>
+        <a href="#" class="hover:underline"> En Uygun Otel </a>
+      </nav>
+      <!--  Image Header -->
+      <div>
+        <div class="relative z-10 h-80 w-full bg-gray-100">
+          <div
+            class="absolute left-[50%] top-0 z-[61] flex h-full w-full max-w-7xl -translate-x-1/2 flex-col items-start justify-center px-3.5 lg:px-4"
+          >
+            <h1
+              class="max-w-[540px] text-balance bg-gradient-to-r from-white to-primary-50 bg-clip-text py-6 text-3xl font-bold text-transparent sm:text-5xl"
+            >
+              SİZİN İÇİN EN UYGUN OTELE ULAŞIN
+            </h1>
+          </div>
+
+          <img
+            src="https://images.project-test.info/25.webp"
+            alt="Dubai'de Balayı Tatili"
+            class="h-full w-full object-cover rtl:scale-x-[-1]"
+            style="transition: filter 0.3s ease"
+          />
+
+          <div
+            class="absolute inset-0 bg-gradient-to-b from-gray-950/30 to-transparent"
+          ></div>
+        </div>
+      </div>
       <!-- Filter Container -->
-      <div class="mx-auto max-w-7xl">
+      <div class="mx-auto my-6 max-w-7xl">
         <!-- Filter Form -->
-        <div class="flex flex-col gap-4 px-3.5 pt-10 md:flex-row lg:pt-0">
+        <div class="flex flex-col gap-4 px-3.5 md:flex-row">
           <!-- Destination Input -->
           <div class="w-full md:w-1/3">
             <div class="relative">
@@ -1056,7 +1089,7 @@
 
       <!-- Mobil Filter Icons -->
       <div
-        class="flex items-center justify-start gap-4 px-3.5 pt-1 text-gray-900 lg:hidden lg:px-4"
+        class="my-6 flex flex-shrink-0 flex-nowrap items-center justify-start gap-4 px-3.5 text-gray-900 lg:hidden"
       >
         <button
           type="button"
@@ -1070,7 +1103,7 @@
           type="button"
           id="filter-modal-button"
           data-state="closed"
-          class="flex items-center gap-1 transition-colors duration-300 hover:!text-primary-500 data-[state=closed]:text-gray-900 data-[state=open]:text-primary-500"
+          class="flex items-center gap-1 transition-colors duration-300 hover:!text-primary-500"
         >
           <i data-lucide="sliders-horizontal" class="size-6"></i>
           <span class="text-sm font-semibold">Filtrele</span>
@@ -1086,16 +1119,16 @@
       </div>
 
       <!-- Filter and Results Container -->
-      <div class="mx-auto flex max-w-7xl items-start pt-2 lg:px-4">
+      <div class="mx-auto my-6 flex max-w-7xl items-start pt-2 lg:px-4">
         <!--  Filter Modal -->
         <div
           data-state="closed"
           id="filter-modal"
-          class="group fixed left-0 top-0 z-[8000] h-full w-full max-w-lg flex-shrink-0 overflow-hidden bg-primary-400 transition-transform duration-300 data-[state=closed]:translate-x-[-100%] data-[state=open]:translate-x-0 lg:static lg:w-[260px] lg:!translate-x-0"
+          class="group fixed left-0 top-0 z-[8000] h-full w-full max-w-lg flex-shrink-0 overflow-hidden transition-transform duration-300 data-[state=closed]:translate-x-[-100%] data-[state=open]:translate-x-0 lg:static lg:w-[260px] lg:!translate-x-0"
         >
           <div
             id="filter-container"
-            class="hide-scrollbar h-full w-full overflow-y-auto border-gray-200 bg-white py-5 sm:border sm:pb-4 lg:w-full lg:pt-4"
+            class="hide-scrollbar h-full w-full overflow-y-auto rounded border-gray-200 bg-white py-5 sm:border sm:pb-4 lg:w-full lg:pt-4"
           >
             <!-- Header -->
             <div
@@ -1311,10 +1344,10 @@
         <!--  Results Pagination Login  -->
         <div class="flex w-full flex-col space-y-4">
           <!--  Results and Pagination -->
-          <div class="flex w-full flex-col space-y-4">
+          <div class="flex w-full flex-col space-y-8">
             <!--  Results Container -->
             <div
-              class="flex h-fit w-full flex-col gap-8 divide-y divide-gray-200 bg-white px-3.5 lg:pl-4 lg:pr-0 rtl:lg:pr-4 [&>*:not(:first-child)]:pt-7"
+              class="flex h-fit w-full flex-col gap-8 divide-y divide-gray-100 bg-white px-3.5 lg:pl-4 lg:pr-0 rtl:lg:pr-4 [&>*:not(:first-child)]:pt-7"
             >
               <!-- Card - Design 1 -->
               <div
@@ -1626,11 +1659,11 @@
             </div>
             <!-- Loading and Not Found -->
             <div
-              class="flex flex-col items-center justify-center divide-y divide-gray-200 bg-white px-3.5 lg:pl-4 lg:pr-0 rtl:lg:pr-4"
+              class="flex flex-col items-center justify-center divide-y divide-gray-100 bg-white px-3.5 lg:pl-4 lg:pr-0 rtl:lg:pr-4 [&>*:first-child]:pb-8 [&>*:not(:first-child)]:py-8"
             >
               <!-- Loading Skeleton Design 1 -->
               <div
-                class="group flex h-fit w-full animate-pulse gap-4 bg-white py-8 transition-all md:items-start md:justify-between"
+                class="group flex h-fit w-full animate-pulse gap-4 bg-white transition-all md:items-start md:justify-between"
               >
                 <!-- Image Skeleton -->
                 <div
@@ -1693,7 +1726,7 @@
 
               <!-- Loading Skeleton Design 2  -->
               <div
-                class="group flex h-fit w-full animate-pulse flex-col gap-4 py-8 transition-all sm:flex-row md:items-start md:justify-between"
+                class="group flex h-fit w-full animate-pulse flex-col gap-4 transition-all sm:flex-row md:items-start md:justify-between"
               >
                 <!-- Image Container -->
                 <div
@@ -1753,7 +1786,7 @@
 
               <!-- Alternative Loading Design -->
               <div
-                class="flex w-full flex-col items-center justify-center gap-6 px-4 py-12"
+                class="flex w-full flex-col items-center justify-center gap-6 px-4"
               >
                 <!-- Loading Animation Container -->
                 <div class="relative flex items-center justify-center">
@@ -1807,13 +1840,13 @@
 
               <!-- Not Found State -->
               <div
-                class="flex w-full flex-col items-center justify-center gap-4 px-4 py-12"
+                class="flex w-full flex-col items-center justify-center gap-4 px-4"
               >
                 <!-- Icon -->
                 <div
                   class="flex h-20 w-20 items-center justify-center rounded-full bg-gray-100"
                 >
-                  <i data-lucide="frown" class="h-10 w-10 text-gray-400"></i>
+                  <i data-lucide="frown" class="size-10 text-gray-400"></i>
                 </div>
 
                 <!-- Text Content -->
@@ -1837,7 +1870,7 @@
             </div>
             <!-- Pagination -->
             <div
-              class="flex items-center justify-between gap-4 border-t border-gray-200 px-3.5 py-4"
+              class="flex items-center justify-between gap-4 border-t border-gray-100 px-3.5 py-4"
             >
               <div class="hidden text-sm text-gray-700 sm:block">
                 <span>Toplam 50 sonuçtan 1-10 arası gösteriliyor</span>
