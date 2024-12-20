@@ -13,9 +13,9 @@ document.addEventListener('DOMContentLoaded', () => {
     minInputId: 'min_price_1',
     maxInputId: 'max_price_1',
   })
+})
 
-  new Pagination('pagination-container')
-
+document.addEventListener('DOMContentLoaded', () => {
   new ModalController(
     [
       {
@@ -56,4 +56,8 @@ document.addEventListener('DOMContentLoaded', () => {
       },
     },
   )
+})
+
+document.addEventListener('DOMContentLoaded', () => {
+  new Pagination('pagination-container')
 })
