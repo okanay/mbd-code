@@ -1435,7 +1435,7 @@
                 </div>
               </div>
 
-              <!-- Card - Design 2 -->
+              <!-- Card - Design 2 (Alternatif) -->
               <div
                 class="group flex h-fit w-full flex-col gap-4 transition-all sm:flex-row md:items-start md:justify-between"
               >
@@ -1584,10 +1584,14 @@
                   </div>
                 </div>
               </div>
-
+            </div>
+            <!-- Loading and Not Found -->
+            <div
+              class="flex flex-col items-center justify-center divide-y divide-gray-200 bg-white px-3.5 lg:pl-4 lg:pr-0 rtl:lg:pr-4"
+            >
               <!-- Loading Skeleton Design 1 -->
               <div
-                class="group flex h-fit w-full animate-pulse gap-4 bg-white transition-all md:items-start md:justify-between"
+                class="group flex h-fit w-full animate-pulse gap-4 bg-white py-8 transition-all md:items-start md:justify-between"
               >
                 <!-- Image Skeleton -->
                 <div
@@ -1638,7 +1642,7 @@
                     <!-- Price and Button Skeleton -->
                     <div class="flex w-full flex-col gap-2">
                       <div
-                        class="ml-auto h-8 w-20 rounded-lg bg-gray-200 rtl:ml-0 rtl:mr-auto"
+                        class="mr-auto h-8 w-20 rounded-lg bg-gray-200 sm:ml-auto sm:mr-0 rtl:ml-0 rtl:mr-0 rtl:md:mr-auto"
                       ></div>
                       <div
                         class="h-9 w-full rounded-lg bg-gray-200 sm:h-11"
@@ -1650,14 +1654,14 @@
 
               <!-- Loading Skeleton Design 2  -->
               <div
-                class="group flex h-fit w-full animate-pulse flex-col gap-4 transition-all sm:flex-row md:items-start md:justify-between"
+                class="group flex h-fit w-full animate-pulse flex-col gap-4 py-8 transition-all sm:flex-row md:items-start md:justify-between"
               >
                 <!-- Image Container -->
                 <div
                   class="relative h-[200px] w-full flex-shrink-0 sm:aspect-[4/3] sm:h-full sm:w-[200px]"
                 >
                   <div
-                    class="h-full w-full rounded-xl bg-gray-200 object-cover sm:rounded-br-[3rem] rtl:rounded-bl-[3rem] rtl:rounded-br-xl"
+                    class="h-full w-full rounded-xl bg-gray-200 object-cover sm:rounded-br-[3rem] rtl:sm:rounded-bl-[3rem] rtl:sm:rounded-br-xl"
                   ></div>
                 </div>
 
@@ -1701,16 +1705,70 @@
                   <!-- Price and Button Skeleton -->
                   <div class="flex w-full flex-col gap-2">
                     <div
-                      class="ml-auto h-8 w-20 rounded-lg bg-gray-200 rtl:ml-0 rtl:mr-auto"
+                      class="mr-auto h-8 w-20 rounded-lg bg-gray-200 sm:ml-auto sm:mr-0 rtl:ml-0 rtl:mr-0 rtl:md:mr-auto"
                     ></div>
                     <div class="h-11 w-full rounded-lg bg-gray-200"></div>
                   </div>
                 </div>
               </div>
 
+              <!-- Alternative Loading Design -->
+              <div
+                class="flex w-full flex-col items-center justify-center gap-6 px-4 py-12"
+              >
+                <!-- Loading Animation Container -->
+                <div class="relative flex items-center justify-center">
+                  <!-- Outer spinning circle -->
+                  <div
+                    class="absolute size-24 animate-[spin_2s_linear_infinite] rounded-full border-4 border-primary-200 border-t-primary-500"
+                  ></div>
+
+                  <!-- Inner content -->
+                  <div
+                    class="z-10 flex size-16 items-center justify-center rounded-full bg-white shadow-lg shadow-primary-100"
+                  >
+                    <!-- Building Icon -->
+                    <i
+                      data-lucide="building"
+                      class="h-8 w-8 text-primary-500"
+                    ></i>
+                  </div>
+                </div>
+
+                <!-- Loading Text with Animated Dots -->
+                <div class="flex flex-col items-center gap-2 text-center">
+                  <div class="flex items-center gap-1">
+                    <h3 class="text-lg font-semibold text-gray-900">
+                      Oteller Aranıyor
+                    </h3>
+                    <span class="animate-bounce text-lg">.</span>
+                    <span class="animate-bounce text-lg [animation-delay:200ms]"
+                      >.</span
+                    >
+                    <span class="animate-bounce text-lg [animation-delay:400ms]"
+                      >.</span
+                    >
+                  </div>
+                  <p class="text-sm text-gray-500">
+                    Size en uygun otelleri buluyoruz
+                  </p>
+                </div>
+                <!-- Progress Bar -->
+                <div class="w-full max-w-md">
+                  <div
+                    class="h-1.5 w-full overflow-hidden rounded-full bg-gray-200"
+                  >
+                    <div
+                      data-found="false"
+                      class="h-full w-full origin-left animate-[loading_10s_ease-in-out] rounded-full bg-primary-500 data-[found=true]:!scale-x-100"
+                    ></div>
+                  </div>
+                </div>
+              </div>
+
               <!-- Not Found State -->
               <div
-                class="flex flex-col items-center justify-center gap-4 px-4 py-16"
+                class="flex w-full flex-col items-center justify-center gap-4 px-4 py-12"
               >
                 <!-- Icon -->
                 <div

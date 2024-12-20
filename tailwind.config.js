@@ -19,6 +19,13 @@ module.exports = {
       fontFamily: {
         custom: ['Fellix', 'Helvetica Neue', 'IBM Plex Sans', 'sans-serif'],
       },
+      keyframes: {
+        loading: {
+          '0%': { transform: 'scaleX(0)' },
+          '50%': { transform: 'scaleX(0.7)' },
+          '100%': { transform: 'scaleX(1)' },
+        },
+      },
     },
   },
   plugins: [],
