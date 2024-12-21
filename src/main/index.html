@@ -1536,8 +1536,9 @@
         <ul class="flex flex-col gap-4 md:grid md:grid-cols-2 lg:grid-cols-4">
           <!-- İlk iki kart, 1. ve 2. kart -->
           <li class="group">
+            <!-- İkinci kart (aynı yapı) -->
             <div
-              class="grid h-full overflow-hidden rounded-2xl border border-gray-200 bg-white transition-all duration-300 hover:border-primary-500"
+              class="flex h-full flex-col justify-start overflow-hidden rounded-2xl border border-gray-200 bg-white transition-all duration-300 hover:border-primary-500"
             >
               <!-- Image Container -->
               <div class="relative h-[200px] overflow-hidden rounded-b-2xl">
@@ -1555,15 +1556,14 @@
                 </span>
               </div>
 
-              <!-- Title Container -->
-              <div class="p-4 pb-2">
+              <div class="flex-grow p-4 pb-2">
                 <h2 class="line-clamp-2 text-xl font-semibold text-gray-800">
-                  Lüks Safari Platinium Heritage
+                  Deluxe Safari Royal Al Sahara
                 </h2>
               </div>
 
-              <!-- Info Container - 1fr (flexible height) -->
-              <div class="flex flex-col gap-2 px-4 sm:gap-4">
+              <div class="flex flex-col gap-1.5 p-4">
+                <!-- Rating -->
                 <div class="flex items-center gap-2">
                   <i
                     data-lucide="star"
@@ -1572,6 +1572,8 @@
                   <span class="text-sm font-medium text-gray-600">4.4</span>
                   <span class="text-sm text-gray-500">(128 değerlendirme)</span>
                 </div>
+
+                <!-- People Count -->
                 <div class="space-y-2">
                   <div class="flex items-center gap-2">
                     <img
@@ -1579,21 +1581,20 @@
                       alt="Daha Fazla Bilgi"
                       class="size-4 fill-primary-500"
                     />
-
                     <span class="text-sm text-gray-600">4 kişi</span>
                   </div>
-                  <div class="flex items-center justify-between">
-                    <span
-                      class="bg-gradient-to-br from-primary-400 to-primary-600 bg-clip-text text-2xl font-bold text-transparent"
-                    >
-                      349$
-                    </span>
-                  </div>
                 </div>
-              </div>
 
-              <!-- Button Container -->
-              <div class="p-4">
+                <!-- Price -->
+                <div class="flex items-center justify-between">
+                  <span
+                    class="bg-gradient-to-br from-primary-400 to-primary-600 bg-clip-text text-2xl font-bold text-transparent"
+                  >
+                    349$
+                  </span>
+                </div>
+
+                <!-- Button -->
                 <button
                   class="w-full rounded-lg bg-primary-500 py-3 font-semibold text-white transition-colors hover:bg-primary-600"
                 >
@@ -1602,10 +1603,11 @@
               </div>
             </div>
           </li>
+          <!-- İkinci kart (aynı yapı) -->
           <li class="group">
             <!-- İkinci kart (aynı yapı) -->
             <div
-              class="grid h-full overflow-hidden rounded-2xl border border-gray-200 bg-white transition-all duration-300 hover:border-primary-500"
+              class="flex h-full flex-col justify-start overflow-hidden rounded-2xl border border-gray-200 bg-white transition-all duration-300 hover:border-primary-500"
             >
               <!-- Image Container -->
               <div class="relative h-[200px] overflow-hidden rounded-b-2xl">
@@ -1623,14 +1625,14 @@
                 </span>
               </div>
 
-              <div class="p-4 pb-2">
+              <div class="flex-grow p-4 pb-2">
                 <h2 class="line-clamp-2 text-xl font-semibold text-gray-800">
                   Deluxe Safari Royal Al Sahara
                 </h2>
               </div>
 
-              <!-- Info Container - 1fr (flexible height) -->
-              <div class="flex flex-col gap-2 px-4 sm:gap-4">
+              <div class="flex flex-col gap-1.5 p-4">
+                <!-- Rating -->
                 <div class="flex items-center gap-2">
                   <i
                     data-lucide="star"
@@ -1639,6 +1641,8 @@
                   <span class="text-sm font-medium text-gray-600">4.4</span>
                   <span class="text-sm text-gray-500">(128 değerlendirme)</span>
                 </div>
+
+                <!-- People Count -->
                 <div class="space-y-2">
                   <div class="flex items-center gap-2">
                     <img
@@ -1648,17 +1652,18 @@
                     />
                     <span class="text-sm text-gray-600">4 kişi</span>
                   </div>
-                  <div class="flex items-center justify-between">
-                    <span
-                      class="bg-gradient-to-br from-primary-400 to-primary-600 bg-clip-text text-2xl font-bold text-transparent"
-                    >
-                      349$
-                    </span>
-                  </div>
                 </div>
-              </div>
 
-              <div class="p-4">
+                <!-- Price -->
+                <div class="flex items-center justify-between">
+                  <span
+                    class="bg-gradient-to-br from-primary-400 to-primary-600 bg-clip-text text-2xl font-bold text-transparent"
+                  >
+                    349$
+                  </span>
+                </div>
+
+                <!-- Button -->
                 <button
                   class="w-full rounded-lg bg-primary-500 py-3 font-semibold text-white transition-colors hover:bg-primary-600"
                 >
@@ -1948,10 +1953,10 @@
           </div>
 
           <!-- Tablet ve desktop'ta gösterilecek kartlar, 3,4,5,6... kart -->
-          <li class="group hidden h-full md:block">
+          <li class="group hidden md:block">
             <!-- İkinci kart (aynı yapı) -->
             <div
-              class="grid h-full overflow-hidden rounded-2xl border border-gray-200 bg-white transition-all duration-300 hover:border-primary-500"
+              class="flex h-full flex-col justify-start overflow-hidden rounded-2xl border border-gray-200 bg-white transition-all duration-300 hover:border-primary-500"
             >
               <!-- Image Container -->
               <div class="relative h-[200px] overflow-hidden rounded-b-2xl">
@@ -1969,14 +1974,14 @@
                 </span>
               </div>
 
-              <div class="p-4 pb-2">
+              <div class="flex-grow p-4 pb-2">
                 <h2 class="line-clamp-2 text-xl font-semibold text-gray-800">
                   Deluxe Safari Royal Al Sahara
                 </h2>
               </div>
 
-              <!-- Info Container - 1fr (flexible height) -->
-              <div class="flex flex-col gap-2 px-4 sm:gap-4">
+              <div class="flex flex-col gap-1.5 p-4">
+                <!-- Rating -->
                 <div class="flex items-center gap-2">
                   <i
                     data-lucide="star"
@@ -1985,6 +1990,8 @@
                   <span class="text-sm font-medium text-gray-600">4.4</span>
                   <span class="text-sm text-gray-500">(128 değerlendirme)</span>
                 </div>
+
+                <!-- People Count -->
                 <div class="space-y-2">
                   <div class="flex items-center gap-2">
                     <img
@@ -1994,17 +2001,18 @@
                     />
                     <span class="text-sm text-gray-600">4 kişi</span>
                   </div>
-                  <div class="flex items-center justify-between">
-                    <span
-                      class="bg-gradient-to-br from-primary-400 to-primary-600 bg-clip-text text-2xl font-bold text-transparent"
-                    >
-                      349$
-                    </span>
-                  </div>
                 </div>
-              </div>
 
-              <div class="p-4">
+                <!-- Price -->
+                <div class="flex items-center justify-between">
+                  <span
+                    class="bg-gradient-to-br from-primary-400 to-primary-600 bg-clip-text text-2xl font-bold text-transparent"
+                  >
+                    349$
+                  </span>
+                </div>
+
+                <!-- Button -->
                 <button
                   class="w-full rounded-lg bg-primary-500 py-3 font-semibold text-white transition-colors hover:bg-primary-600"
                 >
@@ -2013,10 +2021,10 @@
               </div>
             </div>
           </li>
-          <li class="group hidden h-full md:block">
+          <li class="group hidden md:block">
             <!-- İkinci kart (aynı yapı) -->
             <div
-              class="grid h-full overflow-hidden rounded-2xl border border-gray-200 bg-white transition-all duration-300 hover:border-primary-500"
+              class="flex h-full flex-col justify-start overflow-hidden rounded-2xl border border-gray-200 bg-white transition-all duration-300 hover:border-primary-500"
             >
               <!-- Image Container -->
               <div class="relative h-[200px] overflow-hidden rounded-b-2xl">
@@ -2034,14 +2042,14 @@
                 </span>
               </div>
 
-              <div class="p-4 pb-2">
+              <div class="flex-grow p-4 pb-2">
                 <h2 class="line-clamp-2 text-xl font-semibold text-gray-800">
                   Deluxe Safari
                 </h2>
               </div>
 
-              <!-- Info Container - 1fr (flexible height) -->
-              <div class="flex flex-col gap-2 px-4 sm:gap-4">
+              <div class="flex flex-col gap-1.5 p-4">
+                <!-- Rating -->
                 <div class="flex items-center gap-2">
                   <i
                     data-lucide="star"
@@ -2050,6 +2058,8 @@
                   <span class="text-sm font-medium text-gray-600">4.4</span>
                   <span class="text-sm text-gray-500">(128 değerlendirme)</span>
                 </div>
+
+                <!-- People Count -->
                 <div class="space-y-2">
                   <div class="flex items-center gap-2">
                     <img
@@ -2059,17 +2069,18 @@
                     />
                     <span class="text-sm text-gray-600">4 kişi</span>
                   </div>
-                  <div class="flex items-center justify-between">
-                    <span
-                      class="bg-gradient-to-br from-primary-400 to-primary-600 bg-clip-text text-2xl font-bold text-transparent"
-                    >
-                      349$
-                    </span>
-                  </div>
                 </div>
-              </div>
 
-              <div class="p-4">
+                <!-- Price -->
+                <div class="flex items-center justify-between">
+                  <span
+                    class="bg-gradient-to-br from-primary-400 to-primary-600 bg-clip-text text-2xl font-bold text-transparent"
+                  >
+                    349$
+                  </span>
+                </div>
+
+                <!-- Button -->
                 <button
                   class="w-full rounded-lg bg-primary-500 py-3 font-semibold text-white transition-colors hover:bg-primary-600"
                 >
