@@ -110,6 +110,11 @@ app.get('/otel', c => {
   return c.html(html.text())
 })
 
+app.get('/otel-details', c => {
+  const html = Bun.file('./dist/otel-details/index.html')
+  return c.html(html.text())
+})
+
 const secret = 'LHOUwjBFGyori7tltMnRQ2YtanvObPZOenCowk/Cq8c='
 
 app.post('/github-push-event', async c => {
