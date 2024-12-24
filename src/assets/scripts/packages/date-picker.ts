@@ -1033,8 +1033,8 @@ class DatePicker {
           } else if (this.betweenStartDate && this.betweenEndDate) {
             const output = this.config.output || {
               order: ['day', 'month', 'year'],
-              slash: '/',
-              between: ' - ',
+              slash: '-',
+              between: ' & ',
             }
             this.activeInput.value = `${this.formatDateBasedOnConfig(this.betweenStartDate)}${output.between}${this.formatDateBasedOnConfig(this.betweenEndDate)}`
           }

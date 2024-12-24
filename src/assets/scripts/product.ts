@@ -3,7 +3,7 @@ import { RatingAnimator } from './packages/rating-bar-controller.js'
 import { URLMatcher } from './packages/url-matcher.js'
 import { ScrollManager } from './packages/floating-elements.js'
 import { NavStickyManager } from './packages/scroll-style.js'
-import { DatePickerManager } from './packages/date-picker.js'
+import { DatePickerManager } from './packages/date-selector.js'
 
 document.addEventListener('DOMContentLoaded', () => {
   new DatePickerManager({
