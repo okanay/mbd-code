@@ -1,5 +1,6 @@
 // Veri tipleri için interface'ler
 import { createIcons, icons } from '../deps/lucide-icons.js'
+createIcons({ icons: { ...icons } })
 interface Room {
   src: string
   alt: string
