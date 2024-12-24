@@ -153,10 +153,12 @@ let currentSet: keyof TestData = 'set1'
 function createTableRow(rowData: BedroomInfo): string {
   return `
     <tr class="border-b border-gray-200 hover:bg-gray-50">
+      <!-- Daire Tipi -->
       <td class="translate-y-[-0.25rem] border-r border-gray-200 px-3.5 py-2">
         <div class="space-y-2">
-          <button class="dynamic-gallery-button font-semibold text-primary-600">
-            ${rowData.title}
+          <button class="dynamic-gallery-button flex items-center gap-2 font-semibold text-primary-600 underline">
+            <i data-lucide="image" class="size-4"></i>
+            <span>${rowData.title}</span>
           </button>
           <div class="space-y-1 text-sm text-gray-600">
             ${rowData.bedrooms.map(room => `<p>${room}</p>`).join('')}
@@ -164,22 +166,29 @@ function createTableRow(rowData: BedroomInfo): string {
           </div>
         </div>
       </td>
+
+      <!-- Konuk Sayısı -->
       <td class="border-r border-gray-200 px-4 py-2.5 align-top">
         <div class="flex gap-1">
           ${Array(4).fill('<i data-lucide="user" class="size-5 text-gray-600"></i>').join('')}
         </div>
       </td>
-      <td class="border-r border-gray-200 px-3.5 py-1 align-top">
-        <div class="space-y-1">
-          <span class="text-xs font-semibold text-lime-600">%20 İndirim</span>
-          <div class="flex flex-col">
-            <span class="text-sm text-gray-400 line-through">${rowData.originalPrice} AED</span>
-            <span class="text-lg font-semibold text-primary-600">${rowData.price} AED</span>
+
+      <!-- Fiyatlar -->
+      <td class="border-r border-gray-200 px-3.5 py-2.5 align-top">
+        <div class="flex flex-shrink-0 flex-col">
+          <span class="text-xs font-semibold text-lime-600">%25 İndirim</span>
+          <div class="flex items-center gap-2">
+            <span class="text-xs font-medium text-gray-500 line-through">${rowData.originalPrice} AED</span>
+            <span class="text-lg font-semibold text-primary-500">${rowData.price} AED</span>
           </div>
         </div>
       </td>
+
+      <!-- Özellikleriniz -->
       <td class="border-r border-gray-200 px-3.5 py-2.5 align-top">
         <div class="space-y-2">
+          <!-- Avantajlar -->
           <div class="space-y-2">
             <div class="flex items-center gap-2">
               <i data-lucide="check" class="size-5 text-lime-600"></i>
@@ -190,6 +199,8 @@ function createTableRow(rowData: BedroomInfo): string {
               <span class="text-sm">Yüksek hızlı internet</span>
             </div>
           </div>
+
+          <!-- Önemli Bilgiler -->
           <div class="space-y-2">
             <div class="flex items-center gap-2">
               <i data-lucide="info" class="size-5 text-primary-500"></i>
@@ -202,20 +213,22 @@ function createTableRow(rowData: BedroomInfo): string {
           </div>
         </div>
       </td>
-      <td class="py-2.5 pl-3.5 pr-1 align-top">
+
+      <!-- Daire Seç -->
+      <td class="px-3.5 py-2.5 align-top">
         <div class="flex justify-end">
           <div class="inline-flex items-center">
-            <div class="relative flex h-10 w-12 items-center justify-between rounded-l border-b border-l border-t border-gray-200">
-              <select class="h-full w-full appearance-none bg-transparent pl-2 pr-1 focus:outline-none focus:ring-0">
+            <button class="rounded-l bg-primary-500 px-4 py-2.5 text-sm font-semibold text-white transition-all duration-200 hover:bg-primary-700 active:scale-95">
+              Seç ve Devam Et
+            </button>
+            <div class="relative flex h-10 w-12 items-center justify-between rounded-r border-b border-r border-t border-gray-200">
+              <select class="h-full w-full appearance-none bg-transparent pl-2.5 pr-1 focus:outline-none focus:ring-0">
                 <option>0</option>
                 <option>1</option>
                 <option>2</option>
               </select>
-              <i data-lucide="chevron-down" class="pointer-events-none absolute right-1 top-[50%] size-4 -translate-y-1/2 text-gray-400"></i>
+              <i data-lucide="chevron-down" class="pointer-events-none absolute right-1.5 top-[50%] size-4 -translate-y-1/2 text-gray-400"></i>
             </div>
-            <button class="rounded-r bg-primary-500 px-4 py-2.5 text-sm font-semibold text-white transition-all duration-200 hover:bg-primary-700 active:scale-95">
-              Seç ve Devam Et
-            </button>
           </div>
         </div>
       </td>
