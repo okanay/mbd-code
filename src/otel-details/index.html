@@ -62,9 +62,14 @@
     <link rel="stylesheet" href="/assets/styles/globals-out.css" />
     <script type="module" src="/assets/scripts/layout.js"></script>
     <script type="module" src="/assets/scripts/otel-details.js"></script>
+
     <script
       type="module"
       src="/assets/scripts/ui/test-dynamic-gallery.js"
+    ></script>
+    <script
+      type="module"
+      src="/assets/scripts/ui/between-date-input.js"
     ></script>
 
     <script>
@@ -1003,7 +1008,7 @@
       <section class="relative" aria-labelledby="slider-heading">
         <!-- Images -->
         <div class="flex w-full items-start gap-0.5">
-          <!-- Images -->
+          <!-- Sliders -->
           <div id="otel-slider-container" class="relative z-[103] w-full">
             <ul
               id="otel-slider"
@@ -1382,6 +1387,115 @@
               class="hidden space-y-6 data-[state=open]:block group-data-[query=price]/query:!block"
             >
               <h2 class="text-base font-bold lg:text-xl">Bilgi ve Fiyatlar</h2>
+              <!-- Filter Container -->
+              <div class="mx-auto my-6 max-w-7xl">
+                <form class="flex flex-col gap-4 lg:flex-row">
+                  <!-- Search Inputs Container (80% on desktop) -->
+                  <div class="flex w-full flex-col gap-4 md:flex-row lg:w-full">
+                    <!-- Destination Input -->
+                    <div class="w-full lg:w-1/3">
+                      <div class="relative">
+                        <input
+                          type="text"
+                          id="destination-input"
+                          name="destination"
+                          style="-webkit-border-radius: 0; border-radius: 0"
+                          class="peer h-12 w-full !rounded border border-gray-200 px-3 py-2 pl-10 outline-none focus:border-primary-200 rtl:pl-0 rtl:pr-10"
+                          placeholder="Nereye Gidiyorsunuz?"
+                          value="Dubai"
+                        />
+                        <label
+                          for="destination-input"
+                          class="absolute -top-2 left-3 bg-white px-1 text-xs text-gray-500 rtl:left-auto rtl:right-3"
+                        >
+                          Nereye Gidiyorsunuz?
+                        </label>
+                        <!-- Search Icon -->
+                        <i
+                          data-lucide="search"
+                          class="absolute left-3 top-1/2 size-4 -translate-y-1/2 text-gray-400 rtl:left-auto rtl:right-3"
+                        ></i>
+                        <!-- Clear Button -->
+                        <button
+                          type="button"
+                          class="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 rtl:left-3 rtl:right-auto"
+                        >
+                          <i data-lucide="x" class="size-4"></i>
+                        </button>
+                      </div>
+                    </div>
+
+                    <!-- Date Select -->
+                    <div class="w-full lg:w-1/3">
+                      <div class="relative">
+                        <input
+                          type="text"
+                          id="date-input"
+                          name="date"
+                          readonly
+                          data-focus="false"
+                          class="h-12 w-full appearance-none !rounded border border-gray-200 bg-white px-3 py-2 outline-none focus:border-primary-200"
+                          placeholder="Tarih seçin"
+                        />
+                        <label
+                          for="date-input"
+                          class="absolute -top-2 left-3 bg-white px-1 text-xs text-gray-500 rtl:left-auto rtl:right-3"
+                        >
+                          Tarih Seçin
+                        </label>
+                        <div
+                          class="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 rtl:left-3 rtl:right-auto"
+                        >
+                          <i
+                            data-lucide="calendar"
+                            class="size-4 text-gray-500"
+                          ></i>
+                        </div>
+                      </div>
+                    </div>
+
+                    <!-- Number of People Select -->
+                    <div class="w-full lg:w-1/3">
+                      <div class="relative">
+                        <select
+                          id="people-select"
+                          name="people"
+                          class="h-12 w-full appearance-none !rounded border border-gray-200 bg-white px-3 py-2 outline-none focus:border-primary-200"
+                          style="-webkit-border-radius: 0; border-radius: 0"
+                        >
+                          <option value="2-adults">2 Yetişkin</option>
+                        </select>
+                        <label
+                          for="people-select"
+                          class="absolute -top-2 left-3 bg-white px-1 text-xs text-gray-500 rtl:left-auto rtl:right-3"
+                        >
+                          Kişi Sayısı
+                        </label>
+                        <div
+                          class="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 rtl:left-3 rtl:right-auto"
+                        >
+                          <i
+                            data-lucide="chevron-down"
+                            class="size-4 text-gray-500"
+                          ></i>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- Filter Button Container (20% on desktop) -->
+                  <div class="w-full lg:w-fit">
+                    <button
+                      type="submit"
+                      class="flex h-12 w-full items-center justify-center gap-2 rounded bg-primary-500 px-4 text-sm font-semibold text-white transition-colors hover:bg-primary-600 active:scale-95"
+                    >
+                      <i data-lucide="filter" class="size-4"></i>
+                      Filtrele
+                    </button>
+                  </div>
+                </form>
+              </div>
+              <!-- Table -->
               <div class="w-full overflow-x-auto">
                 <table
                   id="otel-price-table"
@@ -1410,7 +1524,7 @@
                         Özellikleriniz
                       </th>
                       <th
-                        class="w-[10%] px-3.5 py-3 text-end text-xs font-semibold uppercase text-white"
+                        class="w-[10%] px-5 py-3 text-end text-xs font-semibold uppercase text-white"
                       >
                         Daire Seç
                       </th>
@@ -1425,9 +1539,10 @@
                       >
                         <div class="space-y-2">
                           <button
-                            class="dynamic-gallery-button font-semibold text-primary-600"
+                            class="dynamic-gallery-button flex items-center gap-2 font-semibold text-primary-600 underline"
                           >
-                            Deluxe 2 Yataklı Daire
+                            <i data-lucide="image" class="size-4"></i>
+                            <span> Deluxe 2 Yataklı Daire </span>
                           </button>
                           <div class="space-y-1 text-sm text-gray-600">
                             <p>Yatak Odası 1: 2 tek kişilik yatak</p>
@@ -1532,150 +1647,7 @@
                       </td>
 
                       <!-- Daire Seç -->
-                      <td class="py-2.5 pl-3.5 pr-1 align-top">
-                        <div class="flex justify-end">
-                          <div class="inline-flex items-center">
-                            <div
-                              class="relative flex h-10 w-12 items-center justify-between rounded-l border-b border-l border-t border-gray-200"
-                            >
-                              <select
-                                class="h-full w-full appearance-none bg-transparent pl-2 pr-1 focus:outline-none focus:ring-0"
-                              >
-                                <option>0</option>
-                                <option>1</option>
-                                <option>2</option>
-                              </select>
-                              <i
-                                data-lucide="chevron-down"
-                                class="pointer-events-none absolute right-1 top-[50%] size-4 -translate-y-1/2 text-gray-400"
-                              ></i>
-                            </div>
-
-                            <button
-                              class="rounded-r bg-primary-500 px-4 py-2.5 text-sm font-semibold text-white transition-all duration-200 hover:bg-primary-700 active:scale-95"
-                            >
-                              Seç ve Devam Et
-                            </button>
-                          </div>
-                        </div>
-                      </td>
-                    </tr>
-                    <!-- 2. Secenek -->
-                    <tr class="border-b border-gray-200 hover:bg-gray-50">
-                      <!-- Daire Tipi -->
-                      <td
-                        class="translate-y-[-0.25rem] border-r border-gray-200 px-3.5 py-2"
-                      >
-                        <div class="space-y-2">
-                          <button
-                            class="dynamic-gallery-button font-semibold text-primary-600"
-                          >
-                            Deluxe 4 Yataklı Daire
-                          </button>
-                          <div class="space-y-1 text-sm text-gray-600">
-                            <p>Yatak Odası 1: 2 tek kişilik yatak</p>
-                            <p>
-                              Yatak Odası 2: 1 ekstra büyük çift kişilik yatak
-                            </p>
-                            <p class="text-gray-500">
-                              Ücretsiz bebek karyolası talep üzerine mevcuttur
-                            </p>
-                          </div>
-                        </div>
-                      </td>
-
-                      <!-- Konuk Sayısı -->
-                      <td
-                        class="border-r border-gray-200 px-4 py-2.5 align-top"
-                      >
-                        <div class="flex gap-1">
-                          <i
-                            data-lucide="user"
-                            class="size-5 text-gray-600"
-                          ></i>
-                          <i
-                            data-lucide="user"
-                            class="size-5 text-gray-600"
-                          ></i>
-                          <i
-                            data-lucide="user"
-                            class="size-5 text-gray-600"
-                          ></i>
-                          <i
-                            data-lucide="user"
-                            class="size-5 text-gray-600"
-                          ></i>
-                        </div>
-                      </td>
-
-                      <!-- Fiyatlar -->
-                      <td
-                        class="border-r border-gray-200 px-3.5 py-1 align-top"
-                      >
-                        <div class="space-y-1">
-                          <span class="text-xs font-semibold text-lime-600"
-                            >%20 İndirim</span
-                          >
-                          <div class="flex flex-col">
-                            <span class="text-sm text-gray-400 line-through"
-                              >1500 AED</span
-                            >
-                            <span class="text-lg font-semibold text-primary-600"
-                              >1300 AED</span
-                            >
-                          </div>
-                        </div>
-                      </td>
-
-                      <!-- Özellikleriniz  -->
-                      <td
-                        class="border-r border-gray-200 px-3.5 py-2.5 align-top"
-                      >
-                        <div class="space-y-2">
-                          <!-- Avantajlar -->
-                          <div class="space-y-2">
-                            <div class="flex items-center gap-2">
-                              <i
-                                data-lucide="check"
-                                class="size-5 text-lime-600"
-                              ></i>
-                              <span class="text-sm">Dahili park yeri</span>
-                            </div>
-                            <div class="flex items-center gap-2">
-                              <i
-                                data-lucide="check"
-                                class="size-5 text-lime-600"
-                              ></i>
-                              <span class="text-sm">Yüksek hızlı internet</span>
-                            </div>
-                          </div>
-
-                          <!-- Önemli Bilgiler -->
-                          <div class="space-y-2">
-                            <div class="flex items-center gap-2">
-                              <i
-                                data-lucide="info"
-                                class="size-5 text-primary-500"
-                              ></i>
-                              <span class="text-sm text-gray-600"
-                                >İade edilemez</span
-                              >
-                            </div>
-                            <div class="flex items-center gap-2">
-                              <i
-                                data-lucide="info"
-                                class="size-5 text-blue-500"
-                              ></i>
-                              <span class="text-sm text-gray-600"
-                                >Varıştan önce tesiste ödeme yapın</span
-                              >
-                            </div>
-                          </div>
-                        </div>
-                      </td>
-
-                      <!-- Daire Seç -->
-                      <td class="py-2.5 pl-3.5 pr-1 align-top">
+                      <td class="px-3.5 py-2.5 align-top">
                         <div class="flex justify-end">
                           <div class="inline-flex items-center">
                             <div
@@ -1879,6 +1851,56 @@
           class="dynamic-gallery-item"
         />
       </ul>
+    </div>
+
+    <!-- Date Picker Container -->
+    <div
+      id="date-picker"
+      data-language="tr"
+      class="w-[calc(100%-1.65rem)] max-w-[410px] rounded-lg border border-gray-200 bg-white p-4"
+    >
+      <div class="flex flex-col gap-4">
+        <!-- Prev - Current Month - Next -->
+        <div class="flex justify-between">
+          <button
+            id="prev-month"
+            class="size-6 rounded-full p-1 text-primary-500 transition-colors duration-300 hover:bg-gray-100 hover:text-primary-600 disabled:pointer-events-none disabled:opacity-50"
+          >
+            <i data-lucide="chevron-left" class="size-full"></i>
+          </button>
+          <div id="current-month" class="font-bold">Aralık 2024</div>
+          <button
+            id="next-month"
+            class="size-6 rounded-full p-1 text-primary-500 transition-colors duration-300 hover:bg-gray-100 hover:text-primary-600 disabled:pointer-events-none disabled:opacity-50"
+          >
+            <i data-lucide="chevron-right" class="size-full"></i>
+          </button>
+        </div>
+        <!-- Calendar Days -->
+        <div id="calendar-days"></div>
+        <div class="flex items-center justify-between">
+          <div class="flex items-center justify-between gap-4">
+            <button
+              id="reset-date"
+              class="text-primary-500 hover:text-primary-600 hover:underline"
+            >
+              Bugün
+            </button>
+            <button
+              id="reset-all"
+              class="text-primary-500 hover:text-primary-600 hover:underline"
+            >
+              Temizle
+            </button>
+          </div>
+          <button
+            id="close-picker"
+            class="rounded-md bg-primary-500 px-3 py-2 text-sm text-white transition-colors hover:bg-primary-600"
+          >
+            Kapat
+          </button>
+        </div>
+      </div>
     </div>
 
     <footer class="w-full">
