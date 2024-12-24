@@ -4,6 +4,10 @@ import { MultiGroupImageGallery } from './packages/multi-group-gallery.js'
 import { Slider } from './packages/slider.js'
 import { TouchDirectionDetector } from './packages/touch-event.js'
 import { ScrollManager } from './packages/floating-elements.js'
+import {
+  UpdateElementInnerHTMLById,
+  UpdateProductSliderDataItems,
+} from './packages/image-gallery.js'
 
 document.addEventListener('DOMContentLoaded', () => {
   new ModalController(
@@ -157,7 +161,7 @@ document.addEventListener('DOMContentLoaded', () => {
     ...config,
   })
 
-  new TouchDirectionDetector('product-slider-container', {
+  new TouchDirectionDetector('otel-slider-container', {
     threshold: 50,
     onSwipe: direction => {
       if (direction === 'right') {
@@ -172,8 +176,8 @@ document.addEventListener('DOMContentLoaded', () => {
   const multiGroupGallery = new MultiGroupImageGallery({
     groups: [
       {
-        containerId: 'product-slider',
-        slideItemClass: 'product-slide',
+        containerId: 'otel-slider',
+        slideItemClass: 'otel-slide',
       },
     ],
     ...galleryConfig,
@@ -190,6 +194,21 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     },
   })
+})
+
+document.addEventListener('DOMContentLoaded', () => {
+  const productSliderElement = document.getElementById('otel-slider')
+  const childCount = productSliderElement
+    ? productSliderElement.children.length
+    : 0
+
+  UpdateProductSliderDataItems('otel-slider', {
+    min: 1,
+    max: 5,
+    childElements: childCount,
+    dataItems: 'auto-detected',
+  })
+  UpdateElementInnerHTMLById('otel-slider-image-count', childCount.toString())
 })
 
 const config = {
