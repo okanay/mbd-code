@@ -2,6 +2,7 @@ import { DatePicker, type DatePickerConfig } from './packages/date-picker.js'
 import { ModalController } from './packages/modal.js'
 import { Pagination } from './packages/pagination.js'
 import { RangeSlider } from './packages/range-slider.js'
+import { TouchDirectionDetector } from './packages/touch-event.js'
 
 document.addEventListener('DOMContentLoaded', () => {
   new RangeSlider({
@@ -113,5 +114,17 @@ document.addEventListener('DOMContentLoaded', () => {
     autoClose: true,
   }
 
-  new DatePicker(datepickerConfig)
+  const datePicker = new DatePicker(datepickerConfig)
+
+  new TouchDirectionDetector('date-picker', {
+    threshold: 50,
+    onSwipe: direction => {
+      if (direction === 'left') {
+        return datePicker.changeMonth('next')
+      }
+      if (direction === 'right') {
+        return datePicker.changeMonth('prev')
+      }
+    },
+  })
 })
