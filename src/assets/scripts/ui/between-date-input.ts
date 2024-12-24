@@ -2,8 +2,18 @@ import { DatePicker, type DatePickerConfig } from '../packages/date-picker.js'
 import { TouchDirectionDetector } from '../packages/touch-event.js'
 
 document.addEventListener('DOMContentLoaded', () => {
+  const today = new Date()
+  const after3days = new Date(today)
+  after3days.setDate(today.getDate() + 3)
+
   const datepickerConfig: DatePickerConfig = {
     minDate: new Date(),
+    defaultDates: {
+      between: {
+        start: today,
+        end: after3days,
+      },
+    },
     elements: {
       container: 'date-picker',
       monthContainer: 'current-month',
@@ -24,7 +34,7 @@ document.addEventListener('DOMContentLoaded', () => {
     },
     output: {
       between: ' & ',
-      slash: '/',
+      slash: '-',
       fullFormat: true,
       backendFormat: ['year', 'month', 'day'],
       order: ['year', 'month', 'day'],

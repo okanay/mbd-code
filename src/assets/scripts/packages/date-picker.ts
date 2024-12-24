@@ -134,6 +134,18 @@ interface OutputConfig {
   backendFormat?: string[] // Yeni alan: Backend formatı için
 }
 
+interface DefaultDates {
+  single?: Date
+  between?: {
+    start?: Date
+    end?: Date
+  }
+  two?: {
+    start?: Date
+    end?: Date
+  }
+}
+
 interface DatePickerConfig {
   elements: {
     container: string
@@ -151,6 +163,7 @@ interface DatePickerConfig {
   classes?: DatePickerClasses
   language: LanguageConfig[]
   output?: OutputConfig
+  defaultDates?: DefaultDates
   minDate?: Date
   maxDate?: Date
   autoClose?: boolean
@@ -208,6 +221,10 @@ class DatePicker {
       this.config.maxDate = this.stripTime(this.config.maxDate)
     }
 
+    if (config.defaultDates) {
+      this.initializeDefaultDates(config.defaultDates)
+    }
+
     this.monthShortNamePointer = document.getElementById(
       config.elements.monthContainer,
     )
@@ -246,6 +263,98 @@ class DatePicker {
     window.addEventListener('resize', this.handleWindowResize)
 
     this.hideDatePicker()
+  }
+
+  private initializeDefaultDates(defaultDates: DefaultDates) {
+    const { input } = this.config
+
+    if (input.type === 'single' && defaultDates.single) {
+      const dateInput = document.getElementById(
+        (input.elements as SingleDateInput).id,
+      ) as HTMLInputElement
+
+      if (dateInput) {
+        const date = this.stripTime(defaultDates.single)
+        this.selectedDates.set(dateInput.id, date)
+        this.dateValues.set(dateInput.id, date)
+        dateInput.value = this.formatDateBasedOnConfig(date)
+        dateInput.setAttribute(
+          'data-selected',
+          this.formatDateBasedOnConfig(date, 'backend'),
+        )
+      }
+    }
+
+    if (input.type === 'between' && defaultDates.between) {
+      const dateInput = document.getElementById(
+        (input.elements as BetweenDateInput).id,
+      ) as HTMLInputElement
+
+      if (dateInput && defaultDates.between.start && defaultDates.between.end) {
+        const startDate = this.stripTime(defaultDates.between.start)
+        const endDate = this.stripTime(defaultDates.between.end)
+
+        this.betweenStartDate = startDate
+        this.betweenEndDate = endDate
+
+        this.selectedDates.set(`${dateInput.id}-start`, startDate)
+        this.selectedDates.set(`${dateInput.id}-end`, endDate)
+        this.dateValues.set(`${dateInput.id}-start`, startDate)
+        this.dateValues.set(`${dateInput.id}-end`, endDate)
+
+        const output = this.config.output || {
+          order: ['day', 'month', 'year'],
+          slash: '/',
+          between: ' - ',
+        }
+
+        dateInput.value = `${this.formatDateBasedOnConfig(startDate)}${output.between}${this.formatDateBasedOnConfig(endDate)}`
+        dateInput.setAttribute(
+          'data-start',
+          this.formatDateBasedOnConfig(startDate, 'backend'),
+        )
+        dateInput.setAttribute(
+          'data-end',
+          this.formatDateBasedOnConfig(endDate, 'backend'),
+        )
+      }
+    }
+
+    if (input.type === 'two' && defaultDates.two) {
+      const rangeConfig = input.elements as DateRangeInput
+
+      if (defaultDates.two.start) {
+        const startInput = document.getElementById(
+          rangeConfig.start.id,
+        ) as HTMLInputElement
+        if (startInput) {
+          const startDate = this.stripTime(defaultDates.two.start)
+          this.selectedDates.set(startInput.id, startDate)
+          this.dateValues.set(startInput.id, startDate)
+          startInput.value = this.formatDateBasedOnConfig(startDate)
+          startInput.setAttribute(
+            'data-start',
+            this.formatDateBasedOnConfig(startDate, 'backend'),
+          )
+        }
+      }
+
+      if (defaultDates.two.end) {
+        const endInput = document.getElementById(
+          rangeConfig.end.id,
+        ) as HTMLInputElement
+        if (endInput) {
+          const endDate = this.stripTime(defaultDates.two.end)
+          this.selectedDates.set(endInput.id, endDate)
+          this.dateValues.set(endInput.id, endDate)
+          endInput.value = this.formatDateBasedOnConfig(endDate)
+          endInput.setAttribute(
+            'data-end',
+            this.formatDateBasedOnConfig(endDate, 'backend'),
+          )
+        }
+      }
+    }
   }
 
   private initializeFocusContainers() {
@@ -917,20 +1026,16 @@ class DatePicker {
 
       if (isOutsideClick && this.isDatePickerVisible()) {
         if (this.activeInput && this.config.input.type === 'between') {
-          // Between modunda sadece bir tarih seçiliyse her şeyi resetle
-          if (
-            (this.betweenStartDate && !this.betweenEndDate) ||
-            (!this.betweenStartDate && this.betweenEndDate)
-          ) {
+          if (this.betweenStartDate && !this.betweenEndDate) {
+            // Tek tarih seçilip kapatılınca tüm değerleri temizle
             this.resetAllInputs()
+            this.activeInput.removeAttribute('data-start')
           } else if (this.betweenStartDate && this.betweenEndDate) {
-            // İki tarih de seçiliyse mevcut değerleri koru
             const output = this.config.output || {
               order: ['day', 'month', 'year'],
               slash: '/',
               between: ' - ',
             }
-
             this.activeInput.value = `${this.formatDateBasedOnConfig(this.betweenStartDate)}${output.between}${this.formatDateBasedOnConfig(this.betweenEndDate)}`
           }
         }
