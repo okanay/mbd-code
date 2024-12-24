@@ -27,12 +27,20 @@ const testData: TestData = {
   set1: {
     images: [
       {
-        src: 'https://images.project-test.info/4.webp',
+        src: 'https://images.project-test.info/1.webp',
         alt: "Dubai'de Balayı Tatili 1",
       },
       {
-        src: 'https://images.project-test.info/8.webp',
+        src: 'https://images.project-test.info/2.webp',
         alt: "Dubai'de Balayı Tatili 2",
+      },
+      {
+        src: 'https://images.project-test.info/3.webp',
+        alt: "Dubai'de Balayı Tatili 3",
+      },
+      {
+        src: 'https://images.project-test.info/4.webp',
+        alt: "Dubai'de Balayı Tatili 4",
       },
     ],
     rows: [
@@ -54,21 +62,43 @@ const testData: TestData = {
         price: '1500',
         originalPrice: '1800',
       },
+      {
+        title: 'Deluxe Plus Daire',
+        bedrooms: [
+          'Yatak Odası 1: 1 king size yatak',
+          'Yatak Odası 2: 1 çift kişilik yatak',
+        ],
+        price: '1800',
+        originalPrice: '2200',
+      },
+      {
+        title: 'Executive Daire',
+        bedrooms: [
+          'Yatak Odası 1: 1 king size yatak',
+          'Yatak Odası 2: 2 tek kişilik yatak',
+        ],
+        price: '2000',
+        originalPrice: '2400',
+      },
     ],
   },
   set2: {
     images: [
       {
+        src: 'https://images.project-test.info/5.webp',
+        alt: "Dubai'de Balayı Tatili 5",
+      },
+      {
+        src: 'https://images.project-test.info/6.webp',
+        alt: "Dubai'de Balayı Tatili 6",
+      },
+      {
         src: 'https://images.project-test.info/7.webp',
-        alt: "Dubai'de Balayı Tatili 3",
+        alt: "Dubai'de Balayı Tatili 7",
       },
       {
         src: 'https://images.project-test.info/8.webp',
-        alt: "Dubai'de Balayı Tatili 4",
-      },
-      {
-        src: 'https://images.project-test.info/9.webp',
-        alt: "Dubai'de Balayı Tatili 5",
+        alt: "Dubai'de Balayı Tatili 8",
       },
     ],
     rows: [
@@ -99,6 +129,16 @@ const testData: TestData = {
         ],
         price: '3500',
         originalPrice: '4000',
+      },
+      {
+        title: 'Royal Suite',
+        bedrooms: [
+          'Yatak Odası 1: 1 king size yatak',
+          'Yatak Odası 2: 1 queen size yatak',
+          'Yatak Odası 3: 2 tek kişilik yatak',
+        ],
+        price: '4000',
+        originalPrice: '5000',
       },
     ],
   },
