@@ -276,7 +276,7 @@
   }
 
   .day-header {
-    @apply flex h-8 w-full cursor-pointer items-center justify-center bg-gray-100 transition duration-300;
+    @apply flex h-8 w-full cursor-pointer items-center justify-center rounded bg-gray-100 transition duration-300;
   }
 
   .day {

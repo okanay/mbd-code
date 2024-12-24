@@ -919,7 +919,13 @@ class DatePicker {
             this.resetAllInputs()
           } else if (this.betweenStartDate && this.betweenEndDate) {
             // İki tarih de seçiliyse mevcut değerleri koru
-            this.activeInput.value = `${this.formatDate(this.betweenStartDate)} & ${this.formatDate(this.betweenEndDate)}`
+            const output = this.config.output || {
+              order: ['day', 'month', 'year'],
+              slash: '/',
+              between: ' - ',
+            }
+
+            this.activeInput.value = `${this.formatDateBasedOnConfig(this.betweenStartDate)}${output.between}${this.formatDateBasedOnConfig(this.betweenEndDate)}`
           }
         }
 
@@ -927,6 +933,53 @@ class DatePicker {
         this.activeInput = null
       }
     })
+  }
+
+  public safeChangeMonth(direction: 'next' | 'prev') {
+    const { minDate, maxDate } = this.config
+    const currentMonth = new Date(
+      this.currentDate.getFullYear(),
+      this.currentDate.getMonth(),
+      1, // Ayın ilk günü
+    )
+
+    // Ay hesaplamasını düzelt
+    const targetMonth =
+      direction === 'prev'
+        ? new Date(currentMonth.getFullYear(), currentMonth.getMonth() - 1, 1)
+        : new Date(currentMonth.getFullYear(), currentMonth.getMonth() + 1, 1)
+
+    // Minimum tarih kontrolü
+    if (direction === 'prev' && minDate) {
+      const strippedMinDate = this.stripTime(minDate)
+      const lastDayOfTargetMonth = new Date(
+        targetMonth.getFullYear(),
+        targetMonth.getMonth() + 1,
+        0,
+      )
+
+      if (lastDayOfTargetMonth < strippedMinDate) {
+        return false // Önceki aya gitmeye izin verme
+      }
+    }
+
+    // Maximum tarih kontrolü
+    if (direction === 'next' && maxDate) {
+      const strippedMaxDate = this.stripTime(maxDate)
+      const lastDayOfTargetMonth = new Date(
+        targetMonth.getFullYear(),
+        targetMonth.getMonth() + 1,
+        0,
+      )
+
+      if (lastDayOfTargetMonth > strippedMaxDate) {
+        return false // Sonraki aya gitmeye izin verme
+      }
+    }
+
+    // Güvenli değişim
+    this.changeMonth(direction)
+    return true
   }
 
   private updateNavigationState() {
