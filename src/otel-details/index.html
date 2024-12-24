@@ -71,6 +71,7 @@
       type="module"
       src="/assets/scripts/ui/between-date-input.js"
     ></script>
+    <script type="module" src="/assets/scripts/ui/room-options.js"></script>
 
     <script>
       ;(function () {
@@ -1384,12 +1385,12 @@
             <section
               id="otel-info-content-2"
               data-state="closed"
-              class="hidden space-y-6 data-[state=open]:block group-data-[query=price]/query:!block"
+              class="hidden min-h-[360px] space-y-6 data-[state=open]:block group-data-[query=price]/query:!block"
             >
               <h2 class="text-base font-bold lg:text-xl">Bilgi ve Fiyatlar</h2>
               <!-- Filter Container -->
               <div class="mx-auto my-6 max-w-7xl">
-                <form class="flex flex-col gap-4 lg:flex-row">
+                <form class="relative z-[200] flex flex-col gap-4 lg:flex-row">
                   <!-- Search Inputs Container (80% on desktop) -->
                   <div class="flex w-full flex-col gap-4 md:flex-row lg:w-full">
                     <!-- Destination Input -->
@@ -1455,16 +1456,24 @@
                     </div>
 
                     <!-- Number of People Select -->
-                    <div class="w-full lg:w-1/3">
+                    <div
+                      id="select-room-options-container"
+                      data-state="closed"
+                      class="group relative w-full lg:w-1/3"
+                    >
+                      <!-- Controller -->
                       <div class="relative">
-                        <select
+                        <input
+                          type="text"
                           id="people-select"
                           name="people"
-                          class="h-12 w-full appearance-none !rounded border border-gray-200 bg-white px-3 py-2 outline-none focus:border-primary-200"
-                          style="-webkit-border-radius: 0; border-radius: 0"
-                        >
-                          <option value="2-adults">2 Yetişkin</option>
-                        </select>
+                          readonly
+                          data-adult="1"
+                          data-child="0"
+                          data-room="0"
+                          value="1 Yetişkin, 0 Çocuk, 0 Oda"
+                          class="h-12 w-full appearance-none !rounded border border-gray-200 bg-white px-3 py-2 outline-none group-data-[state=open]:!rounded-b-none group-data-[state=open]:border-gray-200 group-data-[state=closed]:text-gray-700/80"
+                        />
                         <label
                           for="people-select"
                           class="absolute -top-2 left-3 bg-white px-1 text-xs text-gray-500 rtl:left-auto rtl:right-3"
@@ -1476,8 +1485,120 @@
                         >
                           <i
                             data-lucide="chevron-down"
-                            class="size-4 text-gray-500"
+                            class="size-4 text-gray-500 transition-transform duration-300 group-data-[state=open]:rotate-180"
                           ></i>
+                        </div>
+                      </div>
+                      <!-- Dropdown -->
+                      <div
+                        id="people-select-dropdown"
+                        class="pointer-events-none absolute left-0 top-full h-fit w-full rounded-b border-b border-l border-r border-gray-200 bg-white opacity-0 transition-all duration-300 group-data-[state=open]:pointer-events-auto group-data-[state=open]:opacity-100"
+                      >
+                        <div class="flex flex-col gap-4 py-4">
+                          <!-- Yetişkin -->
+                          <div class="flex items-center justify-between px-4">
+                            <div class="flex items-center gap-2">
+                              <i
+                                data-lucide="user"
+                                class="size-5 text-gray-600"
+                              ></i>
+                              <span id="adult-text" class="text-sm"
+                                >Yetişkin</span
+                              >
+                            </div>
+                            <div class="flex items-center gap-2">
+                              <button
+                                type="button"
+                                id="adult-minus"
+                                class="flex h-8 w-8 items-center justify-center rounded-full border text-gray-500"
+                              >
+                                -
+                              </button>
+                              <span id="adult-count" class="w-8 text-center"
+                                >1</span
+                              >
+                              <button
+                                type="button"
+                                id="adult-plus"
+                                class="flex h-8 w-8 items-center justify-center rounded-full border text-primary-500"
+                              >
+                                +
+                              </button>
+                            </div>
+                          </div>
+
+                          <!-- Çocuk -->
+                          <div class="flex items-center justify-between px-4">
+                            <div class="flex items-center gap-2">
+                              <i
+                                data-lucide="baby"
+                                class="size-5 text-gray-600"
+                              ></i>
+                              <span id="child-text" class="text-sm">Çocuk</span>
+                            </div>
+                            <div class="flex items-center gap-2">
+                              <button
+                                type="button"
+                                id="child-minus"
+                                class="flex h-8 w-8 items-center justify-center rounded-full border text-gray-500"
+                              >
+                                -
+                              </button>
+                              <span id="child-count" class="w-8 text-center"
+                                >0</span
+                              >
+                              <button
+                                type="button"
+                                id="child-plus"
+                                class="flex h-8 w-8 items-center justify-center rounded-full border text-primary-500"
+                              >
+                                +
+                              </button>
+                            </div>
+                          </div>
+
+                          <!-- Oda -->
+                          <div class="flex items-center justify-between px-4">
+                            <div class="flex items-center gap-2">
+                              <i
+                                data-lucide="door-open"
+                                class="size-5 text-gray-600"
+                              ></i>
+                              <span id="room-text" class="text-sm">Oda</span>
+                            </div>
+                            <div class="flex items-center gap-2">
+                              <button
+                                type="button"
+                                id="room-minus"
+                                class="flex h-8 w-8 items-center justify-center rounded-full border text-gray-500"
+                              >
+                                -
+                              </button>
+                              <span id="room-count" class="w-8 text-center"
+                                >0</span
+                              >
+                              <button
+                                type="button"
+                                id="room-plus"
+                                class="flex h-8 w-8 items-center justify-center rounded-full border text-primary-500"
+                              >
+                                +
+                              </button>
+                            </div>
+                          </div>
+
+                          <hr class="-mb-4 border-t border-gray-200" />
+
+                          <!-- Onayla -->
+                          <div class="w-full px-4">
+                            <button
+                              type="button"
+                              id="people-select-close"
+                              class="mt-4 h-11 w-full rounded bg-primary-500 text-white"
+                            >
+                              Onayla
+                            </button>
+                          </div>
                         </div>
                       </div>
                     </div>
@@ -1582,18 +1703,19 @@
 
                       <!-- Fiyatlar -->
                       <td
-                        class="border-r border-gray-200 px-3.5 py-1 align-top"
+                        class="border-r border-gray-200 px-3.5 py-2.5 align-top"
                       >
-                        <div class="space-y-1">
+                        <div class="flex flex-shrink-0 flex-col">
                           <span class="text-xs font-semibold text-lime-600"
-                            >%20 İndirim</span
+                            >%25 İndirim</span
                           >
-                          <div class="flex flex-col">
-                            <span class="text-sm text-gray-400 line-through"
-                              >1500 AED</span
+                          <div class="flex items-center gap-2">
+                            <span
+                              class="text-xs font-medium text-gray-500 line-through"
+                              >650 AED</span
                             >
-                            <span class="text-lg font-semibold text-primary-600"
-                              >1300 AED</span
+                            <span class="text-lg font-semibold text-primary-500"
+                              >550 AED</span
                             >
                           </div>
                         </div>
@@ -1650,11 +1772,16 @@
                       <td class="px-3.5 py-2.5 align-top">
                         <div class="flex justify-end">
                           <div class="inline-flex items-center">
+                            <button
+                              class="rounded-l bg-primary-500 px-4 py-2.5 text-sm font-semibold text-white transition-all duration-200 hover:bg-primary-700 active:scale-95"
+                            >
+                              Seç ve Devam Et
+                            </button>
                             <div
-                              class="relative flex h-10 w-12 items-center justify-between rounded-l border-b border-l border-t border-gray-200"
+                              class="relative flex h-10 w-12 items-center justify-between rounded-r border-b border-r border-t border-gray-200"
                             >
                               <select
-                                class="h-full w-full appearance-none bg-transparent pl-2 pr-1 focus:outline-none focus:ring-0"
+                                class="h-full w-full appearance-none bg-transparent pl-2.5 pr-1 focus:outline-none focus:ring-0"
                               >
                                 <option>0</option>
                                 <option>1</option>
@@ -1662,15 +1789,9 @@
                               </select>
                               <i
                                 data-lucide="chevron-down"
-                                class="pointer-events-none absolute right-1 top-[50%] size-4 -translate-y-1/2 text-gray-400"
+                                class="pointer-events-none absolute right-1.5 top-[50%] size-4 -translate-y-1/2 text-gray-400"
                               ></i>
                             </div>
-
-                            <button
-                              class="rounded-r bg-primary-500 px-4 py-2.5 text-sm font-semibold text-white transition-all duration-200 hover:bg-primary-700 active:scale-95"
-                            >
-                              Seç ve Devam Et
-                            </button>
                           </div>
                         </div>
                       </td>
@@ -1857,7 +1978,7 @@
     <div
       id="date-picker"
       data-language="tr"
-      class="w-[calc(100%-1.65rem)] max-w-[410px] rounded-lg border border-gray-200 bg-white p-4"
+      class="w-[calc(100%-1.65rem)] max-w-[410px] rounded-lg border border-gray-200 bg-white p-4 opacity-0 lg:max-w-[366px]"
     >
       <div class="flex flex-col gap-4">
         <!-- Prev - Current Month - Next -->

@@ -63,6 +63,8 @@ import {
   ArrowUpDown,
   MapPinned,
   Frown,
+  DoorOpen,
+  Baby,
 } from 'lucide'
 
 const icons = {
@@ -81,6 +83,7 @@ const icons = {
   CalendarCheck,
   Building,
   Bus,
+  DoorOpen,
   FolderKanban,
   IdCard,
   MapPin,
@@ -90,6 +93,7 @@ const icons = {
   Phone,
   CircleUser,
   CircleX,
+  Baby,
   Image,
   X,
   Check,

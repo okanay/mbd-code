@@ -66,6 +66,7 @@
       type="module"
       src="/assets/scripts/ui/between-date-input.js"
     ></script>
+    <script type="module" src="/assets/scripts/ui/room-options.js"></script>
   </head>
   <body class="bg-white">
     <header class="w-full border-gray-200 lg:h-[80px] lg:border-b">
@@ -972,7 +973,7 @@
     <div
       id="date-picker"
       data-language="tr"
-      class="w-[calc(100%-1.65rem)] max-w-[410px] rounded-lg border border-gray-200 bg-white p-4"
+      class="w-[calc(100%-1.65rem)] max-w-[456px] rounded-lg border border-gray-200 bg-white p-4 opacity-0 lg:max-w-[366px]"
     >
       <div class="flex flex-col gap-4">
         <!-- Prev - Current Month - Next -->
@@ -1054,92 +1055,216 @@
       </div>
 
       <!-- Filter Container -->
-      <div class="mx-auto my-6 max-w-7xl">
+      <div class="mx-auto my-6 max-w-7xl px-4">
         <!-- Filter Form -->
-        <div class="flex flex-col gap-4 px-3.5 md:flex-row">
-          <!-- Destination Input -->
-          <div class="w-full md:w-1/3">
-            <div class="relative">
-              <input
-                type="text"
-                id="destination-input"
-                name="destination"
-                style="-webkit-border-radius: 0; border-radius: 0"
-                class="peer h-12 w-full !rounded border border-gray-200 px-3 py-2 pl-10 outline-none focus:border-primary-200 rtl:pl-0 rtl:pr-10"
-                placeholder="Nereye Gidiyorsunuz?"
-                value="Dubai"
-              />
-              <label
-                for="destination-input"
-                class="absolute -top-2 left-3 bg-white px-1 text-xs text-gray-500 rtl:left-auto rtl:right-3"
-              >
-                Nereye Gidiyorsunuz?
-              </label>
-              <!-- Search Icon -->
-              <i
-                data-lucide="search"
-                class="absolute left-3 top-1/2 size-4 -translate-y-1/2 text-gray-400 rtl:left-auto rtl:right-3"
-              ></i>
-              <!-- Clear Button -->
-              <button
-                type="button"
-                class="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 rtl:left-3 rtl:right-auto"
-              >
-                <i data-lucide="x" class="size-4"></i>
-              </button>
+        <form class="relative z-[200] flex flex-col gap-4 lg:flex-row">
+          <!-- Search Inputs Container (80% on desktop) -->
+          <div class="flex w-full flex-col gap-4 md:flex-row lg:w-full">
+            <!-- Destination Input -->
+            <div class="w-full lg:w-1/3">
+              <div class="relative">
+                <input
+                  type="text"
+                  id="destination-input"
+                  name="destination"
+                  style="-webkit-border-radius: 0; border-radius: 0"
+                  class="peer h-12 w-full !rounded border border-gray-200 px-3 py-2 pl-10 outline-none focus:border-primary-200 rtl:pl-0 rtl:pr-10"
+                  placeholder="Nereye Gidiyorsunuz?"
+                  value="Dubai"
+                />
+                <label
+                  for="destination-input"
+                  class="absolute -top-2 left-3 bg-white px-1 text-xs text-gray-500 rtl:left-auto rtl:right-3"
+                >
+                  Nereye Gidiyorsunuz?
+                </label>
+                <!-- Search Icon -->
+                <i
+                  data-lucide="search"
+                  class="absolute left-3 top-1/2 size-4 -translate-y-1/2 text-gray-400 rtl:left-auto rtl:right-3"
+                ></i>
+                <!-- Clear Button -->
+                <button
+                  type="button"
+                  class="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 rtl:left-3 rtl:right-auto"
+                >
+                  <i data-lucide="x" class="size-4"></i>
+                </button>
+              </div>
             </div>
-          </div>
 
-          <!-- Date Select -->
-          <div class="w-full md:w-1/3">
-            <div class="relative">
-              <input
-                type="text"
-                id="date-input"
-                readonly
-                data-focus="false"
-                class="h-12 w-full appearance-none !rounded border border-gray-200 bg-white px-3 py-2 outline-none focus:border-primary-200"
-                placeholder="Tarih seçin"
-              />
-              <label
-                for="people-select"
-                class="absolute -top-2 left-3 bg-white px-1 text-xs text-gray-500 rtl:left-auto rtl:right-3"
-              >
-                Tarih Seçin
-              </label>
+            <!-- Date Select -->
+            <div class="w-full lg:w-1/3">
+              <div class="relative">
+                <input
+                  type="text"
+                  id="date-input"
+                  name="date"
+                  readonly
+                  data-focus="false"
+                  class="h-12 w-full appearance-none !rounded border border-gray-200 bg-white px-3 py-2 outline-none focus:border-primary-200"
+                  placeholder="Tarih seçin"
+                />
+                <label
+                  for="date-input"
+                  class="absolute -top-2 left-3 bg-white px-1 text-xs text-gray-500 rtl:left-auto rtl:right-3"
+                >
+                  Tarih Seçin
+                </label>
+                <div
+                  class="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 rtl:left-3 rtl:right-auto"
+                >
+                  <i data-lucide="calendar" class="size-4 text-gray-500"></i>
+                </div>
+              </div>
+            </div>
+
+            <!-- Number of People Select -->
+            <div
+              id="select-room-options-container"
+              data-state="closed"
+              class="group relative w-full lg:w-1/3"
+            >
+              <!-- Controller -->
+              <div class="relative">
+                <input
+                  type="text"
+                  id="people-select"
+                  name="people"
+                  readonly
+                  data-adult="1"
+                  data-child="0"
+                  data-room="0"
+                  value="1 Yetişkin, 0 Çocuk, 0 Oda"
+                  class="h-12 w-full appearance-none !rounded border border-gray-200 bg-white px-3 py-2 outline-none group-data-[state=open]:!rounded-b-none group-data-[state=open]:border-gray-200 group-data-[state=closed]:text-gray-700/80"
+                />
+                <label
+                  for="people-select"
+                  class="absolute -top-2 left-3 bg-white px-1 text-xs text-gray-500 rtl:left-auto rtl:right-3"
+                >
+                  Kişi Sayısı
+                </label>
+                <div
+                  class="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 rtl:left-3 rtl:right-auto"
+                >
+                  <i
+                    data-lucide="chevron-down"
+                    class="size-4 text-gray-500 transition-transform duration-300 group-data-[state=open]:rotate-180"
+                  ></i>
+                </div>
+              </div>
+              <!-- Dropdown -->
               <div
-                class="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 rtl:left-3 rtl:right-auto"
+                id="people-select-dropdown"
+                class="pointer-events-none absolute left-0 top-full h-fit w-full rounded-b border-b border-l border-r border-gray-200 bg-white opacity-0 transition-all duration-300 group-data-[state=open]:pointer-events-auto group-data-[state=open]:opacity-100"
               >
-                <i data-lucide="calendar" class="size-4 text-gray-500"></i>
+                <div class="flex flex-col gap-4 py-4">
+                  <!-- Yetişkin -->
+                  <div class="flex items-center justify-between px-4">
+                    <div class="flex items-center gap-2">
+                      <i data-lucide="user" class="size-5 text-gray-600"></i>
+                      <span id="adult-text" class="text-sm">Yetişkin</span>
+                    </div>
+                    <div class="flex items-center gap-2">
+                      <button
+                        type="button"
+                        id="adult-minus"
+                        class="flex h-8 w-8 items-center justify-center rounded-full border text-gray-500"
+                      >
+                        -
+                      </button>
+                      <span id="adult-count" class="w-8 text-center">1</span>
+                      <button
+                        type="button"
+                        id="adult-plus"
+                        class="flex h-8 w-8 items-center justify-center rounded-full border text-primary-500"
+                      >
+                        +
+                      </button>
+                    </div>
+                  </div>
+
+                  <!-- Çocuk -->
+                  <div class="flex items-center justify-between px-4">
+                    <div class="flex items-center gap-2">
+                      <i data-lucide="baby" class="size-5 text-gray-600"></i>
+                      <span id="child-text" class="text-sm">Çocuk</span>
+                    </div>
+                    <div class="flex items-center gap-2">
+                      <button
+                        type="button"
+                        id="child-minus"
+                        class="flex h-8 w-8 items-center justify-center rounded-full border text-gray-500"
+                      >
+                        -
+                      </button>
+                      <span id="child-count" class="w-8 text-center">0</span>
+                      <button
+                        type="button"
+                        id="child-plus"
+                        class="flex h-8 w-8 items-center justify-center rounded-full border text-primary-500"
+                      >
+                        +
+                      </button>
+                    </div>
+                  </div>
+
+                  <!-- Oda -->
+                  <div class="flex items-center justify-between px-4">
+                    <div class="flex items-center gap-2">
+                      <i
+                        data-lucide="door-open"
+                        class="size-5 text-gray-600"
+                      ></i>
+                      <span id="room-text" class="text-sm">Oda</span>
+                    </div>
+                    <div class="flex items-center gap-2">
+                      <button
+                        type="button"
+                        id="room-minus"
+                        class="flex h-8 w-8 items-center justify-center rounded-full border text-gray-500"
+                      >
+                        -
+                      </button>
+                      <span id="room-count" class="w-8 text-center">0</span>
+                      <button
+                        type="button"
+                        id="room-plus"
+                        class="flex h-8 w-8 items-center justify-center rounded-full border text-primary-500"
+                      >
+                        +
+                      </button>
+                    </div>
+                  </div>
+
+                  <hr class="-mb-4 border-t border-gray-200" />
+
+                  <!-- Onayla -->
+                  <div class="w-full px-4">
+                    <button
+                      type="button"
+                      id="people-select-close"
+                      class="mt-4 h-11 w-full rounded bg-primary-500 text-white"
+                    >
+                      Onayla
+                    </button>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
 
-          <!-- Number of People Select -->
-          <div class="w-full md:w-1/3">
-            <div class="relative">
-              <select
-                id="people-select"
-                name="people"
-                class="h-12 w-full appearance-none !rounded border border-gray-200 bg-white px-3 py-2 outline-none focus:border-primary-200"
-                style="-webkit-border-radius: 0; border-radius: 0"
-              >
-                <option value="2-adults">2 Yetişkin</option>
-              </select>
-              <label
-                for="people-select"
-                class="absolute -top-2 left-3 bg-white px-1 text-xs text-gray-500 rtl:left-auto rtl:right-3"
-              >
-                Kişi Sayısı
-              </label>
-              <div
-                class="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 rtl:left-3 rtl:right-auto"
-              >
-                <i data-lucide="chevron-down" class="size-4 text-gray-500"></i>
-              </div>
-            </div>
+          <!-- Filter Button Container (20% on desktop) -->
+          <div class="w-full lg:w-fit">
+            <button
+              type="submit"
+              class="flex h-12 w-full items-center justify-center gap-2 rounded bg-primary-500 px-4 text-sm font-semibold text-white transition-colors hover:bg-primary-600 active:scale-95"
+            >
+              <i data-lucide="filter" class="size-4"></i>
+              Filtrele
+            </button>
           </div>
-        </div>
+        </form>
       </div>
 
       <!-- Mobil Filter Icons -->
