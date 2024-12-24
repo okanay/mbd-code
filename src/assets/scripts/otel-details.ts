@@ -262,3 +262,65 @@ const galleryConfig = {
   thumbnailClass: 'thumbnail',
   activeThumbnailClass: 'thumbnail-active',
 }
+
+// Dynamic Gallery
+document.addEventListener('DOMContentLoaded', () => {
+  const multiGroupGallery = new MultiGroupImageGallery({
+    groups: [],
+    dynamicGallery: {
+      galleryGroupClass: 'dynamic-gallery',
+      galleryItemClass: 'dynamic-gallery-item',
+      galleryButtonClass: 'dynamic-gallery-button',
+    },
+    ...galleryConfig,
+  })
+
+  new TouchDirectionDetector('multi-gallery-main-image-container', {
+    threshold: 50,
+    onSwipe: direction => {
+      if (direction === 'right') {
+        return multiGroupGallery.navigateGallery('prev')
+      }
+      if (direction === 'left') {
+        return multiGroupGallery.navigateGallery('next')
+      }
+    },
+  })
+
+  // Hidden gallery container'ı izleyen observer
+  const createGalleryObserver = (gallery: MultiGroupImageGallery) => {
+    const observer = new MutationObserver(mutations => {
+      // DOM değişikliklerini kontrol et
+      const hasRelevantChanges = mutations.some(mutation => {
+        // Eğer yeni node'lar eklendiyse veya var olanlar değiştiyse
+        return (
+          mutation.type === 'childList' ||
+          (mutation.type === 'attributes' &&
+            (mutation.attributeName === 'data-src' ||
+              mutation.attributeName === 'src'))
+        )
+      })
+
+      if (hasRelevantChanges) {
+        console.log('Hidden gallery changed, refreshing gallery...')
+        gallery.refreshGallery()
+      }
+    })
+
+    // Observer'ı başlat
+    const container = document.getElementById('multi-gallery-images-container')
+    if (container) {
+      observer.observe(container, {
+        childList: true, // Yeni elementler eklendiğinde/silindiğinde
+        subtree: true, // Alt elementlerdeki değişiklikleri de izle
+        attributes: true, // Attribute değişikliklerini izle
+        attributeFilter: ['data-src', 'src'], // Sadece bu attribute'ları izle
+      })
+      console.log('Gallery observer started')
+    }
+
+    return observer
+  }
+
+  createGalleryObserver(multiGroupGallery)
+})

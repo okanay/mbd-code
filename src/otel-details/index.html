@@ -62,6 +62,10 @@
     <link rel="stylesheet" href="/assets/styles/globals-out.css" />
     <script type="module" src="/assets/scripts/layout.js"></script>
     <script type="module" src="/assets/scripts/otel-details.js"></script>
+    <script
+      type="module"
+      src="/assets/scripts/ui/test-dynamic-gallery.js"
+    ></script>
 
     <script>
       ;(function () {
@@ -1291,7 +1295,7 @@
                     <i data-lucide="star" class="size-4 text-yellow-400"></i>
                   </div>
                   <h4
-                    class="-mt-1 text-sm font-semibold text-lime-500 lg:text-base"
+                    class="-mt-1 text-sm font-semibold text-lime-600 lg:text-base"
                   >
                     Mükemmel
                   </h4>
@@ -1380,6 +1384,7 @@
               <h2 class="text-base font-bold lg:text-xl">Bilgi ve Fiyatlar</h2>
               <div class="w-full overflow-x-auto">
                 <table
+                  id="otel-price-table"
                   class="w-full divide-y divide-gray-100 whitespace-nowrap rounded-lg border border-gray-200"
                 >
                   <thead class="border-b border-gray-200 bg-primary-500">
@@ -1419,9 +1424,11 @@
                         class="translate-y-[-0.25rem] border-r border-gray-200 px-3.5 py-2"
                       >
                         <div class="space-y-2">
-                          <h3 class="font-semibold text-primary-600">
+                          <button
+                            class="dynamic-gallery-button font-semibold text-primary-600"
+                          >
                             Deluxe 2 Yataklı Daire
-                          </h3>
+                          </button>
                           <div class="space-y-1 text-sm text-gray-600">
                             <p>Yatak Odası 1: 2 tek kişilik yatak</p>
                             <p>
@@ -1487,14 +1494,14 @@
                             <div class="flex items-center gap-2">
                               <i
                                 data-lucide="check"
-                                class="size-5 text-lime-500"
+                                class="size-5 text-lime-600"
                               ></i>
                               <span class="text-sm">Dahili park yeri</span>
                             </div>
                             <div class="flex items-center gap-2">
                               <i
                                 data-lucide="check"
-                                class="size-5 text-lime-500"
+                                class="size-5 text-lime-600"
                               ></i>
                               <span class="text-sm">Yüksek hızlı internet</span>
                             </div>
@@ -1560,9 +1567,11 @@
                         class="translate-y-[-0.25rem] border-r border-gray-200 px-3.5 py-2"
                       >
                         <div class="space-y-2">
-                          <h3 class="font-semibold text-primary-600">
-                            Deluxe 2 Yataklı Daire
-                          </h3>
+                          <button
+                            class="dynamic-gallery-button font-semibold text-primary-600"
+                          >
+                            Deluxe 4 Yataklı Daire
+                          </button>
                           <div class="space-y-1 text-sm text-gray-600">
                             <p>Yatak Odası 1: 2 tek kişilik yatak</p>
                             <p>
@@ -1628,14 +1637,14 @@
                             <div class="flex items-center gap-2">
                               <i
                                 data-lucide="check"
-                                class="size-5 text-lime-500"
+                                class="size-5 text-lime-600"
                               ></i>
                               <span class="text-sm">Dahili park yeri</span>
                             </div>
                             <div class="flex items-center gap-2">
                               <i
                                 data-lucide="check"
-                                class="size-5 text-lime-500"
+                                class="size-5 text-lime-600"
                               ></i>
                               <span class="text-sm">Yüksek hızlı internet</span>
                             </div>
@@ -1716,6 +1725,7 @@
             >
               <h2 class="text-base font-bold lg:text-xl">Tesis Kuralları</h2>
             </section>
+
             <!-- Şu Ayrıntılara Dikkat -->
             <section
               id="otel-info-content-5"
@@ -1849,6 +1859,26 @@
           </div>
         </div>
       </div>
+    </div>
+
+    <!-- Hidden Images Groups -->
+    <div id="multi-gallery-images-container" class="hidden">
+      <ul class="dynamic-gallery">
+        <img
+          data-src="https://images.project-test.info/5.webp"
+          src="/assets/images/gray-placeholder.webp"
+          alt="Dubai'de Balayı Tatili 1"
+          class="dynamic-gallery-item"
+        />
+      </ul>
+      <ul class="dynamic-gallery">
+        <img
+          data-src="https://images.project-test.info/6.webp"
+          src="/assets/images/gray-placeholder.webp"
+          alt="Dubai'de Balayı Tatili 2"
+          class="dynamic-gallery-item"
+        />
+      </ul>
     </div>
 
     <footer class="w-full">

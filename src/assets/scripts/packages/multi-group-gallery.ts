@@ -13,12 +13,19 @@ interface GalleryGroup {
   slideItemClass: string
 }
 
+interface DynamicGalleryConfig {
+  galleryGroupClass: string
+  galleryItemClass: string
+  galleryButtonClass: string
+}
+
 interface GalleryOptions {
   elements?: Partial<GalleryElements>
   groups: GalleryGroup[]
   thumbnailClass?: string
   activeThumbnailClass?: string
   onImageCount?: (groupId: string, count: number) => void
+  dynamicGallery?: DynamicGalleryConfig // Yeni eklenen
 }
 
 class MultiGroupImageGallery {
@@ -44,6 +51,10 @@ class MultiGroupImageGallery {
   private currentIndex: number = 0
   private thumbnailClass: string
   private activeThumbnailClass: string
+
+  private dynamicConfig?: DynamicGalleryConfig
+  private dynamicGroups: Array<HTMLElement[]> = []
+  private dynamicButtons: HTMLElement[] = []
 
   private onImageCountCallback?: (groupId: string, count: number) => void
 
@@ -80,6 +91,11 @@ class MultiGroupImageGallery {
     this.activeThumbnailClass =
       options.activeThumbnailClass || 'thumbnail-active'
     this.onImageCountCallback = options.onImageCount
+
+    this.dynamicConfig = options.dynamicGallery
+    if (this.dynamicConfig) {
+      this.initializeDynamicGallery()
+    }
 
     this.initializeGallery()
     this.bindEvents()
@@ -132,6 +148,64 @@ class MultiGroupImageGallery {
     // Tüm grupları başlangıçta initialize et
     this.groupConfigs.forEach(group => {
       this.initializeGroup(group.containerId)
+    })
+  }
+
+  private initializeDynamicGallery(): void {
+    if (!this.dynamicConfig) return
+
+    // Gallery gruplarını topla
+    const galleryGroups = document.getElementsByClassName(
+      this.dynamicConfig.galleryGroupClass,
+    )
+
+    // Her grup için resimleri topla
+    Array.from(galleryGroups).forEach(group => {
+      const items = group.getElementsByClassName(
+        this.dynamicConfig!.galleryItemClass,
+      )
+      this.dynamicGroups.push(
+        Array.from(items).map(item => item as HTMLElement),
+      )
+    })
+
+    // Butonları topla
+    this.dynamicButtons = Array.from(
+      document.getElementsByClassName(this.dynamicConfig.galleryButtonClass),
+    ).map(element => element as HTMLElement)
+
+    // Butonlara click handler'ları ekle
+    this.bindDynamicGalleryEvents()
+  }
+
+  private bindDynamicGalleryEvents(): void {
+    this.dynamicButtons.forEach((button, buttonIndex) => {
+      button.addEventListener('click', () => {
+        const images = this.dynamicGroups[buttonIndex]
+        if (!images) return
+
+        // Geçici bir grup ID oluştur
+        const tempGroupId = `dynamic-group-${buttonIndex}`
+
+        // Grup verilerini hazırla
+        const groupImages = Array.from(images)
+          .map((item, index) => {
+            const image = item as HTMLImageElement
+            const src = this.getImageSource(image)
+            if (!src || src === '#') return null
+
+            return {
+              src,
+              alt: image.alt || '',
+              index,
+            }
+          })
+          .filter((item): item is NonNullable<typeof item> => item !== null)
+
+        // Grubu kaydet ve galeriyi aç
+        this.groups.set(tempGroupId, groupImages)
+        this.openGallery(tempGroupId, 0)
+      })
     })
   }
 
@@ -308,8 +382,21 @@ class MultiGroupImageGallery {
   }
 
   public refreshGallery(): void {
+    // Mevcut grupları temizle
     this.groups.clear()
+
+    // Normal grupları yenile
     this.initializeGallery()
+
+    // Dinamik grupları yenile
+    if (this.dynamicConfig) {
+      // Mevcut dinamik grupları ve butonları temizle
+      this.dynamicGroups = []
+      this.dynamicButtons = []
+
+      // Dinamik galeriyi yeniden initialize et
+      this.initializeDynamicGallery()
+    }
   }
 }
 
