@@ -7,7 +7,7 @@ document.addEventListener('DOMContentLoaded', () => {
   after3days.setDate(today.getDate() + 3)
 
   const datepickerConfig: DatePickerConfig = {
-    minDate: new Date(),
+    minDate: today,
     defaultDates: {
       between: {
         start: today,
