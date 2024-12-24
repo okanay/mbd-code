@@ -23,11 +23,11 @@ document.addEventListener('DOMContentLoaded', () => {
       },
     },
     output: {
-      order: ['year', 'month', 'day'],
-      between: ' - ',
-      slash: '-',
-      fullFormat: true, // Yeni opsiyonel alan
+      between: ' & ',
+      slash: '/',
+      fullFormat: true,
       backendFormat: ['year', 'month', 'day'],
+      order: ['year', 'month', 'day'],
     },
     autoClose: false,
     language: [...languages],
