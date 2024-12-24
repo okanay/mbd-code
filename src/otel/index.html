@@ -994,17 +994,25 @@
         <!-- Calendar Days -->
         <div id="calendar-days"></div>
         <div class="flex items-center justify-between">
+          <div class="flex items-center justify-between gap-4">
+            <button
+              id="reset-date"
+              class="text-primary-500 hover:text-primary-600 hover:underline"
+            >
+              Bugün
+            </button>
+            <button
+              id="reset-all"
+              class="text-primary-500 hover:text-primary-600 hover:underline"
+            >
+              Temizle
+            </button>
+          </div>
           <button
-            id="reset-date"
-            class="text-primary-500 hover:text-primary-600 hover:underline"
+            id="close-picker"
+            class="rounded-md bg-primary-500 px-3 py-2 text-sm text-white transition-colors hover:bg-primary-600"
           >
-            Bugün
-          </button>
-          <button
-            id="reset-all"
-            class="text-primary-500 hover:text-primary-600 hover:underline"
-          >
-            Temizle
+            Kapat
           </button>
         </div>
       </div>

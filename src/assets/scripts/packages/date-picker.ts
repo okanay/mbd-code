@@ -144,6 +144,7 @@ interface DatePickerConfig {
       next: string
       reset?: string
       resetAll?: string
+      close?: string // Yeni, opsiyonel close butonu
     }
   }
   input: DatePickerInputConfig
@@ -184,6 +185,7 @@ class DatePicker {
   private betweenStartDate: Date | null = null
   private betweenEndDate: Date | null = null
   private isBetweenSelectionActive = false
+  private closeButton: HTMLElement | null = null
 
   constructor(config: DatePickerConfig) {
     this.config = config
@@ -222,6 +224,10 @@ class DatePicker {
       this.resetAllButton = document.getElementById(
         config.elements.buttons.resetAll,
       )
+    }
+
+    if (config.elements.buttons.close) {
+      this.closeButton = document.getElementById(config.elements.buttons.close)
     }
 
     if (
@@ -933,6 +939,14 @@ class DatePicker {
         this.activeInput = null
       }
     })
+
+    if (this.closeButton) {
+      this.closeButton.addEventListener('click', e => {
+        e.stopPropagation()
+        this.hideDatePicker()
+        this.activeInput = null
+      })
+    }
   }
 
   public safeChangeMonth(direction: 'next' | 'prev') {

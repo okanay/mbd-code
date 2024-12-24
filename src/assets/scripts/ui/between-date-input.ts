@@ -13,6 +13,7 @@ document.addEventListener('DOMContentLoaded', () => {
         next: 'next-month',
         reset: 'reset-date',
         resetAll: 'reset-all',
+        close: 'close-picker',
       },
     },
     input: {
