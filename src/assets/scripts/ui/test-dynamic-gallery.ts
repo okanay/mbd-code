@@ -1,4 +1,5 @@
 // Veri tipleri için interface'ler
+import { createIcons, icons } from '../deps/lucide-icons.js'
 interface Room {
   src: string
   alt: string
@@ -262,6 +263,8 @@ function updateContent(): void {
   currentSet = currentSet === 'set1' ? 'set2' : 'set1'
 
   console.log('Content updated to:', currentSet)
+
+  createIcons({ icons: { ...icons } })
 }
 
 // Klavye event listener'ı
