@@ -1021,26 +1021,8 @@ class DatePicker {
     return d1.getTime() === d2.getTime()
   }
 
-  // HERE2
   private selectDate(date: Date) {
     if (!this.activeInput || !this.isDatePickerVisible()) return
-
-    if (this.activeInput) {
-      // Backend formatını input'un data attribute'ına ekle
-      if (this.config.input.type === 'between') {
-        if (!this.betweenStartDate) {
-          this.activeInput.setAttribute(
-            'data-start',
-            this.formatDateBasedOnConfig(date, 'backend'),
-          )
-        } else {
-          this.activeInput.setAttribute(
-            'data-end',
-            this.formatDateBasedOnConfig(date, 'backend'),
-          )
-        }
-      }
-    }
 
     const inputConfig = this.registeredInputs.get(this.activeInput.id)
     if (!inputConfig) return
@@ -1048,6 +1030,41 @@ class DatePicker {
     const shouldAutoClose = this.config.autoClose ?? true
     const shouldAutoSwitch = this.config.autoSwitchInput ?? true
     const selectedDate = this.stripTime(date)
+
+    // Input type'a göre data attribute'ları ekleyelim
+    if (this.config.input.type === 'between') {
+      if (!this.betweenStartDate) {
+        this.activeInput.setAttribute(
+          'data-start',
+          this.formatDateBasedOnConfig(date, 'backend'),
+        )
+      } else {
+        this.activeInput.setAttribute(
+          'data-end',
+          this.formatDateBasedOnConfig(date, 'backend'),
+        )
+      }
+    } else if (this.config.input.type === 'single') {
+      // Single input için data-selected attribute'u
+      this.activeInput.setAttribute(
+        'data-selected',
+        this.formatDateBasedOnConfig(date, 'backend'),
+      )
+    } else if (this.config.input.type === 'two') {
+      // İki input için start ve end attribute'ları
+      const inputType = inputConfig.type
+      if (inputType === 'start') {
+        this.activeInput.setAttribute(
+          'data-start',
+          this.formatDateBasedOnConfig(date, 'backend'),
+        )
+      } else if (inputType === 'end') {
+        this.activeInput.setAttribute(
+          'data-end',
+          this.formatDateBasedOnConfig(date, 'backend'),
+        )
+      }
+    }
 
     // Between tipi için özel tarih seçim mantığı
     if (this.config.input.type === 'between') {
@@ -1213,7 +1230,23 @@ class DatePicker {
   public resetInput(inputId: string) {
     const inputConfig = this.registeredInputs.get(inputId)
     if (inputConfig) {
-      inputConfig.element.value = ''
+      const input = inputConfig.element
+      input.value = ''
+
+      // Input type'a göre attribute'ları temizle
+      if (this.config.input.type === 'between') {
+        input.removeAttribute('data-start')
+        input.removeAttribute('data-end')
+      } else if (this.config.input.type === 'single') {
+        input.removeAttribute('data-selected')
+      } else if (this.config.input.type === 'two') {
+        if (inputConfig.type === 'start') {
+          input.removeAttribute('data-start')
+        } else if (inputConfig.type === 'end') {
+          input.removeAttribute('data-end')
+        }
+      }
+
       this.selectedDates.delete(inputId)
       this.renderCalendar()
     }
@@ -1286,7 +1319,19 @@ class DatePicker {
 
   private resetAllInputs() {
     this.registeredInputs.forEach(config => {
-      config.element.value = ''
+      const input = config.element
+      input.value = ''
+
+      // Input type'a göre attribute'ları temizle
+      if (this.config.input.type === 'between') {
+        input.removeAttribute('data-start')
+        input.removeAttribute('data-end')
+      } else if (this.config.input.type === 'single') {
+        input.removeAttribute('data-selected')
+      } else if (this.config.input.type === 'two') {
+        input.removeAttribute('data-start')
+        input.removeAttribute('data-end')
+      }
     })
 
     this.selectedDates.clear()
