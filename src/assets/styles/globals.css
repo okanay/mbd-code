@@ -195,20 +195,6 @@
     @apply relative col-span-4 col-start-5 row-start-2 overflow-hidden rounded-br-2xl rtl:rounded-bl-2xl rtl:rounded-br-none;
   }
 
-  /* 3 eleman durumu */
-  .otel-container[data-items='3'] {
-    @apply grid-cols-8 grid-rows-2;
-  }
-  .otel-container[data-items='3'] > *:nth-child(1) {
-    @apply relative col-span-4 row-span-2 overflow-hidden rounded-l-2xl rtl:rounded-l-none rtl:rounded-r-2xl;
-  }
-  .otel-container[data-items='3'] > *:nth-child(2) {
-    @apply relative col-span-4 col-start-5 overflow-hidden;
-  }
-  .otel-container[data-items='3'] > *:nth-child(3) {
-    @apply relative col-span-4 col-start-5 row-start-2 overflow-hidden;
-  }
-
   /* 2 eleman durumu */
   .grid-container[data-items='2'] {
     @apply grid-cols-2 grid-rows-2;
@@ -237,11 +223,6 @@
 
   /* 3 eleman durumunda 4 ve sonrasını gizle */
   .grid-container[data-items='3'] > *:nth-child(n + 4) {
-    @apply lg:hidden;
-  }
-
-  /* 3 eleman durumunda 4 ve sonrasını gizle */
-  .otel-container[data-items='3'] > *:nth-child(n + 4) {
     @apply lg:hidden;
   }
 
@@ -287,5 +268,38 @@
   }
   .product-slider-active-btn {
     @apply scale-[128%] !border !border-gray-950 !bg-gray-950;
+  }
+
+  /* DATE PICKER  */
+  .calendar-grid {
+    @apply grid w-full grid-cols-7 gap-1;
+  }
+
+  .day-header {
+    @apply flex h-8 w-full cursor-pointer items-center justify-center bg-gray-100 transition duration-300;
+  }
+
+  .day {
+    @apply flex h-8 w-full cursor-pointer items-center justify-center rounded transition duration-300 hover:bg-gray-100;
+  }
+
+  .day-empty {
+    @apply !bg-gray-100 opacity-50 hover:opacity-100;
+  }
+
+  .day-disabled {
+    @apply cursor-not-allowed !bg-gray-100 opacity-50;
+  }
+
+  .date-hidden {
+    @apply invisible hidden;
+  }
+
+  .day-selected {
+    @apply !bg-primary-500 !text-white hover:bg-primary-600;
+  }
+
+  .date-between {
+    @apply bg-primary-100;
   }
 }

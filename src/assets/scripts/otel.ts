@@ -1,3 +1,4 @@
+import { DatePicker, type DatePickerConfig } from './packages/date-picker.js'
 import { ModalController } from './packages/modal.js'
 import { Pagination } from './packages/pagination.js'
 import { RangeSlider } from './packages/range-slider.js'
@@ -60,4 +61,57 @@ document.addEventListener('DOMContentLoaded', () => {
 
 document.addEventListener('DOMContentLoaded', () => {
   new Pagination('pagination-container')
+})
+
+document.addEventListener('DOMContentLoaded', () => {
+  const datepickerConfig: DatePickerConfig = {
+    minDate: new Date(),
+    elements: {
+      container: 'date-picker',
+      monthContainer: 'current-month',
+      daysContainer: 'calendar-days',
+      buttons: {
+        prev: 'prev-month',
+        next: 'next-month',
+        reset: 'reset-date',
+        resetAll: 'reset-all',
+      },
+    },
+    input: {
+      type: 'between',
+      elements: {
+        id: 'date-input',
+      },
+    },
+    language: [
+      {
+        language: 'en',
+        monthNames: [
+          'January',
+          'February',
+          'March',
+          'April',
+          'May',
+          'June',
+          'July',
+          'August',
+          'September',
+          'October',
+          'November',
+          'December',
+        ],
+        dayNames: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+      },
+    ],
+    output: {
+      order: ['year', 'month', 'day'],
+      between: ' - ',
+      slash: '-',
+      fullFormat: true, // Yeni opsiyonel alan
+      backendFormat: ['year', 'month', 'day'],
+    },
+    autoClose: true,
+  }
+
+  new DatePicker(datepickerConfig)
 })

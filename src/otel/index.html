@@ -998,6 +998,7 @@
           ></div>
         </div>
       </div>
+
       <!-- Filter Container -->
       <div class="mx-auto my-6 max-w-7xl">
         <!-- Filter Form -->
@@ -1036,26 +1037,62 @@
           </div>
 
           <!-- Date Select -->
-          <div class="w-full md:w-1/3">
-            <div class="relative">
-              <select
-                id="date-select"
-                name="date"
+          <div class="flex w-full md:w-1/3">
+            <div class="flex-1">
+              <!-- Input alanı -->
+              <input
+                type="text"
+                id="date-input"
+                readonly
                 class="h-12 w-full appearance-none !rounded border border-gray-200 bg-white px-3 py-2 outline-none focus:border-primary-200"
-                style="-webkit-border-radius: 0; border-radius: 0"
-              >
-                <option value="all">Hepsi</option>
-              </select>
+                placeholder="Tarih seçin"
+              />
               <label
-                for="date-select"
+                for="date-input"
                 class="absolute -top-2 left-3 bg-white px-1 text-xs text-gray-500 rtl:left-auto rtl:right-3"
               >
                 Tarih
               </label>
+              <!-- Date Picker Container -->
               <div
-                class="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 rtl:left-3 rtl:right-auto"
+                id="date-picker"
+                data-language="en"
+                class="w-[440px] rounded-lg border border-gray-200 bg-white p-4"
               >
-                <i data-lucide="chevron-down" class="size-4 text-gray-500"></i>
+                <div class="flex flex-col gap-4">
+                  <!-- Prev - Current Month - Next -->
+                  <div class="flex justify-between">
+                    <button
+                      id="prev-month"
+                      class="size-6 rounded-full p-1 text-primary-500 transition-colors duration-300 hover:bg-gray-100 hover:text-primary-600 disabled:pointer-events-none disabled:opacity-50"
+                    >
+                      <i data-lucide="chevron-left" class="size-full"></i>
+                    </button>
+                    <div id="current-month" class="font-bold">Aralık 2024</div>
+                    <button
+                      id="next-month"
+                      class="size-6 rounded-full p-1 text-primary-500 transition-colors duration-300 hover:bg-gray-100 hover:text-primary-600 disabled:pointer-events-none disabled:opacity-50"
+                    >
+                      <i data-lucide="chevron-right" class="size-full"></i>
+                    </button>
+                  </div>
+                  <!-- Calendar Days -->
+                  <div id="calendar-days"></div>
+                  <div class="flex items-center justify-between">
+                    <button
+                      id="reset-date"
+                      class="text-primary-500 hover:text-primary-600 hover:underline"
+                    >
+                      Bugün
+                    </button>
+                    <button
+                      id="reset-all"
+                      class="text-primary-500 hover:text-primary-600 hover:underline"
+                    >
+                      Temizle
+                    </button>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
