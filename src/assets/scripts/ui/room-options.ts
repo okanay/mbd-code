@@ -6,7 +6,7 @@ document.addEventListener('DOMContentLoaded', () => {
     [
       {
         id: 'select-room-options',
-        toggleElements: [],
+        toggleElements: ['#select-room-options'],
         openElements: ['#select-room-options-container'],
         contentElement: '#select-room-options-container',
         closeElements: ['#people-select-close'],
@@ -53,5 +53,5 @@ document.addEventListener('DOMContentLoaded', () => {
     },
   ]
 
-  new InputCounter('people-select', counterConfig)
+  new InputCounter('select-room-options', counterConfig)
 })

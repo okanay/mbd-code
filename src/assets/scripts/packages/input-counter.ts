@@ -31,6 +31,7 @@ export class InputCounter {
 
     this.initialize()
     this.bindEvents()
+    this.updateInputValue() // Set initial input text value
   }
 
   private initialize() {

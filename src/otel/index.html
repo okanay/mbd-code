@@ -973,7 +973,7 @@
     <div
       id="date-picker"
       data-language="tr"
-      class="w-[calc(100%-1.65rem)] max-w-[456px] rounded-lg border border-gray-200 bg-white p-4 opacity-0 lg:max-w-[366px]"
+      class="absolute w-[calc(100%-1.65rem)] max-w-[456px] rounded-lg border border-gray-200 bg-white p-4 opacity-0 lg:max-w-[366px]"
     >
       <div class="flex flex-col gap-4">
         <!-- Prev - Current Month - Next -->
@@ -1120,6 +1120,7 @@
             </div>
 
             <!-- Number of People Select -->
+            <!-- Number of People Select -->
             <div
               id="select-room-options-container"
               data-state="closed"
@@ -1128,21 +1129,20 @@
               <!-- Controller -->
               <div class="relative">
                 <input
-                  type="text"
-                  id="people-select"
-                  name="people"
                   readonly
+                  type="text"
+                  id="select-room-options"
+                  name="select-room-options"
                   data-adult="1"
                   data-child="0"
                   data-room="0"
-                  value="1 Yetişkin, 0 Çocuk, 0 Oda"
                   class="h-12 w-full appearance-none !rounded border border-gray-200 bg-white px-3 py-2 outline-none group-data-[state=open]:!rounded-b-none group-data-[state=open]:border-gray-200 group-data-[state=closed]:text-gray-700/80"
                 />
                 <label
                   for="people-select"
                   class="absolute -top-2 left-3 bg-white px-1 text-xs text-gray-500 rtl:left-auto rtl:right-3"
                 >
-                  Kişi Sayısı
+                  Oda Seçimi
                 </label>
                 <div
                   class="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 rtl:left-3 rtl:right-auto"
