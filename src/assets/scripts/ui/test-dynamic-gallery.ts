@@ -150,13 +150,14 @@ const testData: TestData = {
 let currentSet: keyof TestData = 'set1'
 
 // Tablo satırı oluşturma fonksiyonu
+// Tablo satırı oluşturma fonksiyonu güncellendi
 function createTableRow(rowData: BedroomInfo): string {
   return `
-    <tr class="border-b border-gray-200 hover:bg-gray-50">
+    <div class="flex flex-1 divide-x divide-gray-200 bg-white hover:bg-gray-100/50">
       <!-- Daire Tipi -->
-      <td class="translate-y-[-0.25rem] border-r border-gray-200 px-3.5 py-2">
+      <div class="order-1 w-[32.5%] flex-shrink-0 translate-y-[-0.25rem] px-3.5 py-4 sm:order-none">
         <div class="space-y-2">
-          <button class="dynamic-gallery-button flex items-center gap-2 font-semibold text-primary-600 underline">
+          <button class="dynamic-gallery-button flex items-center gap-2 font-semibold text-primary-600 underline transition-all duration-200 hover:text-primary-400 active:scale-95">
             <i data-lucide="image" class="size-4"></i>
             <span>${rowData.title}</span>
           </button>
@@ -165,17 +166,17 @@ function createTableRow(rowData: BedroomInfo): string {
             <p class="text-gray-500">Ücretsiz bebek karyolası talep üzerine mevcuttur</p>
           </div>
         </div>
-      </td>
+      </div>
 
       <!-- Konuk Sayısı -->
-      <td class="border-r border-gray-200 px-4 py-2.5 align-top">
+      <div class="order-3 w-[15%] flex-shrink-0 px-4 py-2.5 sm:order-none">
         <div class="flex gap-1">
           ${Array(4).fill('<i data-lucide="user" class="size-5 text-gray-600"></i>').join('')}
         </div>
-      </td>
+      </div>
 
       <!-- Fiyatlar -->
-      <td class="border-r border-gray-200 px-3.5 py-2.5 align-top">
+      <div class="order-4 w-[15%] flex-shrink-0 px-3.5 py-2.5 sm:order-none">
         <div class="flex flex-shrink-0 flex-col">
           <span class="text-xs font-semibold text-lime-600">%25 İndirim</span>
           <div class="flex items-center gap-2">
@@ -183,45 +184,35 @@ function createTableRow(rowData: BedroomInfo): string {
             <span class="text-lg font-semibold text-primary-500">${rowData.price} AED</span>
           </div>
         </div>
-      </td>
+      </div>
 
       <!-- Özellikleriniz -->
-      <td class="border-r border-gray-200 px-3.5 py-2.5 align-top">
-        <div class="space-y-2">
+      <div class="order-5 w-[20%] flex-shrink-0 px-3.5 py-2.5 text-end sm:order-none sm:text-start">
+        <div class="flex flex-col items-end space-y-2 sm:items-start">
           <!-- Avantajlar -->
-          <div class="space-y-2">
-            <div class="flex items-center gap-2">
-              <i data-lucide="check" class="size-5 text-lime-600"></i>
-              <span class="text-sm">Dahili park yeri</span>
-            </div>
-            <div class="flex items-center gap-2">
-              <i data-lucide="check" class="size-5 text-lime-600"></i>
-              <span class="text-sm">Yüksek hızlı internet</span>
-            </div>
+          <div class="flex items-start gap-2">
+            <i data-lucide="check" class="order-2 size-5 flex-shrink-0 text-lime-600 sm:order-none"></i>
+            <span class="order-1 text-sm sm:order-none">Dahili park yeri</span>
           </div>
-
-          <!-- Önemli Bilgiler -->
-          <div class="space-y-2">
-            <div class="flex items-center gap-2">
-              <i data-lucide="info" class="size-5 text-primary-500"></i>
-              <span class="text-sm text-gray-600">İade edilemez</span>
-            </div>
-            <div class="flex items-center gap-2">
-              <i data-lucide="info" class="size-5 text-blue-500"></i>
-              <span class="text-sm text-gray-600">Varıştan önce tesiste ödeme yapın</span>
-            </div>
+          <div class="flex items-start gap-2">
+            <i data-lucide="info" class="order-2 size-5 flex-shrink-0 text-primary-600 sm:order-none"></i>
+            <span class="order-1 text-sm sm:order-none">İade edilemez</span>
+          </div>
+          <div class="flex items-start gap-2">
+            <i data-lucide="info" class="order-2 size-5 flex-shrink-0 text-blue-600 sm:order-none"></i>
+            <span class="order-1 text-sm sm:order-none">Varıştan önce tesiste ödeme yapın</span>
           </div>
         </div>
-      </td>
+      </div>
 
-      <!-- Daire Seç -->
-      <td class="px-3.5 py-2.5 align-top">
+      <!-- Aksiyon Butonu -->
+      <div class="order-2 w-[17.5%] flex-shrink-0 px-3.5 py-2.5 sm:order-none">
         <div class="flex justify-end">
           <div class="inline-flex items-center">
-            <button class="rounded-l bg-primary-500 px-4 py-2.5 text-sm font-semibold text-white transition-all duration-200 hover:bg-primary-700 active:scale-95">
+            <button class="text-nowrap rounded-l border border-r-0 border-gray-200 bg-primary-500 px-4 py-2.5 text-sm font-semibold text-white transition-all duration-200 hover:bg-primary-600 active:scale-95">
               Seç ve Devam Et
             </button>
-            <div class="relative flex h-10 w-12 items-center justify-between rounded-r border-b border-r border-t border-gray-200">
+            <div class="relative flex h-10 w-12 scale-y-[103%] items-center justify-between rounded-r border border-gray-200">
               <select class="h-full w-full appearance-none bg-transparent pl-2.5 pr-1 focus:outline-none focus:ring-0">
                 <option>0</option>
                 <option>1</option>
@@ -231,12 +222,12 @@ function createTableRow(rowData: BedroomInfo): string {
             </div>
           </div>
         </div>
-      </td>
-    </tr>
+      </div>
+    </div>
   `
 }
 
-// İçerik güncelleme fonksiyonu
+// İçerik güncelleme fonksiyonu güncellendi
 function updateContent(): void {
   // Görsel gruplarını güncelle
   const container = document.getElementById('multi-gallery-images-container')
@@ -260,10 +251,10 @@ function updateContent(): void {
     container.innerHTML = galleryHTML
   }
 
-  // Tablo içeriğini güncelle
-  const tableBody = document.querySelector('#otel-price-table tbody')
-  if (tableBody) {
-    tableBody.innerHTML = testData[currentSet].rows
+  // Tablo içeriğini güncelle - Yeni yapıya uygun selector
+  const contentContainer = document.querySelector('#otel-price-table .flex-col')
+  if (contentContainer) {
+    contentContainer.innerHTML = testData[currentSet].rows
       .map(row => createTableRow(row))
       .join('')
   }
@@ -280,7 +271,6 @@ function updateContent(): void {
 
   createIcons({ icons: { ...icons } })
 }
-
 // Klavye event listener'ı
 document.addEventListener('keydown', (event: KeyboardEvent) => {
   if (event.key.toLowerCase() === 't') {
