@@ -161,6 +161,10 @@
     display: none;
   }
 
+  .dynamic-gallery-button {
+    @apply !cursor-pointer underline transition-all duration-200 hover:text-primary-400 active:scale-95;
+  }
+
   .slider-active-btn {
     @apply !scale-[102%] !border-primary-500;
   }
@@ -327,7 +331,7 @@
   }
 
   .date-hidden {
-    @apply invisible hidden;
+    @apply hidden;
   }
 
   .day-selected {

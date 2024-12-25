@@ -1441,7 +1441,7 @@
                       />
                       <label
                         for="destination-input"
-                        class="absolute -top-2 left-3 bg-white px-1 text-xs text-gray-500 rtl:left-auto rtl:right-3"
+                        class="absolute -top-2 left-3 bg-white px-1 text-xs text-gray-500 peer-focus:text-primary-500 rtl:left-auto rtl:right-3"
                       >
                         Nereye Gidiyorsunuz?
                       </label>
@@ -1473,8 +1473,10 @@
                         placeholder="Tarih seçin"
                       />
                       <label
+                        id="date-input-label"
                         for="date-input"
-                        class="absolute -top-2 left-3 bg-white px-1 text-xs text-gray-500 rtl:left-auto rtl:right-3"
+                        data-focus="false"
+                        class="absolute -top-2 left-3 bg-white px-1 text-xs text-gray-500 data-[focus=true]:text-primary-500 rtl:left-auto rtl:right-3"
                       >
                         Tarih Seçin
                       </label>
@@ -1703,7 +1705,7 @@
                       >
                         <div class="space-y-2">
                           <button
-                            class="dynamic-gallery-button flex items-center gap-2 font-semibold text-primary-600 underline transition-all duration-200 hover:text-primary-400 active:scale-95"
+                            class="flex cursor-default items-center gap-2 font-semibold text-primary-600"
                           >
                             <i data-lucide="image" class="size-4"></i>
                             <span>Deluxe 2 Yataklı Daire</span>

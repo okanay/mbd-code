@@ -388,6 +388,14 @@ class DatePicker {
           this.focusContainers.set(rangeConfig.end.id, endContainer)
         }
       }
+    } else if (input.type === 'between') {
+      const betweenConfig = input.elements as BetweenDateInput
+      if (betweenConfig.focusContainer) {
+        const container = document.getElementById(betweenConfig.focusContainer)
+        if (container) {
+          this.focusContainers.set(betweenConfig.id, container)
+        }
+      }
     }
   }
 

@@ -30,6 +30,7 @@ document.addEventListener('DOMContentLoaded', () => {
       type: 'between',
       elements: {
         id: 'date-input',
+        focusContainer: 'date-input-label',
       },
     },
     output: {
