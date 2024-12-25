@@ -631,7 +631,7 @@ class DatePicker {
     this.containerElement.style.position = 'absolute'
     this.containerElement.style.top = `${Math.round(top)}px`
     this.containerElement.style.left = `${Math.round(left)}px`
-    this.containerElement.style.zIndex = '1000'
+    this.containerElement.style.zIndex = '20'
     this.containerElement.style.opacity = '100%'
 
     // Add a data attribute indicating position (useful for animations/styling)

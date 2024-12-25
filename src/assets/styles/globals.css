@@ -123,6 +123,26 @@
     -ms-overflow-style: none;
   }
 
+  .invisible-scrollbar {
+    -webkit-overflow-scrolling: touch; /* Mobil cihazlarda daha yumuşak scroll */
+    scroll-behavior: smooth; /* Daha yumuşak kaydırma */
+
+    /*FireFox*/
+    scrollbar-width: none;
+    /*IE10+*/
+    -ms-overflow-style: none;
+
+    @media (min-width: 512px) {
+      -webkit-overflow-scrolling: touch; /* Mobil cihazlarda daha yumuşak scroll */
+      scroll-behavior: smooth; /* Daha yumuşak kaydırma */
+
+      /*FireFox*/
+      scrollbar-width: thin;
+      /*IE10+*/
+      -ms-overflow-style: scrollbar;
+    }
+  }
+
   input[type='date']::-webkit-inner-spin-button,
   input[type='date']::-webkit-calendar-picker-indicator {
     display: none;

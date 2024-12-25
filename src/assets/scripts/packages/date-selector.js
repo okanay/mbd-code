@@ -1,1 +1,0 @@
-class n{containers;constructor(e){this.containers=document.querySelectorAll(e.containerSelector),this.initialize(e.inputSelector||'input[type="date"]')}initialize(e){this.containers.forEach((t)=>{t.addEventListener("click",()=>{const i=t.querySelector(e);if(i)i.showPicker()})})}}export{n as DatePickerManager};
