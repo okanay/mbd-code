@@ -1,4 +1,3 @@
-// Veri tipleri için interface'ler
 import { createIcons, icons } from '../deps/lucide-icons.js'
 
 interface Room {
@@ -149,8 +148,6 @@ const testData: TestData = {
 // Global değişkenler
 let currentSet: keyof TestData = 'set1'
 
-// Tablo satırı oluşturma fonksiyonu
-// Tablo satırı oluşturma fonksiyonu güncellendi
 function createTableRow(rowData: BedroomInfo): string {
   return `
     <div class="flex flex-1 divide-x divide-gray-200 bg-white hover:bg-gray-100/50">
@@ -227,9 +224,7 @@ function createTableRow(rowData: BedroomInfo): string {
   `
 }
 
-// İçerik güncelleme fonksiyonu güncellendi
 function updateContent(): void {
-  // Görsel gruplarını güncelle
   const container = document.getElementById('multi-gallery-images-container')
   if (container) {
     const newSet = testData[currentSet]
