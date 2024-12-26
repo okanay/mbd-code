@@ -115,6 +115,11 @@ app.get('/otel-details', c => {
   return c.html(html.text())
 })
 
+app.get('/payment', c => {
+  const html = Bun.file('./dist/payment/index.html')
+  return c.html(html.text())
+})
+
 const secret = 'LHOUwjBFGyori7tltMnRQ2YtanvObPZOenCowk/Cq8c='
 
 app.post('/github-push-event', async c => {

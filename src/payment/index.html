@@ -6,7 +6,7 @@
       name="viewport"
       content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
     />
-    <title>Örnek Otel-Details Sayfası</title>
+    <title>MBD Travel</title>
 
     <!-- Project Fonts -->
     <link rel="stylesheet" href="/assets/fonts/custom/font.css" />
@@ -61,36 +61,12 @@
 
     <link rel="stylesheet" href="/assets/styles/globals-out.css" />
     <script type="module" src="/assets/scripts/layout.js"></script>
-    <script type="module" src="/assets/scripts/otel-details.js"></script>
-
-    <script
-      type="module"
-      src="/assets/scripts/ui/test-dynamic-gallery.js"
-    ></script>
+    <script type="module" src="/assets/scripts/otel.js"></script>
     <script
       type="module"
       src="/assets/scripts/ui/between-date-input.js"
     ></script>
     <script type="module" src="/assets/scripts/ui/room-options.js"></script>
-
-    <script>
-      ;(function () {
-        const urlParams = new URLSearchParams(window.location.search)
-        const modalParam = urlParams.get('view')
-
-        if (modalParam) {
-          document.documentElement.classList.add('group/query')
-          document.documentElement.setAttribute('data-query', modalParam)
-        } else {
-          document.documentElement.classList.add('group/query')
-          document.documentElement.setAttribute('data-query', 'info')
-        }
-
-        document.addEventListener('DOMContentLoaded', function () {
-          document.documentElement.removeAttribute('data-query')
-        })
-      })()
-    </script>
   </head>
   <body class="bg-white">
     <header class="w-full border-gray-200 lg:h-[80px] lg:border-b">
@@ -278,21 +254,23 @@
           </div>
 
           <div class="flex items-center gap-4">
-            <!-- Login Link -->
+            <!-- Sign Up Button -->
             <a
-              href="/register"
+              href="/profile"
+              class="flex h-[40px] items-center gap-2 rounded-full border border-gray-200 bg-gray-100 px-5 text-center text-sm font-semibold transition-opacity duration-300 hover:opacity-75"
+            >
+              <i data-lucide="circle-user" class="size-5"></i>
+              <span id="user-name" class="w-[48px] truncate">
+                John Michael Andrew Richardson
+              </span>
+            </a>
+            <!-- Logout Link -->
+            <a
+              href="/logout"
               class="text-sm font-semibold transition-opacity duration-300 hover:opacity-75"
               aria-label="Giriş Yap"
             >
-              Giriş Yap
-            </a>
-            <!-- Sign Up Button -->
-            <a
-              href="/login"
-              class="flex h-[40px] items-center rounded-full border border-gray-200 bg-gray-100 px-7 text-center text-sm font-semibold transition-opacity duration-300 hover:opacity-75"
-              aria-label="Üye Ol"
-            >
-              <span> Üye Ol </span>
+              Çıkış Yap
             </a>
           </div>
         </div>
@@ -301,14 +279,14 @@
       <!--  Mobile Navigation -->
       <nav
         data-state="closed"
-        class="group absolute left-0 top-0 z-[1001] mx-auto flex h-fit w-full items-start justify-between bg-transparent px-3.5 py-4 data-[state=closed]:pointer-events-none lg:hidden"
+        class="group absolute left-0 top-0 z-[1001] mx-auto flex h-fit w-full items-start justify-between bg-transparent px-3.5 py-4 lg:hidden"
         id="mobile-navigation"
       >
         <!-- Hamburger Button -->
-        <div class="pointer-events-none flex flex-col gap-4">
+        <div class="flex flex-col gap-4">
           <button
             id="mobile-menu-button"
-            class="pointer-events-auto relative z-[1001] w-fit"
+            class="relative z-[1001] w-fit"
             aria-expanded="false"
             aria-controls="mobile-navigation-content"
             aria-label="Toggle navigation menu"
@@ -328,44 +306,25 @@
               <i data-lucide="x" class="size-full"></i>
             </span>
           </button>
-
-          <button
-            class="pointer-events-auto relative z-20 size-[28px] rounded-full border border-gray-200 bg-white p-1 opacity-50 transition-opacity duration-500 hover:opacity-75"
-          >
-            <i
-              data-lucide="corner-up-left"
-              class="size-full brightness-0 group-data-[state=closed]:block group-data-[state=open]:hidden rtl:scale-x-[-1]"
-            ></i>
-          </button>
         </div>
 
-        <a href="/" class="pointer-events-auto" aria-label="MBD Travel Home">
+        <!-- Logo -->
+        <a href="/" class="" aria-label="MBD Travel Home">
           <img
-            src="/assets/images/brand-images/guide_of_dubai_yatay.svg"
+            src="/assets/images/brand-images/guide_of_dubai_yatay.svg?v=c"
             alt="MBD Travel"
             class="h-auto w-[96px] object-scale-down brightness-0 invert"
           />
         </a>
 
         <!-- Buttons -->
-        <div class="pointer-events-none flex flex-col gap-4">
+        <div
+          class="flex flex-col gap-4 group-data-[state=closed]:visible group-data-[state=open]:invisible"
+        >
           <button
-            class="pointer-events-auto relative z-20 size-[28px] rounded-full border border-gray-200 bg-white p-1 transition-[opacity,transform] duration-500 hover:scale-105 hover:opacity-50"
+            class="relative z-20 size-[28px] rounded-full border border-gray-200 bg-white"
           >
-            <i
-              data-lucide="heart"
-              data-like="true"
-              class="size-full transition-all duration-300 data-[like=true]:fill-primary-600 data-[like=true]:stroke-primary-500/10"
-            ></i>
-          </button>
-          <button
-            class="pointer-events-auto relative z-20 size-[28px] rounded-full border border-gray-200 bg-white p-1 transition-[opacity,transform] duration-500 hover:scale-105 hover:opacity-50"
-          >
-            <i
-              data-lucide="shopping-cart"
-              style="transform: scaleX(-1)"
-              class="size-full brightness-0"
-            ></i>
+            <i data-lucide="user" class="size-full"></i>
           </button>
           <button
             id="search-button-mobile"
@@ -381,7 +340,6 @@
           aria-hidden="true"
           role="dialog"
         >
-          <!-- Mobile Options -->
           <!-- Mobile Options -->
           <div
             style="padding-top: 12px"
@@ -449,7 +407,9 @@
                         alt="User Icon"
                         class="size-6"
                       />
-                      <span class="transition group-hover:text-gray-900">
+                      <span
+                        class="text-gray-700 transition group-hover:text-gray-900"
+                      >
                         Burj Khalifa
                       </span>
                     </div>
@@ -467,7 +427,9 @@
                         alt="User Icon"
                         class="size-6"
                       />
-                      <span class="transition group-hover:text-gray-900">
+                      <span
+                        class="text-gray-700 transition group-hover:text-gray-900"
+                      >
                         Museum of the Future
                       </span>
                     </div>
@@ -485,7 +447,9 @@
                         alt="User Icon"
                         class="size-6"
                       />
-                      <span class="transition group-hover:text-gray-900">
+                      <span
+                        class="text-gray-700 transition group-hover:text-gray-900"
+                      >
                         Miracle Garden
                       </span>
                     </div>
@@ -510,7 +474,9 @@
                         alt="User Icon"
                         class="size-6"
                       />
-                      <span class="transition group-hover:text-gray-900">
+                      <span
+                        class="text-gray-700 transition group-hover:text-gray-900"
+                      >
                         Çöl Safari Turu
                       </span>
                     </div>
@@ -528,7 +494,9 @@
                         alt="User Icon"
                         class="size-6"
                       />
-                      <span class="transition group-hover:text-gray-900">
+                      <span
+                        class="text-gray-700 transition group-hover:text-gray-900"
+                      >
                         Dubai Şehir Turu
                       </span>
                     </div>
@@ -546,7 +514,9 @@
                         alt="User Icon"
                         class="size-6"
                       />
-                      <span class="transition group-hover:text-gray-900">
+                      <span
+                        class="text-gray-700 transition group-hover:text-gray-900"
+                      >
                         Abu Dabi Şehir Turu
                       </span>
                     </div>
@@ -572,7 +542,9 @@
                         alt="User Icon"
                         class="size-6"
                       />
-                      <span class="transition group-hover:text-gray-900">
+                      <span
+                        class="text-gray-700 transition group-hover:text-gray-900"
+                      >
                         Dubai Vizesi
                       </span>
                     </div>
@@ -598,7 +570,9 @@
                         alt="User Icon"
                         class="size-6"
                       />
-                      <span class="transition group-hover:text-gray-900">
+                      <span
+                        class="text-gray-700 transition group-hover:text-gray-900"
+                      >
                         Sıkça Sorulan Sorular
                       </span>
                     </div>
@@ -995,1283 +969,11 @@
       </div>
     </header>
 
-    <main class="mx-auto max-w-7xl overflow-hidden pb-6 pt-0 lg:px-4">
-      <!-- Breadcrumb -->
-      <nav
-        class="mx-auto hidden max-w-7xl items-center gap-0 py-6 text-xs lg:flex"
-      >
-        <a href="#" class="hover:underline"> Guide of Dubai </a>
-        <i data-lucide="chevron-right" class="size-4 rtl:scale-x-[-1]"></i>
-        <a href="#" class="hover:underline"> Jood Hotel Apartments </a>
-      </nav>
-
-      <!-- Slider Container -->
-      <section class="relative" aria-labelledby="slider-heading">
-        <!-- Images -->
-        <div class="flex w-full items-start gap-0.5">
-          <!-- Sliders -->
-          <div id="otel-slider-container" class="relative z-[103] w-full">
-            <ul
-              id="otel-slider"
-              data-items="5"
-              class="slider lg:grid-container relative h-[320px] lg:grid lg:h-[360px] lg:gap-0.5"
-            >
-              <li
-                class="otel-slide absolute -z-10 h-full w-full cursor-pointer bg-gray-200 opacity-0 data-[index=0]:opacity-100 lg:!relative lg:z-20 lg:!opacity-100 lg:!transition-opacity lg:!duration-500 lg:hover:!opacity-75"
-                data-index="0"
-              >
-                <img
-                  data-src="https://images.project-test.info/20.webp"
-                  src="/assets/images/gray-placeholder.webp"
-                  alt="Dubai'de Balayı Tatili"
-                  class="lazy-slider h-full w-full object-cover"
-                  style="transition: filter 0.3s ease"
-                />
-
-                <div
-                  class="absolute inset-0 z-[60] bg-gradient-to-t from-black/50 via-black/10 to-black/50 lg:hidden"
-                  aria-hidden="true"
-                  role="presentation"
-                ></div>
-              </li>
-              <li
-                class="otel-slide absolute -z-10 h-full w-full cursor-pointer bg-gray-200 opacity-0 data-[index=0]:opacity-100 lg:!relative lg:z-20 lg:!opacity-100 lg:!transition-opacity lg:!duration-500 lg:hover:!opacity-75"
-                data-index="1"
-              >
-                <img
-                  data-src="https://images.project-test.info/25.webp"
-                  src="/assets/images/gray-placeholder.webp"
-                  alt="Dubai'de Balayı Tatili"
-                  class="lazy-slider h-full w-full object-cover"
-                  style="transition: filter 0.3s ease"
-                />
-
-                <div
-                  class="absolute inset-0 z-[60] bg-gradient-to-t from-black/50 via-black/10 to-black/50 lg:hidden"
-                  aria-hidden="true"
-                  role="presentation"
-                ></div>
-              </li>
-              <li
-                class="otel-slide absolute -z-10 h-full w-full cursor-pointer bg-gray-200 opacity-0 data-[index=0]:opacity-100 lg:!relative lg:z-20 lg:!opacity-100 lg:!transition-opacity lg:!duration-500 lg:hover:!opacity-75"
-                data-index="2"
-              >
-                <img
-                  data-src="https://images.project-test.info/26.webp"
-                  src="/assets/images/gray-placeholder.webp"
-                  alt="Dubai'de Balayı Tatili"
-                  class="lazy-slider h-full w-full object-cover"
-                  style="transition: filter 0.3s ease"
-                />
-
-                <div
-                  class="absolute inset-0 z-[60] bg-gradient-to-t from-black/50 via-black/10 to-black/50 lg:hidden"
-                  aria-hidden="true"
-                  role="presentation"
-                ></div>
-              </li>
-              <li
-                class="otel-slide absolute -z-10 h-full w-full cursor-pointer bg-gray-200 opacity-0 data-[index=0]:opacity-100 lg:!relative lg:z-20 lg:!opacity-100 lg:!transition-opacity lg:!duration-500 lg:hover:!opacity-75"
-                data-index="3"
-              >
-                <img
-                  data-src="https://images.project-test.info/9.webp"
-                  src="/assets/images/gray-placeholder.webp"
-                  alt="Dubai'de Balayı Tatili"
-                  class="lazy-slider h-full w-full object-cover"
-                  style="transition: filter 0.3s ease"
-                />
-
-                <div
-                  class="absolute inset-0 z-[60] bg-gradient-to-t from-black/50 via-black/10 to-black/50 lg:hidden"
-                  aria-hidden="true"
-                  role="presentation"
-                ></div>
-              </li>
-              <li
-                class="otel-slide absolute -z-10 h-full w-full cursor-pointer bg-gray-200 opacity-0 data-[index=0]:opacity-100 lg:!relative lg:z-20 lg:!opacity-100 lg:!transition-opacity lg:!duration-500 lg:hover:!opacity-75"
-                data-index="4"
-              >
-                <img
-                  data-src="https://images.project-test.info/21.webp"
-                  src="/assets/images/gray-placeholder.webp"
-                  alt="Dubai'de Balayı Tatili"
-                  class="lazy-slider h-full w-full object-cover"
-                  style="transition: filter 0.3s ease"
-                />
-
-                <div
-                  class="absolute inset-0 z-[60] bg-gradient-to-t from-black/50 via-black/10 to-black/50 lg:hidden"
-                  aria-hidden="true"
-                  role="presentation"
-                ></div>
-              </li>
-              <li
-                class="otel-slide absolute -z-10 h-full w-full cursor-pointer bg-gray-200 opacity-0 data-[index=0]:opacity-100 lg:!relative lg:z-20 lg:!opacity-100 lg:!transition-opacity lg:!duration-500 lg:hover:!opacity-75"
-                data-index="5"
-              >
-                <img
-                  data-src="https://images.project-test.info/23.webp"
-                  src="/assets/images/gray-placeholder.webp"
-                  alt="Dubai'de Balayı Tatili"
-                  class="lazy-slider h-full w-full object-cover"
-                  style="transition: filter 0.3s ease"
-                />
-
-                <div
-                  class="absolute inset-0 z-[60] bg-gradient-to-t from-black/50 via-black/10 to-black/50 lg:hidden"
-                  aria-hidden="true"
-                  role="presentation"
-                ></div>
-              </li>
-            </ul>
-          </div>
-        </div>
-
-        <!-- Control Buttons -->
-        <div
-          class="pointer-events-none absolute inset-1 z-[200] flex items-center justify-between px-2.5 pt-8 lg:hidden"
-        >
-          <button
-            id="slider-prev"
-            class="pointer-events-auto relative size-[28px] rounded-full border border-gray-200 bg-white p-1 opacity-50 transition-opacity duration-300 hover:opacity-100"
-          >
-            <i
-              data-lucide="chevron-left"
-              class="size-full brightness-0 rtl:scale-x-[-1]"
-            ></i>
-          </button>
-          <button
-            id="slider-next"
-            class="pointer-events-auto relative size-[28px] rounded-full border border-gray-200 bg-white p-1 opacity-50 transition-opacity duration-300 hover:opacity-100"
-          >
-            <i
-              data-lucide="chevron-right"
-              class="size-full brightness-0 rtl:scale-x-[-1]"
-            ></i>
-          </button>
-        </div>
-
-        <!-- Image Count Indicator ** Auto. -->
-        <div class="pointer-event-none absolute z-[200] hidden w-full lg:block">
-          <div
-            class="absolute bottom-4 left-5 flex items-center gap-1 rounded-full border border-gray-50 bg-gray-950 p-1 px-4 py-2.5 text-sm tracking-wide text-gray-50"
-          >
-            <i data-lucide="image" class="size-4"></i>
-            <span id="otel-slider-image-count">0</span>
-          </div>
-        </div>
-
-        <!-- Slider Buttons -->
-        <div
-          class="pointer-event-auto absolute z-[200] flex w-full translate-y-[-100%] justify-center gap-2.5 p-8 lg:hidden"
-        >
-          <button
-            class="otel-slider-btn otel-slider-btn-item"
-            data-target="0"
-            aria-label="Slide 1"
-          ></button>
-          <button
-            class="otel-slider-btn otel-slider-btn-item"
-            data-target="1"
-            aria-label="Slide 2"
-          ></button>
-          <button
-            class="otel-slider-btn otel-slider-btn-item"
-            data-target="2"
-            aria-label="Slide 3"
-          ></button>
-          <button
-            class="otel-slider-btn otel-slider-btn-item"
-            data-target="3"
-            aria-label="Slide 4"
-          ></button>
-          <button
-            class="otel-slider-btn otel-slider-btn-item"
-            data-target="4"
-            aria-label="Slide 5"
-          ></button>
-          <button
-            class="otel-slider-btn otel-slider-btn-item"
-            data-target="5"
-            aria-label="Slide 6"
-          ></button>
-        </div>
-      </section>
-
-      <!-- Otel Information -->
-      <div id="otel-content" class="flex flex-col gap-6">
-        <!-- Navigation Tabs -->
-        <nav
-          id="otel-nav"
-          class="flex h-12 w-full items-center justify-between border-b bg-white pt-1.5"
-        >
-          <div
-            class="invisible-scrollbar flex h-full w-full items-start justify-start gap-8 overflow-x-auto overflow-y-hidden px-3.5 lg:w-3/4 lg:gap-16 lg:px-0"
-          >
-            <button
-              id="otel-info-btn-1"
-              data-state="closed"
-              class="h-full text-nowrap border-primary-500 text-sm font-bold data-[state=open]:translate-y-[4%] data-[state=open]:border-b-4 group-data-[query=info]/query:!translate-y-[4%] group-data-[query=info]/query:!border-b-4 lg:text-base"
-            >
-              Genel Bakış
-            </button>
-            <button
-              id="otel-info-btn-2"
-              data-state="closed"
-              class="h-full text-nowrap border-primary-500 text-sm font-bold data-[state=open]:translate-y-[4%] data-[state=open]:border-b-4 group-data-[query=price]/query:!translate-y-[4%] group-data-[query=price]/query:!border-b-4 lg:text-base"
-            >
-              Bilgi ve Fiyatlar
-            </button>
-            <button
-              id="otel-info-btn-3"
-              data-state="closed"
-              class="h-full text-nowrap border-primary-500 text-sm font-bold data-[state=open]:translate-y-[4%] data-[state=open]:border-b-4 group-data-[query=includes]/query:!translate-y-[4%] group-data-[query=includes]/query:!border-b-4 lg:text-base"
-            >
-              Özellikler
-            </button>
-            <button
-              id="otel-info-btn-4"
-              data-state="closed"
-              class="h-full text-nowrap border-primary-500 text-sm font-bold data-[state=open]:translate-y-[4%] data-[state=open]:border-b-4 group-data-[query=rules]/query:!translate-y-[4%] group-data-[query=rules]/query:!border-b-4 lg:text-base"
-            >
-              Tesis Kuralları
-            </button>
-            <button
-              id="otel-info-btn-5"
-              data-state="closed"
-              class="h-full text-nowrap border-primary-500 text-sm font-bold data-[state=open]:translate-y-[4%] data-[state=open]:border-b-4 group-data-[query=details]/query:!translate-y-[4%] group-data-[query=details]/query:!border-b-4 lg:text-base"
-            >
-              Şu Ayrıntılara Dikkat
-            </button>
-          </div>
-
-          <div class="hidden items-center justify-center gap-4 pb-2 lg:flex">
-            <button
-              class="relative z-20 size-[28px] rounded-full border border-gray-200 bg-white p-1 transition-[opacity,transform] duration-500 hover:scale-105 hover:opacity-50"
-            >
-              <i
-                data-lucide="heart"
-                data-like="true"
-                class="size-full transition-all duration-300 data-[like=true]:fill-primary-600 data-[like=true]:stroke-primary-500/10"
-              ></i>
-            </button>
-          </div>
-        </nav>
-        <!-- Otel Information Content -->
-        <article class="flex flex-col gap-6 lg:flex-row">
-          <!-- Otel Information Content -->
-          <div class="w-full px-3.5 lg:px-0">
-            <!-- Otel Name and Rating -->
-            <section class="mb-4 flex w-full justify-between gap-1">
-              <div class="flex flex-col gap-1">
-                <h1
-                  id="main-title"
-                  itemprop="name"
-                  class="text-xl font-bold lg:text-2xl"
-                >
-                  Jood Hotel Apartments
-                </h1>
-
-                <!-- Puan ve Toplam Değerlendirme Sayısı-->
-
-                <div class="flex items-center gap-2">
-                  <div
-                    class="rounded-custom -mt-1 bg-lime-500 px-4 py-1 text-white"
-                  >
-                    <span class="text-base font-bold lg:text-xl">4.4</span>
-                    <span class="text-sm">/5</span>
-                  </div>
-                  <div class="flex flex-col gap-1">
-                    <div class="flex gap-px">
-                      <i
-                        data-lucide="star"
-                        class="size-4 fill-yellow-400 text-yellow-400"
-                      ></i>
-                      <i
-                        data-lucide="star"
-                        class="size-4 fill-yellow-400 text-yellow-400"
-                      ></i>
-                      <i
-                        data-lucide="star"
-                        class="size-4 fill-yellow-400 text-yellow-400"
-                      ></i>
-                      <i
-                        data-lucide="star"
-                        class="size-4 fill-yellow-400 text-yellow-400"
-                      ></i>
-                      <i data-lucide="star" class="size-4 text-yellow-400"></i>
-                    </div>
-                    <h4
-                      class="-mt-1 text-sm font-semibold text-lime-600 lg:text-base"
-                    >
-                      Mükemmel
-                    </h4>
-                  </div>
-                </div>
-              </div>
-
-              <button
-                class="hidden h-full w-fit items-center justify-center gap-2.5 rounded bg-primary-500 px-4 py-3 text-sm font-semibold text-white transition-all duration-300 hover:bg-primary-600 active:scale-95 md:flex"
-              >
-                Rezervasyon Yap
-              </button>
-            </section>
-
-            <!-- Genel Tanıtım -->
-            <section
-              id="otel-info-content-1"
-              data-state="closed"
-              class="hidden flex-col items-start gap-6 data-[state=open]:flex group-data-[query=info]/query:!flex lg:flex-row lg:gap-24"
-            >
-              <div class="flex w-full flex-col gap-6 lg:w-2/3">
-                <!-- Buraya otel hakkında genel bilgiler gelecek -->
-                <div class="flex flex-col text-sm tracking-wide text-gray-600">
-                  <h2 class="mb-2 text-base font-bold lg:text-xl">
-                    Genel Tanıtım
-                  </h2>
-                  <div class="flex flex-col gap-4">
-                    <p>
-                      Platinum Heritage, Dubai çölünde benzersiz bir lüks safari
-                      deneyimi sunar. Çölün eşsiz güzelliklerini keşfederken,
-                      kültürel ve çevresel sorumluluklarla hazırlanan bu
-                      deneyim, sizi modern dünyanın karmaşasından uzaklaştırır.
-                      Retro Land Rover araçlarla yapılan turlar, sizi geçmişin
-                      büyüsüne taşır.
-                    </p>
-                    <p>
-                      Safariler, Bedevi kültürünü yakından tanıma, geleneksel
-                      yemeklerin tadını çıkarma ve yıldızların altında çöl
-                      atmosferini yaşama fırsatı sunar. Sürdürülebilirlik odaklı
-                      yaklaşımıyla Platinum Heritage, Dubai'nin doğal ve
-                      kültürel mirasını keşfetmek isteyenler için mükemmel bir
-                      seçenektir.
-                    </p>
-                  </div>
-
-                  <div class="flex items-start gap-2">
-                    <p>
-                      Lüksü ve doğayı harmanlayan bu deneyim, unutulmaz bir
-                      yolculuk vaat ediyor.
-                    </p>
-                  </div>
-                </div>
-                <!-- En Popüler Özellikler -->
-                <div class="flex flex-col text-sm tracking-wide text-gray-600">
-                  <h2 class="mb-3.5 text-base font-bold lg:text-xl">
-                    En Popüler Özellikler
-                  </h2>
-                  <div class="grid grid-cols-1 gap-4 lg:grid-cols-2">
-                    <div class="flex items-start gap-2 text-sm lg:items-center">
-                      <i
-                        data-lucide="check"
-                        class="size-4 rounded-full border border-gray-200 p-0.5 lg:size-5 lg:p-1"
-                      ></i>
-                      <span class="text-sm text-gray-600 lg:text-base"
-                        >2 yüzme havuzu</span
-                      >
-                    </div>
-                    <!-- Diğer eğlence özellikleri aynı yapıda devam eder -->
-                    <div class="flex items-start gap-2 text-sm lg:items-center">
-                      <i
-                        data-lucide="check"
-                        class="size-4 rounded-full border border-gray-200 p-0.5 lg:size-5 lg:p-1"
-                      ></i>
-                      <span class="text-sm text-gray-600 lg:text-base"
-                        >Havaalanı servisi</span
-                      >
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <!-- Map -->
-              <div
-                class="relative h-[360px] w-full flex-shrink-0 overflow-hidden rounded-lg bg-gray-200 lg:-mt-[1rem] lg:w-1/3"
-              >
-                <img
-                  src="/assets/images/map.png"
-                  alt="Dubai'de Balayı Tatili"
-                  class="h-full w-full object-cover"
-                />
-                <div
-                  class="pointer-events-none absolute inset-0 z-10 flex items-center justify-center"
-                >
-                  <div
-                    class="group pointer-events-auto flex flex-col items-center gap-2"
-                  >
-                    <i
-                      data-lucide="map-pin"
-                      class="size-8 fill-primary-50 stroke-[1.25] text-primary-500 transition-all duration-300 group-hover:translate-y-[-25%] group-hover:scale-125 group-active:scale-95"
-                    ></i>
-                    <button
-                      class="rounded border border-primary-500 bg-primary-50 px-4 py-2 font-semibold text-primary-500 transition-all duration-300 active:scale-95"
-                    >
-                      Haritada Göster
-                    </button>
-                  </div>
-                  c
-                </div>
-              </div>
-            </section>
-
-            <!-- Bilgi ve Fiyatlar -->
-            <section
-              id="otel-info-content-2"
-              data-state="closed"
-              class="hidden min-h-[360px] data-[state=open]:block group-data-[query=price]/query:!block"
-            >
-              <h2 class="text-base font-bold lg:text-xl">Yer Durumu</h2>
-              <!-- Filter Container -->
-              <form
-                class="relative z-[20] mx-auto mt-4 flex max-w-7xl flex-col gap-4 pb-2 lg:flex-row"
-              >
-                <!-- Search Inputs Container (80% on desktop) -->
-                <div class="flex w-full flex-col gap-4 md:flex-row lg:w-full">
-                  <!-- Destination Input -->
-                  <div class="w-full lg:w-1/3">
-                    <div class="relative">
-                      <input
-                        type="text"
-                        id="destination-input"
-                        name="destination"
-                        style="-webkit-border-radius: 0; border-radius: 0"
-                        class="peer h-12 w-full !rounded border border-gray-200 px-3 py-2 pl-10 text-sm outline-none focus:border-primary-200 sm:text-base rtl:pl-0 rtl:pr-10"
-                        placeholder="Nereye Gidiyorsunuz?"
-                        value="Dubai"
-                      />
-                      <label
-                        for="destination-input"
-                        class="absolute -top-2 left-3 bg-white px-1 text-xs text-gray-500 peer-focus:text-primary-500 rtl:left-auto rtl:right-3"
-                      >
-                        Nereye Gidiyorsunuz?
-                      </label>
-                      <!-- Search Icon -->
-                      <i
-                        data-lucide="search"
-                        class="absolute left-3 top-1/2 size-4 -translate-y-1/2 text-gray-400 rtl:left-auto rtl:right-3"
-                      ></i>
-                      <!-- Clear Button -->
-                      <button
-                        type="button"
-                        class="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 rtl:left-3 rtl:right-auto"
-                      >
-                        <i data-lucide="x" class="size-4"></i>
-                      </button>
-                    </div>
-                  </div>
-
-                  <!-- Date Select -->
-                  <div class="w-full lg:w-1/3">
-                    <div class="relative">
-                      <input
-                        type="text"
-                        id="date-input"
-                        name="date"
-                        readonly
-                        data-focus="false"
-                        class="h-12 w-full appearance-none !rounded border border-gray-200 bg-white px-3 py-2 text-sm outline-none focus:border-primary-200 sm:text-base"
-                        placeholder="Tarih seçin"
-                      />
-                      <label
-                        id="date-input-label"
-                        for="date-input"
-                        data-focus="false"
-                        class="absolute -top-2 left-3 bg-white px-1 text-xs text-gray-500 data-[focus=true]:text-primary-500 rtl:left-auto rtl:right-3"
-                      >
-                        Tarih Seçin
-                      </label>
-                      <div
-                        class="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 rtl:left-3 rtl:right-auto"
-                      >
-                        <i
-                          data-lucide="calendar"
-                          class="size-4 text-gray-500"
-                        ></i>
-                      </div>
-                    </div>
-                  </div>
-
-                  <!-- Number of People Select -->
-                  <div
-                    id="select-room-options-container"
-                    data-state="closed"
-                    class="group relative w-full lg:w-1/3"
-                  >
-                    <!-- Controller -->
-                    <div class="relative">
-                      <input
-                        readonly
-                        type="text"
-                        id="select-room-options"
-                        name="select-room-options"
-                        data-adult="1"
-                        data-child="0"
-                        data-room="1"
-                        class="h-12 w-full appearance-none !rounded border border-gray-200 bg-white px-3 py-2 text-sm outline-none group-data-[state=open]:!rounded-b-none group-data-[state=open]:border-gray-200 group-data-[state=closed]:text-gray-600/80 sm:text-base"
-                      />
-                      <label
-                        for="people-select"
-                        class="absolute -top-2 left-3 bg-white px-1 text-xs text-gray-500 group-data-[state=open]:text-primary-500 rtl:left-auto rtl:right-3"
-                      >
-                        Oda Seçimi
-                      </label>
-                      <div
-                        class="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 rtl:left-3 rtl:right-auto"
-                      >
-                        <i
-                          data-lucide="chevron-down"
-                          class="size-4 text-gray-500 transition-transform duration-300 group-data-[state=open]:rotate-180"
-                        ></i>
-                      </div>
-                    </div>
-                    <!-- Dropdown -->
-                    <div
-                      id="people-select-dropdown"
-                      class="pointer-events-none absolute right-0 top-full h-fit w-full rounded-b border-b border-l border-r border-gray-200 bg-white opacity-0 shadow transition-all duration-300 group-data-[state=open]:pointer-events-auto group-data-[state=open]:opacity-100"
-                    >
-                      <div class="flex flex-col gap-4 py-4">
-                        <!-- Yetişkin -->
-                        <div class="flex items-center justify-between px-4">
-                          <div class="flex items-center gap-2">
-                            <i
-                              data-lucide="user"
-                              class="size-5 text-gray-600"
-                            ></i>
-                            <span id="adult-text" class="text-sm"
-                              >Yetişkin</span
-                            >
-                          </div>
-                          <div class="flex items-center gap-2">
-                            <button
-                              type="button"
-                              id="adult-minus"
-                              class="flex h-8 w-8 items-center justify-center rounded-full border border-gray-200 text-primary-500 transition-transform duration-300 hover:scale-105 disabled:cursor-not-allowed disabled:text-gray-500 disabled:hover:scale-100"
-                            >
-                              -
-                            </button>
-                            <span id="adult-count" class="w-8 text-center"
-                              >0</span
-                            >
-                            <button
-                              type="button"
-                              id="adult-plus"
-                              class="flex h-8 w-8 items-center justify-center rounded-full border border-gray-200 text-primary-500 transition-transform duration-300 hover:scale-105 disabled:cursor-not-allowed disabled:text-gray-500 disabled:hover:scale-100"
-                            >
-                              +
-                            </button>
-                          </div>
-                        </div>
-
-                        <!-- Çocuk -->
-                        <div class="flex items-center justify-between px-4">
-                          <div class="flex items-center gap-2">
-                            <i
-                              data-lucide="baby"
-                              class="size-5 text-gray-600"
-                            ></i>
-                            <span id="child-text" class="text-sm">Çocuk</span>
-                          </div>
-                          <div class="flex items-center gap-2">
-                            <button
-                              type="button"
-                              id="child-minus"
-                              class="flex h-8 w-8 items-center justify-center rounded-full border border-gray-200 text-primary-500 transition-transform duration-300 hover:scale-105 disabled:cursor-not-allowed disabled:text-gray-500 disabled:hover:scale-100"
-                            >
-                              -
-                            </button>
-                            <span id="child-count" class="w-8 text-center"
-                              >0</span
-                            >
-                            <button
-                              type="button"
-                              id="child-plus"
-                              class="flex h-8 w-8 items-center justify-center rounded-full border border-gray-200 text-primary-500 transition-transform duration-300 hover:scale-105 disabled:cursor-not-allowed disabled:text-gray-500 disabled:hover:scale-100"
-                            >
-                              +
-                            </button>
-                          </div>
-                        </div>
-
-                        <!-- Oda -->
-                        <div class="flex items-center justify-between px-4">
-                          <div class="flex items-center gap-2">
-                            <i
-                              data-lucide="door-open"
-                              class="size-5 text-gray-600"
-                            ></i>
-                            <span id="room-text" class="text-sm">Oda</span>
-                          </div>
-                          <div class="flex items-center gap-2">
-                            <button
-                              type="button"
-                              id="room-minus"
-                              class="flex h-8 w-8 items-center justify-center rounded-full border border-gray-200 text-primary-500 transition-transform duration-300 hover:scale-105 disabled:cursor-not-allowed disabled:text-gray-500 disabled:hover:scale-100"
-                            >
-                              -
-                            </button>
-                            <span id="room-count" class="w-8 text-center"
-                              >0</span
-                            >
-                            <button
-                              type="button"
-                              id="room-plus"
-                              class="flex h-8 w-8 items-center justify-center rounded-full border border-gray-200 text-primary-500 transition-transform duration-300 hover:scale-105 disabled:cursor-not-allowed disabled:text-gray-500 disabled:hover:scale-100"
-                            >
-                              +
-                            </button>
-                          </div>
-                        </div>
-
-                        <hr class="-mb-4 border-t border-gray-200" />
-
-                        <!-- Onayla -->
-                        <div class="w-full px-4">
-                          <button
-                            type="button"
-                            id="people-select-close"
-                            class="mt-4 h-11 w-full rounded bg-primary-500 font-semibold text-white transition-all duration-200 hover:bg-primary-600 active:scale-95"
-                          >
-                            Onayla
-                          </button>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-                <!-- Filter Button Container (20% on desktop) -->
-                <div class="w-full lg:w-fit">
-                  <button
-                    type="submit"
-                    class="flex h-12 w-full items-center justify-center gap-2 rounded bg-primary-500 px-4 text-sm font-semibold text-white transition-colors hover:bg-primary-600 active:scale-95"
-                  >
-                    <i data-lucide="filter" class="size-4"></i>
-                    Filtrele
-                  </button>
-                </div>
-              </form>
-
-              <h2 class="mb-4 mt-4 text-base font-bold lg:text-xl">Sonuçlar</h2>
-              <!-- Table Container -->
-              <div class="w-full overflow-x-auto">
-                <div
-                  id="otel-price-table"
-                  class="relative min-w-[1200px] divide-y divide-gray-100 overflow-hidden rounded border border-gray-200"
-                >
-                  <!-- Header Row -->
-                  <div class="flex bg-primary-500">
-                    <!-- Group 1: Initial Columns -->
-                    <div class="flex flex-1 divide-x divide-gray-200">
-                      <div
-                        class="order-1 w-[32.5%] flex-shrink-0 px-3.5 py-3 text-xs font-semibold uppercase text-white sm:order-none"
-                      >
-                        Daire Tipi
-                      </div>
-                      <div
-                        class="order-3 w-[15%] flex-shrink-0 px-3.5 py-3 text-xs font-semibold uppercase text-white sm:order-none"
-                      >
-                        Konuk Sayısı
-                      </div>
-                      <div
-                        class="order-4 w-[15%] flex-shrink-0 px-3.5 py-3 text-xs font-semibold uppercase text-white sm:order-none"
-                      >
-                        5 Gecelik Fiyat
-                      </div>
-                      <div
-                        class="order-5 w-[20%] flex-shrink-0 px-3.5 py-3 text-end text-xs font-semibold uppercase text-white sm:order-none sm:text-start"
-                      >
-                        Özellikleriniz
-                      </div>
-                      <!-- Group 2: Action Column (moves in mobile) -->
-                      <div
-                        class="order-2 w-[17.5%] flex-shrink-0 px-5 py-3 text-xs font-semibold uppercase text-white sm:order-none sm:text-end"
-                      >
-                        Daire Seç
-                      </div>
-                    </div>
-                  </div>
-
-                  <!-- Content Rows -->
-                  <div
-                    id="table-contents"
-                    class="flex flex-col divide-y divide-gray-200 border-b border-gray-200"
-                  >
-                    <!-- Item 1: Initial Columns -->
-                    <div
-                      class="flex flex-1 divide-x divide-gray-200 bg-white hover:bg-gray-100/50"
-                    >
-                      <!-- Daire Tipi -->
-                      <div
-                        class="order-1 w-[32.5%] flex-shrink-0 translate-y-[-0.25rem] px-3.5 py-4 sm:order-none"
-                      >
-                        <div class="space-y-2">
-                          <button
-                            class="dynamic-gallery-button flex cursor-default items-center gap-2 font-semibold text-primary-600"
-                          >
-                            <i data-lucide="image" class="size-4"></i>
-                            <span>Deluxe 2 Yataklı Daire</span>
-                          </button>
-                          <div class="space-y-1 text-sm text-gray-600">
-                            <p>Yatak Odası 1: 2 tek kişilik yatak</p>
-                            <p>
-                              Yatak Odası 2: 1 ekstra büyük çift kişilik yatak
-                            </p>
-                            <p class="text-gray-500">
-                              Ücretsiz bebek karyolası talep üzerine mevcuttur
-                            </p>
-                          </div>
-                        </div>
-                      </div>
-
-                      <!-- Konuk Sayısı -->
-                      <div
-                        class="order-3 w-[15%] flex-shrink-0 px-4 py-2.5 sm:order-none"
-                      >
-                        <div class="flex gap-1">
-                          <i
-                            data-lucide="user"
-                            class="size-5 text-gray-600"
-                          ></i>
-                          <i
-                            data-lucide="user"
-                            class="size-5 text-gray-600"
-                          ></i>
-                          <i
-                            data-lucide="user"
-                            class="size-5 text-gray-600"
-                          ></i>
-                          <i
-                            data-lucide="user"
-                            class="size-5 text-gray-600"
-                          ></i>
-                        </div>
-                      </div>
-
-                      <!-- Fiyatlar -->
-                      <div
-                        class="order-4 w-[15%] flex-shrink-0 px-3.5 py-2.5 sm:order-none"
-                      >
-                        <div class="flex flex-shrink-0 flex-col">
-                          <span class="text-xs font-semibold text-lime-600"
-                            >%25 İndirim</span
-                          >
-                          <div class="flex items-center gap-2">
-                            <span
-                              class="text-xs font-medium text-gray-500 line-through"
-                              >650 AED</span
-                            >
-                            <span class="text-lg font-semibold text-primary-500"
-                              >550 AED</span
-                            >
-                          </div>
-                        </div>
-                      </div>
-
-                      <!-- Özellikleriniz -->
-                      <div
-                        class="order-5 w-[20%] flex-shrink-0 px-3.5 py-2.5 text-end sm:order-none sm:text-start"
-                      >
-                        <div
-                          class="flex flex-col items-end space-y-2 sm:items-start"
-                        >
-                          <!-- Avantajlar -->
-                          <div class="flex items-start gap-2">
-                            <i
-                              data-lucide="check"
-                              class="order-2 size-5 flex-shrink-0 text-lime-600 sm:order-none"
-                            ></i>
-                            <span class="order-1 text-sm sm:order-none"
-                              >Dahili park yeri</span
-                            >
-                          </div>
-                          <div class="flex items-start gap-2">
-                            <i
-                              data-lucide="info"
-                              class="order-2 size-5 flex-shrink-0 text-primary-600 sm:order-none"
-                            ></i>
-                            <span class="order-1 text-sm sm:order-none"
-                              >İade edilemez</span
-                            >
-                          </div>
-
-                          <div class="flex items-start gap-2">
-                            <i
-                              data-lucide="info"
-                              class="order-2 size-5 flex-shrink-0 text-blue-600 sm:order-none"
-                            ></i>
-                            <span class="order-1 text-sm sm:order-none"
-                              >Varıştan önce tesiste ödeme yapın</span
-                            >
-                          </div>
-                        </div>
-                      </div>
-
-                      <!-- Aksiyon Butonu-->
-                      <div
-                        class="order-2 w-[17.5%] flex-shrink-0 px-3.5 py-2.5 sm:order-none"
-                      >
-                        <div class="flex justify-end">
-                          <div class="inline-flex items-center">
-                            <button
-                              class="text-nowrap rounded-l border border-r-0 border-gray-200 bg-primary-500 px-4 py-2.5 text-sm font-semibold text-white transition-all duration-200 hover:bg-primary-600 active:scale-95"
-                            >
-                              Seç ve Devam Et
-                            </button>
-                            <div
-                              class="relative flex h-10 w-12 scale-y-[103%] items-center justify-between rounded-r border border-gray-200"
-                            >
-                              <select
-                                class="h-full w-full appearance-none bg-transparent pl-2.5 pr-1 focus:outline-none focus:ring-0"
-                              >
-                                <option>0</option>
-                                <option>1</option>
-                                <option>2</option>
-                              </select>
-                              <i
-                                data-lucide="chevron-down"
-                                class="pointer-events-none absolute right-1.5 top-[50%] size-4 -translate-y-1/2 text-gray-400"
-                              ></i>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-
-                    <!-- Loading Skeleton -->
-                    <div class="flex flex-col divide-y divide-gray-200">
-                      <div
-                        class="flex flex-1 divide-x divide-gray-200 bg-white"
-                      >
-                        <!-- Daire Tipi -->
-                        <div
-                          class="order-1 w-[32.5%] flex-shrink-0 translate-y-[-0.25rem] px-3.5 py-4 sm:order-none"
-                        >
-                          <div class="space-y-2">
-                            <div class="flex items-center gap-2">
-                              <div
-                                class="size-4 animate-pulse rounded-full bg-gray-200"
-                              ></div>
-                              <div
-                                class="h-5 w-48 animate-pulse rounded bg-gray-200"
-                              ></div>
-                            </div>
-                            <div class="space-y-1">
-                              <div
-                                class="h-4 w-56 animate-pulse rounded bg-gray-200"
-                              ></div>
-                              <div
-                                class="h-4 w-64 animate-pulse rounded bg-gray-200"
-                              ></div>
-                              <div
-                                class="h-4 w-52 animate-pulse rounded bg-gray-200"
-                              ></div>
-                            </div>
-                          </div>
-                        </div>
-
-                        <!-- Konuk Sayısı -->
-                        <div
-                          class="order-3 w-[15%] flex-shrink-0 px-4 py-2.5 sm:order-none"
-                        >
-                          <div class="flex gap-1">
-                            <div
-                              class="size-5 animate-pulse rounded-full bg-gray-200"
-                            ></div>
-                            <div
-                              class="size-5 animate-pulse rounded-full bg-gray-200"
-                            ></div>
-                            <div
-                              class="size-5 animate-pulse rounded-full bg-gray-200"
-                            ></div>
-                            <div
-                              class="size-5 animate-pulse rounded-full bg-gray-200"
-                            ></div>
-                          </div>
-                        </div>
-
-                        <!-- Fiyatlar -->
-                        <div
-                          class="order-4 w-[15%] flex-shrink-0 px-3.5 py-2.5 sm:order-none"
-                        >
-                          <div class="flex flex-shrink-0 flex-col">
-                            <div
-                              class="h-4 w-20 animate-pulse rounded bg-gray-200"
-                            ></div>
-                            <div class="mt-1 flex items-center gap-2">
-                              <div
-                                class="h-4 w-16 animate-pulse rounded bg-gray-200"
-                              ></div>
-                              <div
-                                class="h-6 w-24 animate-pulse rounded bg-gray-200"
-                              ></div>
-                            </div>
-                          </div>
-                        </div>
-
-                        <!-- Özellikleriniz -->
-                        <div
-                          class="order-5 w-[20%] flex-shrink-0 px-3.5 py-2.5 text-end sm:order-none sm:text-start"
-                        >
-                          <div
-                            class="flex flex-col items-end space-y-2 sm:items-start"
-                          >
-                            <div class="flex items-start gap-2">
-                              <div
-                                class="order-2 size-5 animate-pulse rounded-full bg-gray-200 sm:order-none"
-                              ></div>
-                              <div
-                                class="order-1 h-4 w-28 animate-pulse rounded bg-gray-200 sm:order-none"
-                              ></div>
-                            </div>
-                            <div class="flex items-start gap-2">
-                              <div
-                                class="order-2 size-5 animate-pulse rounded-full bg-gray-200 sm:order-none"
-                              ></div>
-                              <div
-                                class="order-1 h-4 w-24 animate-pulse rounded bg-gray-200 sm:order-none"
-                              ></div>
-                            </div>
-                            <div class="flex items-start gap-2">
-                              <div
-                                class="order-2 size-5 animate-pulse rounded-full bg-gray-200 sm:order-none"
-                              ></div>
-                              <div
-                                class="order-1 h-4 w-48 animate-pulse rounded bg-gray-200 sm:order-none"
-                              ></div>
-                            </div>
-                          </div>
-                        </div>
-
-                        <!-- Aksiyon Butonu -->
-                        <div
-                          class="order-2 w-[17.5%] flex-shrink-0 px-3.5 py-2.5 sm:order-none"
-                        >
-                          <div class="flex justify-end">
-                            <div class="inline-flex items-center">
-                              <div
-                                class="h-10 w-32 animate-pulse rounded-l bg-gray-200"
-                              ></div>
-                              <div
-                                class="h-10 w-12 animate-pulse rounded-r bg-gray-200"
-                              ></div>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </section>
-
-            <!-- Özellikler -->
-            <section
-              id="otel-info-content-3"
-              data-state="closed"
-              class="hidden flex-col items-start gap-6 data-[state=open]:flex group-data-[query=includes]/query:!flex"
-            >
-              <div class="flex w-full flex-col gap-6">
-                <div class="flex flex-col text-sm tracking-wide text-gray-600">
-                  <h2 class="mb-3.5 text-base font-bold lg:text-xl">
-                    Özellikler
-                  </h2>
-                  <div class="grid grid-cols-1 gap-4 lg:grid-cols-2">
-                    <div class="flex items-start gap-2 text-sm lg:items-center">
-                      <i
-                        data-lucide="check"
-                        class="size-4 rounded-full border border-gray-200 p-0.5 lg:size-5 lg:p-1"
-                      ></i>
-                      <span class="text-sm text-gray-600 lg:text-base"
-                        >2 yüzme havuzu</span
-                      >
-                    </div>
-                    <div class="flex items-start gap-2 text-sm lg:items-center">
-                      <i
-                        data-lucide="check"
-                        class="size-4 rounded-full border border-gray-200 p-0.5 lg:size-5 lg:p-1"
-                      ></i>
-                      <span class="text-sm text-gray-600 lg:text-base"
-                        >Havaalanı servisi</span
-                      >
-                    </div>
-                    <div class="flex items-start gap-2 text-sm lg:items-center">
-                      <i
-                        data-lucide="check"
-                        class="size-4 rounded-full border border-gray-200 p-0.5 lg:size-5 lg:p-1"
-                      ></i>
-                      <span class="text-sm text-gray-600 lg:text-base"
-                        >Sigara içilmeyen odalar</span
-                      >
-                    </div>
-                    <div class="flex items-start gap-2 text-sm lg:items-center">
-                      <i
-                        data-lucide="check"
-                        class="size-4 rounded-full border border-gray-200 p-0.5 lg:size-5 lg:p-1"
-                      ></i>
-                      <span class="text-sm text-gray-600 lg:text-base"
-                        >Ücretsiz Wi-Fi internet bağlantısı</span
-                      >
-                    </div>
-                    <div class="flex items-start gap-2 text-sm lg:items-center">
-                      <i
-                        data-lucide="check"
-                        class="size-4 rounded-full border border-gray-200 p-0.5 lg:size-5 lg:p-1"
-                      ></i>
-                      <span class="text-sm text-gray-600 lg:text-base"
-                        >Fitness merkezi</span
-                      >
-                    </div>
-                    <div class="flex items-start gap-2 text-sm lg:items-center">
-                      <i
-                        data-lucide="check"
-                        class="size-4 rounded-full border border-gray-200 p-0.5 lg:size-5 lg:p-1"
-                      ></i>
-                      <span class="text-sm text-gray-600 lg:text-base"
-                        >Tüm odalarda çay/kahve makinesi</span
-                      >
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </section>
-
-            <!-- Tesis Kuralları -->
-            <section
-              id="otel-info-content-4"
-              data-state="closed"
-              class="hidden flex-col items-start gap-6 data-[state=open]:flex group-data-[query=rules]/query:!flex"
-            >
-              <div class="flex w-full flex-col gap-6">
-                <div class="flex flex-col text-sm tracking-wide text-gray-600">
-                  <h2 class="mb-3.5 text-base font-bold lg:text-xl">
-                    Tesis Kuralları
-                  </h2>
-                  <div class="flex flex-col gap-4">
-                    <div
-                      class="flex flex-col gap-2 border-b border-gray-100 pb-4"
-                    >
-                      <div class="flex items-center justify-between">
-                        <span class="font-medium">Check-in</span>
-                        <span>15:00 - 23:30 arasında</span>
-                      </div>
-                      <p class="text-sm text-gray-500">
-                        Check-in sırasında konukların fotoğraflı kimlik belgesi
-                        ve kredi kartı göstermesi gerekmektedir
-                      </p>
-                    </div>
-                    <div
-                      class="flex flex-col gap-2 border-b border-gray-100 pb-4"
-                    >
-                      <div class="flex items-center justify-between">
-                        <span class="font-medium">Check-out</span>
-                        <span>12:00 - 12:30 arasında</span>
-                      </div>
-                    </div>
-                    <div class="flex flex-col gap-2">
-                      <div class="flex items-center justify-between">
-                        <span class="font-medium">İptal/ ön ödeme</span>
-                      </div>
-                      <p class="text-sm text-gray-500">
-                        İptal ve ön ödeme koşulları, konaklama tesisinin türüne
-                        göre değişmektedir. Lütfen seçiminizi yaparken her
-                        seçenek için hangi koşulların geçerli olabileceğini
-                        kontrol edin.
-                      </p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </section>
-
-            <!-- Şu Ayrıntılara Dikkat -->
-            <section
-              id="otel-info-content-5"
-              data-state="closed"
-              class="hidden flex-col items-start gap-6 data-[state=open]:flex group-data-[query=details]/query:!flex"
-            >
-              <div class="flex w-full flex-col gap-6">
-                <div class="flex flex-col text-sm tracking-wide text-gray-600">
-                  <h2 class="mb-3.5 text-base font-bold lg:text-xl">
-                    Şu Ayrıntılara Dikkat
-                  </h2>
-                  <div class="flex flex-col gap-4">
-                    <p>
-                      Check-in sırasında konukların fotoğraflı kimlik belgesi ve
-                      kredi kartı göstermesi gerekmektedir.
-                    </p>
-                    <p>
-                      Özel isteklerin doluluk durumuna bağlı olduğunu ve ek
-                      ücrete tabi olabileceğini lütfen unutmayın.
-                    </p>
-                    <p>
-                      18 yaşından küçük konuklar yalnızca ebeveyn veya resmi
-                      vasi ile check-in yapabilirler.
-                    </p>
-                    <p>
-                      Tesise vardığınızda AED 500 depozito ödemeniz
-                      gerekmektedir. Bu ödeme nakit olarak tahsil edilecektir.
-                    </p>
-                    <p>
-                      Check-out esnasında iadeniz yapılacaktır. Depozitonuz
-                      tesisteki kontrole bağlı olarak nakden eksisiz iade
-                      edilecektir.
-                    </p>
-                    <p class="font-medium">Ruhsat numarası: 1098312</p>
-                  </div>
-                </div>
-              </div>
-            </section>
-          </div>
-        </article>
-      </div>
-    </main>
-
-    <!-- Fixed Mobile Complete Purchase Button -->
-    <div
-      id="complete-purchase-container"
-      class="w-full overflow-hidden border-t border-gray-200 bg-white p-3 md:hidden"
-    >
-      <div class="flex items-center justify-between gap-8">
-        <div class="flex flex-shrink-0 flex-col">
-          <span class="text-xs font-semibold text-lime-600">%25 İndirim</span>
-          <div class="flex items-center gap-2">
-            <span class="text-xs font-medium text-gray-500 line-through"
-              >650 AED</span
-            >
-            <span class="text-lg font-semibold text-primary-500">550 AED</span>
-          </div>
-        </div>
-        <button
-          class="flex h-12 w-full max-w-[240px] items-center justify-center gap-2.5 rounded bg-primary-500 text-sm font-semibold text-white transition-all duration-300 active:scale-95"
-        >
-          Rezervasyon Yap
-        </button>
-      </div>
-    </div>
-
-    <!--  Fixed WhatsApp Button -->
-    <button
-      id="whatsapp-button"
-      class="size-12 rounded-full border border-gray-200 bg-white p-1 md:hidden rtl:!left-2 rtl:!right-auto"
-    >
-      <a
-        href="https://wa.me/97152521419"
-        aria-label="WhatsApp ile mesaj gönder"
-        class="block"
-      >
-        <img
-          src="/assets/images/icons/whatsapp.svg"
-          alt="WhatsApp ile İletişime Geç"
-          class="size-full"
-        />
-      </a>
-    </button>
-
-    <!-- Multi Group Image Gallery - DONT EDIT THIS ** AUTO -->
-    <div
-      id="multi-gallery"
-      data-state="closed"
-      class="fixed inset-0 z-[9001] flex items-center justify-center bg-black/90 p-4 backdrop-blur-md data-[state=closed]:hidden"
-      aria-hidden="true"
-      role="dialog"
-    >
-      <div
-        id="multi-gallery-content"
-        class="relative w-full max-w-5xl overflow-hidden rounded-xl bg-neutral-900 shadow-2xl"
-      >
-        <!-- Main image - DONT EDIT THIS -->
-        <div
-          id="multi-gallery-main-image-container"
-          class="relative bg-neutral-950 py-4"
-        >
-          <img
-            src="#"
-            alt="Gallery Main Image"
-            class="mx-auto aspect-video h-auto w-full object-contain lg:max-h-[70vh]"
-          />
-
-          <!-- Gallery Control Buttons - DONT EDIT THIS -->
-          <div
-            class="pointer-events-none absolute inset-0 flex items-center justify-between px-2"
-          >
-            <button
-              id="close-multi-gallery"
-              class="pointer-events-auto absolute right-2 top-2 isolate z-40 rounded-full border border-white/20 bg-neutral-900 p-1.5 transition-all duration-300 active:scale-90 md:hover:opacity-60 lg:p-2"
-              aria-label="Close Gallery"
-            >
-              <i
-                data-lucide="x"
-                class="size-4 brightness-0 invert lg:size-6"
-              ></i>
-            </button>
-
-            <button
-              id="prev-multi-gallery"
-              class="pointer-events-auto rounded-full border border-white/20 bg-neutral-900 p-1.5 transition-all duration-300 md:hover:opacity-60 md:active:scale-90 lg:p-2"
-            >
-              <i
-                data-lucide="chevron-left"
-                class="size-4 text-white lg:size-6 rtl:scale-x-[-1]"
-              ></i>
-            </button>
-            <button
-              id="next-multi-gallery"
-              class="pointer-events-auto rounded-full border border-white/20 bg-neutral-900 p-1.5 transition-all duration-300 md:hover:opacity-60 md:active:scale-90 lg:p-2"
-            >
-              <i
-                data-lucide="chevron-right"
-                class="size-4 text-white lg:size-6 rtl:scale-x-[-1]"
-              ></i>
-            </button>
-          </div>
-        </div>
-
-        <!-- Thumbnails container -->
-        <div
-          class="relative rounded-b-xl border border-neutral-800 bg-neutral-900 px-4 py-2 lg:py-2"
-        >
-          <!-- Thumbnails - DONT EDIT THIS -->
-          <div
-            id="multi-gallery-thumbnails"
-            class="custom-scrollbar flex gap-x-4 overflow-x-auto px-2 py-2"
-          >
-            <img src="#" alt="Thumbnail 1" class="thumbnail" />
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- Hidden Images Groups -->
-    <div id="multi-gallery-images-container" class="hidden">
-      <ul class="dynamic-gallery">
-        <img
-          data-src="https://images.project-test.info/5.webp"
-          src="/assets/images/gray-placeholder.webp"
-          alt="Dubai'de Balayı Tatili 1"
-          class="dynamic-gallery-item"
-        />
-        <img
-          data-src="https://images.project-test.info/6.webp"
-          src="/assets/images/gray-placeholder.webp"
-          alt="Dubai'de Balayı Tatili 1"
-          class="dynamic-gallery-item"
-        />
-      </ul>
-      <ul class="dynamic-gallery">
-        <img
-          data-src="https://images.project-test.info/6.webp"
-          src="/assets/images/gray-placeholder.webp"
-          alt="Dubai'de Balayı Tatili 2"
-          class="dynamic-gallery-item"
-        />
-      </ul>
-    </div>
-
     <!-- Date Picker Container -->
     <div
       id="date-picker"
       data-language="tr"
-      class="absolute w-[calc(100%-1.65rem)] max-w-[23.125rem] rounded-lg border border-gray-200 bg-white p-4 opacity-0"
+      class="absolute w-[calc(100%-1.65rem)] max-w-[456px] rounded-lg border border-gray-200 bg-white p-4 opacity-0 lg:max-w-[366px]"
     >
       <div class="flex flex-col gap-4">
         <!-- Prev - Current Month - Next -->
@@ -2316,6 +1018,1155 @@
         </div>
       </div>
     </div>
+
+    <main class="mb-8 lg:mt-4">
+      <!-- Breadcrumb -->
+      <nav
+        class="mx-auto my-4 hidden max-w-7xl items-center gap-0 overflow-hidden text-xs lg:flex lg:px-6"
+      >
+        <a href="#" class="hover:underline"> Guide of Dubai </a>
+        <i data-lucide="chevron-right" class="size-4 rtl:scale-x-[-1]"></i>
+        <a href="#" class="hover:underline"> En Uygun Otel </a>
+      </nav>
+      <!--  Image Header -->
+      <div>
+        <div class="relative z-10 h-80 w-full bg-gray-100">
+          <div
+            class="absolute left-[50%] top-0 z-[61] flex h-full w-full max-w-7xl -translate-x-1/2 flex-col items-start justify-center px-3.5 lg:px-4"
+          >
+            <h1
+              class="max-w-[540px] text-balance bg-gradient-to-r from-white to-primary-50 bg-clip-text py-6 text-3xl font-bold text-transparent sm:text-5xl"
+            >
+              SİZİN İÇİN EN UYGUN OTELE ULAŞIN
+            </h1>
+          </div>
+
+          <img
+            src="https://images.project-test.info/25.webp"
+            alt="Dubai'de Balayı Tatili"
+            class="h-full w-full object-cover rtl:scale-x-[-1]"
+            style="transition: filter 0.3s ease"
+          />
+
+          <div
+            class="absolute inset-0 bg-gradient-to-b from-gray-950/30 to-transparent"
+          ></div>
+        </div>
+      </div>
+
+      <!-- Filter Container -->
+      <div class="mx-auto my-6 max-w-7xl px-4">
+        <!-- Filter Form -->
+        <form class="relative z-[200] flex flex-col gap-4 lg:flex-row">
+          <!-- Search Inputs Container (80% on desktop) -->
+          <!-- Search Inputs Container (80% on desktop) -->
+          <div class="flex w-full flex-col gap-4 md:flex-row lg:w-full">
+            <!-- Destination Input -->
+            <div class="w-full lg:w-1/3">
+              <div class="relative">
+                <input
+                  type="text"
+                  id="destination-input"
+                  name="destination"
+                  style="-webkit-border-radius: 0; border-radius: 0"
+                  class="peer h-12 w-full !rounded border border-gray-200 px-3 py-2 pl-10 text-sm outline-none focus:border-primary-200 sm:text-base rtl:pl-0 rtl:pr-10"
+                  placeholder="Nereye Gidiyorsunuz?"
+                  value="Dubai"
+                />
+                <label
+                  for="destination-input"
+                  class="absolute -top-2 left-3 bg-white px-1 text-xs text-gray-500 peer-focus:text-primary-500 rtl:left-auto rtl:right-3"
+                >
+                  Nereye Gidiyorsunuz?
+                </label>
+                <!-- Search Icon -->
+                <i
+                  data-lucide="search"
+                  class="absolute left-3 top-1/2 size-4 -translate-y-1/2 text-gray-400 rtl:left-auto rtl:right-3"
+                ></i>
+                <!-- Clear Button -->
+                <button
+                  type="button"
+                  class="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 rtl:left-3 rtl:right-auto"
+                >
+                  <i data-lucide="x" class="size-4"></i>
+                </button>
+              </div>
+            </div>
+
+            <!-- Date Select -->
+            <div class="w-full lg:w-1/3">
+              <div class="relative">
+                <input
+                  type="text"
+                  id="date-input"
+                  name="date"
+                  readonly
+                  data-focus="false"
+                  class="h-12 w-full appearance-none !rounded border border-gray-200 bg-white px-3 py-2 text-sm outline-none focus:border-primary-200 sm:text-base"
+                  placeholder="Tarih seçin"
+                />
+                <label
+                  id="date-input-label"
+                  for="date-input"
+                  data-focus="false"
+                  class="absolute -top-2 left-3 bg-white px-1 text-xs text-gray-500 data-[focus=true]:text-primary-500 rtl:left-auto rtl:right-3"
+                >
+                  Tarih Seçin
+                </label>
+                <div
+                  class="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 rtl:left-3 rtl:right-auto"
+                >
+                  <i data-lucide="calendar" class="size-4 text-gray-500"></i>
+                </div>
+              </div>
+            </div>
+
+            <!-- Number of People Select -->
+            <div
+              id="select-room-options-container"
+              data-state="closed"
+              class="group relative w-full lg:w-1/3"
+            >
+              <!-- Controller -->
+              <div class="relative">
+                <input
+                  readonly
+                  type="text"
+                  id="select-room-options"
+                  name="select-room-options"
+                  data-adult="1"
+                  data-child="0"
+                  data-room="1"
+                  class="h-12 w-full appearance-none !rounded border border-gray-200 bg-white px-3 py-2 text-sm outline-none group-data-[state=open]:!rounded-b-none group-data-[state=open]:border-gray-200 group-data-[state=closed]:text-gray-600/80 sm:text-base"
+                />
+                <label
+                  for="people-select"
+                  class="absolute -top-2 left-3 bg-white px-1 text-xs text-gray-500 group-data-[state=open]:text-primary-500 rtl:left-auto rtl:right-3"
+                >
+                  Oda Seçimi
+                </label>
+                <div
+                  class="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 rtl:left-3 rtl:right-auto"
+                >
+                  <i
+                    data-lucide="chevron-down"
+                    class="size-4 text-gray-500 transition-transform duration-300 group-data-[state=open]:rotate-180"
+                  ></i>
+                </div>
+              </div>
+              <!-- Dropdown -->
+              <div
+                id="people-select-dropdown"
+                class="pointer-events-none absolute right-0 top-full h-fit w-full rounded-b border-b border-l border-r border-gray-200 bg-white opacity-0 shadow transition-all duration-300 group-data-[state=open]:pointer-events-auto group-data-[state=open]:opacity-100"
+              >
+                <div class="flex flex-col gap-4 py-4">
+                  <!-- Yetişkin -->
+                  <div class="flex items-center justify-between px-4">
+                    <div class="flex items-center gap-2">
+                      <i data-lucide="user" class="size-5 text-gray-600"></i>
+                      <span id="adult-text" class="text-sm">Yetişkin</span>
+                    </div>
+                    <div class="flex items-center gap-2">
+                      <button
+                        type="button"
+                        id="adult-minus"
+                        class="flex h-8 w-8 items-center justify-center rounded-full border border-gray-200 text-primary-500 transition-transform duration-300 hover:scale-105 disabled:cursor-not-allowed disabled:text-gray-500 disabled:hover:scale-100"
+                      >
+                        -
+                      </button>
+                      <span id="adult-count" class="w-8 text-center">0</span>
+                      <button
+                        type="button"
+                        id="adult-plus"
+                        class="flex h-8 w-8 items-center justify-center rounded-full border border-gray-200 text-primary-500 transition-transform duration-300 hover:scale-105 disabled:cursor-not-allowed disabled:text-gray-500 disabled:hover:scale-100"
+                      >
+                        +
+                      </button>
+                    </div>
+                  </div>
+
+                  <!-- Çocuk -->
+                  <div class="flex items-center justify-between px-4">
+                    <div class="flex items-center gap-2">
+                      <i data-lucide="baby" class="size-5 text-gray-600"></i>
+                      <span id="child-text" class="text-sm">Çocuk</span>
+                    </div>
+                    <div class="flex items-center gap-2">
+                      <button
+                        type="button"
+                        id="child-minus"
+                        class="flex h-8 w-8 items-center justify-center rounded-full border border-gray-200 text-primary-500 transition-transform duration-300 hover:scale-105 disabled:cursor-not-allowed disabled:text-gray-500 disabled:hover:scale-100"
+                      >
+                        -
+                      </button>
+                      <span id="child-count" class="w-8 text-center">0</span>
+                      <button
+                        type="button"
+                        id="child-plus"
+                        class="flex h-8 w-8 items-center justify-center rounded-full border border-gray-200 text-primary-500 transition-transform duration-300 hover:scale-105 disabled:cursor-not-allowed disabled:text-gray-500 disabled:hover:scale-100"
+                      >
+                        +
+                      </button>
+                    </div>
+                  </div>
+
+                  <!-- Oda -->
+                  <div class="flex items-center justify-between px-4">
+                    <div class="flex items-center gap-2">
+                      <i
+                        data-lucide="door-open"
+                        class="size-5 text-gray-600"
+                      ></i>
+                      <span id="room-text" class="text-sm">Oda</span>
+                    </div>
+                    <div class="flex items-center gap-2">
+                      <button
+                        type="button"
+                        id="room-minus"
+                        class="flex h-8 w-8 items-center justify-center rounded-full border border-gray-200 text-primary-500 transition-transform duration-300 hover:scale-105 disabled:cursor-not-allowed disabled:text-gray-500 disabled:hover:scale-100"
+                      >
+                        -
+                      </button>
+                      <span id="room-count" class="w-8 text-center">0</span>
+                      <button
+                        type="button"
+                        id="room-plus"
+                        class="flex h-8 w-8 items-center justify-center rounded-full border border-gray-200 text-primary-500 transition-transform duration-300 hover:scale-105 disabled:cursor-not-allowed disabled:text-gray-500 disabled:hover:scale-100"
+                      >
+                        +
+                      </button>
+                    </div>
+                  </div>
+
+                  <hr class="-mb-4 border-t border-gray-200" />
+
+                  <!-- Onayla -->
+                  <div class="w-full px-4">
+                    <button
+                      type="button"
+                      id="people-select-close"
+                      class="mt-4 h-11 w-full rounded bg-primary-500 font-semibold text-white transition-all duration-200 hover:bg-primary-600 active:scale-95"
+                    >
+                      Onayla
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Filter Button Container (20% on desktop) -->
+          <div class="w-full lg:w-fit">
+            <button
+              type="submit"
+              class="flex h-12 w-full items-center justify-center gap-2 rounded bg-primary-500 px-4 text-sm font-semibold text-white transition-colors hover:bg-primary-600 active:scale-95"
+            >
+              <i data-lucide="filter" class="size-4"></i>
+              Filtrele
+            </button>
+          </div>
+        </form>
+      </div>
+
+      <!-- Mobil Filter Icons -->
+      <div
+        class="my-6 flex flex-shrink-0 flex-nowrap items-center justify-start gap-4 px-3.5 text-gray-900 lg:hidden"
+      >
+        <button
+          type="button"
+          id="sort-modal-button"
+          class="flex items-center gap-1 transition-colors duration-300 hover:!text-primary-500"
+        >
+          <i data-lucide="arrow-up-down" class="size-6"></i>
+          <span class="text-sm font-semibold">Sırala</span>
+        </button>
+        <button
+          type="button"
+          id="filter-modal-button"
+          data-state="closed"
+          class="flex items-center gap-1 transition-colors duration-300 hover:!text-primary-500"
+        >
+          <i data-lucide="sliders-horizontal" class="size-6"></i>
+          <span class="text-sm font-semibold">Filtrele</span>
+        </button>
+        <button
+          type="button"
+          id="filter-map-button"
+          class="flex items-center gap-1 transition-colors duration-300 hover:!text-primary-500"
+        >
+          <i data-lucide="map-pinned" class="size-6"></i>
+          <span class="text-sm font-semibold">Harita</span>
+        </button>
+      </div>
+
+      <!-- Filter and Results Container -->
+      <div class="mx-auto my-6 flex max-w-7xl items-start pt-2 lg:px-4">
+        <!--  Filter Modal -->
+        <div
+          data-state="closed"
+          id="filter-modal"
+          class="group fixed left-0 top-0 z-[8000] h-full w-full max-w-lg flex-shrink-0 overflow-hidden transition-transform duration-300 data-[state=closed]:translate-x-[-100%] data-[state=open]:translate-x-0 lg:static lg:w-[260px] lg:!translate-x-0"
+        >
+          <div
+            id="filter-container"
+            class="hide-scrollbar h-full w-full overflow-y-auto rounded border-gray-200 bg-white py-5 sm:border sm:pb-4 lg:w-full lg:pt-4"
+          >
+            <!-- Header -->
+            <div
+              class="mb-4 flex items-center justify-between border-b border-gray-200 px-4 pb-4"
+            >
+              <h2 class="text-2xl font-semibold text-gray-900">Filtre Seçin</h2>
+
+              <!-- Close Button -->
+              <button
+                id="filter-modal-close-button"
+                class="transition-all duration-300 hover:opacity-75 active:scale-95 lg:hidden"
+              >
+                <i data-lucide="x" class="size-7"></i>
+              </button>
+            </div>
+
+            <!-- Sort Options -->
+            <div class="mb-6 px-3.5 sm:mb-6">
+              <h3 class="mb-3 text-base font-medium text-gray-900">Sıralama</h3>
+              <div class="relative">
+                <select
+                  id="sort-select"
+                  name="sort"
+                  class="h-12 w-full appearance-none rounded-lg border border-gray-200 bg-white px-3 py-2 pl-10 text-sm text-gray-700 outline-none transition-colors hover:border-gray-300 focus:border-primary-200 rtl:pl-3 rtl:pr-8"
+                >
+                  <option value="recommended">Önerilen Sıralama</option>
+                  <option value="price-low-to-high">
+                    Fiyat (Düşükten Yükseğe)
+                  </option>
+                  <option value="price-high-to-low">
+                    Fiyat (Yüksekten Düşüğe)
+                  </option>
+                  <option value="rating-high-to-low">
+                    Puan (Yüksekten Düşüğe)
+                  </option>
+                  <option value="distance-low-to-high">
+                    Merkeze Uzaklık (Yakından Uzağa)
+                  </option>
+                </select>
+                <!-- Sort Icon -->
+                <i
+                  data-lucide="arrow-up-down"
+                  class="absolute left-3 top-1/2 size-4 -translate-y-1/2 text-gray-400"
+                ></i>
+                <!-- Dropdown Icon -->
+                <div
+                  class="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2"
+                >
+                  <i
+                    data-lucide="chevron-down"
+                    class="size-4 text-gray-500"
+                  ></i>
+                </div>
+              </div>
+            </div>
+
+            <!-- Budget Range -->
+            <div class="mb-6 px-4 sm:mb-8">
+              <h3 class="mb-3 text-base font-medium text-gray-900">
+                Bütçeniz (Gecelik)
+              </h3>
+
+              <div
+                id="price-range-1"
+                class="relative"
+                data-min="0"
+                data-max="10000"
+                data-step="25"
+              >
+                <!-- Hidden inputs for form submission -->
+                <input
+                  type="hidden"
+                  name="min_price"
+                  id="min_price_1"
+                  value="0"
+                />
+                <input
+                  type="hidden"
+                  name="max_price"
+                  id="max_price_1"
+                  value="10000"
+                />
+
+                <!-- Range values -->
+                <div class="mb-4 flex justify-between">
+                  <div class="flex items-center gap-1">
+                    <span class="currency">TL</span>
+                    <span id="display-min-value-1">0</span>
+                    <span> - </span>
+                    <span class="currency">TL</span>
+                    <span id="display-max-value-1">10.000</span>
+                  </div>
+                </div>
+
+                <!-- Slider Container -->
+                <div class="relative h-2">
+                  <!-- Background track -->
+                  <div
+                    class="absolute h-full w-full rounded-lg bg-gray-200"
+                  ></div>
+
+                  <!-- Selected Range Track -->
+                  <div
+                    id="slider-range-1"
+                    class="absolute h-full rounded-lg bg-primary-500"
+                  ></div>
+
+                  <!-- Min handle -->
+                  <div
+                    id="min-handle-1"
+                    class="slider-handle absolute top-1/2 size-6 -translate-y-1/2 cursor-grab rounded-full border-2 border-primary-500 bg-white shadow-md transition-transform active:scale-110 active:cursor-grabbing"
+                  ></div>
+
+                  <!-- Max handle -->
+                  <div
+                    id="max-handle-1"
+                    class="slider-handle absolute top-1/2 size-6 -translate-y-1/2 translate-x-[-100%] cursor-grab rounded-full border-2 border-primary-500 bg-white shadow-md transition-transform active:scale-110 active:cursor-grabbing"
+                  ></div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Popular Filters -->
+            <div class="mb-6 px-4 sm:mb-8">
+              <h3 class="mb-3 text-base font-medium text-gray-900">
+                Dubai'de En Çok Kullanılan Filtreler
+              </h3>
+              <div class="space-y-3">
+                <label class="group flex cursor-pointer items-center gap-3">
+                  <input
+                    type="checkbox"
+                    class="peer relative grid size-5 appearance-none place-content-center rounded border-2 border-gray-300 bg-white transition-colors duration-200 before:h-[0.65em] before:w-[0.65em] before:origin-bottom-left before:scale-0 before:bg-white before:transition-transform before:duration-200 before:ease-in-out before:content-[''] before:[clip-path:polygon(14%_44%,0_65%,50%_100%,100%_16%,80%_0%,43%_62%)] checked:border-primary-500 checked:bg-primary-500 checked:before:scale-100 hover:border-primary-500"
+                  />
+                  <span class="text-sm text-gray-700 group-hover:text-gray-900"
+                    >Ön Ödeme Yok</span
+                  >
+                </label>
+                <label class="group flex cursor-pointer items-center gap-3">
+                  <input
+                    type="checkbox"
+                    class="peer relative grid size-5 appearance-none place-content-center rounded border-2 border-gray-300 bg-white transition-colors duration-200 before:h-[0.65em] before:w-[0.65em] before:origin-bottom-left before:scale-0 before:bg-white before:transition-transform before:duration-200 before:ease-in-out before:content-[''] before:[clip-path:polygon(14%_44%,0_65%,50%_100%,100%_16%,80%_0%,43%_62%)] checked:border-primary-500 checked:bg-primary-500 checked:before:scale-100 hover:border-primary-500"
+                  />
+                  <span class="text-sm text-gray-700 group-hover:text-gray-900"
+                    >Ücretsiz İptal</span
+                  >
+                </label>
+                <label class="group flex cursor-pointer items-center gap-3">
+                  <input
+                    type="checkbox"
+                    class="peer relative grid size-5 appearance-none place-content-center rounded border-2 border-gray-300 bg-white transition-colors duration-200 before:h-[0.65em] before:w-[0.65em] before:origin-bottom-left before:scale-0 before:bg-white before:transition-transform before:duration-200 before:ease-in-out before:content-[''] before:[clip-path:polygon(14%_44%,0_65%,50%_100%,100%_16%,80%_0%,43%_62%)] checked:border-primary-500 checked:bg-primary-500 checked:before:scale-100 hover:border-primary-500"
+                  />
+                  <span class="text-sm text-gray-700 group-hover:text-gray-900"
+                    >Kahvaltı Dahil</span
+                  >
+                </label>
+              </div>
+            </div>
+
+            <!-- Amenities -->
+            <div class="mb-6 px-4 sm:mb-8">
+              <h3 class="mb-3 text-base font-medium text-gray-900">
+                Olanaklar
+              </h3>
+              <div class="space-y-3">
+                <label class="group flex cursor-pointer items-center gap-3">
+                  <input
+                    type="checkbox"
+                    class="peer relative grid size-5 appearance-none place-content-center rounded border-2 border-gray-300 bg-white transition-colors duration-200 before:h-[0.65em] before:w-[0.65em] before:origin-bottom-left before:scale-0 before:bg-white before:transition-transform before:duration-200 before:ease-in-out before:content-[''] before:[clip-path:polygon(14%_44%,0_65%,50%_100%,100%_16%,80%_0%,43%_62%)] checked:border-primary-500 checked:bg-primary-500 checked:before:scale-100 hover:border-primary-500"
+                  />
+                  <span class="text-sm text-gray-700 group-hover:text-gray-900"
+                    >Otopark</span
+                  >
+                </label>
+                <label class="group flex cursor-pointer items-center gap-3">
+                  <input
+                    type="checkbox"
+                    class="peer relative grid size-5 appearance-none place-content-center rounded border-2 border-gray-300 bg-white transition-colors duration-200 before:h-[0.65em] before:w-[0.65em] before:origin-bottom-left before:scale-0 before:bg-white before:transition-transform before:duration-200 before:ease-in-out before:content-[''] before:[clip-path:polygon(14%_44%,0_65%,50%_100%,100%_16%,80%_0%,43%_62%)] checked:border-primary-500 checked:bg-primary-500 checked:before:scale-100 hover:border-primary-500"
+                  />
+                  <span class="text-sm text-gray-700 group-hover:text-gray-900"
+                    >Restoran</span
+                  >
+                </label>
+                <label class="group flex cursor-pointer items-center gap-3">
+                  <input
+                    type="checkbox"
+                    class="peer relative grid size-5 appearance-none place-content-center rounded border-2 border-gray-300 bg-white transition-colors duration-200 before:h-[0.65em] before:w-[0.65em] before:origin-bottom-left before:scale-0 before:bg-white before:transition-transform before:duration-200 before:ease-in-out before:content-[''] before:[clip-path:polygon(14%_44%,0_65%,50%_100%,100%_16%,80%_0%,43%_62%)] checked:border-primary-500 checked:bg-primary-500 checked:before:scale-100 hover:border-primary-500"
+                  />
+                  <span class="text-sm text-gray-700 group-hover:text-gray-900"
+                    >Evcil Hayvan Girebilir</span
+                  >
+                </label>
+              </div>
+            </div>
+
+            <!-- Filter Actions -->
+            <div class="flex gap-2 px-4">
+              <button
+                type="button"
+                class="h-12 flex-1 rounded border border-gray-200 bg-gray-100 px-4 py-2 text-sm font-semibold text-gray-700 transition-colors duration-200 hover:bg-gray-200"
+              >
+                Temizle
+              </button>
+              <button
+                type="button"
+                class="h-12 flex-1 rounded bg-primary-500 px-4 py-2 text-sm font-semibold text-white transition-colors duration-200 hover:bg-primary-600"
+              >
+                Uygula
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!--  Results Pagination Login  -->
+        <div class="flex w-full flex-col space-y-4">
+          <!--  Results and Pagination -->
+          <div class="flex w-full flex-col space-y-8">
+            <!--  Results Container -->
+            <div
+              class="flex h-fit w-full flex-col gap-8 divide-y divide-gray-100 bg-white px-3.5 lg:pl-4 lg:pr-0 rtl:lg:pr-4 [&>*:not(:first-child)]:pt-7"
+            >
+              <!-- Card - Design 1 -->
+              <div
+                class="group flex h-fit w-full gap-4 bg-white transition-all md:items-start md:justify-between"
+              >
+                <!-- Image Container -->
+                <div
+                  class="relative aspect-[4/3] w-[152px] flex-shrink-0 sm:w-[200px]"
+                >
+                  <!-- Ribbon -->
+                  <div
+                    class="absolute -left-1.5 top-1.5 z-10 rtl:-right-1.5 rtl:left-auto"
+                  >
+                    <div
+                      class="relative before:absolute before:bottom-[-5px] before:left-0 before:border-l-[5px] before:border-t-[5px] before:border-l-transparent before:border-t-primary-500 rtl:before:left-auto"
+                    >
+                      <span
+                        class="relative block bg-primary-500 px-3 py-1 text-xs font-semibold text-white"
+                      >
+                        Kahvaltı Dahil
+                      </span>
+                    </div>
+                  </div>
+                  <img
+                    src="https://images.project-test.info/22.webp"
+                    alt="Hotel Image"
+                    class="h-full w-full rounded-xl rounded-br-[3rem] object-cover rtl:rounded-bl-[3rem] rtl:rounded-br-xl"
+                  />
+                </div>
+
+                <div
+                  class="flex w-full flex-col justify-between gap-4 md:flex-row"
+                >
+                  <!-- Info Container -->
+                  <div class="flex flex-col gap-1 sm:gap-1.5">
+                    <!-- Hotel Name -->
+                    <h3 class="text-sm font-semibold text-gray-900 sm:text-xl">
+                      Jood Hotel Apartments
+                    </h3>
+
+                    <!-- Rating Section -->
+                    <div class="mb-1.5 flex items-center gap-2">
+                      <div
+                        class="-mt-0.5 flex items-center justify-center rounded-lg bg-green-500 px-2 py-1.5 text-center text-xs font-bold text-white sm:py-1.5 sm:text-sm"
+                      >
+                        <span>4.9</span>
+                        <span>/5</span>
+                      </div>
+                      <div class="flex flex-col">
+                        <div class="flex gap-0.5">
+                          <i
+                            data-lucide="star"
+                            class="size-2.5 fill-yellow-400 text-yellow-400 sm:size-4"
+                          ></i>
+                          <i
+                            data-lucide="star"
+                            class="size-2.5 fill-yellow-400 text-yellow-400 sm:size-4"
+                          ></i>
+                          <i
+                            data-lucide="star"
+                            class="size-2.5 fill-yellow-400 text-yellow-400 sm:size-4"
+                          ></i>
+                          <i
+                            data-lucide="star"
+                            class="size-2.5 fill-yellow-400 text-yellow-400 sm:size-4"
+                          ></i>
+                          <i
+                            data-lucide="star"
+                            class="size-2.5 fill-yellow-400 text-yellow-400 sm:size-4"
+                          ></i>
+                        </div>
+                        <span
+                          class="text-xs font-semibold text-green-500 sm:text-sm"
+                          >Mükemmel</span
+                        >
+                      </div>
+                    </div>
+
+                    <!-- Location and Distance -->
+                    <div
+                      class="flex flex-wrap items-center gap-2 text-xs sm:text-sm"
+                    >
+                      <a href="#" class="text-primary-500 hover:underline"
+                        >Deyra, Dubai</a
+                      >
+                      <a href="#" class="text-primary-500 hover:underline"
+                        >Haritada Göster</a
+                      >
+                      <span class="text-gray-500">Merkez 9,3 KM</span>
+                    </div>
+
+                    <!-- Feature Tags -->
+                    <div class="flex flex-wrap gap-2">
+                      <span
+                        class="rounded-full bg-primary-100 px-3 py-1 text-xs text-primary-600 sm:text-sm"
+                      >
+                        Ücretsiz Havaalanı Taksi
+                      </span>
+                      <span
+                        class="rounded-full bg-primary-100 px-3 py-1 text-xs text-primary-600 sm:text-sm"
+                      >
+                        Sınırlı Süre Fırsat
+                      </span>
+                    </div>
+                  </div>
+
+                  <!-- Room Details and Booking -->
+                  <div
+                    class="flex w-full flex-col gap-3 md:h-fit md:w-full md:max-w-[240px] md:items-end md:justify-between"
+                  >
+                    <!-- Room Details -->
+                    <div
+                      class="text-xs text-gray-600 sm:text-sm md:text-right rtl:text-left"
+                    >
+                      <h4 class="font-semibold text-gray-900">
+                        Deluxe İki Yatak Odalı Daire
+                      </h4>
+                      <ul
+                        class="flex flex-wrap gap-0.5 gap-x-2 text-nowrap text-xs"
+                      >
+                        <li>2 yatak odası</li>
+                        <li>1 oturma odası</li>
+                        <li>1 banyo</li>
+                      </ul>
+                    </div>
+
+                    <!-- Button and Price Section -->
+                    <div
+                      class="flex w-full flex-col gap-2 md:items-end md:justify-end md:text-end"
+                    >
+                      <!--  Price Section -->
+                      <div class="flex-shrink-0">
+                        <div class="flex flex-shrink-0 items-center gap-1.5">
+                          <span
+                            class="text-xs text-gray-400 line-through sm:text-sm"
+                            >1500 AED</span
+                          >
+                          <div
+                            class="text-xs font-medium text-primary-600 sm:text-sm"
+                          >
+                            %20 İndirim
+                          </div>
+                        </div>
+                        <span
+                          class="text-base font-bold text-primary-600 md:text-2xl"
+                          >1300 AED</span
+                        >
+                      </div>
+                      <!--  Button Section -->
+                      <button
+                        class="flex h-9 w-full items-center justify-center gap-1.5 rounded-lg bg-primary-500 px-5 text-xs font-semibold text-white transition-colors hover:bg-primary-600 sm:h-11 md:text-base"
+                      >
+                        <span>Rezervasyon Yap</span>
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Card - Design 2 (Alternatif) -->
+              <div
+                class="group flex h-fit w-full flex-col gap-4 transition-all sm:flex-row md:items-start md:justify-between"
+              >
+                <!-- Image Container -->
+                <div
+                  class="relative h-[200px] w-full flex-shrink-0 sm:aspect-[4/3] sm:h-full sm:w-[200px]"
+                >
+                  <!-- Ribbon -->
+                  <div
+                    class="absolute -left-1.5 top-1.5 z-10 rtl:-right-1.5 rtl:left-auto"
+                  >
+                    <div
+                      class="relative before:absolute before:bottom-[-5px] before:left-0 before:border-l-[5px] before:border-t-[5px] before:border-l-transparent before:border-t-primary-500 rtl:before:left-auto"
+                    >
+                      <span
+                        class="relative block bg-primary-500 px-3 py-1 text-xs font-semibold text-white"
+                      >
+                        Kahvaltı Dahil
+                      </span>
+                    </div>
+                  </div>
+                  <img
+                    src="https://images.project-test.info/28.webp"
+                    alt="Hotel Image"
+                    class="h-full w-full rounded-xl object-cover sm:rounded-br-[3rem] rtl:rounded-bl-[3rem] rtl:rounded-br-xl"
+                  />
+                </div>
+
+                <!-- Info Container -->
+                <div class="flex w-full flex-col gap-1 sm:gap-1.5">
+                  <!-- Hotel Name -->
+                  <h3 class="text-xl font-semibold text-gray-900">
+                    Jood Hotel Apartments
+                  </h3>
+
+                  <!-- Rating Section -->
+                  <div class="mb-1.5 flex items-center gap-2">
+                    <div
+                      class="-mt-0.5 flex items-center justify-center rounded-lg bg-green-500 px-2 py-1.5 text-center"
+                    >
+                      <span class="text-sm font-bold text-white">4.9 / 5</span>
+                    </div>
+                    <div class="flex flex-col">
+                      <div class="flex gap-0.5">
+                        <i
+                          data-lucide="star"
+                          class="size-4 fill-yellow-400 text-yellow-400"
+                        ></i>
+                        <i
+                          data-lucide="star"
+                          class="size-4 fill-yellow-400 text-yellow-400"
+                        ></i>
+                        <i
+                          data-lucide="star"
+                          class="size-4 fill-yellow-400 text-yellow-400"
+                        ></i>
+                        <i
+                          data-lucide="star"
+                          class="size-4 fill-yellow-400 text-yellow-400"
+                        ></i>
+                        <i
+                          data-lucide="star"
+                          class="size-4 fill-yellow-400 text-yellow-400"
+                        ></i>
+                      </div>
+                      <span class="text-sm font-semibold text-green-500"
+                        >Mükemmel</span
+                      >
+                    </div>
+                  </div>
+
+                  <!-- Location and Distance -->
+                  <div class="flex flex-wrap items-center gap-2 text-sm">
+                    <a href="#" class="text-primary-500 hover:underline"
+                      >Deyra, Dubai</a
+                    >
+                    <a href="#" class="text-primary-500 hover:underline"
+                      >Haritada Göster</a
+                    >
+                    <span class="text-gray-500">Merkez 9,3 KM</span>
+                  </div>
+
+                  <!-- Feature Tags -->
+                  <div class="flex flex-wrap gap-2">
+                    <span
+                      class="rounded-full bg-primary-100 px-3 py-1 text-sm text-primary-600"
+                    >
+                      Ücretsiz Havaalanı Taksi
+                    </span>
+                    <span
+                      class="rounded-full bg-primary-100 px-3 py-1 text-sm text-primary-600"
+                    >
+                      Sınırlı Süre Fırsat
+                    </span>
+                  </div>
+                </div>
+
+                <!-- Room Details and Booking -->
+                <div
+                  class="flex flex-col gap-3 md:h-fit md:w-full md:max-w-[240px] md:items-end md:justify-between"
+                >
+                  <!-- Room Details -->
+                  <div
+                    class="text-sm text-gray-600 md:text-right rtl:text-left"
+                  >
+                    <h4 class="font-semibold text-gray-900">
+                      Deluxe İki Yatak Odalı Daire
+                    </h4>
+                    <ul
+                      class="flex flex-wrap gap-x-2 gap-y-1 text-nowrap text-xs"
+                    >
+                      <li>2 yatak odası</li>
+                      <li>1 oturma odası</li>
+                      <li>1 banyo</li>
+                    </ul>
+                  </div>
+
+                  <!-- Button and Price Section -->
+                  <div
+                    class="flex w-full flex-col gap-1 sm:gap-2 md:items-end md:justify-end md:text-end"
+                  >
+                    <!--  Price Section -->
+                    <div class="flex-shrink-0">
+                      <div class="flex flex-shrink-0 items-center gap-1.5">
+                        <span
+                          class="text-xs text-gray-400 line-through sm:text-sm"
+                          >1500 AED</span
+                        >
+                        <div
+                          class="text-xs font-medium text-primary-600 sm:text-sm"
+                        >
+                          %20 İndirim
+                        </div>
+                      </div>
+                      <span
+                        class="text-lg font-bold text-primary-600 md:text-2xl"
+                        >1300 AED</span
+                      >
+                    </div>
+                    <!--  Button Section -->
+                    <button
+                      class="flex h-11 w-full flex-shrink-0 items-center justify-center gap-1.5 rounded-lg bg-primary-500 px-5 text-base font-semibold text-white transition-colors hover:bg-primary-600 md:text-base"
+                    >
+                      <span>Rezervasyon Yap</span>
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- Loading and Not Found -->
+            <div
+              class="flex flex-col items-center justify-center divide-y divide-gray-100 bg-white px-3.5 lg:pl-4 lg:pr-0 rtl:lg:pr-4 [&>*:first-child]:pb-8 [&>*:not(:first-child)]:py-8"
+            >
+              <!-- Loading Skeleton Design 1 -->
+              <div
+                class="group flex h-fit w-full animate-pulse gap-4 bg-white transition-all md:items-start md:justify-between"
+              >
+                <!-- Image Skeleton -->
+                <div
+                  class="relative aspect-[4/3] w-[152px] flex-shrink-0 rounded-xl rounded-br-[3rem] bg-gray-200 sm:w-[200px] rtl:rounded-bl-[3rem] rtl:rounded-br-xl"
+                ></div>
+
+                <div
+                  class="flex w-full flex-col justify-between gap-4 md:flex-row"
+                >
+                  <!-- Info Container -->
+                  <div class="flex flex-col gap-1 sm:gap-1.5">
+                    <!-- Hotel Name Skeleton -->
+                    <div class="h-5 w-48 rounded-lg bg-gray-200"></div>
+
+                    <!-- Rating Section Skeleton -->
+                    <div class="mb-1.5 flex items-center gap-2">
+                      <div class="h-5 w-8 rounded-lg bg-gray-200"></div>
+                      <div
+                        class="hidden h-5 w-16 rounded-lg bg-gray-200 sm:block"
+                      ></div>
+                    </div>
+
+                    <!-- Location Skeleton -->
+                    <div class="flex gap-2">
+                      <div class="h-5 w-16 rounded-lg bg-gray-200"></div>
+                      <div
+                        class="hidden h-5 w-24 rounded-lg bg-gray-200 sm:block"
+                      ></div>
+                      <div class="h-5 w-16 rounded-lg bg-gray-200"></div>
+                    </div>
+
+                    <!-- Feature Tags Skeleton -->
+                    <div class="flex flex-wrap gap-2">
+                      <div class="h-5 w-32 rounded-full bg-gray-200"></div>
+                    </div>
+                  </div>
+
+                  <!-- Room Details and Booking Skeleton -->
+                  <div
+                    class="flex w-full flex-col gap-3 md:h-fit md:w-full md:max-w-[240px] md:items-end"
+                  >
+                    <!-- Room Details Skeleton -->
+                    <div class="hidden flex-col gap-2 sm:flex">
+                      <div class="h-5 w-full rounded-lg bg-gray-200"></div>
+                      <div class="h-4 w-3/4 rounded-lg bg-gray-200"></div>
+                    </div>
+
+                    <!-- Price and Button Skeleton -->
+                    <div class="flex w-full flex-col gap-2">
+                      <div
+                        class="mr-auto h-8 w-20 rounded-lg bg-gray-200 sm:ml-auto sm:mr-0 rtl:ml-0 rtl:mr-0 rtl:md:mr-auto"
+                      ></div>
+                      <div
+                        class="h-9 w-full rounded-lg bg-gray-200 sm:h-11"
+                      ></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Loading Skeleton Design 2  -->
+              <div
+                class="group flex h-fit w-full animate-pulse flex-col gap-4 transition-all sm:flex-row md:items-start md:justify-between"
+              >
+                <!-- Image Container -->
+                <div
+                  class="relative h-[200px] w-full flex-shrink-0 sm:aspect-[4/3] sm:h-full sm:w-[200px]"
+                >
+                  <div
+                    class="h-full w-full rounded-xl bg-gray-200 object-cover sm:rounded-br-[3rem] rtl:sm:rounded-bl-[3rem] rtl:sm:rounded-br-xl"
+                  ></div>
+                </div>
+
+                <!-- Info Container -->
+                <div class="flex w-full flex-col gap-1 sm:gap-1.5">
+                  <!-- Hotel Name -->
+                  <div class="h-5 w-48 rounded-lg bg-gray-200"></div>
+
+                  <!-- Rating Section Skeleton (Simplified) -->
+                  <div class="mb-1.5 flex items-center gap-2">
+                    <div class="h-5 w-8 rounded-lg bg-gray-200"></div>
+                    <div
+                      class="hidden h-5 w-16 rounded-lg bg-gray-200 sm:block"
+                    ></div>
+                  </div>
+
+                  <!-- Location Skeleton -->
+                  <div class="flex gap-2">
+                    <div class="h-5 w-16 rounded-lg bg-gray-200"></div>
+                    <div
+                      class="hidden h-5 w-24 rounded-lg bg-gray-200 sm:block"
+                    ></div>
+                    <div class="h-5 w-16 rounded-lg bg-gray-200"></div>
+                  </div>
+
+                  <!-- Feature Tags -->
+                  <div class="flex flex-wrap gap-2">
+                    <div class="h-5 w-32 rounded-full bg-gray-200"></div>
+                  </div>
+                </div>
+
+                <div
+                  class="flex w-full flex-col gap-3 md:h-fit md:w-full md:max-w-[240px] md:items-end"
+                >
+                  <!-- Room Details Skeleton -->
+                  <div class="hidden flex-col gap-2 sm:flex">
+                    <div class="h-5 w-full rounded-lg bg-gray-200"></div>
+                    <div class="h-4 w-3/4 rounded-lg bg-gray-200"></div>
+                  </div>
+
+                  <!-- Price and Button Skeleton -->
+                  <div class="flex w-full flex-col gap-2">
+                    <div
+                      class="mr-auto h-8 w-20 rounded-lg bg-gray-200 sm:ml-auto sm:mr-0 rtl:ml-0 rtl:mr-0 rtl:md:mr-auto"
+                    ></div>
+                    <div class="h-11 w-full rounded-lg bg-gray-200"></div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Alternative Loading Design -->
+              <div
+                class="flex w-full flex-col items-center justify-center gap-6 px-4"
+              >
+                <!-- Loading Animation Container -->
+                <div class="relative flex items-center justify-center">
+                  <!-- Outer spinning circle -->
+                  <div
+                    class="absolute size-24 animate-[spin_2s_linear_infinite] rounded-full border-4 border-gray-100 border-t-primary-500"
+                  ></div>
+
+                  <!-- Inner content -->
+                  <div
+                    class="z-10 flex size-16 items-center justify-center rounded-full bg-white shadow-lg shadow-gray-200/75"
+                  >
+                    <!-- Building Icon -->
+                    <i
+                      data-lucide="building"
+                      class="size-8 animate-pulse text-primary-500"
+                    ></i>
+                  </div>
+                </div>
+
+                <!-- Loading Text with Animated Dots -->
+                <div class="flex flex-col items-center gap-2 text-center">
+                  <div class="flex items-center gap-1">
+                    <h3 class="text-lg font-semibold text-gray-900">
+                      Oteller Aranıyor
+                    </h3>
+                    <span class="animate-bounce text-lg">.</span>
+                    <span class="animate-bounce text-lg [animation-delay:200ms]"
+                      >.</span
+                    >
+                    <span class="animate-bounce text-lg [animation-delay:400ms]"
+                      >.</span
+                    >
+                  </div>
+                  <p class="text-sm text-gray-500">
+                    Size en uygun otelleri buluyoruz
+                  </p>
+                </div>
+                <!-- Progress Bar -->
+                <div class="w-full max-w-md">
+                  <div
+                    class="h-1.5 w-full overflow-hidden rounded-full bg-gray-100"
+                  >
+                    <div
+                      data-found="false"
+                      class="h-full w-full origin-left animate-[loading_10s_ease-in-out] rounded-full bg-primary-500 data-[found=true]:!scale-x-100"
+                    ></div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Not Found State -->
+              <div
+                class="flex w-full flex-col items-center justify-center gap-4 px-4"
+              >
+                <!-- Icon -->
+                <div
+                  class="flex h-20 w-20 items-center justify-center rounded-full bg-gray-100"
+                >
+                  <i data-lucide="frown" class="size-10 text-gray-400"></i>
+                </div>
+
+                <!-- Text Content -->
+                <div class="text-center">
+                  <h3 class="text-lg font-semibold text-gray-900">
+                    Sonuç Bulunamadı
+                  </h3>
+                  <p class="mt-1 text-sm text-gray-500">
+                    Arama kriterlerinize uygun otel bulunamadı. Lütfen farklı
+                    tarih veya konum seçerek tekrar deneyin.
+                  </p>
+                </div>
+
+                <!-- Action Button -->
+                <button
+                  class="mt-4 flex h-11 items-center justify-center rounded-lg bg-primary-500 px-6 text-base font-semibold text-white transition-colors hover:bg-primary-600"
+                >
+                  Aramayı Temizle
+                </button>
+              </div>
+            </div>
+            <!-- Pagination -->
+            <div
+              class="flex items-center justify-between gap-4 border-t border-gray-100 px-3.5 py-4"
+            >
+              <div class="hidden text-sm text-gray-700 sm:block">
+                <span>Toplam 50 sonuçtan 1-10 arası gösteriliyor</span>
+              </div>
+
+              <div
+                class="flex flex-1 items-center justify-center gap-2 sm:justify-end"
+              >
+                <button
+                  class="inline-flex h-8 w-8 items-center justify-center rounded border border-gray-300 bg-white text-gray-500 transition-colors hover:bg-gray-50 disabled:cursor-not-allowed disabled:opacity-50"
+                  data-page="prev"
+                >
+                  <i
+                    data-lucide="chevron-left"
+                    class="size-4 rtl:rotate-180"
+                  ></i>
+                </button>
+
+                <div class="flex items-center gap-2" id="pagination-container">
+                  <div
+                    class="flex items-center gap-2"
+                    id="pagination-container"
+                  >
+                    <a
+                      href="#"
+                      class="inline-flex h-8 min-w-8 items-center justify-center rounded border border-gray-300 bg-white px-3 text-sm text-gray-600 transition-colors hover:bg-gray-50 data-[active=true]:border-primary-500 data-[active=true]:bg-primary-50 data-[active=true]:font-semibold data-[active=true]:text-primary-600"
+                      data-page="1"
+                      data-active="true"
+                    >
+                      1
+                    </a>
+                    <a
+                      href="#"
+                      class="inline-flex h-8 min-w-8 items-center justify-center rounded border border-gray-300 bg-white px-3 text-sm text-gray-600 transition-colors hover:bg-gray-50 data-[active=true]:border-primary-500 data-[active=true]:bg-primary-50 data-[active=true]:font-semibold data-[active=true]:text-primary-600"
+                      data-page="2"
+                      data-active="false"
+                    >
+                      2
+                    </a>
+                    <a
+                      href="#"
+                      class="inline-flex h-8 min-w-8 items-center justify-center rounded border border-gray-300 bg-white px-3 text-sm text-gray-600 transition-colors hover:bg-gray-50 data-[active=true]:border-primary-500 data-[active=true]:bg-primary-50 data-[active=true]:font-semibold data-[active=true]:text-primary-600"
+                      data-page="3"
+                      data-active="false"
+                    >
+                      3
+                    </a>
+                    <a
+                      href="#"
+                      class="inline-flex h-8 min-w-8 items-center justify-center rounded border border-gray-300 bg-white px-3 text-sm text-gray-600 transition-colors hover:bg-gray-50 data-[active=true]:border-primary-500 data-[active=true]:bg-primary-50 data-[active=true]:font-semibold data-[active=true]:text-primary-600"
+                      data-page="4"
+                      data-active="false"
+                    >
+                      4
+                    </a>
+                  </div>
+                </div>
+
+                <button
+                  class="inline-flex h-8 w-8 items-center justify-center rounded border border-gray-300 bg-white text-gray-500 transition-colors hover:bg-gray-50"
+                  data-page="next"
+                >
+                  <i
+                    data-lucide="chevron-right"
+                    class="size-4 rtl:rotate-180"
+                  ></i>
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!--  Login and Register Section -->
+          <div class="px-3.5 lg:pl-4 lg:pr-0">
+            <div
+              class="mx-auto flex max-w-7xl flex-col rounded bg-primary-500 p-4 sm:flex-row sm:items-center sm:justify-between"
+            >
+              <!-- Sol taraftaki metin alanı -->
+              <div>
+                <h2
+                  class="text-xl font-semibold text-white sm:text-2xl lg:text-xl"
+                >
+                  Giriş yapın, tasarruf edin
+                </h2>
+                <p class="text-sm text-white sm:text-base lg:text-base">
+                  Dubai seyahatleri için üyelere özel indirimlerin kilidini açın
+                </p>
+                <!-- Butonlar -->
+                <div class="mt-4 flex gap-2 sm:mt-6 sm:gap-4">
+                  <button
+                    class="rounded-lg bg-white px-4 py-2 text-sm font-medium text-primary-500 transition-colors hover:bg-gray-100 sm:px-6 sm:text-base"
+                  >
+                    Giriş Yap
+                  </button>
+                  <button
+                    class="rounded-lg bg-white px-4 py-2 text-sm font-medium text-primary-500 transition-colors hover:bg-gray-100 sm:px-6 sm:text-base"
+                  >
+                    Üye Ol
+                  </button>
+                </div>
+              </div>
+
+              <!-- Sağ taraftaki logo -->
+              <div class="flex justify-end">
+                <img
+                  src="/assets/images/brand-images/guide_of_dubai_yatay.svg"
+                  alt="Guide of Dubai Logo"
+                  class="h-auto w-20 brightness-0 invert lg:w-32"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
 
     <footer class="w-full">
       <div class="hidden w-full lg:block">
@@ -2816,21 +2667,21 @@
             <a
               href="#"
               aria-label="Instagram"
-              class="flex size-10 items-center justify-center rounded-full border border-gray-200 hover:bg-gray-100"
+              class="flex size-10 items-center justify-center rounded-full border border-gray-300 hover:bg-gray-100"
             >
               <i data-lucide="instagram" class="size-6"></i>
             </a>
             <a
               href="#"
               aria-label="Facebook"
-              class="flex size-10 items-center justify-center rounded-full border border-gray-200 hover:bg-gray-100"
+              class="flex size-10 items-center justify-center rounded-full border border-gray-300 hover:bg-gray-100"
             >
               <i data-lucide="facebook" class="size-6"></i>
             </a>
             <a
               href="#"
               aria-label="YouTube"
-              class="flex size-10 items-center justify-center rounded-full border border-gray-200 hover:bg-gray-100"
+              class="flex size-10 items-center justify-center rounded-full border border-gray-300 hover:bg-gray-100"
             >
               <i data-lucide="youtube" class="size-6"></i>
             </a>
