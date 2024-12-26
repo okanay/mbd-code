@@ -6,22 +6,25 @@ interface CounterItem {
   minusButtonId: string
   plusButtonId: string
   countElementId: string
-  minValue?: number // Opsiyonel minimum değer
+  containerId: string // Parent element ID'si eklendi
 }
 
 interface CounterConfig {
   value: number
-  minValue: number // Minimum değer eklendi
+  minValue: number
+  maxValue: number // Maximum değer eklendi
   plusBtn: HTMLButtonElement | null
   minusBtn: HTMLButtonElement | null
   countElement: HTMLElement | null
   textElement: HTMLElement | null
+  container: HTMLElement | null // Parent element referansı eklendi
 }
 
 export class InputCounter {
   private input: HTMLInputElement
   private counters: Map<string, CounterConfig> = new Map()
   private counterItems: CounterItem[]
+  private observers: Map<string, MutationObserver> = new Map() // MutationObserver'lar için
 
   constructor(inputId: string, counterItems: CounterItem[]) {
     this.input = document.getElementById(inputId) as HTMLInputElement
@@ -32,11 +35,13 @@ export class InputCounter {
     }
     this.initialize()
     this.bindEvents()
+    this.setupObservers()
     this.updateInputValue()
   }
 
   private initialize() {
     this.counterItems.forEach(item => {
+      const container = document.getElementById(item.containerId)
       const plusBtn = document.getElementById(item.plusButtonId)
       const minusBtn = document.getElementById(item.minusButtonId)
       const countElement = document.getElementById(item.countElementId)
@@ -45,29 +50,81 @@ export class InputCounter {
       const dataAttrName = item.dataAttribute.replace('data-', '')
       const initialValue = Number(this.input.dataset[dataAttrName] || 0)
 
+      // Min ve max değerlerini container'dan al
+      const minValue = Number(container?.dataset.min || 0)
+      const maxValue = Number(container?.dataset.max || 99)
+
       if (countElement) {
         countElement.textContent = initialValue.toString()
       }
 
       this.counters.set(item.type, {
         value: initialValue,
-        minValue: item.minValue || 0, // Eğer minValue belirtilmemişse 0 kullan
+        minValue,
+        maxValue,
         plusBtn: plusBtn as HTMLButtonElement,
         minusBtn: minusBtn as HTMLButtonElement,
         countElement,
         textElement,
+        container,
       })
     })
 
-    // İlk yüklemede butonların durumlarını güncelle
+    this.updateButtonStates()
+  }
+
+  private setupObservers() {
+    this.counters.forEach((config, type) => {
+      if (config.container) {
+        const observer = new MutationObserver(mutations => {
+          mutations.forEach(mutation => {
+            if (
+              mutation.type === 'attributes' &&
+              (mutation.attributeName === 'data-min' ||
+                mutation.attributeName === 'data-max')
+            ) {
+              this.updateLimits(type)
+            }
+          })
+        })
+
+        observer.observe(config.container, {
+          attributes: true,
+          attributeFilter: ['data-min', 'data-max'],
+        })
+
+        this.observers.set(type, observer)
+      }
+    })
+  }
+
+  private updateLimits(type: string) {
+    const config = this.counters.get(type)
+    if (!config || !config.container) return
+
+    const newMin = Number(config.container.dataset.min || 0)
+    const newMax = Number(config.container.dataset.max || 99)
+
+    config.minValue = newMin
+    config.maxValue = newMax
+
+    // Mevcut değeri yeni limitlere göre ayarla
+    config.value = Math.min(Math.max(config.value, newMin), newMax)
+    if (config.countElement) {
+      config.countElement.textContent = config.value.toString()
+    }
+
+    this.updateInputValue()
     this.updateButtonStates()
   }
 
   private updateButtonStates() {
     this.counters.forEach(config => {
       if (config.minusBtn) {
-        // Değer minimum değere eşit veya küçükse minus butonu disabled olsun
         config.minusBtn.disabled = config.value <= config.minValue
+      }
+      if (config.plusBtn) {
+        config.plusBtn.disabled = config.value >= config.maxValue
       }
     })
   }
@@ -76,7 +133,10 @@ export class InputCounter {
     const config = this.counters.get(type)
     if (!config) return
 
-    const newValue = Math.max(config.minValue, config.value + change)
+    const newValue = Math.min(
+      Math.max(config.minValue, config.value + change),
+      config.maxValue,
+    )
     if (newValue === config.value) return
 
     config.value = newValue
@@ -85,7 +145,7 @@ export class InputCounter {
     }
 
     this.updateInputValue()
-    this.updateButtonStates() // Butonların durumlarını güncelle
+    this.updateButtonStates()
   }
 
   private updateInputValue() {
