@@ -154,7 +154,7 @@ function createTableRow(rowData: BedroomInfo): string {
       <!-- Daire Tipi -->
       <div class="order-1 w-[32.5%] flex-shrink-0 translate-y-[-0.25rem] px-3.5 py-4 sm:order-none">
         <div class="space-y-2">
-          <button class="dynamic-gallery-button flex items-center gap-2 font-semibold text-primary-600 underline transition-all duration-200 hover:text-primary-400 active:scale-95">
+          <button class="dynamic-gallery-button flex cursor-default items-center gap-2 font-semibold text-primary-600">
             <i data-lucide="image" class="size-4"></i>
             <span>${rowData.title}</span>
           </button>
@@ -184,9 +184,8 @@ function createTableRow(rowData: BedroomInfo): string {
       </div>
 
       <!-- Özellikleriniz -->
-      <div class="order-5 w-[20%] flex-shrink-0 px-3.5 py-2.5 text-end sm:order-none sm:text-start">
+      <div class="order-5 w-[29.5%] flex-shrink-0 px-3.5 py-2.5 text-end sm:order-none sm:text-start">
         <div class="flex flex-col items-end space-y-2 sm:items-start">
-          <!-- Avantajlar -->
           <div class="flex items-start gap-2">
             <i data-lucide="check" class="order-2 size-5 flex-shrink-0 text-lime-600 sm:order-none"></i>
             <span class="order-1 text-sm sm:order-none">Dahili park yeri</span>
@@ -203,13 +202,10 @@ function createTableRow(rowData: BedroomInfo): string {
       </div>
 
       <!-- Aksiyon Butonu -->
-      <div class="order-2 w-[17.5%] flex-shrink-0 px-3.5 py-2.5 sm:order-none">
-        <div class="flex justify-end">
+      <div class="order-2 w-[8%] flex-shrink-0 px-3.5 py-2.5 sm:order-none">
+        <div class="flex justify-center">
           <div class="inline-flex items-center">
-            <button class="text-nowrap rounded-l border border-r-0 border-gray-200 bg-primary-500 px-4 py-2.5 text-sm font-semibold text-white transition-all duration-200 hover:bg-primary-600 active:scale-95">
-              Seç ve Devam Et
-            </button>
-            <div class="relative flex h-10 w-12 scale-y-[103%] items-center justify-between rounded-r border border-gray-200">
+            <div class="relative flex h-10 w-12 scale-y-[103%] items-center justify-between rounded border border-gray-200">
               <select class="h-full w-full appearance-none bg-transparent pl-2.5 pr-1 focus:outline-none focus:ring-0">
                 <option>0</option>
                 <option>1</option>
