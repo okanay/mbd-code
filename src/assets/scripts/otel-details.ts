@@ -19,14 +19,6 @@ document.addEventListener('DOMContentLoaded', () => {
         containers: ['#otel-info-content-1'],
       },
       {
-        id: 'price',
-        toggleElements: [],
-        openElements: ['#otel-info-btn-2'],
-        contentElement: '#otel-info-content-2',
-        closeElements: [],
-        containers: ['#otel-info-content-2'],
-      },
-      {
         id: 'includes',
         toggleElements: [],
         openElements: ['#otel-info-btn-3'],
@@ -56,7 +48,7 @@ document.addEventListener('DOMContentLoaded', () => {
       urlState: {
         enabled: true,
         queryParam: 'view',
-        modals: ['info', 'price', 'includes', 'rules', 'details'],
+        modals: ['info', 'includes', 'rules', 'details'],
       },
       scrollTo: {
         enabled: true,
