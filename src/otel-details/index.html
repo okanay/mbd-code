@@ -1216,13 +1216,7 @@
             >
               Genel Bakış
             </button>
-            <button
-              id="otel-info-btn-2"
-              data-state="closed"
-              class="h-full text-nowrap border-primary-500 text-sm font-bold data-[state=open]:translate-y-[4%] data-[state=open]:border-b-4 group-data-[query=price]/query:!translate-y-[4%] group-data-[query=price]/query:!border-b-4 lg:text-base"
-            >
-              Bilgi ve Fiyatlar
-            </button>
+
             <button
               id="otel-info-btn-3"
               data-state="closed"
@@ -1261,9 +1255,9 @@
         <!-- Otel Information Content -->
         <article class="flex flex-col gap-6 lg:flex-row">
           <!-- Otel Information Content -->
-          <div class="w-full px-3.5 lg:px-0">
+          <div class="flex w-full flex-col gap-6 px-3.5 lg:px-0">
             <!-- Otel Name and Rating -->
-            <section class="mb-4 flex w-full justify-between gap-1">
+            <section class="flex w-full justify-between gap-1">
               <div class="flex flex-col gap-1">
                 <h1
                   id="main-title"
@@ -1312,7 +1306,7 @@
               </div>
 
               <button
-                class="hidden h-full w-fit items-center justify-center gap-2.5 rounded bg-primary-500 px-4 py-3 text-sm font-semibold text-white transition-all duration-300 hover:bg-primary-600 active:scale-95 md:flex"
+                class="hidden h-11 w-fit items-center justify-center gap-2.5 rounded bg-primary-500 px-4 py-3 text-sm font-semibold text-white transition-all duration-300 hover:bg-primary-600 active:scale-95 md:flex"
               >
                 Rezervasyon Yap
               </button>
@@ -1414,12 +1408,247 @@
               </div>
             </section>
 
-            <!-- Bilgi ve Fiyatlar -->
+            <!-- Özellikler -->
             <section
-              id="otel-info-content-2"
+              id="otel-info-content-3"
               data-state="closed"
-              class="hidden min-h-[360px] data-[state=open]:block group-data-[query=price]/query:!block"
+              class="hidden flex-col items-start gap-6 data-[state=open]:flex group-data-[query=includes]/query:!flex"
             >
+              <div class="flex w-full flex-col gap-6">
+                <div class="flex flex-col text-sm tracking-wide text-gray-600">
+                  <h2 class="mb-3.5 text-base font-bold lg:text-xl">
+                    Özellikler
+                  </h2>
+                  <div class="grid grid-cols-1 gap-4 lg:grid-cols-2">
+                    <div class="flex items-start gap-2 text-sm lg:items-center">
+                      <i
+                        data-lucide="check"
+                        class="size-4 rounded-full border border-gray-200 p-0.5 lg:size-5 lg:p-1"
+                      ></i>
+                      <span class="text-sm text-gray-600 lg:text-base"
+                        >2 yüzme havuzu</span
+                      >
+                    </div>
+                    <div class="flex items-start gap-2 text-sm lg:items-center">
+                      <i
+                        data-lucide="check"
+                        class="size-4 rounded-full border border-gray-200 p-0.5 lg:size-5 lg:p-1"
+                      ></i>
+                      <span class="text-sm text-gray-600 lg:text-base"
+                        >Havaalanı servisi</span
+                      >
+                    </div>
+                    <div class="flex items-start gap-2 text-sm lg:items-center">
+                      <i
+                        data-lucide="check"
+                        class="size-4 rounded-full border border-gray-200 p-0.5 lg:size-5 lg:p-1"
+                      ></i>
+                      <span class="text-sm text-gray-600 lg:text-base"
+                        >Sigara içilmeyen odalar</span
+                      >
+                    </div>
+                    <div class="flex items-start gap-2 text-sm lg:items-center">
+                      <i
+                        data-lucide="check"
+                        class="size-4 rounded-full border border-gray-200 p-0.5 lg:size-5 lg:p-1"
+                      ></i>
+                      <span class="text-sm text-gray-600 lg:text-base"
+                        >Ücretsiz Wi-Fi internet bağlantısı</span
+                      >
+                    </div>
+                    <div class="flex items-start gap-2 text-sm lg:items-center">
+                      <i
+                        data-lucide="check"
+                        class="size-4 rounded-full border border-gray-200 p-0.5 lg:size-5 lg:p-1"
+                      ></i>
+                      <span class="text-sm text-gray-600 lg:text-base"
+                        >Fitness merkezi</span
+                      >
+                    </div>
+                    <div class="flex items-start gap-2 text-sm lg:items-center">
+                      <i
+                        data-lucide="check"
+                        class="size-4 rounded-full border border-gray-200 p-0.5 lg:size-5 lg:p-1"
+                      ></i>
+                      <span class="text-sm text-gray-600 lg:text-base"
+                        >Tüm odalarda çay/kahve makinesi</span
+                      >
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </section>
+
+            <!-- Tesis Kuralları -->
+            <section
+              id="otel-info-content-4"
+              data-state="closed"
+              class="hidden flex-col items-start gap-6 data-[state=open]:flex group-data-[query=rules]/query:!flex"
+            >
+              <div class="flex w-full flex-col gap-6">
+                <!-- Başlık -->
+                <div class="flex items-center gap-2">
+                  <h2 class="text-xl font-semibold text-gray-900">
+                    Tesis Kuralları
+                  </h2>
+                </div>
+
+                <!-- İçerik -->
+                <div class="flex flex-col gap-6">
+                  <!-- Check-in -->
+                  <div
+                    class="flex flex-col gap-3 border-b border-b-gray-200 pb-2"
+                  >
+                    <div class="flex items-center justify-between">
+                      <div class="flex items-center gap-2">
+                        <i
+                          data-lucide="door-closed"
+                          class="size-5 text-gray-500"
+                        ></i>
+                        <span class="font-medium">Check-in</span>
+                      </div>
+                      <span
+                        class="rounded-full bg-primary-50 px-3 py-1 text-sm text-primary-600"
+                        >15:00 - 23:30 arasında</span
+                      >
+                    </div>
+                    <p class="text-sm text-gray-600">
+                      Check-in sırasında konukların fotoğraflı kimlik belgesi ve
+                      kredi kartı göstermesi gerekmektedir
+                    </p>
+                  </div>
+
+                  <!-- Check-out -->
+                  <div
+                    class="flex flex-col gap-3 border-b border-b-gray-200 pb-2"
+                  >
+                    <div class="flex items-center justify-between">
+                      <div class="flex items-center gap-2">
+                        <i
+                          data-lucide="door-open"
+                          class="size-5 text-gray-500"
+                        ></i>
+                        <span class="font-medium">Check-out</span>
+                      </div>
+                      <span
+                        class="rounded-full bg-primary-50 px-3 py-1 text-sm text-primary-600"
+                        >12:00 - 12:30 arasında</span
+                      >
+                    </div>
+                    <p class="text-sm text-gray-600">
+                      Check-out sırasında konukların fotoğraflı kimlik belgesi
+                      ve kredi kartı göstermesi gerekmektedir.
+                    </p>
+                  </div>
+
+                  <!-- İptal/Ön Ödeme -->
+                  <div
+                    class="flex flex-col gap-3 border-b border-b-gray-200 pb-2"
+                  >
+                    <div class="flex items-center gap-2">
+                      <i
+                        data-lucide="banknote"
+                        class="size-5 text-gray-500"
+                      ></i>
+                      <span class="font-medium">İptal/ ön ödeme</span>
+                    </div>
+                    <p class="text-sm text-gray-600">
+                      İptal ve ön ödeme koşulları, konaklama tesisinin türüne
+                      göre değişmektedir. Lütfen seçiminizi yaparken her seçenek
+                      için hangi koşulların geçerli olabileceğini kontrol edin.
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </section>
+
+            <!-- Şu Ayrıntılara Dikkat -->
+            <section
+              id="otel-info-content-5"
+              data-state="closed"
+              class="hidden flex-col items-start gap-6 data-[state=open]:flex group-data-[query=details]/query:!flex"
+            >
+              <div class="flex w-full flex-col gap-6">
+                <!-- Başlık -->
+                <div class="flex items-center gap-2">
+                  <h2 class="text-xl font-semibold text-gray-900">
+                    Şu Ayrıntılara Dikkat
+                  </h2>
+                </div>
+
+                <!-- İçerik -->
+                <div class="flex flex-col gap-2">
+                  <!-- Ruhsat Numarası -->
+                  <div
+                    class="mb-2 flex items-center gap-2 border-b border-gray-200 pb-2"
+                  >
+                    <i data-lucide="file-text" class="size-5 text-gray-500"></i>
+                    <span class="text-sm font-medium"
+                      >Ruhsat numarası: 1098312</span
+                    >
+                  </div>
+
+                  <!-- Liste -->
+                  <ul class="list-inside list-disc space-y-4">
+                    <!-- Her madde için ayrı li -->
+                    <li class="flex items-start gap-2">
+                      <i
+                        data-lucide="info"
+                        class="mt-0.5 size-5 flex-shrink-0"
+                      ></i>
+                      <p class="text-sm text-gray-600">
+                        Check-in sırasında konukların fotoğraflı kimlik belgesi
+                        ve kredi kartı göstermesi gerekmektedir.
+                      </p>
+                    </li>
+
+                    <li class="flex items-start gap-2">
+                      <i
+                        data-lucide="info"
+                        class="mt-0.5 size-5 flex-shrink-0"
+                      ></i>
+                      <p class="text-sm text-gray-600">
+                        Özel isteklerin doluluk durumuna bağlı olduğunu ve ek
+                        ücrete tabi olabileceğini lütfen unutmayın.
+                      </p>
+                    </li>
+
+                    <li class="flex items-start gap-2">
+                      <i
+                        data-lucide="info"
+                        class="mt-0.5 size-5 flex-shrink-0"
+                      ></i>
+                      <p class="text-sm text-gray-600">
+                        18 yaşından küçük konuklar yalnızca ebeveyn veya resmi
+                        vasi ile check-in yapabilirler.
+                      </p>
+                    </li>
+
+                    <li class="flex items-start gap-2">
+                      <i
+                        data-lucide="info"
+                        class="mt-0.5 size-5 flex-shrink-0"
+                      ></i>
+                      <div class="space-y-2">
+                        <p class="text-sm text-gray-600">
+                          Tesise vardığınızda AED 500 depozito ödemeniz
+                          gerekmektedir. Bu ödeme nakit olarak tahsil
+                          edilecektir.
+                        </p>
+                        <p class="text-sm text-gray-600">
+                          Check-out esnasında iadeniz yapılacaktır. Depozitonuz
+                          tesisteki kontrole bağlı olarak nakden eksisiz iade
+                          edilecektir.
+                        </p>
+                      </div>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </section>
+
+            <!-- Bilgi ve Fiyatlar -->
+            <section id="otel-info-content-2" class="min-h-[360px]">
               <h2 class="text-base font-bold lg:text-xl">Yer Durumu</h2>
               <!-- Filter Container -->
               <form
@@ -1960,245 +2189,6 @@
                       </div>
                     </div>
                   </div>
-                </div>
-              </div>
-            </section>
-
-            <!-- Özellikler -->
-            <section
-              id="otel-info-content-3"
-              data-state="closed"
-              class="hidden flex-col items-start gap-6 data-[state=open]:flex group-data-[query=includes]/query:!flex"
-            >
-              <div class="flex w-full flex-col gap-6">
-                <div class="flex flex-col text-sm tracking-wide text-gray-600">
-                  <h2 class="mb-3.5 text-base font-bold lg:text-xl">
-                    Özellikler
-                  </h2>
-                  <div class="grid grid-cols-1 gap-4 lg:grid-cols-2">
-                    <div class="flex items-start gap-2 text-sm lg:items-center">
-                      <i
-                        data-lucide="check"
-                        class="size-4 rounded-full border border-gray-200 p-0.5 lg:size-5 lg:p-1"
-                      ></i>
-                      <span class="text-sm text-gray-600 lg:text-base"
-                        >2 yüzme havuzu</span
-                      >
-                    </div>
-                    <div class="flex items-start gap-2 text-sm lg:items-center">
-                      <i
-                        data-lucide="check"
-                        class="size-4 rounded-full border border-gray-200 p-0.5 lg:size-5 lg:p-1"
-                      ></i>
-                      <span class="text-sm text-gray-600 lg:text-base"
-                        >Havaalanı servisi</span
-                      >
-                    </div>
-                    <div class="flex items-start gap-2 text-sm lg:items-center">
-                      <i
-                        data-lucide="check"
-                        class="size-4 rounded-full border border-gray-200 p-0.5 lg:size-5 lg:p-1"
-                      ></i>
-                      <span class="text-sm text-gray-600 lg:text-base"
-                        >Sigara içilmeyen odalar</span
-                      >
-                    </div>
-                    <div class="flex items-start gap-2 text-sm lg:items-center">
-                      <i
-                        data-lucide="check"
-                        class="size-4 rounded-full border border-gray-200 p-0.5 lg:size-5 lg:p-1"
-                      ></i>
-                      <span class="text-sm text-gray-600 lg:text-base"
-                        >Ücretsiz Wi-Fi internet bağlantısı</span
-                      >
-                    </div>
-                    <div class="flex items-start gap-2 text-sm lg:items-center">
-                      <i
-                        data-lucide="check"
-                        class="size-4 rounded-full border border-gray-200 p-0.5 lg:size-5 lg:p-1"
-                      ></i>
-                      <span class="text-sm text-gray-600 lg:text-base"
-                        >Fitness merkezi</span
-                      >
-                    </div>
-                    <div class="flex items-start gap-2 text-sm lg:items-center">
-                      <i
-                        data-lucide="check"
-                        class="size-4 rounded-full border border-gray-200 p-0.5 lg:size-5 lg:p-1"
-                      ></i>
-                      <span class="text-sm text-gray-600 lg:text-base"
-                        >Tüm odalarda çay/kahve makinesi</span
-                      >
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </section>
-
-            <!-- Tesis Kuralları -->
-            <section
-              id="otel-info-content-4"
-              data-state="closed"
-              class="hidden flex-col items-start gap-6 data-[state=open]:flex group-data-[query=rules]/query:!flex"
-            >
-              <div class="flex w-full flex-col gap-6">
-                <!-- Başlık -->
-                <div class="flex items-center gap-2">
-                  <h2 class="text-xl font-semibold text-gray-900">
-                    Tesis Kuralları
-                  </h2>
-                </div>
-
-                <!-- İçerik -->
-                <div class="flex flex-col gap-6">
-                  <!-- Check-in -->
-                  <div
-                    class="flex flex-col gap-3 border-b border-b-gray-200 pb-2"
-                  >
-                    <div class="flex items-center justify-between">
-                      <div class="flex items-center gap-2">
-                        <i
-                          data-lucide="door-closed"
-                          class="size-5 text-gray-500"
-                        ></i>
-                        <span class="font-medium">Check-in</span>
-                      </div>
-                      <span
-                        class="rounded-full bg-primary-50 px-3 py-1 text-sm text-primary-600"
-                        >15:00 - 23:30 arasında</span
-                      >
-                    </div>
-                    <p class="text-sm text-gray-600">
-                      Check-in sırasında konukların fotoğraflı kimlik belgesi ve
-                      kredi kartı göstermesi gerekmektedir
-                    </p>
-                  </div>
-
-                  <!-- Check-out -->
-                  <div
-                    class="flex flex-col gap-3 border-b border-b-gray-200 pb-2"
-                  >
-                    <div class="flex items-center justify-between">
-                      <div class="flex items-center gap-2">
-                        <i
-                          data-lucide="door-open"
-                          class="size-5 text-gray-500"
-                        ></i>
-                        <span class="font-medium">Check-out</span>
-                      </div>
-                      <span
-                        class="rounded-full bg-primary-50 px-3 py-1 text-sm text-primary-600"
-                        >12:00 - 12:30 arasında</span
-                      >
-                    </div>
-                    <p class="text-sm text-gray-600">
-                      Check-out sırasında konukların fotoğraflı kimlik belgesi
-                      ve kredi kartı göstermesi gerekmektedir.
-                    </p>
-                  </div>
-
-                  <!-- İptal/Ön Ödeme -->
-                  <div
-                    class="flex flex-col gap-3 border-b border-b-gray-200 pb-2"
-                  >
-                    <div class="flex items-center gap-2">
-                      <i
-                        data-lucide="banknote"
-                        class="size-5 text-gray-500"
-                      ></i>
-                      <span class="font-medium">İptal/ ön ödeme</span>
-                    </div>
-                    <p class="text-sm text-gray-600">
-                      İptal ve ön ödeme koşulları, konaklama tesisinin türüne
-                      göre değişmektedir. Lütfen seçiminizi yaparken her seçenek
-                      için hangi koşulların geçerli olabileceğini kontrol edin.
-                    </p>
-                  </div>
-                </div>
-              </div>
-            </section>
-
-            <!-- Şu Ayrıntılara Dikkat -->
-            <section
-              id="otel-info-content-5"
-              data-state="closed"
-              class="hidden flex-col items-start gap-6 data-[state=open]:flex group-data-[query=details]/query:!flex"
-            >
-              <div class="flex w-full flex-col gap-6">
-                <!-- Başlık -->
-                <div class="flex items-center gap-2">
-                  <h2 class="text-xl font-semibold text-gray-900">
-                    Şu Ayrıntılara Dikkat
-                  </h2>
-                </div>
-
-                <!-- İçerik -->
-                <div class="flex flex-col gap-2">
-                  <!-- Ruhsat Numarası -->
-                  <div
-                    class="mb-2 flex items-center gap-2 border-b border-gray-200 pb-2"
-                  >
-                    <i data-lucide="file-text" class="size-5 text-gray-500"></i>
-                    <span class="text-sm font-medium"
-                      >Ruhsat numarası: 1098312</span
-                    >
-                  </div>
-
-                  <!-- Liste -->
-                  <ul class="list-inside list-disc space-y-4">
-                    <!-- Her madde için ayrı li -->
-                    <li class="flex items-start gap-2">
-                      <i
-                        data-lucide="info"
-                        class="mt-0.5 size-5 flex-shrink-0"
-                      ></i>
-                      <p class="text-sm text-gray-600">
-                        Check-in sırasında konukların fotoğraflı kimlik belgesi
-                        ve kredi kartı göstermesi gerekmektedir.
-                      </p>
-                    </li>
-
-                    <li class="flex items-start gap-2">
-                      <i
-                        data-lucide="info"
-                        class="mt-0.5 size-5 flex-shrink-0"
-                      ></i>
-                      <p class="text-sm text-gray-600">
-                        Özel isteklerin doluluk durumuna bağlı olduğunu ve ek
-                        ücrete tabi olabileceğini lütfen unutmayın.
-                      </p>
-                    </li>
-
-                    <li class="flex items-start gap-2">
-                      <i
-                        data-lucide="info"
-                        class="mt-0.5 size-5 flex-shrink-0"
-                      ></i>
-                      <p class="text-sm text-gray-600">
-                        18 yaşından küçük konuklar yalnızca ebeveyn veya resmi
-                        vasi ile check-in yapabilirler.
-                      </p>
-                    </li>
-
-                    <li class="flex items-start gap-2">
-                      <i
-                        data-lucide="info"
-                        class="mt-0.5 size-5 flex-shrink-0"
-                      ></i>
-                      <div class="space-y-2">
-                        <p class="text-sm text-gray-600">
-                          Tesise vardığınızda AED 500 depozito ödemeniz
-                          gerekmektedir. Bu ödeme nakit olarak tahsil
-                          edilecektir.
-                        </p>
-                        <p class="text-sm text-gray-600">
-                          Check-out esnasında iadeniz yapılacaktır. Depozitonuz
-                          tesisteki kontrole bağlı olarak nakden eksisiz iade
-                          edilecektir.
-                        </p>
-                      </div>
-                    </li>
-                  </ul>
                 </div>
               </div>
             </section>
