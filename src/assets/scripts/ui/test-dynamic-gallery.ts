@@ -277,3 +277,9 @@ document.addEventListener('keydown', (event: KeyboardEvent) => {
     updateContent()
   }
 })
+
+if (window.matchMedia('(max-width: 520px)').matches) {
+  setTimeout(() => {
+    updateContent()
+  }, 5000)
+}
