@@ -1620,9 +1620,14 @@ class DatePicker {
       this.selectedDates.set(`${this.activeInput?.id}-start`, today)
       this.dateValues.set(`${this.activeInput?.id}-start`, today)
 
-      // Input değerini güncelle - yeni formatlama sistemi ile
+      // Input değerini ve data attributelarını güncelle
       if (this.activeInput) {
         this.activeInput.value = this.formatDateBasedOnConfig(today)
+        this.activeInput.setAttribute(
+          'data-start',
+          this.formatDateBasedOnConfig(today, 'backend'),
+        )
+        this.activeInput.removeAttribute('data-end')
       }
 
       // Calendar'ı bugünün olduğu aya getir
@@ -1658,8 +1663,27 @@ class DatePicker {
       this.selectedDate = today
       this.selectedDates.set(this.activeInput.id, new Date(today))
       this.dateValues.set(this.activeInput.id, new Date(today))
-      // Yeni formatlama sistemi ile bugünün tarihini yazdır
+
+      // Input değerini ve data attributelarını güncelle
       this.activeInput.value = this.formatDateBasedOnConfig(today)
+
+      // Input tipine göre uygun data attribute'unu güncelle
+      if (this.config.input.type === 'single') {
+        this.activeInput.setAttribute(
+          'data-selected',
+          this.formatDateBasedOnConfig(today, 'backend'),
+        )
+      } else if (inputConfig?.type === 'start') {
+        this.activeInput.setAttribute(
+          'data-start',
+          this.formatDateBasedOnConfig(today, 'backend'),
+        )
+      } else if (inputConfig?.type === 'end') {
+        this.activeInput.setAttribute(
+          'data-end',
+          this.formatDateBasedOnConfig(today, 'backend'),
+        )
+      }
     } else {
       this.currentDate = new Date(today)
       this.selectedDate = today

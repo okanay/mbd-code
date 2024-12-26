@@ -3,12 +3,9 @@ import { TouchDirectionDetector } from '../packages/touch-event.js'
 
 document.addEventListener('DOMContentLoaded', () => {
   const today = new Date()
-  const after3days = new Date(today)
-  after3days.setDate(today.getDate() + 3)
 
   const datepickerConfig: DatePickerConfig = {
     minDate: today,
-
     elements: {
       container: 'date-picker',
       monthContainer: 'current-month',
