@@ -78,62 +78,6 @@ document.addEventListener('DOMContentLoaded', () => {
       margin: '0 auto',
     },
   })
-
-  new ScrollManager([
-    {
-      id: 'complete-purchase-container',
-      order: 1,
-      position: {
-        position: 'fixed',
-        right: '0px',
-        bottom: '0px',
-        width: '100%',
-        zIndex: '50',
-        visibility: 'hidden',
-        opacity: '0',
-        transform: 'translateY(0%)',
-        transition:
-          'transform 500ms cubic-bezier(0.4, 0, 0.2, 1), opacity 500ms cubic-bezier(0.4, 0, 0.2, 1)',
-        willChange: 'transform, opacity',
-      },
-      showAnimation: {
-        visibility: 'visible',
-        opacity: '1',
-        transform: 'translateY(0%)',
-      },
-      hideAnimation: {
-        visibility: 'hidden',
-        opacity: '0',
-        transform: 'translateY(100%)',
-      },
-    },
-    {
-      id: 'whatsapp-button',
-      order: 2,
-      position: {
-        position: 'fixed',
-        right: '16px',
-        bottom: '84px',
-        visibility: 'hidden',
-        opacity: '0%',
-        transform: 'translateY(100%)',
-        transition: 'all 0.3s ease-in-out',
-        zIndex: '60',
-      },
-      showAnimation: {
-        transition: 'all 0.3s ease-in-out',
-        transform: 'translateY(-12px)',
-        visibility: 'visible',
-        opacity: '100%',
-      },
-      hideAnimation: {
-        transition: 'all 0.3s ease-in-out',
-        transform: 'translateY(120%)',
-        visibility: 'hidden',
-        opacity: '0%',
-      },
-    },
-  ])
 })
 
 // Main slider

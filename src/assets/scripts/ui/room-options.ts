@@ -58,24 +58,3 @@ document.addEventListener('DOMContentLoaded', () => {
 
   new InputCounter('select-room-options', counterConfig)
 })
-
-// Test için event listener ekleyelim
-document.addEventListener('keydown', event => {
-  if (event.key.toLowerCase() === 'p') {
-    const adultContainer = document.getElementById('adult-container')
-    if (adultContainer) {
-      // Mevcut değerleri alalım
-      const currentMin = Number(adultContainer.dataset.min || 1)
-      const currentMax = Number(adultContainer.dataset.max || 4)
-
-      // Değerleri değiştirelim
-      adultContainer.dataset.min = String(currentMin + 1)
-      adultContainer.dataset.max = String(currentMax - 1)
-
-      console.log('Yeni değerler:', {
-        min: adultContainer.dataset.min,
-        max: adultContainer.dataset.max,
-      })
-    }
-  }
-})
