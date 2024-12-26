@@ -205,12 +205,12 @@ class DatePicker {
     this.classes = this.mergeClasses(DEFAULT_CLASSES, config.classes || {})
 
     // Reset hours, minutes, seconds, and milliseconds for consistent date comparison
+    // Reset hours, minutes, seconds, and milliseconds for consistent date comparison
     this.currentDate = this.stripTime(new Date())
     this.selectedDate = this.stripTime(new Date())
 
     this.autoClose = config.autoClose || this.autoClose
     this.autoSwitchInput = config.autoSwitchInput || this.autoSwitchInput
-
     this.outputConfig = config.output || this.outputConfig
 
     // Also strip time from min and max dates
@@ -224,6 +224,26 @@ class DatePicker {
     if (config.defaultDates) {
       this.initializeDefaultDates(config.defaultDates)
     }
+
+    // Strip time from min and max dates
+    if (this.config.minDate) {
+      this.config.minDate = this.stripTime(this.config.minDate)
+    }
+    if (this.config.maxDate) {
+      this.config.maxDate = this.stripTime(this.config.maxDate)
+    }
+
+    // Read HTML data attributes first
+    this.initializeFromDataAttributes()
+
+    // Then apply config default dates if no data attributes found
+    if (config.defaultDates && !this.hasDataAttributes()) {
+      this.initializeDefaultDates(config.defaultDates)
+    }
+
+    this.monthShortNamePointer = document.getElementById(
+      config.elements.monthContainer,
+    )
 
     this.monthShortNamePointer = document.getElementById(
       config.elements.monthContainer,
@@ -412,6 +432,158 @@ class DatePicker {
     if (container) {
       container.setAttribute('data-focus', isFocused ? 'true' : 'false')
     }
+  }
+
+  private initializeFromDataAttributes() {
+    const { input } = this.config
+
+    if (input.type === 'single') {
+      const dateInput = document.getElementById(
+        (input.elements as SingleDateInput).id,
+      ) as HTMLInputElement
+      if (dateInput) {
+        const selectedDate = dateInput.getAttribute('data-selected')
+        if (selectedDate) {
+          const date = this.parseBackendDate(selectedDate)
+          if (date) {
+            this.selectedDates.set(dateInput.id, date)
+            this.dateValues.set(dateInput.id, date)
+            dateInput.value = this.formatDateBasedOnConfig(date)
+          }
+        }
+      }
+    }
+
+    if (input.type === 'between') {
+      const dateInput = document.getElementById(
+        (input.elements as BetweenDateInput).id,
+      ) as HTMLInputElement
+      if (dateInput) {
+        const startDate = dateInput.getAttribute('data-start')
+        const endDate = dateInput.getAttribute('data-end')
+
+        if (startDate) {
+          const parsedStartDate = this.parseBackendDate(startDate)
+          if (parsedStartDate) {
+            this.betweenStartDate = parsedStartDate
+            this.selectedDates.set(`${dateInput.id}-start`, parsedStartDate)
+            this.dateValues.set(`${dateInput.id}-start`, parsedStartDate)
+          }
+        }
+
+        if (endDate) {
+          const parsedEndDate = this.parseBackendDate(endDate)
+          if (parsedEndDate) {
+            this.betweenEndDate = parsedEndDate
+            this.selectedDates.set(`${dateInput.id}-end`, parsedEndDate)
+            this.dateValues.set(`${dateInput.id}-end`, parsedEndDate)
+          }
+        }
+
+        if (startDate && endDate) {
+          const parsedStartDate = this.parseBackendDate(startDate)
+          const parsedEndDate = this.parseBackendDate(endDate)
+          if (parsedStartDate && parsedEndDate) {
+            dateInput.value = `${this.formatDateBasedOnConfig(parsedStartDate)}${this.outputConfig.between}${this.formatDateBasedOnConfig(parsedEndDate)}`
+          }
+        }
+      }
+    }
+
+    if (input.type === 'two') {
+      const rangeConfig = input.elements as DateRangeInput
+      const startInput = document.getElementById(
+        rangeConfig.start.id,
+      ) as HTMLInputElement
+      const endInput = document.getElementById(
+        rangeConfig.end.id,
+      ) as HTMLInputElement
+
+      if (startInput) {
+        const startDate = startInput.getAttribute('data-start')
+        if (startDate) {
+          const parsedStartDate = this.parseBackendDate(startDate)
+          if (parsedStartDate) {
+            this.selectedDates.set(startInput.id, parsedStartDate)
+            this.dateValues.set(startInput.id, parsedStartDate)
+            startInput.value = this.formatDateBasedOnConfig(parsedStartDate)
+          }
+        }
+      }
+
+      if (endInput) {
+        const endDate = endInput.getAttribute('data-end')
+        if (endDate) {
+          const parsedEndDate = this.parseBackendDate(endDate)
+          if (parsedEndDate) {
+            this.selectedDates.set(endInput.id, parsedEndDate)
+            this.dateValues.set(endInput.id, parsedEndDate)
+            endInput.value = this.formatDateBasedOnConfig(parsedEndDate)
+          }
+        }
+      }
+    }
+  }
+
+  private parseBackendDate(dateStr: string): Date | null {
+    const parts = dateStr.split(this.outputConfig.slash || '-')
+    if (parts.length !== 3) return null
+
+    const backendFormat = this.config.output?.backendFormat || [
+      'year',
+      'month',
+      'day',
+    ]
+    const dateObj: { [key: string]: number } = {}
+
+    parts.forEach((part, index) => {
+      dateObj[backendFormat[index]] = parseInt(part)
+    })
+
+    const date = new Date(
+      dateObj.year,
+      dateObj.month - 1, // Month is 0-based
+      dateObj.day,
+    )
+
+    return isNaN(date.getTime()) ? null : date
+  }
+
+  private hasDataAttributes(): boolean {
+    const { input } = this.config
+
+    if (input.type === 'single') {
+      const dateInput = document.getElementById(
+        (input.elements as SingleDateInput).id,
+      ) as HTMLInputElement
+      return !!dateInput?.getAttribute('data-selected')
+    }
+
+    if (input.type === 'between') {
+      const dateInput = document.getElementById(
+        (input.elements as BetweenDateInput).id,
+      ) as HTMLInputElement
+      return !!(
+        dateInput?.getAttribute('data-start') ||
+        dateInput?.getAttribute('data-end')
+      )
+    }
+
+    if (input.type === 'two') {
+      const rangeConfig = input.elements as DateRangeInput
+      const startInput = document.getElementById(
+        rangeConfig.start.id,
+      ) as HTMLInputElement
+      const endInput = document.getElementById(
+        rangeConfig.end.id,
+      ) as HTMLInputElement
+      return !!(
+        startInput?.getAttribute('data-start') ||
+        endInput?.getAttribute('data-end')
+      )
+    }
+
+    return false
   }
 
   private mergeClasses(

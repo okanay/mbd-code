@@ -8,12 +8,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   const datepickerConfig: DatePickerConfig = {
     minDate: today,
-    defaultDates: {
-      between: {
-        start: today,
-        end: after3days,
-      },
-    },
+
     elements: {
       container: 'date-picker',
       monthContainer: 'current-month',
