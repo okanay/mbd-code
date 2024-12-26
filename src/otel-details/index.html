@@ -2042,42 +2042,77 @@
               class="hidden flex-col items-start gap-6 data-[state=open]:flex group-data-[query=rules]/query:!flex"
             >
               <div class="flex w-full flex-col gap-6">
-                <div class="flex flex-col text-sm tracking-wide text-gray-600">
-                  <h2 class="mb-3.5 text-base font-bold lg:text-xl">
+                <!-- Başlık -->
+                <div class="flex items-center gap-2">
+                  <h2 class="text-xl font-semibold text-gray-900">
                     Tesis Kuralları
                   </h2>
-                  <div class="flex flex-col gap-4">
-                    <div
-                      class="flex flex-col gap-2 border-b border-gray-100 pb-4"
-                    >
-                      <div class="flex items-center justify-between">
+                </div>
+
+                <!-- İçerik -->
+                <div class="flex flex-col gap-6">
+                  <!-- Check-in -->
+                  <div
+                    class="flex flex-col gap-3 border-b border-b-gray-200 pb-2"
+                  >
+                    <div class="flex items-center justify-between">
+                      <div class="flex items-center gap-2">
+                        <i
+                          data-lucide="door-closed"
+                          class="size-5 text-gray-500"
+                        ></i>
                         <span class="font-medium">Check-in</span>
-                        <span>15:00 - 23:30 arasında</span>
                       </div>
-                      <p class="text-sm text-gray-500">
-                        Check-in sırasında konukların fotoğraflı kimlik belgesi
-                        ve kredi kartı göstermesi gerekmektedir
-                      </p>
+                      <span
+                        class="rounded-full bg-primary-50 px-3 py-1 text-sm text-primary-600"
+                        >15:00 - 23:30 arasında</span
+                      >
                     </div>
-                    <div
-                      class="flex flex-col gap-2 border-b border-gray-100 pb-4"
-                    >
-                      <div class="flex items-center justify-between">
+                    <p class="text-sm text-gray-600">
+                      Check-in sırasında konukların fotoğraflı kimlik belgesi ve
+                      kredi kartı göstermesi gerekmektedir
+                    </p>
+                  </div>
+
+                  <!-- Check-out -->
+                  <div
+                    class="flex flex-col gap-3 border-b border-b-gray-200 pb-2"
+                  >
+                    <div class="flex items-center justify-between">
+                      <div class="flex items-center gap-2">
+                        <i
+                          data-lucide="door-open"
+                          class="size-5 text-gray-500"
+                        ></i>
                         <span class="font-medium">Check-out</span>
-                        <span>12:00 - 12:30 arasında</span>
                       </div>
+                      <span
+                        class="rounded-full bg-primary-50 px-3 py-1 text-sm text-primary-600"
+                        >12:00 - 12:30 arasında</span
+                      >
                     </div>
-                    <div class="flex flex-col gap-2">
-                      <div class="flex items-center justify-between">
-                        <span class="font-medium">İptal/ ön ödeme</span>
-                      </div>
-                      <p class="text-sm text-gray-500">
-                        İptal ve ön ödeme koşulları, konaklama tesisinin türüne
-                        göre değişmektedir. Lütfen seçiminizi yaparken her
-                        seçenek için hangi koşulların geçerli olabileceğini
-                        kontrol edin.
-                      </p>
+                    <p class="text-sm text-gray-600">
+                      Check-out sırasında konukların fotoğraflı kimlik belgesi
+                      ve kredi kartı göstermesi gerekmektedir.
+                    </p>
+                  </div>
+
+                  <!-- İptal/Ön Ödeme -->
+                  <div
+                    class="flex flex-col gap-3 border-b border-b-gray-200 pb-2"
+                  >
+                    <div class="flex items-center gap-2">
+                      <i
+                        data-lucide="banknote"
+                        class="size-5 text-gray-500"
+                      ></i>
+                      <span class="font-medium">İptal/ ön ödeme</span>
                     </div>
+                    <p class="text-sm text-gray-600">
+                      İptal ve ön ödeme koşulları, konaklama tesisinin türüne
+                      göre değişmektedir. Lütfen seçiminizi yaparken her seçenek
+                      için hangi koşulların geçerli olabileceğini kontrol edin.
+                    </p>
                   </div>
                 </div>
               </div>
@@ -2090,34 +2125,80 @@
               class="hidden flex-col items-start gap-6 data-[state=open]:flex group-data-[query=details]/query:!flex"
             >
               <div class="flex w-full flex-col gap-6">
-                <div class="flex flex-col text-sm tracking-wide text-gray-600">
-                  <h2 class="mb-3.5 text-base font-bold lg:text-xl">
+                <!-- Başlık -->
+                <div class="flex items-center gap-2">
+                  <h2 class="text-xl font-semibold text-gray-900">
                     Şu Ayrıntılara Dikkat
                   </h2>
-                  <div class="flex flex-col gap-4">
-                    <p>
-                      Check-in sırasında konukların fotoğraflı kimlik belgesi ve
-                      kredi kartı göstermesi gerekmektedir.
-                    </p>
-                    <p>
-                      Özel isteklerin doluluk durumuna bağlı olduğunu ve ek
-                      ücrete tabi olabileceğini lütfen unutmayın.
-                    </p>
-                    <p>
-                      18 yaşından küçük konuklar yalnızca ebeveyn veya resmi
-                      vasi ile check-in yapabilirler.
-                    </p>
-                    <p>
-                      Tesise vardığınızda AED 500 depozito ödemeniz
-                      gerekmektedir. Bu ödeme nakit olarak tahsil edilecektir.
-                    </p>
-                    <p>
-                      Check-out esnasında iadeniz yapılacaktır. Depozitonuz
-                      tesisteki kontrole bağlı olarak nakden eksisiz iade
-                      edilecektir.
-                    </p>
-                    <p class="font-medium">Ruhsat numarası: 1098312</p>
+                </div>
+
+                <!-- İçerik -->
+                <div class="flex flex-col gap-2">
+                  <!-- Ruhsat Numarası -->
+                  <div
+                    class="mb-2 flex items-center gap-2 border-b border-gray-200 pb-2"
+                  >
+                    <i data-lucide="file-text" class="size-5 text-gray-500"></i>
+                    <span class="text-sm font-medium"
+                      >Ruhsat numarası: 1098312</span
+                    >
                   </div>
+
+                  <!-- Liste -->
+                  <ul class="list-inside list-disc space-y-4">
+                    <!-- Her madde için ayrı li -->
+                    <li class="flex items-start gap-2">
+                      <i
+                        data-lucide="info"
+                        class="mt-0.5 size-5 flex-shrink-0"
+                      ></i>
+                      <p class="text-sm text-gray-600">
+                        Check-in sırasında konukların fotoğraflı kimlik belgesi
+                        ve kredi kartı göstermesi gerekmektedir.
+                      </p>
+                    </li>
+
+                    <li class="flex items-start gap-2">
+                      <i
+                        data-lucide="info"
+                        class="mt-0.5 size-5 flex-shrink-0"
+                      ></i>
+                      <p class="text-sm text-gray-600">
+                        Özel isteklerin doluluk durumuna bağlı olduğunu ve ek
+                        ücrete tabi olabileceğini lütfen unutmayın.
+                      </p>
+                    </li>
+
+                    <li class="flex items-start gap-2">
+                      <i
+                        data-lucide="info"
+                        class="mt-0.5 size-5 flex-shrink-0"
+                      ></i>
+                      <p class="text-sm text-gray-600">
+                        18 yaşından küçük konuklar yalnızca ebeveyn veya resmi
+                        vasi ile check-in yapabilirler.
+                      </p>
+                    </li>
+
+                    <li class="flex items-start gap-2">
+                      <i
+                        data-lucide="info"
+                        class="mt-0.5 size-5 flex-shrink-0"
+                      ></i>
+                      <div class="space-y-2">
+                        <p class="text-sm text-gray-600">
+                          Tesise vardığınızda AED 500 depozito ödemeniz
+                          gerekmektedir. Bu ödeme nakit olarak tahsil
+                          edilecektir.
+                        </p>
+                        <p class="text-sm text-gray-600">
+                          Check-out esnasında iadeniz yapılacaktır. Depozitonuz
+                          tesisteki kontrole bağlı olarak nakden eksisiz iade
+                          edilecektir.
+                        </p>
+                      </div>
+                    </li>
+                  </ul>
                 </div>
               </div>
             </section>

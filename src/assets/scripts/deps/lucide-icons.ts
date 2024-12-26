@@ -3,6 +3,7 @@ import {
   Heart,
   Home,
   PanelRightClose,
+  DoorClosed,
   PanelRightOpen,
   Calendar,
   User,
@@ -65,6 +66,7 @@ import {
   Frown,
   DoorOpen,
   Baby,
+  FileText,
 } from 'lucide'
 
 const icons = {
@@ -100,6 +102,7 @@ const icons = {
   CircleCheck,
   ChevronRight,
   Frown,
+  Banknote,
   ChevronLeft,
   ChevronUp,
   MapPinned,
@@ -112,7 +115,7 @@ const icons = {
   Info,
   Eye,
   EyeOff,
-  Banknote,
+  DoorClosed,
   TextSelect,
   Binary,
   Pen,
@@ -130,6 +133,7 @@ const icons = {
   Instagram,
   Facebook,
   Twitter,
+  FileText,
   FileDown,
   CircleHelp,
 }
