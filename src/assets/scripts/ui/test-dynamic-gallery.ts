@@ -1,5 +1,3 @@
-import { createIcons, icons } from '../deps/lucide-icons.js'
-
 interface Room {
   src: string
   alt: string
@@ -260,7 +258,7 @@ function updateContent(): void {
 
   console.log('Content updated to:', currentSet)
 
-  createIcons({ icons: { ...icons } })
+  window.callIcons()
 }
 // Klavye event listener'ı
 document.addEventListener('keydown', (event: KeyboardEvent) => {

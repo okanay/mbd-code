@@ -137,4 +137,18 @@ const icons = {
   FileDown,
   CircleHelp,
 }
-export { createIcons, icons }
+
+function callIcons() {
+  createIcons({ icons: { ...icons } })
+}
+
+// Global'e ekleyelim
+declare global {
+  interface Window {
+    callIcons: () => void
+  }
+}
+
+window.callIcons = callIcons
+
+export { createIcons, icons, callIcons }

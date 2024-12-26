@@ -2,7 +2,6 @@ import { AccordionController } from './packages/accordion.js'
 import { ModalController } from './packages/modal.js'
 import { PictureLazyLoadController } from './packages/picture-lazy-load.js'
 import { LazyImageLoadController } from './packages/lazy-load.js'
-import { createIcons, icons } from './deps/lucide-icons.js'
 
 document.addEventListener('DOMContentLoaded', async () => {
   function formatUserName(name: string) {
@@ -37,7 +36,9 @@ document.addEventListener('DOMContentLoaded', async () => {
 })
 
 document.addEventListener('DOMContentLoaded', async () => {
-  createIcons({ icons: { ...icons } })
+  if (typeof window !== 'undefined') {
+    window.callIcons()
+  }
 
   new PictureLazyLoadController({
     imageSelector: '.lazy-picture',
