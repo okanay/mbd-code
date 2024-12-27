@@ -1,3 +1,7 @@
+import * as leaflet from '../deps/leaflet/leaflet-src.esm.js'
+const L = leaflet as any
+L.Icon.Default.prototype.options.imagePath = '/assets/images/leaflet/'
+
 // Interfaces
 interface MapModalElements {
   modalId: string
@@ -18,11 +22,9 @@ class ModalMap {
   private closeButton: HTMLElement
   private elements: MapModalElements
   private mapButtons: NodeListOf<Element>
-  private apiKey: string
+  private map: L.Map | null = null
 
-  constructor(apiKey: string, options: Partial<MapModalElements> = {}) {
-    this.apiKey = apiKey
-
+  constructor(options: Partial<MapModalElements> = {}) {
     const defaultElements: MapModalElements = {
       modalId: 'map-modal',
       modalContentId: 'map-modal-content',
@@ -39,10 +41,6 @@ class ModalMap {
     this.mapButtons = document.querySelectorAll('.map-ctr-button')
 
     this.bindEvents()
-  }
-
-  private createMapUrl(lat: number, lng: number): string {
-    return `https://www.google.com/maps/embed/v1/place?key=${this.apiKey}&q=${lat},${lng}&zoom=15`
   }
 
   private parseCoordinates(
@@ -96,18 +94,46 @@ class ModalMap {
   }
 
   public openMap(lat: number, lng: number): void {
-    const iframe = document.createElement('iframe')
-    iframe.src = this.createMapUrl(lat, lng)
-    iframe.className = 'w-full h-full border-none'
-    iframe.loading = 'lazy'
-    iframe.allowFullscreen = true
-
     this.mapContainer.innerHTML = ''
-    this.mapContainer.appendChild(iframe)
-    this.modal.setAttribute('data-state', 'open')
+
+    // Create a div for Leaflet
+    const mapDiv = document.createElement('div')
+    mapDiv.className = 'w-full h-full'
+    this.mapContainer.appendChild(mapDiv)
+
+    try {
+      // Initialize Leaflet map
+      this.map = L.map(mapDiv, {
+        zoomControl: false, // Disable default zoom control
+        attributionControl: true, // Keep attribution
+      }).setView([lat, lng], 15)
+
+      // Add OpenStreetMap tiles
+      L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        maxZoom: 19,
+        attribution: '© OpenStreetMap contributors',
+      }).addTo(this.map)
+
+      // Add a marker
+      L.marker([lat, lng]).addTo(this.map)
+
+      // Add custom zoom controls
+      const zoomControl = L.control.zoom({
+        position: 'bottomright',
+      })
+      zoomControl.addTo(this.map)
+
+      this.modal.setAttribute('data-state', 'open')
+    } catch (error) {
+      console.error('Error initializing map:', error)
+    }
   }
 
   private closeMap(): void {
+    if (this.map) {
+      this.map.remove()
+      this.map = null
+    }
     this.modal.setAttribute('data-state', 'closed')
     this.mapContainer.innerHTML = ''
   }
@@ -121,27 +147,29 @@ class ModalMap {
 // Embedded Map Class
 class EmbeddedMap {
   private container: HTMLElement
-  private apiKey: string
-  private config: EmbeddedMapConfig
+  private config!: EmbeddedMapConfig
+  private map: L.Map | null = null
 
-  constructor(apiKey: string, containerId: string) {
-    this.apiKey = apiKey
-    this.container = document.getElementById(containerId)!
+  constructor(containerId: string) {
+    const container = document.getElementById(containerId)
 
-    if (this.container) {
-      const coordinate = this.container.getAttribute('data-coordinate')
-      if (coordinate) {
-        this.config = {
-          containerId,
-          coordinate,
-        }
-        this.initialize()
-      }
+    if (!container) {
+      throw new Error(`Container with id "${containerId}" not found`)
     }
-  }
 
-  private createMapUrl(lat: number, lng: number): string {
-    return `https://www.google.com/maps/embed/v1/place?key=${this.apiKey}&q=${lat},${lng}&zoom=14`
+    this.container = container
+    const coordinate = container.getAttribute('data-coordinate')
+
+    if (!coordinate) {
+      throw new Error(`Container must have a "data-coordinate" attribute`)
+    }
+
+    this.config = {
+      containerId,
+      coordinate,
+    }
+
+    this.initialize()
   }
 
   private parseCoordinates(
@@ -160,22 +188,47 @@ class EmbeddedMap {
     const coordinates = this.parseCoordinates(this.config.coordinate)
     if (!coordinates) return
 
-    // Create and add iframe to the existing map container
-    const iframe = document.createElement('iframe')
-    iframe.src = this.createMapUrl(coordinates.lat, coordinates.lng)
-    iframe.className = 'absolute inset-0 w-full h-full border-none'
-    iframe.loading = 'lazy'
-    iframe.allowFullscreen = true
-
-    // Find the map container inside our main container
     const mapContainer = this.container.querySelector('.map-container')
-    if (mapContainer) {
-      mapContainer.innerHTML = ''
-      mapContainer.appendChild(iframe)
+    if (!mapContainer) return
+
+    mapContainer.innerHTML = ''
+
+    // Create a div for Leaflet
+    const mapDiv = document.createElement('div')
+    mapDiv.className = 'absolute inset-0 w-full h-full'
+    mapContainer.appendChild(mapDiv)
+
+    try {
+      // Initialize Leaflet map
+      this.map = L.map(mapDiv, {
+        zoomControl: false,
+        attributionControl: true,
+      }).setView([coordinates.lat, coordinates.lng], 14)
+
+      // Add OpenStreetMap tiles
+      L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        maxZoom: 19,
+        attribution: '© OpenStreetMap contributors',
+      }).addTo(this.map)
+
+      // Add a marker
+      L.marker([coordinates.lat, coordinates.lng]).addTo(this.map)
+
+      // Add custom zoom controls
+      const zoomControl = L.control.zoom({
+        position: 'bottomright',
+      })
+      zoomControl.addTo(this.map)
+    } catch (error) {
+      console.error('Error initializing map:', error)
     }
   }
 
   public refresh(): void {
+    if (this.map) {
+      this.map.remove()
+      this.map = null
+    }
     this.initialize()
   }
 }
