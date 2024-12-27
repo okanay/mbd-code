@@ -208,13 +208,11 @@ document.addEventListener('DOMContentLoaded', () => {
 })
 
 document.addEventListener('DOMContentLoaded', () => {
-  const mapModal = new ModalMap()
-
-  const embeddedMap = new EmbeddedMap('location-map')
-
-  window.addEventListener('resize', () => {
-    embeddedMap.refresh()
+  new ModalMap({
+    mapId: 'map-modal',
   })
+
+  new EmbeddedMap('location-map')
 })
 
 const config = {

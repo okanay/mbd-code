@@ -8,11 +8,45 @@ interface MapModalElements {
   modalContentId: string
   mapContainerId: string
   closeButtonId: string
+  mapId?: string // Yeni eklenen ID alanı
 }
 
 interface EmbeddedMapConfig {
   containerId: string
   coordinate: string
+}
+
+// Global map instances yönetimi
+class MapInstanceManager {
+  private static instances: Map<string, ModalMap> = new Map()
+
+  static addInstance(id: string, instance: ModalMap): void {
+    this.instances.set(id, instance)
+  }
+
+  static getInstance(id: string): ModalMap | undefined {
+    return this.instances.get(id)
+  }
+
+  static refreshInstance(id: string): boolean {
+    const instance = this.instances.get(id)
+    if (instance) {
+      instance.refreshButtons()
+      return true
+    }
+    return false
+  }
+}
+
+declare global {
+  interface Window {
+    RefreshMapButtons: (mapId: string) => boolean
+  }
+}
+
+// Global refresh fonksiyonu
+window.RefreshMapButtons = function (mapId: string): boolean {
+  return MapInstanceManager.refreshInstance(mapId)
 }
 
 // Modal Map Class
@@ -40,7 +74,13 @@ class ModalMap {
     this.closeButton = document.getElementById(this.elements.closeButtonId)!
     this.mapButtons = document.querySelectorAll('.map-ctr-button')
 
+    // Eğer mapId verilmişse instance'ı kaydet
+    if (this.elements.mapId) {
+      MapInstanceManager.addInstance(this.elements.mapId, this)
+    }
+
     this.bindEvents()
+    this.refreshButtons()
   }
 
   private parseCoordinates(
@@ -104,8 +144,8 @@ class ModalMap {
     try {
       // Initialize Leaflet map
       this.map = L.map(mapDiv, {
-        zoomControl: false, // Disable default zoom control
-        attributionControl: true, // Keep attribution
+        zoomControl: false,
+        attributionControl: true,
       }).setView([lat, lng], 15)
 
       // Add OpenStreetMap tiles
