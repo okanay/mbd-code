@@ -170,6 +170,15 @@ interface DatePickerConfig {
   autoSwitchInput?: boolean
 }
 
+type ResetType = 'today' | 'all' | 'between-new' | 'between-update' | 'soft'
+
+interface ResetOptions {
+  type: ResetType
+  inputId?: string
+  date?: Date
+  keepStart?: boolean
+}
+
 class DatePicker {
   private config: DatePickerConfig
   private classes: Required<DatePickerClasses>
@@ -197,7 +206,6 @@ class DatePicker {
 
   private betweenStartDate: Date | null = null
   private betweenEndDate: Date | null = null
-  private isBetweenSelectionActive = false
   private closeButton: HTMLElement | null = null
 
   constructor(config: DatePickerConfig) {
@@ -205,11 +213,10 @@ class DatePicker {
     this.classes = this.mergeClasses(DEFAULT_CLASSES, config.classes || {})
 
     // Reset hours, minutes, seconds, and milliseconds for consistent date comparison
-    // Reset hours, minutes, seconds, and milliseconds for consistent date comparison
     this.currentDate = this.stripTime(new Date())
     this.selectedDate = this.stripTime(new Date())
 
-    this.autoClose = config.autoClose || this.autoClose
+    this.autoClose = config.autoClose ?? this.autoClose
     this.autoSwitchInput = config.autoSwitchInput || this.autoSwitchInput
     this.outputConfig = config.output || this.outputConfig
 
@@ -295,13 +302,11 @@ class DatePicker {
 
       if (dateInput) {
         const date = this.stripTime(defaultDates.single)
-        this.selectedDates.set(dateInput.id, date)
-        this.dateValues.set(dateInput.id, date)
-        dateInput.value = this.formatDateBasedOnConfig(date)
-        dateInput.setAttribute(
-          'data-selected',
-          this.formatDateBasedOnConfig(date, 'backend'),
-        )
+        this.resetState({
+          type: 'between-new',
+          inputId: dateInput.id,
+          date: date,
+        })
       }
     }
 
@@ -314,29 +319,20 @@ class DatePicker {
         const startDate = this.stripTime(defaultDates.between.start)
         const endDate = this.stripTime(defaultDates.between.end)
 
-        this.betweenStartDate = startDate
-        this.betweenEndDate = endDate
+        // Önce start date'i set et
+        this.resetState({
+          type: 'between-new',
+          inputId: dateInput.id,
+          date: startDate,
+        })
 
-        this.selectedDates.set(`${dateInput.id}-start`, startDate)
-        this.selectedDates.set(`${dateInput.id}-end`, endDate)
-        this.dateValues.set(`${dateInput.id}-start`, startDate)
-        this.dateValues.set(`${dateInput.id}-end`, endDate)
-
-        const output = this.config.output || {
-          order: ['day', 'month', 'year'],
-          slash: '/',
-          between: ' - ',
-        }
-
-        dateInput.value = `${this.formatDateBasedOnConfig(startDate)}${output.between}${this.formatDateBasedOnConfig(endDate)}`
-        dateInput.setAttribute(
-          'data-start',
-          this.formatDateBasedOnConfig(startDate, 'backend'),
-        )
-        dateInput.setAttribute(
-          'data-end',
-          this.formatDateBasedOnConfig(endDate, 'backend'),
-        )
+        // Sonra end date'i ekle
+        this.resetState({
+          type: 'between-update',
+          inputId: dateInput.id,
+          date: endDate,
+          keepStart: true,
+        })
       }
     }
 
@@ -349,13 +345,11 @@ class DatePicker {
         ) as HTMLInputElement
         if (startInput) {
           const startDate = this.stripTime(defaultDates.two.start)
-          this.selectedDates.set(startInput.id, startDate)
-          this.dateValues.set(startInput.id, startDate)
-          startInput.value = this.formatDateBasedOnConfig(startDate)
-          startInput.setAttribute(
-            'data-start',
-            this.formatDateBasedOnConfig(startDate, 'backend'),
-          )
+          this.resetState({
+            type: 'between-new',
+            inputId: startInput.id,
+            date: startDate,
+          })
         }
       }
 
@@ -365,16 +359,159 @@ class DatePicker {
         ) as HTMLInputElement
         if (endInput) {
           const endDate = this.stripTime(defaultDates.two.end)
-          this.selectedDates.set(endInput.id, endDate)
-          this.dateValues.set(endInput.id, endDate)
-          endInput.value = this.formatDateBasedOnConfig(endDate)
-          endInput.setAttribute(
-            'data-end',
-            this.formatDateBasedOnConfig(endDate, 'backend'),
-          )
+          this.resetState({
+            type: 'between-new',
+            inputId: endInput.id,
+            date: endDate,
+          })
         }
       }
     }
+  }
+
+  private initializeFromDataAttributes() {
+    const { input } = this.config
+
+    if (input.type === 'single') {
+      const dateInput = document.getElementById(
+        (input.elements as SingleDateInput).id,
+      ) as HTMLInputElement
+      if (dateInput) {
+        const selectedDate = dateInput.getAttribute('data-selected')
+        if (selectedDate) {
+          const date = this.parseBackendDate(selectedDate)
+          if (date) {
+            this.resetState({
+              type: 'between-new',
+              inputId: dateInput.id,
+              date: date,
+            })
+          }
+        }
+      }
+    }
+
+    if (input.type === 'between') {
+      const dateInput = document.getElementById(
+        (input.elements as BetweenDateInput).id,
+      ) as HTMLInputElement
+      if (dateInput) {
+        const startDate = this.parseBackendDate(
+          dateInput.getAttribute('data-start') as any,
+        )
+        const endDate = this.parseBackendDate(
+          dateInput.getAttribute('data-end') as any,
+        )
+
+        if (startDate) {
+          // Start date'i set et
+          this.betweenStartDate = startDate
+          this.selectedDates.set(`${dateInput.id}-start`, startDate)
+          this.dateValues.set(`${dateInput.id}-start`, startDate)
+        }
+
+        if (startDate && endDate) {
+          // End date'i de set et
+          this.betweenEndDate = endDate
+          this.selectedDates.set(`${dateInput.id}-end`, endDate)
+          this.dateValues.set(`${dateInput.id}-end`, endDate)
+
+          // Input değerini güncelle
+          dateInput.value = `${this.formatDateBasedOnConfig(startDate)}${this.outputConfig.between}${this.formatDateBasedOnConfig(endDate)}`
+        } else if (startDate) {
+          // Sadece start date varsa
+          dateInput.value = this.formatDateBasedOnConfig(startDate)
+        }
+      }
+    }
+
+    if (input.type === 'two') {
+      const rangeConfig = input.elements as DateRangeInput
+      const startInput = document.getElementById(
+        rangeConfig.start.id,
+      ) as HTMLInputElement
+      const endInput = document.getElementById(
+        rangeConfig.end.id,
+      ) as HTMLInputElement
+
+      if (startInput) {
+        const startDate = startInput.getAttribute('data-start')
+        if (startDate) {
+          const parsedStartDate = this.parseBackendDate(startDate)
+          if (parsedStartDate) {
+            this.selectedDates.set(startInput.id, parsedStartDate)
+            this.dateValues.set(startInput.id, parsedStartDate)
+            startInput.value = this.formatDateBasedOnConfig(parsedStartDate)
+          }
+        }
+      }
+
+      if (endInput) {
+        const endDate = endInput.getAttribute('data-end')
+        if (endDate) {
+          const parsedEndDate = this.parseBackendDate(endDate)
+          if (parsedEndDate) {
+            this.selectedDates.set(endInput.id, parsedEndDate)
+            this.dateValues.set(endInput.id, parsedEndDate)
+            endInput.value = this.formatDateBasedOnConfig(parsedEndDate)
+          }
+        }
+      }
+    }
+  }
+
+  private handleInputClick(input: HTMLInputElement) {
+    if (this.activeInput === input && this.isDatePickerVisible()) {
+      return
+    }
+
+    const prevInput = this.activeInput
+    this.activeInput = input
+
+    if (input.value) {
+      const [day, month, year] = input.value.split('/').map(Number)
+      const date = new Date(year, month - 1, day)
+
+      if (!isNaN(date.getTime())) {
+        this.currentDate = new Date(date)
+
+        if (this.config.input.type === 'between') {
+          // Between mode için özel kontrol
+          if (this.betweenStartDate && !this.betweenEndDate) {
+            this.resetState({
+              type: 'between-new',
+              inputId: input.id,
+              date: date,
+            })
+          }
+        } else {
+          // Diğer modlar için
+          this.resetState({
+            type: 'between-new',
+            inputId: input.id,
+            date: date,
+          })
+        }
+      }
+    }
+
+    this.renderCalendar()
+    this.renderMonthShortNames()
+    this.updateNavigationState()
+    this.positionDatePickerUnderInput(input)
+    this.showDatePicker()
+
+    if (prevInput) {
+      this.updateFocusContainer(prevInput.id, false)
+    }
+    this.updateFocusContainer(input.id, true)
+  }
+
+  public resetInput(inputId: string) {
+    this.resetState({
+      type: 'soft',
+      inputId: inputId,
+    })
   }
 
   private initializeFocusContainers() {
@@ -431,97 +568,6 @@ class DatePicker {
     const container = this.focusContainers.get(inputId)
     if (container) {
       container.setAttribute('data-focus', isFocused ? 'true' : 'false')
-    }
-  }
-
-  private initializeFromDataAttributes() {
-    const { input } = this.config
-
-    if (input.type === 'single') {
-      const dateInput = document.getElementById(
-        (input.elements as SingleDateInput).id,
-      ) as HTMLInputElement
-      if (dateInput) {
-        const selectedDate = dateInput.getAttribute('data-selected')
-        if (selectedDate) {
-          const date = this.parseBackendDate(selectedDate)
-          if (date) {
-            this.selectedDates.set(dateInput.id, date)
-            this.dateValues.set(dateInput.id, date)
-            dateInput.value = this.formatDateBasedOnConfig(date)
-          }
-        }
-      }
-    }
-
-    if (input.type === 'between') {
-      const dateInput = document.getElementById(
-        (input.elements as BetweenDateInput).id,
-      ) as HTMLInputElement
-      if (dateInput) {
-        const startDate = dateInput.getAttribute('data-start')
-        const endDate = dateInput.getAttribute('data-end')
-
-        if (startDate) {
-          const parsedStartDate = this.parseBackendDate(startDate)
-          if (parsedStartDate) {
-            this.betweenStartDate = parsedStartDate
-            this.selectedDates.set(`${dateInput.id}-start`, parsedStartDate)
-            this.dateValues.set(`${dateInput.id}-start`, parsedStartDate)
-          }
-        }
-
-        if (endDate) {
-          const parsedEndDate = this.parseBackendDate(endDate)
-          if (parsedEndDate) {
-            this.betweenEndDate = parsedEndDate
-            this.selectedDates.set(`${dateInput.id}-end`, parsedEndDate)
-            this.dateValues.set(`${dateInput.id}-end`, parsedEndDate)
-          }
-        }
-
-        if (startDate && endDate) {
-          const parsedStartDate = this.parseBackendDate(startDate)
-          const parsedEndDate = this.parseBackendDate(endDate)
-          if (parsedStartDate && parsedEndDate) {
-            dateInput.value = `${this.formatDateBasedOnConfig(parsedStartDate)}${this.outputConfig.between}${this.formatDateBasedOnConfig(parsedEndDate)}`
-          }
-        }
-      }
-    }
-
-    if (input.type === 'two') {
-      const rangeConfig = input.elements as DateRangeInput
-      const startInput = document.getElementById(
-        rangeConfig.start.id,
-      ) as HTMLInputElement
-      const endInput = document.getElementById(
-        rangeConfig.end.id,
-      ) as HTMLInputElement
-
-      if (startInput) {
-        const startDate = startInput.getAttribute('data-start')
-        if (startDate) {
-          const parsedStartDate = this.parseBackendDate(startDate)
-          if (parsedStartDate) {
-            this.selectedDates.set(startInput.id, parsedStartDate)
-            this.dateValues.set(startInput.id, parsedStartDate)
-            startInput.value = this.formatDateBasedOnConfig(parsedStartDate)
-          }
-        }
-      }
-
-      if (endInput) {
-        const endDate = endInput.getAttribute('data-end')
-        if (endDate) {
-          const parsedEndDate = this.parseBackendDate(endDate)
-          if (parsedEndDate) {
-            this.selectedDates.set(endInput.id, parsedEndDate)
-            this.dateValues.set(endInput.id, parsedEndDate)
-            endInput.value = this.formatDateBasedOnConfig(parsedEndDate)
-          }
-        }
-      }
     }
   }
 
@@ -694,37 +740,6 @@ class DatePicker {
         this.handleInputClick(input)
       })
     }
-  }
-
-  private handleInputClick(input: HTMLInputElement) {
-    if (this.activeInput === input && this.isDatePickerVisible()) {
-      return
-    }
-
-    const prevInput = this.activeInput
-    this.activeInput = input
-
-    if (input.value) {
-      // input.value'dan tarihi parse ederken dd/MM/yyyy formatını dikkate alalım
-      const [day, month, year] = input.value.split('/').map(Number)
-      const date = new Date(year, month - 1, day) // Ay değerini 1 azaltıyoruz çünkü JS'de aylar 0'dan başlar
-
-      if (!isNaN(date.getTime())) {
-        this.currentDate = new Date(date)
-        this.selectedDates.set(input.id, new Date(date))
-      }
-    }
-
-    this.renderCalendar()
-    this.renderMonthShortNames()
-    this.updateNavigationState()
-    this.positionDatePickerUnderInput(input)
-    this.showDatePicker()
-
-    if (prevInput) {
-      this.updateFocusContainer(prevInput.id, false)
-    }
-    this.updateFocusContainer(input.id, true)
   }
 
   private initializeDatePicker() {
@@ -1021,13 +1036,6 @@ class DatePicker {
     this.daysContainer.innerHTML = calendarHTML
   }
 
-  private formatDate(date: Date): string {
-    const day = date.getDate().toString().padStart(2, '0')
-    const month = (date.getMonth() + 1).toString().padStart(2, '0')
-    const year = date.getFullYear()
-    return `${day}/${month}/${year}`
-  }
-
   private formatDateBasedOnConfig(
     date: Date,
     type: 'display' | 'backend' = 'display',
@@ -1191,9 +1199,12 @@ class DatePicker {
       }
     })
 
-    this.containerElement?.addEventListener('click', e => {
-      e.stopPropagation()
-    })
+    if (this.closeButton) {
+      this.closeButton.addEventListener('click', e => {
+        e.stopPropagation()
+        this.safeClose()
+      })
+    }
 
     document.addEventListener('click', e => {
       const target = e.target as HTMLElement
@@ -1206,33 +1217,9 @@ class DatePicker {
         !isDateInput
 
       if (isOutsideClick && this.isDatePickerVisible()) {
-        if (this.activeInput && this.config.input.type === 'between') {
-          if (this.betweenStartDate && !this.betweenEndDate) {
-            // Tek tarih seçilip kapatılınca tüm değerleri temizle
-            this.resetAllInputs()
-            this.activeInput.removeAttribute('data-start')
-          } else if (this.betweenStartDate && this.betweenEndDate) {
-            const output = this.config.output || {
-              order: ['day', 'month', 'year'],
-              slash: '-',
-              between: ' & ',
-            }
-            this.activeInput.value = `${this.formatDateBasedOnConfig(this.betweenStartDate)}${output.between}${this.formatDateBasedOnConfig(this.betweenEndDate)}`
-          }
-        }
-
-        this.hideDatePicker()
-        this.activeInput = null
+        this.safeClose()
       }
     })
-
-    if (this.closeButton) {
-      this.closeButton.addEventListener('click', e => {
-        e.stopPropagation()
-        this.hideDatePicker()
-        this.activeInput = null
-      })
-    }
   }
 
   public safeChangeMonth(direction: 'next' | 'prev') {
@@ -1380,149 +1367,118 @@ class DatePicker {
     const inputConfig = this.registeredInputs.get(this.activeInput.id)
     if (!inputConfig) return
 
-    const shouldAutoClose = this.config.autoClose ?? true
-    const shouldAutoSwitch = this.config.autoSwitchInput ?? true
     const selectedDate = this.stripTime(date)
+    const isValid = this.isDateValid(date)
 
-    // Input type'a göre data attribute'ları ekleyelim
+    // Between mode için özel mantık
     if (this.config.input.type === 'between') {
-      if (!this.betweenStartDate) {
-        this.activeInput.setAttribute(
-          'data-start',
-          this.formatDateBasedOnConfig(date, 'backend'),
-        )
-      } else {
-        this.activeInput.setAttribute(
-          'data-end',
-          this.formatDateBasedOnConfig(date, 'backend'),
-        )
-      }
-    } else if (this.config.input.type === 'single') {
-      // Single input için data-selected attribute'u
-      this.activeInput.setAttribute(
-        'data-selected',
-        this.formatDateBasedOnConfig(date, 'backend'),
-      )
-    } else if (this.config.input.type === 'two') {
-      // İki input için start ve end attribute'ları
-      const inputType = inputConfig.type
-      if (inputType === 'start') {
-        this.activeInput.setAttribute(
-          'data-start',
-          this.formatDateBasedOnConfig(date, 'backend'),
-        )
-      } else if (inputType === 'end') {
-        this.activeInput.setAttribute(
-          'data-end',
-          this.formatDateBasedOnConfig(date, 'backend'),
-        )
-      }
-    }
+      // Eğer seçilen tarih geçerli değilse işlem yapma
+      if (!isValid) return
 
-    // Between tipi için özel tarih seçim mantığı
-    if (this.config.input.type === 'between') {
-      // Seçilen tarih zaten seçili olan başlangıç veya bitiş tarihiyse, date picker'ı resetle
+      // Seçilen tarih zaten seçili olan başlangıç veya bitiş tarihiyse, sıfırla ve yeniden başla
       if (
         (this.betweenStartDate &&
           this.areDatesEqual(selectedDate, this.betweenStartDate)) ||
         (this.betweenEndDate &&
           this.areDatesEqual(selectedDate, this.betweenEndDate))
       ) {
-        // Tüm seçimleri temizle
-        this.betweenStartDate = null
-        this.betweenEndDate = null
-        this.selectedDates.clear()
-        this.dateValues.clear()
-        this.activeInput.value = ''
-
-        // Yeni seçim olarak seçilen tarihi ata
-        this.betweenStartDate = selectedDate
-        this.selectedDates.set(`${this.activeInput.id}-start`, selectedDate)
-        this.dateValues.set(`${this.activeInput.id}-start`, selectedDate)
-        this.activeInput.value = this.formatDateBasedOnConfig(selectedDate)
-
-        this.renderCalendar()
+        this.resetState({
+          type: 'between-new',
+          date: selectedDate,
+          inputId: this.activeInput.id,
+        })
         return
       }
 
-      // Hiç tarih seçili değilse (ilk seçim)
+      // İlk seçim (hiç tarih seçili değil)
       if (!this.betweenStartDate && !this.betweenEndDate) {
-        this.betweenStartDate = selectedDate
-        this.isBetweenSelectionActive = true
-
-        this.activeInput.value = this.formatDateBasedOnConfig(selectedDate)
-        this.selectedDates.set(`${this.activeInput.id}-start`, selectedDate)
-        this.dateValues.set(`${this.activeInput.id}-start`, selectedDate)
-
-        this.renderCalendar()
+        this.resetState({
+          type: 'between-new',
+          date: selectedDate,
+          inputId: this.activeInput.id,
+        })
         return
       }
 
-      // Sadece başlangıç tarihi seçili ve yeni tarih seçiliyorsa
+      // Sadece başlangıç tarihi seçili
       if (this.betweenStartDate && !this.betweenEndDate) {
-        if (selectedDate <= this.betweenStartDate) {
-          // Seçilen tarih başlangıç tarihinden önce veya eşitse, yeni başlangıç tarihi yap
-          this.betweenStartDate = selectedDate
-          this.selectedDates.set(`${this.activeInput.id}-start`, selectedDate)
-          this.dateValues.set(`${this.activeInput.id}-start`, selectedDate)
-          this.activeInput.value = this.formatDateBasedOnConfig(selectedDate)
+        if (selectedDate < this.betweenStartDate) {
+          // Seçilen tarih başlangıç tarihinden küçükse, yeni başlangıç tarihi olarak ata
+          this.resetState({
+            type: 'between-update',
+            date: selectedDate,
+            inputId: this.activeInput.id,
+            keepStart: false,
+          })
         } else {
-          // Seçilen tarih başlangıçtan sonraysa, bitiş tarihi yap
-          this.betweenEndDate = selectedDate
-          this.selectedDates.set(`${this.activeInput.id}-end`, selectedDate)
-          this.dateValues.set(`${this.activeInput.id}-end`, selectedDate)
+          // Seçilen tarih başlangıç tarihinden büyükse, bitiş tarihi olarak ata
+          this.resetState({
+            type: 'between-update',
+            date: selectedDate,
+            inputId: this.activeInput.id,
+            keepStart: true,
+          })
 
-          // Between separator'ı kullanarak iki tarihi birleştir
-          const output = this.config.output || {
-            order: ['day', 'month', 'year'],
-            slash: '/',
-            between: ' - ',
-          }
-
-          this.activeInput.value = `${this.formatDateBasedOnConfig(this.betweenStartDate)}${output.between}${this.formatDateBasedOnConfig(selectedDate)}`
-
-          if (shouldAutoClose) {
+          // AutoClose kontrolü
+          if (this.autoClose) {
+            // <- Burada kontrol eksikti
             this.hideDatePicker()
             this.activeInput = null
           }
         }
-        this.renderCalendar()
         return
       }
 
-      // İki tarih de seçiliyse, yeni seçim başlatılır
+      // İki tarih de seçili - yeni seçim başlat
       if (this.betweenStartDate && this.betweenEndDate) {
-        // Tüm seçimleri temizle ve yeni başlangıç tarihi olarak seç
-        this.betweenStartDate = selectedDate
-        this.betweenEndDate = null
-        this.selectedDates.clear()
-        this.dateValues.clear()
-
-        this.selectedDates.set(`${this.activeInput.id}-start`, selectedDate)
-        this.dateValues.set(`${this.activeInput.id}-start`, selectedDate)
-        this.activeInput.value = this.formatDateBasedOnConfig(selectedDate)
-
-        this.renderCalendar()
+        this.resetState({
+          type: 'between-new',
+          date: selectedDate,
+          inputId: this.activeInput.id,
+        })
         return
       }
     }
 
-    // Range tipi için özel tarih seçim mantığı
+    // Two inputs mode için mantık
     if (this.config.input.type === 'two') {
-      // Tarihi seç ve input'u güncelle
-      this.selectedDates.set(this.activeInput.id, new Date(selectedDate))
-      this.dateValues.set(this.activeInput.id, new Date(selectedDate))
+      if (!isValid) {
+        // Eğer seçilen tarih linked date ise ve disabled ise, diğer input'a geç
+        const isLinkedDate = (() => {
+          if (!inputConfig.linkedInputId) return false
+          const linkedDate = this.dateValues.get(inputConfig.linkedInputId)
+          return linkedDate && this.areDatesEqual(linkedDate, date)
+        })()
+
+        if (isLinkedDate && inputConfig.linkedInputId) {
+          const linkedInput = document.getElementById(
+            inputConfig.linkedInputId,
+          ) as HTMLInputElement
+          if (linkedInput) {
+            this.handleInputClick(linkedInput)
+          }
+        }
+        return
+      }
+
+      // Tarihi seç ve değerleri güncelle
+      this.selectedDates.set(this.activeInput.id, selectedDate)
+      this.dateValues.set(this.activeInput.id, selectedDate)
       this.activeInput.value = this.formatDateBasedOnConfig(selectedDate)
 
-      // Diğer input'a geçiş kontrolü
-      if (shouldAutoSwitch && inputConfig.linkedInputId) {
+      // Data attribute'unu güncelle
+      this.updateDataAttributes(this.activeInput, {
+        [inputConfig.type === 'start' ? 'start' : 'end']: selectedDate,
+      })
+
+      // AutoSwitch kontrolü
+      if (this.autoSwitchInput && inputConfig.linkedInputId) {
         const linkedInput = document.getElementById(
           inputConfig.linkedInputId,
         ) as HTMLInputElement
         const linkedDate = this.selectedDates.get(inputConfig.linkedInputId)
 
         if (linkedInput && !linkedDate) {
-          // Date picker'ı kapatmadan diğer input'a geç
           this.handleInputClick(linkedInput)
           this.updateFocusContainer(this.activeInput.id, false)
           this.updateFocusContainer(linkedInput.id, true)
@@ -1530,8 +1486,8 @@ class DatePicker {
         }
       }
 
-      // İki tarih de seçiliyse ve autoClose true ise kapat
-      if (shouldAutoClose) {
+      // AutoClose kontrolü
+      if (this.autoClose) {
         this.hideDatePicker()
         this.activeInput = null
       }
@@ -1540,188 +1496,312 @@ class DatePicker {
       return
     }
 
-    // Normal tarih seçimi işlemleri (single mod)
-    if (this.isDateValid(date)) {
-      // Seçilen tarihi kaydet
-      this.selectedDates.set(this.activeInput.id, new Date(selectedDate))
+    // Single mode için mantık
+    if (this.config.input.type === 'single' && isValid) {
+      this.selectedDates.set(this.activeInput.id, selectedDate)
+      this.dateValues.set(this.activeInput.id, selectedDate)
       this.activeInput.value = this.formatDateBasedOnConfig(selectedDate)
-      this.dateValues.set(this.activeInput.id, new Date(selectedDate))
 
-      // Bağlantılı tarihleri kontrol et ve gerekirse temizle
-      if (inputConfig.type === 'start' && inputConfig.linkedInputId) {
-        const endInput = document.getElementById(
-          inputConfig.linkedInputId,
-        ) as HTMLInputElement
-        const endDate = this.dateValues.get(inputConfig.linkedInputId)
-        if (endDate && this.stripTime(endDate) < selectedDate) {
-          endInput.value = ''
-          this.dateValues.delete(inputConfig.linkedInputId)
-          this.selectedDates.delete(inputConfig.linkedInputId)
-        }
-      } else if (inputConfig.type === 'end' && inputConfig.linkedInputId) {
-        const startInput = document.getElementById(
-          inputConfig.linkedInputId,
-        ) as HTMLInputElement
-        const startDate = this.dateValues.get(inputConfig.linkedInputId)
-        if (startDate && this.stripTime(startDate) > selectedDate) {
-          startInput.value = ''
-          this.dateValues.delete(inputConfig.linkedInputId)
-          this.selectedDates.delete(inputConfig.linkedInputId)
-        }
-      }
+      // Data attribute'unu güncelle
+      this.updateDataAttributes(this.activeInput, { selected: selectedDate })
 
-      this.renderCalendar()
-
-      // Single mod için autoClose kontrolü
-      if (shouldAutoClose) {
+      if (this.autoClose) {
         this.hideDatePicker()
         this.activeInput = null
       }
+
+      this.renderCalendar()
     }
   }
 
-  public resetInput(inputId: string) {
-    const inputConfig = this.registeredInputs.get(inputId)
-    if (inputConfig) {
-      const input = inputConfig.element
-      input.value = ''
+  private safeClose() {
+    if (!this.activeInput) return
+    const inputConfig = this.registeredInputs.get(this.activeInput.id)
+    if (!inputConfig) return
 
-      // Input type'a göre attribute'ları temizle
-      if (this.config.input.type === 'between') {
-        input.removeAttribute('data-start')
-        input.removeAttribute('data-end')
-      } else if (this.config.input.type === 'single') {
-        input.removeAttribute('data-selected')
-      } else if (this.config.input.type === 'two') {
+    switch (this.config.input.type) {
+      case 'between':
+        if (this.betweenStartDate && !this.betweenEndDate) {
+          // Tek tarih seçiliyken tamamen reset yapılmalı
+          this.resetState({
+            type: 'all', // 'soft' yerine 'all' kullanıyoruz
+            inputId: this.activeInput.id,
+          })
+        } else if (this.betweenStartDate && this.betweenEndDate) {
+          // İki tarih de seçiliyse tarihleri formatlayıp göster
+          this.resetState({
+            type: 'between-update',
+            inputId: this.activeInput.id,
+            date: this.betweenEndDate,
+            keepStart: true,
+          })
+        }
+        break
+
+      case 'single':
+        const selectedDate = this.selectedDates.get(this.activeInput.id)
+        if (!selectedDate) {
+          // Tarih seçili değilse soft reset
+          this.resetState({
+            type: 'soft',
+            inputId: this.activeInput.id,
+          })
+        }
+        break
+
+      case 'two':
         if (inputConfig.type === 'start') {
-          input.removeAttribute('data-start')
-        } else if (inputConfig.type === 'end') {
-          input.removeAttribute('data-end')
-        }
-      }
+          const startDate = this.selectedDates.get(this.activeInput.id)
+          const endDate = inputConfig.linkedInputId
+            ? this.selectedDates.get(inputConfig.linkedInputId)
+            : null
 
-      this.selectedDates.delete(inputId)
-      this.renderCalendar()
+          if (!startDate && endDate) {
+            // Başlangıç tarihi yoksa soft reset
+            this.resetState({
+              type: 'soft',
+              inputId: this.activeInput.id,
+            })
+          }
+        } else if (inputConfig.type === 'end') {
+          const endDate = this.selectedDates.get(this.activeInput.id)
+          const startDate = inputConfig.linkedInputId
+            ? this.selectedDates.get(inputConfig.linkedInputId)
+            : null
+
+          if (!endDate && startDate) {
+            // Bitiş tarihi yoksa soft reset
+            this.resetState({
+              type: 'soft',
+              inputId: this.activeInput.id,
+            })
+          }
+        }
+        break
     }
+
+    this.hideDatePicker()
+    this.activeInput = null
   }
 
-  public resetToToday() {
-    const today = this.stripTime(new Date())
+  private resetState(options: ResetOptions) {
+    const { type, inputId, date, keepStart = false } = options
 
-    // Between modu için özel resetleme mantığı
-    if (this.config.input.type === 'between') {
-      // Her şeyi temizle ve bugünü başlangıç tarihi yap
-      this.betweenStartDate = today
-      this.betweenEndDate = null
-      this.selectedDates.clear()
-      this.dateValues.clear()
+    // Seçilen input için temel kontroller
+    const input = inputId
+      ? (document.getElementById(inputId) as HTMLInputElement)
+      : this.activeInput
+    if (!input) return
 
-      // Yeni başlangıç tarihini kaydet
-      this.selectedDates.set(`${this.activeInput?.id}-start`, today)
-      this.dateValues.set(`${this.activeInput?.id}-start`, today)
+    const inputConfig = this.registeredInputs.get(input.id)
+    if (!inputConfig) return
 
-      // Input değerini ve data attributelarını güncelle
-      if (this.activeInput) {
-        this.activeInput.value = this.formatDateBasedOnConfig(today)
-        this.activeInput.setAttribute(
-          'data-start',
-          this.formatDateBasedOnConfig(today, 'backend'),
-        )
-        this.activeInput.removeAttribute('data-end')
-      }
+    // Reset tiplerine göre işlemler
+    switch (type) {
+      case 'today':
+        this.handleTodayReset(input)
+        break
 
-      // Calendar'ı bugünün olduğu aya getir
-      this.currentDate = new Date(today)
-      this.selectedDate = today
+      case 'all':
+        this.handleFullReset()
+        break
 
-      this.renderMonthShortNames()
-      this.renderCalendar()
-      this.updateNavigationState()
-      return
+      case 'between-new':
+        if (!date) return
+        this.handleBetweenNewReset(input, date)
+        break
+
+      case 'between-update':
+        if (!date) return
+        this.handleBetweenUpdateReset(input, date, keepStart)
+        break
+
+      case 'soft':
+        this.handleSoftReset(input)
+        break
     }
 
-    // Normal mod için mevcut mantık devam eder
-    if (this.activeInput) {
-      const inputConfig = this.registeredInputs.get(this.activeInput.id)
-
-      if (inputConfig?.type === 'end' && inputConfig.linkedInputId) {
-        // Dönüş tarihi inputu aktifken
-        const startInput = document.getElementById(
-          inputConfig.linkedInputId,
-        ) as HTMLInputElement
-        const startDate = this.selectedDates.get(inputConfig.linkedInputId)
-
-        // Eğer gidiş tarihi seçiliyse, gidiş inputuna geç
-        if (startDate && startInput) {
-          this.handleInputClick(startInput)
-          return
-        }
-      }
-
-      // Gidiş tarihi seçili değilse veya gidiş inputu aktifse bugüne dön
-      this.currentDate = new Date(today)
-      this.selectedDate = today
-      this.selectedDates.set(this.activeInput.id, new Date(today))
-      this.dateValues.set(this.activeInput.id, new Date(today))
-
-      // Input değerini ve data attributelarını güncelle
-      this.activeInput.value = this.formatDateBasedOnConfig(today)
-
-      // Input tipine göre uygun data attribute'unu güncelle
-      if (this.config.input.type === 'single') {
-        this.activeInput.setAttribute(
-          'data-selected',
-          this.formatDateBasedOnConfig(today, 'backend'),
-        )
-      } else if (inputConfig?.type === 'start') {
-        this.activeInput.setAttribute(
-          'data-start',
-          this.formatDateBasedOnConfig(today, 'backend'),
-        )
-      } else if (inputConfig?.type === 'end') {
-        this.activeInput.setAttribute(
-          'data-end',
-          this.formatDateBasedOnConfig(today, 'backend'),
-        )
-      }
-    } else {
-      this.currentDate = new Date(today)
-      this.selectedDate = today
-    }
-
-    this.renderMonthShortNames()
+    // Calendar'ı güncelle
     this.renderCalendar()
+    this.renderMonthShortNames()
     this.updateNavigationState()
   }
 
-  private resetAllInputs() {
-    this.registeredInputs.forEach(config => {
-      const input = config.element
-      input.value = ''
+  private handleTodayReset(input: HTMLInputElement) {
+    const today = this.stripTime(new Date())
 
-      // Input type'a göre attribute'ları temizle
-      if (this.config.input.type === 'between') {
-        input.removeAttribute('data-start')
-        input.removeAttribute('data-end')
-      } else if (this.config.input.type === 'single') {
-        input.removeAttribute('data-selected')
-      } else if (this.config.input.type === 'two') {
-        input.removeAttribute('data-start')
-        input.removeAttribute('data-end')
+    if (this.config.input.type === 'between') {
+      // Between mode için bugün resetleme
+      this.betweenStartDate = today
+      this.betweenEndDate = null
+
+      // Map'leri temizle ve yeni değeri set et
+      this.clearDateMaps()
+      this.selectedDates.set(`${input.id}-start`, today)
+      this.dateValues.set(`${input.id}-start`, today)
+
+      // Input'u güncelle
+      input.value = this.formatDateBasedOnConfig(today)
+      this.updateDataAttributes(input, { start: today, end: null })
+    } else {
+      // Single veya Two inputs mode için bugün resetleme
+      this.selectedDates.set(input.id, today)
+      this.dateValues.set(input.id, today)
+      input.value = this.formatDateBasedOnConfig(today)
+
+      const inputConfig = this.registeredInputs.get(input.id)
+      if (inputConfig?.type === 'start') {
+        this.updateDataAttributes(input, { start: today })
+      } else if (inputConfig?.type === 'end') {
+        this.updateDataAttributes(input, { end: today })
+      } else {
+        this.updateDataAttributes(input, { selected: today })
+      }
+    }
+
+    this.currentDate = new Date(today)
+    this.selectedDate = today
+  }
+
+  private handleFullReset() {
+    this.registeredInputs.forEach((config, id) => {
+      const input = document.getElementById(id) as HTMLInputElement
+      if (input) {
+        input.value = ''
+        this.updateDataAttributes(input, {
+          start: null,
+          end: null,
+          selected: null,
+        })
       }
     })
 
-    this.selectedDates.clear()
-    this.dateValues.clear()
+    this.clearDateMaps()
+    this.resetBetweenState()
     this.currentDate = new Date()
     this.selectedDate = null
+  }
+
+  private handleBetweenNewReset(input: HTMLInputElement, date: Date) {
+    // Her şeyi temizle ve yeni start date'i set et
+    this.clearDateMaps()
+    this.resetBetweenState()
+
+    this.betweenStartDate = date
+    this.selectedDates.set(`${input.id}-start`, date)
+    this.dateValues.set(`${input.id}-start`, date)
+
+    input.value = this.formatDateBasedOnConfig(date)
+    this.updateDataAttributes(input, { start: date, end: null })
+  }
+
+  private handleBetweenUpdateReset(
+    input: HTMLInputElement,
+    date: Date,
+    keepStart: boolean,
+  ) {
+    if (keepStart && this.betweenStartDate) {
+      // Start date'i koru, end date'i güncelle
+      this.betweenEndDate = date
+      this.selectedDates.set(`${input.id}-end`, date)
+      this.dateValues.set(`${input.id}-end`, date)
+
+      const value = `${this.formatDateBasedOnConfig(this.betweenStartDate)}${this.outputConfig.between}${this.formatDateBasedOnConfig(date)}`
+      input.value = value
+      this.updateDataAttributes(input, {
+        start: this.betweenStartDate,
+        end: date,
+      })
+
+      // AutoClose buradan KALDIRILMALI - selectDate içinde kontrol edilecek
+    } else {
+      // Start date'i güncelle, end date'i temizle
+      this.betweenStartDate = date
+      this.betweenEndDate = null
+
+      this.clearDateMaps()
+      this.selectedDates.set(`${input.id}-start`, date)
+      this.dateValues.set(`${input.id}-start`, date)
+
+      input.value = this.formatDateBasedOnConfig(date)
+      this.updateDataAttributes(input, { start: date, end: null })
+    }
+  }
+
+  private handleSoftReset(input: HTMLInputElement) {
+    input.value = ''
+    this.selectedDates.delete(input.id)
+    this.dateValues.delete(input.id)
+
+    if (this.config.input.type === 'between') {
+      this.updateDataAttributes(input, { start: null, end: null })
+    } else if (this.config.input.type === 'single') {
+      this.updateDataAttributes(input, { selected: null })
+    } else {
+      const inputConfig = this.registeredInputs.get(input.id)
+      if (inputConfig?.type === 'start') {
+        this.updateDataAttributes(input, { start: null })
+      } else if (inputConfig?.type === 'end') {
+        this.updateDataAttributes(input, { end: null })
+      }
+    }
+  }
+
+  private clearDateMaps() {
+    this.selectedDates.clear()
+    this.dateValues.clear()
+  }
+
+  private resetBetweenState() {
     this.betweenStartDate = null
     this.betweenEndDate = null
-    this.isBetweenSelectionActive = false
+  }
 
-    this.renderMonthShortNames()
-    this.renderCalendar()
-    this.updateNavigationState()
+  private updateDataAttributes(
+    input: HTMLInputElement,
+    data: {
+      start?: Date | null
+      end?: Date | null
+      selected?: Date | null
+    },
+  ) {
+    const { start, end, selected } = data
+
+    if (start === null) {
+      input.removeAttribute('data-start')
+    } else if (start) {
+      input.setAttribute(
+        'data-start',
+        this.formatDateBasedOnConfig(start, 'backend'),
+      )
+    }
+
+    if (end === null) {
+      input.removeAttribute('data-end')
+    } else if (end) {
+      input.setAttribute(
+        'data-end',
+        this.formatDateBasedOnConfig(end, 'backend'),
+      )
+    }
+
+    if (selected === null) {
+      input.removeAttribute('data-selected')
+    } else if (selected) {
+      input.setAttribute(
+        'data-selected',
+        this.formatDateBasedOnConfig(selected, 'backend'),
+      )
+    }
+  }
+
+  // Mevcut fonksiyonları güncelleme
+  public resetToToday() {
+    this.resetState({ type: 'today' })
+  }
+
+  public resetAllInputs() {
+    this.resetState({ type: 'all' })
   }
 
   public destroy() {
