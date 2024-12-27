@@ -9,6 +9,13 @@ interface CounterItem {
   containerId: string // Parent element ID'si eklendi
 }
 
+interface SelectItem {
+  type: string
+  dataAttribute: string
+  selectElementId: string
+  containerId: string
+}
+
 interface CounterConfig {
   value: number
   minValue: number
@@ -23,16 +30,25 @@ interface CounterConfig {
 export class InputCounter {
   private input: HTMLInputElement
   private counters: Map<string, CounterConfig> = new Map()
+  private selects: Map<string, HTMLSelectElement> = new Map()
   private counterItems: CounterItem[]
-  private observers: Map<string, MutationObserver> = new Map() // MutationObserver'lar için
+  private selectItems: SelectItem[]
+  private observers: Map<string, MutationObserver> = new Map()
 
-  constructor(inputId: string, counterItems: CounterItem[]) {
+  constructor(
+    inputId: string,
+    counterItems: CounterItem[],
+    selectItems: SelectItem[],
+  ) {
     this.input = document.getElementById(inputId) as HTMLInputElement
     this.counterItems = counterItems
+    this.selectItems = selectItems
+
     if (!this.input) {
       console.error(`Input element with id ${inputId} not found`)
       return
     }
+
     this.initialize()
     this.bindEvents()
     this.setupObservers()
@@ -40,6 +56,13 @@ export class InputCounter {
   }
 
   private initialize() {
+    // Counter'ları başlat
+    this.initializeCounters()
+    // Select'leri başlat
+    this.initializeSelects()
+  }
+
+  private initializeCounters() {
     this.counterItems.forEach(item => {
       const container = document.getElementById(item.containerId)
       const plusBtn = document.getElementById(item.plusButtonId)
@@ -50,7 +73,6 @@ export class InputCounter {
       const dataAttrName = item.dataAttribute.replace('data-', '')
       const initialValue = Number(this.input.dataset[dataAttrName] || 0)
 
-      // Min ve max değerlerini container'dan al
       const minValue = Number(container?.dataset.min || 0)
       const maxValue = Number(container?.dataset.max || 99)
 
@@ -69,8 +91,27 @@ export class InputCounter {
         container,
       })
     })
+  }
 
-    this.updateButtonStates()
+  private initializeSelects() {
+    this.selectItems.forEach(item => {
+      const select = document.getElementById(
+        item.selectElementId,
+      ) as HTMLSelectElement
+      if (select) {
+        this.selects.set(item.type, select)
+        const dataAttrName = item.dataAttribute.replace('data-', '')
+
+        // Select değeri değiştiğinde input'u güncelle
+        select.addEventListener('change', () => {
+          this.input.dataset[dataAttrName] = select.value
+          this.updateInputValue()
+        })
+
+        // Başlangıç değerini ayarla
+        this.input.dataset[dataAttrName] = select.value
+      }
+    })
   }
 
   private setupObservers() {
@@ -150,6 +191,18 @@ export class InputCounter {
 
   private updateInputValue() {
     const parts: string[] = []
+
+    // Select değerlerini güncelle ve ekle
+    this.selectItems.forEach(item => {
+      const select = this.selects.get(item.type)
+      if (select) {
+        const dataAttrName = item.dataAttribute.replace('data-', '')
+        this.input.dataset[dataAttrName] = select.value
+        parts.push(select.value)
+      }
+    })
+
+    // Counter değerlerini ekle
     this.counters.forEach((config, type) => {
       const translation = config.textElement?.textContent
       if (translation) {
@@ -158,16 +211,7 @@ export class InputCounter {
     })
 
     this.input.value = parts.join(', ')
-
-    this.counterItems.forEach(item => {
-      const config = this.counters.get(item.type)
-      if (config) {
-        const dataAttrName = item.dataAttribute.replace('data-', '')
-        this.input.dataset[dataAttrName] = config.value.toString()
-      }
-    })
-
-    this.updateButtonStates() // Butonların durumlarını güncelle
+    this.updateButtonStates()
   }
 
   private bindEvents() {

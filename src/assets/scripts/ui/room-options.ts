@@ -56,5 +56,14 @@ document.addEventListener('DOMContentLoaded', () => {
     },
   ]
 
-  new InputCounter('select-room-options', counterConfig)
+  const selectConfig = [
+    {
+      type: 'country',
+      dataAttribute: 'data-country',
+      selectElementId: 'flag-select',
+      containerId: 'flag-container',
+    },
+  ]
+
+  new InputCounter('select-room-options', counterConfig, selectConfig)
 })
