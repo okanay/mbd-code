@@ -5,7 +5,7 @@ import { Slider } from './packages/slider.js'
 import { TouchDirectionDetector } from './packages/touch-event.js'
 import { UpdateElementInnerHTMLById } from './packages/image-gallery.js'
 import { UpdateProductSliderDataItems } from './packages/image-gallery.js'
-import { MapModal } from './packages/google-maps.js'
+import { ModalMap, EmbeddedMap } from './packages/google-maps.js'
 
 document.addEventListener('DOMContentLoaded', () => {
   new ModalController(
@@ -208,7 +208,12 @@ document.addEventListener('DOMContentLoaded', () => {
 })
 
 document.addEventListener('DOMContentLoaded', () => {
-  const mapModal = new MapModal('AIzaSyDYT2ujHlRpgizU5IlvYfMl90BB4VpD584')
+  const mapModal = new ModalMap('AIzaSyDYT2ujHlRpgizU5IlvYfMl90BB4VpD584')
+
+  const embeddedMap = new EmbeddedMap(
+    'AIzaSyDYT2ujHlRpgizU5IlvYfMl90BB4VpD584',
+    'location-map',
+  )
 })
 
 const config = {

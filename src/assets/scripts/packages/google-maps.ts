@@ -1,3 +1,4 @@
+// Interfaces
 interface MapModalElements {
   modalId: string
   modalContentId: string
@@ -5,7 +6,13 @@ interface MapModalElements {
   closeButtonId: string
 }
 
-class MapModal {
+interface EmbeddedMapConfig {
+  containerId: string
+  coordinate: string
+}
+
+// Modal Map Class
+class ModalMap {
   private modal: HTMLElement
   private mapContainer: HTMLElement
   private closeButton: HTMLElement
@@ -25,12 +32,10 @@ class MapModal {
 
     this.elements = { ...defaultElements, ...options }
 
-    // Required DOM elements
+    // Initialize DOM elements
     this.modal = document.getElementById(this.elements.modalId)!
     this.mapContainer = document.getElementById(this.elements.mapContainerId)!
     this.closeButton = document.getElementById(this.elements.closeButtonId)!
-
-    // Get all map buttons
     this.mapButtons = document.querySelectorAll('.map-ctr-button')
 
     this.bindEvents()
@@ -91,32 +96,88 @@ class MapModal {
   }
 
   public openMap(lat: number, lng: number): void {
-    // Create or update iframe
     const iframe = document.createElement('iframe')
     iframe.src = this.createMapUrl(lat, lng)
     iframe.className = 'w-full h-full border-none'
     iframe.loading = 'lazy'
     iframe.allowFullscreen = true
 
-    // Clear and add new iframe
     this.mapContainer.innerHTML = ''
     this.mapContainer.appendChild(iframe)
-
-    // Open modal
     this.modal.setAttribute('data-state', 'open')
   }
 
   private closeMap(): void {
     this.modal.setAttribute('data-state', 'closed')
-    // Optionally clear iframe when closing
     this.mapContainer.innerHTML = ''
   }
 
-  // Yeni butonlar eklendiğinde çağırın
-  public refreshMap(): void {
+  public refreshButtons(): void {
     this.mapButtons = document.querySelectorAll('.map-ctr-button')
     this.bindEvents()
   }
 }
 
-export { MapModal, type MapModalElements }
+// Embedded Map Class
+class EmbeddedMap {
+  private container: HTMLElement
+  private apiKey: string
+  private config: EmbeddedMapConfig
+
+  constructor(apiKey: string, containerId: string) {
+    this.apiKey = apiKey
+    this.container = document.getElementById(containerId)!
+
+    if (this.container) {
+      const coordinate = this.container.getAttribute('data-coordinate')
+      if (coordinate) {
+        this.config = {
+          containerId,
+          coordinate,
+        }
+        this.initialize()
+      }
+    }
+  }
+
+  private createMapUrl(lat: number, lng: number): string {
+    return `https://www.google.com/maps/embed/v1/place?key=${this.apiKey}&q=${lat},${lng}&zoom=14`
+  }
+
+  private parseCoordinates(
+    coordString: string,
+  ): { lat: number; lng: number } | null {
+    try {
+      const [lat, lng] = coordString.split(',').map(Number)
+      if (isNaN(lat) || isNaN(lng)) return null
+      return { lat, lng }
+    } catch {
+      return null
+    }
+  }
+
+  private initialize(): void {
+    const coordinates = this.parseCoordinates(this.config.coordinate)
+    if (!coordinates) return
+
+    // Create and add iframe to the existing map container
+    const iframe = document.createElement('iframe')
+    iframe.src = this.createMapUrl(coordinates.lat, coordinates.lng)
+    iframe.className = 'absolute inset-0 w-full h-full border-none'
+    iframe.loading = 'lazy'
+    iframe.allowFullscreen = true
+
+    // Find the map container inside our main container
+    const mapContainer = this.container.querySelector('.map-container')
+    if (mapContainer) {
+      mapContainer.innerHTML = ''
+      mapContainer.appendChild(iframe)
+    }
+  }
+
+  public refresh(): void {
+    this.initialize()
+  }
+}
+
+export { ModalMap, EmbeddedMap, type MapModalElements, type EmbeddedMapConfig }
