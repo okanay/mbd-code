@@ -2190,35 +2190,35 @@
               <div class="w-full overflow-x-auto">
                 <div
                   id="otel-price-table"
-                  class="relative min-w-[1200px] divide-y divide-gray-100 overflow-hidden rounded border border-gray-200"
+                  class="relative min-w-[1200px] overflow-hidden rounded"
                 >
                   <!-- Header Row -->
                   <div class="flex bg-primary-500">
-                    <!-- Group 1: Initial Columns -->
-                    <div class="flex flex-1 divide-x divide-gray-200">
+                    <!-- Headers -->
+                    <div class="flex flex-1">
                       <div
-                        class="order-1 w-[32.5%] flex-shrink-0 px-3.5 py-3 text-xs font-semibold uppercase text-white sm:order-none"
+                        class="order-1 w-[32.5%] flex-shrink-0 border-r px-3.5 py-3 text-xs font-semibold uppercase text-white sm:order-none"
                       >
                         Daire Tipi
                       </div>
                       <div
-                        class="order-3 w-[15%] flex-shrink-0 px-3.5 py-3 text-xs font-semibold uppercase text-white sm:order-none"
+                        class="order-3 w-[15%] flex-shrink-0 border-r px-3.5 py-3 text-xs font-semibold uppercase text-white sm:order-none"
                       >
                         Konuk Sayısı
                       </div>
                       <div
-                        class="order-4 w-[15%] flex-shrink-0 px-3.5 py-3 text-xs font-semibold uppercase text-white sm:order-none"
+                        class="order-4 w-[15%] flex-shrink-0 border-r px-3.5 py-3 text-xs font-semibold uppercase text-white sm:order-none"
                       >
                         5 Gecelik Fiyat
                       </div>
                       <div
-                        class="order-5 w-[29.5%] flex-shrink-0 px-3.5 py-3 text-end text-xs font-semibold uppercase text-white sm:order-none sm:text-start"
+                        class="order-5 w-[29.5%] flex-shrink-0 border-r px-3.5 py-3 text-end text-xs font-semibold uppercase text-white sm:order-none sm:text-start"
                       >
                         Özellikleriniz
                       </div>
                       <!-- Group 2: Action Column (moves in mobile) -->
                       <div
-                        class="order-2 w-[8%] flex-shrink-0 py-3 text-center text-xs font-semibold uppercase text-white sm:order-none"
+                        class="order-2 w-[8%] flex-shrink-0 border-r py-3 text-center text-xs font-semibold uppercase text-white sm:order-none"
                       >
                         Daire Seç
                       </div>
@@ -2226,17 +2226,12 @@
                   </div>
 
                   <!-- Content Rows -->
-                  <div
-                    id="table-contents"
-                    class="flex flex-col divide-y divide-gray-200 border-b border-gray-200"
-                  >
+                  <div id="table-contents" class="flex flex-col">
                     <!-- Item 1: Initial Columns -->
-                    <div
-                      class="flex flex-1 divide-x divide-gray-200 bg-white hover:bg-gray-100/50"
-                    >
+                    <div class="flex flex-1 bg-white hover:bg-gray-100/50">
                       <!-- Daire Tipi -->
                       <div
-                        class="order-1 w-[32.5%] flex-shrink-0 translate-y-[-0.25rem] px-3.5 py-4 sm:order-none"
+                        class="order-1 w-[32.5%] flex-shrink-0 border-l border-r border-gray-200 px-3.5 py-2.5 sm:order-none"
                       >
                         <div class="space-y-2">
                           <button
@@ -2259,7 +2254,7 @@
 
                       <!-- Konuk Sayısı -->
                       <div
-                        class="order-3 w-[15%] flex-shrink-0 px-4 py-2.5 sm:order-none"
+                        class="order-3 w-[15%] flex-shrink-0 border-b border-r border-gray-200 px-4 py-2.5 sm:order-none"
                       >
                         <div class="flex gap-1">
                           <i
@@ -2283,7 +2278,7 @@
 
                       <!-- Fiyatlar -->
                       <div
-                        class="order-4 w-[15%] flex-shrink-0 px-3.5 py-2.5 sm:order-none"
+                        class="order-4 w-[15%] flex-shrink-0 border-b border-r border-gray-200 px-3.5 py-2.5 sm:order-none"
                       >
                         <div class="flex flex-shrink-0 flex-col">
                           <span class="text-xs font-semibold text-lime-600"
@@ -2303,7 +2298,7 @@
 
                       <!-- Özellikleriniz -->
                       <div
-                        class="order-5 w-[29.5%] flex-shrink-0 px-3.5 py-2.5 text-end sm:order-none sm:text-start"
+                        class="order-5 w-[29.5%] flex-shrink-0 border-b border-gray-200 px-3.5 py-2.5 text-end sm:order-none sm:border-r sm:text-start"
                       >
                         <div
                           class="flex flex-col items-end space-y-2 sm:items-start"
@@ -2342,7 +2337,367 @@
 
                       <!-- Aksiyon Butonu-->
                       <div
-                        class="order-2 w-[8%] flex-shrink-0 px-3.5 py-2.5 sm:order-none"
+                        class="order-2 w-[8%] flex-shrink-0 border-b border-r border-gray-200 px-3.5 py-2.5 sm:order-none"
+                      >
+                        <div class="flex justify-center">
+                          <div class="inline-flex items-center">
+                            <div
+                              class="relative flex h-10 w-12 scale-y-[103%] items-center justify-between rounded border border-gray-200"
+                            >
+                              <select
+                                class="h-full w-full appearance-none bg-transparent pl-2.5 pr-1 focus:outline-none focus:ring-0"
+                              >
+                                <option>0</option>
+                                <option>1</option>
+                                <option>2</option>
+                              </select>
+                              <i
+                                data-lucide="chevron-down"
+                                class="pointer-events-none absolute right-1.5 top-[50%] size-4 -translate-y-1/2 text-gray-400"
+                              ></i>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="flex flex-1 bg-white hover:bg-gray-100/50">
+                      <!-- Daire Tipi -->
+                      <div
+                        class="order-1 w-[32.5%] flex-shrink-0 border-l border-r border-gray-200 px-3.5 py-2.5 sm:order-none"
+                      ></div>
+
+                      <!-- Konuk Sayısı -->
+                      <div
+                        class="order-3 w-[15%] flex-shrink-0 border-b border-r border-gray-200 px-4 py-2.5 sm:order-none"
+                      >
+                        <div class="flex gap-1">
+                          <i
+                            data-lucide="user"
+                            class="size-5 text-gray-600"
+                          ></i>
+                          <i
+                            data-lucide="user"
+                            class="size-5 text-gray-600"
+                          ></i>
+                          <i
+                            data-lucide="user"
+                            class="size-5 text-gray-600"
+                          ></i>
+                          <i
+                            data-lucide="user"
+                            class="size-5 text-gray-600"
+                          ></i>
+                        </div>
+                      </div>
+
+                      <!-- Fiyatlar -->
+                      <div
+                        class="order-4 w-[15%] flex-shrink-0 border-b border-r border-gray-200 px-3.5 py-2.5 sm:order-none"
+                      >
+                        <div class="flex flex-shrink-0 flex-col">
+                          <span class="text-xs font-semibold text-lime-600"
+                            >%25 İndirim</span
+                          >
+                          <div class="flex items-center gap-2">
+                            <span
+                              class="text-xs font-medium text-gray-500 line-through"
+                              >650 AED</span
+                            >
+                            <span class="text-lg font-semibold text-primary-500"
+                              >550 AED</span
+                            >
+                          </div>
+                        </div>
+                      </div>
+
+                      <!-- Özellikleriniz -->
+                      <div
+                        class="order-5 w-[29.5%] flex-shrink-0 border-b border-gray-200 px-3.5 py-2.5 text-end sm:order-none sm:border-r sm:text-start"
+                      >
+                        <div
+                          class="flex flex-col items-end space-y-2 sm:items-start"
+                        >
+                          <!-- Avantajlar -->
+                          <div class="flex items-start gap-2">
+                            <i
+                              data-lucide="check"
+                              class="order-2 size-5 flex-shrink-0 text-lime-600 sm:order-none"
+                            ></i>
+                            <span class="order-1 text-sm sm:order-none"
+                              >Dahili park yeri</span
+                            >
+                          </div>
+                          <div class="flex items-start gap-2">
+                            <i
+                              data-lucide="info"
+                              class="order-2 size-5 flex-shrink-0 text-primary-600 sm:order-none"
+                            ></i>
+                            <span class="order-1 text-sm sm:order-none"
+                              >İade edilemez</span
+                            >
+                          </div>
+
+                          <div class="flex items-start gap-2">
+                            <i
+                              data-lucide="info"
+                              class="order-2 size-5 flex-shrink-0 text-blue-600 sm:order-none"
+                            ></i>
+                            <span class="order-1 text-sm sm:order-none"
+                              >Varıştan önce tesiste ödeme yapın</span
+                            >
+                          </div>
+                        </div>
+                      </div>
+
+                      <!-- Aksiyon Butonu-->
+                      <div
+                        class="order-2 w-[8%] flex-shrink-0 border-b border-r border-gray-200 px-3.5 py-2.5 sm:order-none"
+                      >
+                        <div class="flex justify-center">
+                          <div class="inline-flex items-center">
+                            <div
+                              class="relative flex h-10 w-12 scale-y-[103%] items-center justify-between rounded border border-gray-200"
+                            >
+                              <select
+                                class="h-full w-full appearance-none bg-transparent pl-2.5 pr-1 focus:outline-none focus:ring-0"
+                              >
+                                <option>0</option>
+                                <option>1</option>
+                                <option>2</option>
+                              </select>
+                              <i
+                                data-lucide="chevron-down"
+                                class="pointer-events-none absolute right-1.5 top-[50%] size-4 -translate-y-1/2 text-gray-400"
+                              ></i>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="flex flex-1 bg-white hover:bg-gray-100/50">
+                      <!-- Daire Tipi -->
+                      <div
+                        class="order-1 w-[32.5%] flex-shrink-0 border-b border-l border-r border-gray-200 px-3.5 py-2.5 sm:order-none"
+                      ></div>
+
+                      <!-- Konuk Sayısı -->
+                      <div
+                        class="order-3 w-[15%] flex-shrink-0 border-b border-r border-gray-200 px-4 py-2.5 sm:order-none"
+                      >
+                        <div class="flex gap-1">
+                          <i
+                            data-lucide="user"
+                            class="size-5 text-gray-600"
+                          ></i>
+                          <i
+                            data-lucide="user"
+                            class="size-5 text-gray-600"
+                          ></i>
+                          <i
+                            data-lucide="user"
+                            class="size-5 text-gray-600"
+                          ></i>
+                          <i
+                            data-lucide="user"
+                            class="size-5 text-gray-600"
+                          ></i>
+                        </div>
+                      </div>
+
+                      <!-- Fiyatlar -->
+                      <div
+                        class="order-4 w-[15%] flex-shrink-0 border-b border-r border-gray-200 px-3.5 py-2.5 sm:order-none"
+                      >
+                        <div class="flex flex-shrink-0 flex-col">
+                          <span class="text-xs font-semibold text-lime-600"
+                            >%25 İndirim</span
+                          >
+                          <div class="flex items-center gap-2">
+                            <span
+                              class="text-xs font-medium text-gray-500 line-through"
+                              >650 AED</span
+                            >
+                            <span class="text-lg font-semibold text-primary-500"
+                              >550 AED</span
+                            >
+                          </div>
+                        </div>
+                      </div>
+
+                      <!-- Özellikleriniz -->
+                      <div
+                        class="order-5 w-[29.5%] flex-shrink-0 border-b border-gray-200 px-3.5 py-2.5 text-end sm:order-none sm:border-r sm:text-start"
+                      >
+                        <div
+                          class="flex flex-col items-end space-y-2 sm:items-start"
+                        >
+                          <!-- Avantajlar -->
+                          <div class="flex items-start gap-2">
+                            <i
+                              data-lucide="check"
+                              class="order-2 size-5 flex-shrink-0 text-lime-600 sm:order-none"
+                            ></i>
+                            <span class="order-1 text-sm sm:order-none"
+                              >Dahili park yeri</span
+                            >
+                          </div>
+                          <div class="flex items-start gap-2">
+                            <i
+                              data-lucide="info"
+                              class="order-2 size-5 flex-shrink-0 text-primary-600 sm:order-none"
+                            ></i>
+                            <span class="order-1 text-sm sm:order-none"
+                              >İade edilemez</span
+                            >
+                          </div>
+
+                          <div class="flex items-start gap-2">
+                            <i
+                              data-lucide="info"
+                              class="order-2 size-5 flex-shrink-0 text-blue-600 sm:order-none"
+                            ></i>
+                            <span class="order-1 text-sm sm:order-none"
+                              >Varıştan önce tesiste ödeme yapın</span
+                            >
+                          </div>
+                        </div>
+                      </div>
+
+                      <!-- Aksiyon Butonu-->
+                      <div
+                        class="order-2 w-[8%] flex-shrink-0 border-b border-r border-gray-200 px-3.5 py-2.5 sm:order-none"
+                      >
+                        <div class="flex justify-center">
+                          <div class="inline-flex items-center">
+                            <div
+                              class="relative flex h-10 w-12 scale-y-[103%] items-center justify-between rounded border border-gray-200"
+                            >
+                              <select
+                                class="h-full w-full appearance-none bg-transparent pl-2.5 pr-1 focus:outline-none focus:ring-0"
+                              >
+                                <option>0</option>
+                                <option>1</option>
+                                <option>2</option>
+                              </select>
+                              <i
+                                data-lucide="chevron-down"
+                                class="pointer-events-none absolute right-1.5 top-[50%] size-4 -translate-y-1/2 text-gray-400"
+                              ></i>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="flex flex-1 bg-white hover:bg-gray-100/50">
+                      <!-- Daire Tipi -->
+                      <div
+                        class="order-1 w-[32.5%] flex-shrink-0 border-b border-l border-r border-gray-200 px-3.5 py-2.5 sm:order-none"
+                      >
+                        <div class="space-y-2">
+                          <button
+                            class="dynamic-gallery-button flex cursor-default items-center gap-2 font-semibold text-primary-600"
+                          >
+                            <i data-lucide="image" class="size-4"></i>
+                            <span>Deluxe 2 Yataklı Daire</span>
+                          </button>
+                          <div class="space-y-1 text-sm text-gray-600">
+                            <p>Yatak Odası 1: 2 tek kişilik yatak</p>
+                            <p>
+                              Yatak Odası 2: 1 ekstra büyük çift kişilik yatak
+                            </p>
+                            <p class="text-gray-500">
+                              Ücretsiz bebek karyolası talep üzerine mevcuttur
+                            </p>
+                          </div>
+                        </div>
+                      </div>
+
+                      <!-- Konuk Sayısı -->
+                      <div
+                        class="order-3 w-[15%] flex-shrink-0 border-b border-r border-gray-200 px-4 py-2.5 sm:order-none"
+                      >
+                        <div class="flex gap-1">
+                          <i
+                            data-lucide="user"
+                            class="size-5 text-gray-600"
+                          ></i>
+                          <i
+                            data-lucide="user"
+                            class="size-5 text-gray-600"
+                          ></i>
+                          <i
+                            data-lucide="user"
+                            class="size-5 text-gray-600"
+                          ></i>
+                          <i
+                            data-lucide="user"
+                            class="size-5 text-gray-600"
+                          ></i>
+                        </div>
+                      </div>
+
+                      <!-- Fiyatlar -->
+                      <div
+                        class="order-4 w-[15%] flex-shrink-0 border-b border-r border-gray-200 px-3.5 py-2.5 sm:order-none"
+                      >
+                        <div class="flex flex-shrink-0 flex-col">
+                          <span class="text-xs font-semibold text-lime-600"
+                            >%25 İndirim</span
+                          >
+                          <div class="flex items-center gap-2">
+                            <span
+                              class="text-xs font-medium text-gray-500 line-through"
+                              >650 AED</span
+                            >
+                            <span class="text-lg font-semibold text-primary-500"
+                              >550 AED</span
+                            >
+                          </div>
+                        </div>
+                      </div>
+
+                      <!-- Özellikleriniz -->
+                      <div
+                        class="order-5 w-[29.5%] flex-shrink-0 border-b border-gray-200 px-3.5 py-2.5 text-end sm:order-none sm:border-r sm:text-start"
+                      >
+                        <div
+                          class="flex flex-col items-end space-y-2 sm:items-start"
+                        >
+                          <!-- Avantajlar -->
+                          <div class="flex items-start gap-2">
+                            <i
+                              data-lucide="check"
+                              class="order-2 size-5 flex-shrink-0 text-lime-600 sm:order-none"
+                            ></i>
+                            <span class="order-1 text-sm sm:order-none"
+                              >Dahili park yeri</span
+                            >
+                          </div>
+                          <div class="flex items-start gap-2">
+                            <i
+                              data-lucide="info"
+                              class="order-2 size-5 flex-shrink-0 text-primary-600 sm:order-none"
+                            ></i>
+                            <span class="order-1 text-sm sm:order-none"
+                              >İade edilemez</span
+                            >
+                          </div>
+
+                          <div class="flex items-start gap-2">
+                            <i
+                              data-lucide="info"
+                              class="order-2 size-5 flex-shrink-0 text-blue-600 sm:order-none"
+                            ></i>
+                            <span class="order-1 text-sm sm:order-none"
+                              >Varıştan önce tesiste ödeme yapın</span
+                            >
+                          </div>
+                        </div>
+                      </div>
+
+                      <!-- Aksiyon Butonu-->
+                      <div
+                        class="order-2 w-[8%] flex-shrink-0 border-b border-r border-gray-200 px-3.5 py-2.5 sm:order-none"
                       >
                         <div class="flex justify-center">
                           <div class="inline-flex items-center">
@@ -2366,121 +2721,231 @@
                       </div>
                     </div>
 
-                    <!-- Loading Skeleton -->
-                    <div class="flex flex-col divide-y divide-gray-200">
+                    <!-- Loading -->
+                    <div class="flex flex-1 bg-white hover:bg-gray-100/50">
+                      <!-- Daire Tipi -->
                       <div
-                        class="flex flex-1 divide-x divide-gray-200 bg-white"
+                        class="order-1 w-[32.5%] flex-shrink-0 border-b border-l border-r border-gray-200 px-3.5 py-2.5 sm:order-none"
                       >
-                        <!-- Daire Tipi -->
-                        <div
-                          class="order-1 w-[32.5%] flex-shrink-0 translate-y-[-0.25rem] px-3.5 py-4 sm:order-none"
-                        >
-                          <div class="space-y-2">
-                            <div class="flex items-center gap-2">
-                              <div
-                                class="size-4 animate-pulse rounded-full bg-gray-200"
-                              ></div>
-                              <div
-                                class="h-5 w-48 animate-pulse rounded bg-gray-200"
-                              ></div>
-                            </div>
-                            <div class="space-y-1">
-                              <div
-                                class="h-4 w-56 animate-pulse rounded bg-gray-200"
-                              ></div>
-                              <div
-                                class="h-4 w-64 animate-pulse rounded bg-gray-200"
-                              ></div>
-                              <div
-                                class="h-4 w-52 animate-pulse rounded bg-gray-200"
-                              ></div>
-                            </div>
+                        <div class="space-y-2">
+                          <div class="flex items-center gap-2">
+                            <div
+                              class="size-4 animate-pulse rounded-full bg-gray-200"
+                            ></div>
+                            <div
+                              class="h-5 w-48 animate-pulse rounded bg-gray-200"
+                            ></div>
                           </div>
-                        </div>
-
-                        <!-- Konuk Sayısı -->
-                        <div
-                          class="order-3 w-[15%] flex-shrink-0 px-4 py-2.5 sm:order-none"
-                        >
-                          <div class="flex gap-1">
+                          <div class="space-y-1">
                             <div
-                              class="size-5 animate-pulse rounded-full bg-gray-200"
+                              class="h-4 w-56 animate-pulse rounded bg-gray-200"
                             ></div>
                             <div
-                              class="size-5 animate-pulse rounded-full bg-gray-200"
+                              class="h-4 w-64 animate-pulse rounded bg-gray-200"
                             ></div>
                             <div
-                              class="size-5 animate-pulse rounded-full bg-gray-200"
-                            ></div>
-                            <div
-                              class="size-5 animate-pulse rounded-full bg-gray-200"
+                              class="h-4 w-52 animate-pulse rounded bg-gray-200"
                             ></div>
                           </div>
                         </div>
+                      </div>
 
-                        <!-- Fiyatlar -->
-                        <div
-                          class="order-4 w-[15%] flex-shrink-0 px-3.5 py-2.5 sm:order-none"
-                        >
-                          <div class="flex flex-shrink-0 flex-col">
-                            <div
-                              class="h-4 w-20 animate-pulse rounded bg-gray-200"
-                            ></div>
-                            <div class="mt-1 flex items-center gap-2">
-                              <div
-                                class="h-4 w-16 animate-pulse rounded bg-gray-200"
-                              ></div>
-                              <div
-                                class="h-6 w-24 animate-pulse rounded bg-gray-200"
-                              ></div>
-                            </div>
-                          </div>
-                        </div>
-
-                        <!-- Özellikleriniz -->
-                        <div
-                          class="order-5 w-[29.5%] flex-shrink-0 px-3.5 py-2.5 text-end sm:order-none sm:text-start"
-                        >
+                      <!-- Konuk Sayısı -->
+                      <div
+                        class="order-3 w-[15%] flex-shrink-0 border-b border-r border-gray-200 px-4 py-2.5 sm:order-none"
+                      >
+                        <div class="flex gap-1">
                           <div
-                            class="flex flex-col items-end space-y-2 sm:items-start"
-                          >
-                            <div class="flex items-start gap-2">
-                              <div
-                                class="order-2 size-5 animate-pulse rounded-full bg-gray-200 sm:order-none"
-                              ></div>
-                              <div
-                                class="order-1 h-4 w-28 animate-pulse rounded bg-gray-200 sm:order-none"
-                              ></div>
-                            </div>
-                            <div class="flex items-start gap-2">
-                              <div
-                                class="order-2 size-5 animate-pulse rounded-full bg-gray-200 sm:order-none"
-                              ></div>
-                              <div
-                                class="order-1 h-4 w-24 animate-pulse rounded bg-gray-200 sm:order-none"
-                              ></div>
-                            </div>
-                            <div class="flex items-start gap-2">
-                              <div
-                                class="order-2 size-5 animate-pulse rounded-full bg-gray-200 sm:order-none"
-                              ></div>
-                              <div
-                                class="order-1 h-4 w-48 animate-pulse rounded bg-gray-200 sm:order-none"
-                              ></div>
-                            </div>
+                            class="size-5 animate-pulse rounded-full bg-gray-200"
+                          ></div>
+                          <div
+                            class="size-5 animate-pulse rounded-full bg-gray-200"
+                          ></div>
+                          <div
+                            class="size-5 animate-pulse rounded-full bg-gray-200"
+                          ></div>
+                          <div
+                            class="size-5 animate-pulse rounded-full bg-gray-200"
+                          ></div>
+                        </div>
+                      </div>
+
+                      <!-- Fiyatlar -->
+                      <div
+                        class="order-4 w-[15%] flex-shrink-0 border-b border-r border-gray-200 px-3.5 py-2.5 sm:order-none"
+                      >
+                        <div class="flex flex-shrink-0 flex-col">
+                          <div
+                            class="h-4 w-20 animate-pulse rounded bg-gray-200"
+                          ></div>
+                          <div class="mt-1 flex items-center gap-2">
+                            <div
+                              class="h-4 w-16 animate-pulse rounded bg-gray-200"
+                            ></div>
+                            <div
+                              class="h-6 w-24 animate-pulse rounded bg-gray-200"
+                            ></div>
                           </div>
                         </div>
+                      </div>
 
-                        <!-- Aksiyon Butonu -->
+                      <!-- Özellikleriniz -->
+                      <div
+                        class="order-5 w-[29.5%] flex-shrink-0 border-b border-r border-gray-200 px-3.5 py-2.5 text-end sm:order-none sm:text-start"
+                      >
                         <div
-                          class="order-2 w-[8%] flex-shrink-0 px-3.5 py-2.5 sm:order-none"
+                          class="flex flex-col items-end space-y-2 sm:items-start"
                         >
-                          <div class="flex justify-center">
-                            <div class="inline-flex items-center">
-                              <div
-                                class="h-10 w-12 animate-pulse rounded bg-gray-200"
-                              ></div>
-                            </div>
+                          <div class="flex items-start gap-2">
+                            <div
+                              class="order-2 size-5 animate-pulse rounded-full bg-gray-200 sm:order-none"
+                            ></div>
+                            <div
+                              class="order-1 h-4 w-28 animate-pulse rounded bg-gray-200 sm:order-none"
+                            ></div>
+                          </div>
+                          <div class="flex items-start gap-2">
+                            <div
+                              class="order-2 size-5 animate-pulse rounded-full bg-gray-200 sm:order-none"
+                            ></div>
+                            <div
+                              class="order-1 h-4 w-24 animate-pulse rounded bg-gray-200 sm:order-none"
+                            ></div>
+                          </div>
+                          <div class="flex items-start gap-2">
+                            <div
+                              class="order-2 size-5 animate-pulse rounded-full bg-gray-200 sm:order-none"
+                            ></div>
+                            <div
+                              class="order-1 h-4 w-48 animate-pulse rounded bg-gray-200 sm:order-none"
+                            ></div>
+                          </div>
+                        </div>
+                      </div>
+
+                      <!-- Aksiyon Butonu -->
+                      <div
+                        class="order-2 w-[8%] flex-shrink-0 border-b border-r border-gray-200 px-3.5 py-2.5 sm:order-none"
+                      >
+                        <div class="flex justify-center">
+                          <div class="inline-flex items-center">
+                            <div
+                              class="h-10 w-12 animate-pulse rounded bg-gray-200"
+                            ></div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="flex flex-1 bg-white hover:bg-gray-100/50">
+                      <!-- Daire Tipi -->
+                      <div
+                        class="order-1 w-[32.5%] flex-shrink-0 border-b border-l border-r border-gray-200 px-3.5 py-2.5 sm:order-none"
+                      >
+                        <div class="space-y-2">
+                          <div class="flex items-center gap-2">
+                            <div
+                              class="size-4 animate-pulse rounded-full bg-gray-200"
+                            ></div>
+                            <div
+                              class="h-5 w-48 animate-pulse rounded bg-gray-200"
+                            ></div>
+                          </div>
+                          <div class="space-y-1">
+                            <div
+                              class="h-4 w-56 animate-pulse rounded bg-gray-200"
+                            ></div>
+                            <div
+                              class="h-4 w-64 animate-pulse rounded bg-gray-200"
+                            ></div>
+                            <div
+                              class="h-4 w-52 animate-pulse rounded bg-gray-200"
+                            ></div>
+                          </div>
+                        </div>
+                      </div>
+
+                      <!-- Konuk Sayısı -->
+                      <div
+                        class="order-3 w-[15%] flex-shrink-0 border-b border-r border-gray-200 px-4 py-2.5 sm:order-none"
+                      >
+                        <div class="flex gap-1">
+                          <div
+                            class="size-5 animate-pulse rounded-full bg-gray-200"
+                          ></div>
+                          <div
+                            class="size-5 animate-pulse rounded-full bg-gray-200"
+                          ></div>
+                          <div
+                            class="size-5 animate-pulse rounded-full bg-gray-200"
+                          ></div>
+                          <div
+                            class="size-5 animate-pulse rounded-full bg-gray-200"
+                          ></div>
+                        </div>
+                      </div>
+
+                      <!-- Fiyatlar -->
+                      <div
+                        class="order-4 w-[15%] flex-shrink-0 border-b border-r border-gray-200 px-3.5 py-2.5 sm:order-none"
+                      >
+                        <div class="flex flex-shrink-0 flex-col">
+                          <div
+                            class="h-4 w-20 animate-pulse rounded bg-gray-200"
+                          ></div>
+                          <div class="mt-1 flex items-center gap-2">
+                            <div
+                              class="h-4 w-16 animate-pulse rounded bg-gray-200"
+                            ></div>
+                            <div
+                              class="h-6 w-24 animate-pulse rounded bg-gray-200"
+                            ></div>
+                          </div>
+                        </div>
+                      </div>
+
+                      <!-- Özellikleriniz -->
+                      <div
+                        class="order-5 w-[29.5%] flex-shrink-0 border-b border-r border-gray-200 px-3.5 py-2.5 text-end sm:order-none sm:text-start"
+                      >
+                        <div
+                          class="flex flex-col items-end space-y-2 sm:items-start"
+                        >
+                          <div class="flex items-start gap-2">
+                            <div
+                              class="order-2 size-5 animate-pulse rounded-full bg-gray-200 sm:order-none"
+                            ></div>
+                            <div
+                              class="order-1 h-4 w-28 animate-pulse rounded bg-gray-200 sm:order-none"
+                            ></div>
+                          </div>
+                          <div class="flex items-start gap-2">
+                            <div
+                              class="order-2 size-5 animate-pulse rounded-full bg-gray-200 sm:order-none"
+                            ></div>
+                            <div
+                              class="order-1 h-4 w-24 animate-pulse rounded bg-gray-200 sm:order-none"
+                            ></div>
+                          </div>
+                          <div class="flex items-start gap-2">
+                            <div
+                              class="order-2 size-5 animate-pulse rounded-full bg-gray-200 sm:order-none"
+                            ></div>
+                            <div
+                              class="order-1 h-4 w-48 animate-pulse rounded bg-gray-200 sm:order-none"
+                            ></div>
+                          </div>
+                        </div>
+                      </div>
+
+                      <!-- Aksiyon Butonu -->
+                      <div
+                        class="order-2 w-[8%] flex-shrink-0 border-b border-r border-gray-200 px-3.5 py-2.5 sm:order-none"
+                      >
+                        <div class="flex justify-center">
+                          <div class="inline-flex items-center">
+                            <div
+                              class="h-10 w-12 animate-pulse rounded bg-gray-200"
+                            ></div>
                           </div>
                         </div>
                       </div>
