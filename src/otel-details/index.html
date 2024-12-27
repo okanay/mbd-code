@@ -1400,7 +1400,8 @@
                       class="size-8 fill-primary-50 stroke-[1.25] text-primary-500 transition-all duration-300 group-hover:translate-y-[-25%] group-hover:scale-125 group-active:scale-95"
                     ></i>
                     <button
-                      class="rounded border border-primary-500 bg-primary-50 px-4 py-2 font-semibold text-primary-500 transition-all duration-300 active:scale-95"
+                      data-coordinate="41.0082,28.9784"
+                      class="map-ctr-button rounded border border-primary-500 bg-primary-50 px-4 py-2 font-semibold text-primary-500 transition-all duration-300 active:scale-95"
                     >
                       Haritada Göster
                     </button>
@@ -2038,7 +2039,7 @@
                             'DOMContentLoaded',
                             async () => {
                               if (typeof window !== 'undefined') {
-                                window.SetOptions('flag-select', 'US', 'TR') // Default Value, Dil Desteği ("TR", "EN")
+                                window.SetOptions('flag-select', 'BE', 'TR') // Default Value, Dil Desteği ("TR", "EN")
                               }
                             },
                           )
@@ -2296,7 +2297,7 @@
 
                       <!-- Özellikleriniz -->
                       <div
-                        class="order-5 w-[29.5%] flex-shrink-0 border-b border-gray-200 px-3.5 py-2.5 text-end sm:order-none sm:border-r sm:text-start"
+                        class="order-5 w-[29.5%] flex-shrink-0 border-b border-r border-gray-200 px-3.5 py-2.5 text-end sm:order-none sm:text-start"
                       >
                         <div
                           class="flex flex-col items-end space-y-2 sm:items-start"
@@ -2411,7 +2412,7 @@
 
                       <!-- Özellikleriniz -->
                       <div
-                        class="order-5 w-[29.5%] flex-shrink-0 border-b border-gray-200 px-3.5 py-2.5 text-end sm:order-none sm:border-r sm:text-start"
+                        class="order-5 w-[29.5%] flex-shrink-0 border-b border-r border-gray-200 px-3.5 py-2.5 text-end sm:order-none sm:text-start"
                       >
                         <div
                           class="flex flex-col items-end space-y-2 sm:items-start"
@@ -2526,7 +2527,7 @@
 
                       <!-- Özellikleriniz -->
                       <div
-                        class="order-5 w-[29.5%] flex-shrink-0 border-b border-gray-200 px-3.5 py-2.5 text-end sm:order-none sm:border-r sm:text-start"
+                        class="order-5 w-[29.5%] flex-shrink-0 border-b border-r border-gray-200 px-3.5 py-2.5 text-end sm:order-none sm:text-start"
                       >
                         <div
                           class="flex flex-col items-end space-y-2 sm:items-start"
@@ -2659,7 +2660,7 @@
 
                       <!-- Özellikleriniz -->
                       <div
-                        class="order-5 w-[29.5%] flex-shrink-0 border-b border-gray-200 px-3.5 py-2.5 text-end sm:order-none sm:border-r sm:text-start"
+                        class="order-5 w-[29.5%] flex-shrink-0 border-b border-r border-gray-200 px-3.5 py-2.5 text-end sm:order-none sm:text-start"
                       >
                         <div
                           class="flex flex-col items-end space-y-2 sm:items-start"
@@ -3156,6 +3157,34 @@
             <img src="#" alt="Thumbnail 1" class="thumbnail" />
           </div>
         </div>
+      </div>
+    </div>
+
+    <!-- Map Modal -->
+    <div
+      id="map-modal"
+      data-state="closed"
+      class="fixed inset-0 z-[9001] flex items-center justify-center bg-black/90 p-4 backdrop-blur-md data-[state=closed]:hidden"
+      aria-hidden="true"
+      role="dialog"
+    >
+      <div
+        id="map-modal-content"
+        class="relative w-full max-w-5xl overflow-hidden rounded-xl bg-neutral-900 shadow-2xl"
+      >
+        <!-- Map container -->
+        <div
+          id="map-container"
+          class="relative h-[70vh] w-full bg-neutral-950"
+        ></div>
+        <!-- Close button -->
+        <button
+          id="close-map-modal"
+          class="absolute right-2 top-2 isolate z-40 rounded-full border border-white/20 bg-neutral-900 p-1.5 transition-all duration-300 active:scale-90 md:hover:opacity-60 lg:p-2"
+          aria-label="Close Map"
+        >
+          <i data-lucide="x" class="size-4 brightness-0 invert lg:size-6"></i>
+        </button>
       </div>
     </div>
 

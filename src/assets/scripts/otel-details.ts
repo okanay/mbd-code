@@ -3,9 +3,9 @@ import { NavStickyManager } from './packages/scroll-style.js'
 import { MultiGroupImageGallery } from './packages/multi-group-gallery.js'
 import { Slider } from './packages/slider.js'
 import { TouchDirectionDetector } from './packages/touch-event.js'
-import { ScrollManager } from './packages/floating-elements.js'
 import { UpdateElementInnerHTMLById } from './packages/image-gallery.js'
 import { UpdateProductSliderDataItems } from './packages/image-gallery.js'
+import { MapModal } from './packages/google-maps.js'
 
 document.addEventListener('DOMContentLoaded', () => {
   new ModalController(
@@ -205,6 +205,10 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   createGalleryObserver(multiGroupGallery)
+})
+
+document.addEventListener('DOMContentLoaded', () => {
+  const mapModal = new MapModal('AIzaSyDYT2ujHlRpgizU5IlvYfMl90BB4VpD584')
 })
 
 const config = {
