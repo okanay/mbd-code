@@ -1,4 +1,4 @@
-import * as leaflet from '../deps/leaflet/leaflet-src.esm.js'
+import * as leaflet from '../deps/leaflet.js'
 const L = leaflet as any
 
 // Interfaces
