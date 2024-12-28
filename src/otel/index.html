@@ -60,6 +60,7 @@
     />
 
     <link rel="stylesheet" href="/assets/styles/globals-out.css" />
+    <link rel="stylesheet" href="/assets/styles/leaflet.css" />
     <script type="module" src="/assets/scripts/otel.js"></script>
     <script type="module" src="/assets/scripts/deps/lucide-icons.js"></script>
     <script
@@ -1025,6 +1026,34 @@
       </div>
     </div>
 
+    <!-- Map Modal -->
+    <div
+      id="map-modal"
+      data-state="closed"
+      class="fixed inset-0 z-[9001] flex items-center justify-center bg-black/90 p-4 backdrop-blur-md data-[state=closed]:hidden"
+      aria-hidden="true"
+      role="dialog"
+    >
+      <div
+        id="map-modal-content"
+        class="relative w-full max-w-5xl overflow-hidden rounded-xl bg-neutral-900 shadow-2xl"
+      >
+        <!-- Map container -->
+        <div
+          id="map-container"
+          class="relative h-[70vh] w-full bg-neutral-950"
+        ></div>
+        <!-- Close button -->
+        <button
+          id="close-map-modal"
+          class="absolute right-2 top-2 isolate z-[1000] rounded-full border border-white/20 bg-neutral-900 p-1.5 transition-all duration-300 active:scale-90 md:hover:opacity-60 lg:p-2"
+          aria-label="Close Map"
+        >
+          <i data-lucide="x" class="size-4 brightness-0 invert lg:size-6"></i>
+        </button>
+      </div>
+    </div>
+
     <main class="mb-8 lg:mt-4">
       <!-- Breadcrumb -->
       <nav
@@ -1892,9 +1921,13 @@
                       <a href="#" class="text-primary-500 hover:underline"
                         >Deyra, Dubai</a
                       >
-                      <a href="#" class="text-primary-500 hover:underline"
-                        >Haritada Göster</a
+
+                      <button
+                        data-coordinate="40.1885,29.0610"
+                        class="map-ctr-button text-primary-500 hover:underline"
                       >
+                        Haritada Göster
+                      </button>
                       <span class="text-gray-500">Merkez 9,3 KM</span>
                     </div>
 
@@ -2043,9 +2076,12 @@
                     <a href="#" class="text-primary-500 hover:underline"
                       >Deyra, Dubai</a
                     >
-                    <a href="#" class="text-primary-500 hover:underline"
-                      >Haritada Göster</a
+                    <button
+                      data-coordinate="25.276987,55.296249"
+                      class="map-ctr-button text-primary-500 hover:underline"
                     >
+                      Haritada Göster
+                    </button>
                     <span class="text-gray-500">Merkez 9,3 KM</span>
                   </div>
 
