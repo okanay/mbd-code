@@ -1,6 +1,5 @@
 import * as leaflet from '../deps/leaflet/leaflet-src.esm.js'
 const L = leaflet as any
-L.Icon.Default.prototype.options.imagePath = '/assets/images/leaflet/'
 
 // Interfaces
 interface MapModalElements {
@@ -8,12 +7,20 @@ interface MapModalElements {
   modalContentId: string
   mapContainerId: string
   closeButtonId: string
-  mapId?: string // Yeni eklenen ID alanı
+  mapId?: string
+}
+
+interface MapIconOptions {
+  iconPath?: string // İkon dosyalarının bulunduğu klasör yolu
+  markerIconUrl?: string // Özel marker ikonu URL'si
+  markerIconSize?: [number, number] // Marker ikonu boyutu
+  markerIconAnchor?: [number, number] // Marker ikonu anchor noktası
 }
 
 interface EmbeddedMapConfig {
   containerId: string
   coordinate: string
+  iconOptions?: MapIconOptions
 }
 
 // Global map instances yönetimi
@@ -44,7 +51,6 @@ declare global {
   }
 }
 
-// Global refresh fonksiyonu
 window.RefreshMapButtons = function (mapId: string): boolean {
   return MapInstanceManager.refreshInstance(mapId)
 }
@@ -57,8 +63,12 @@ class ModalMap {
   private elements: MapModalElements
   private mapButtons: NodeListOf<Element>
   private map: L.Map | null = null
+  private iconOptions: MapIconOptions
 
-  constructor(options: Partial<MapModalElements> = {}) {
+  constructor(
+    options: Partial<MapModalElements> = {},
+    iconOptions: MapIconOptions = {},
+  ) {
     const defaultElements: MapModalElements = {
       modalId: 'map-modal',
       modalContentId: 'map-modal-content',
@@ -67,6 +77,12 @@ class ModalMap {
     }
 
     this.elements = { ...defaultElements, ...options }
+    this.iconOptions = iconOptions
+
+    // Leaflet ikonlarının yolunu ayarla
+    if (this.iconOptions.iconPath) {
+      L.Icon.Default.imagePath = this.iconOptions.iconPath
+    }
 
     // Initialize DOM elements
     this.modal = document.getElementById(this.elements.modalId)!
@@ -74,13 +90,24 @@ class ModalMap {
     this.closeButton = document.getElementById(this.elements.closeButtonId)!
     this.mapButtons = document.querySelectorAll('.map-ctr-button')
 
-    // Eğer mapId verilmişse instance'ı kaydet
     if (this.elements.mapId) {
       MapInstanceManager.addInstance(this.elements.mapId, this)
     }
 
     this.bindEvents()
     this.refreshButtons()
+  }
+
+  private createCustomMarker(lat: number, lng: number): L.Marker {
+    if (this.iconOptions.markerIconUrl) {
+      const customIcon = L.icon({
+        iconUrl: this.iconOptions.markerIconUrl,
+        iconSize: this.iconOptions.markerIconSize || [25, 41],
+        iconAnchor: this.iconOptions.markerIconAnchor || [12, 41],
+      })
+      return L.marker([lat, lng], { icon: customIcon })
+    }
+    return L.marker([lat, lng])
   }
 
   private parseCoordinates(
@@ -136,28 +163,26 @@ class ModalMap {
   public openMap(lat: number, lng: number): void {
     this.mapContainer.innerHTML = ''
 
-    // Create a div for Leaflet
     const mapDiv = document.createElement('div')
     mapDiv.className = 'w-full h-full'
     this.mapContainer.appendChild(mapDiv)
 
     try {
-      // Initialize Leaflet map
       this.map = L.map(mapDiv, {
         zoomControl: false,
         attributionControl: true,
       }).setView([lat, lng], 15)
 
-      // Add OpenStreetMap tiles
       L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
         maxZoom: 19,
         attribution: '© OpenStreetMap contributors',
       }).addTo(this.map)
 
-      // Add a marker
-      L.marker([lat, lng]).addTo(this.map)
+      // Özel marker oluştur
+      if (this.map) {
+        this.createCustomMarker(lat, lng).addTo(this.map)
+      }
 
-      // Add custom zoom controls
       const zoomControl = L.control.zoom({
         position: 'bottomright',
       })
@@ -187,29 +212,41 @@ class ModalMap {
 // Embedded Map Class
 class EmbeddedMap {
   private container: HTMLElement
-  private config!: EmbeddedMapConfig
+  private config: EmbeddedMapConfig
   private map: L.Map | null = null
 
-  constructor(containerId: string) {
+  constructor(containerId: string, iconOptions: MapIconOptions = {}) {
     const container = document.getElementById(containerId)
-
     if (!container) {
       throw new Error(`Container with id "${containerId}" not found`)
     }
-
     this.container = container
     const coordinate = container.getAttribute('data-coordinate')
-
     if (!coordinate) {
       throw new Error(`Container must have a "data-coordinate" attribute`)
     }
-
     this.config = {
       containerId,
       coordinate,
+      iconOptions,
     }
 
+    if (iconOptions.iconPath) {
+      L.Icon.Default.imagePath = iconOptions.iconPath
+    }
     this.initialize()
+  }
+
+  private createCustomMarker(lat: number, lng: number): L.Marker {
+    if (this.config.iconOptions?.markerIconUrl) {
+      const customIcon = L.icon({
+        iconUrl: this.config.iconOptions.markerIconUrl,
+        iconSize: this.config.iconOptions.markerIconSize || [25, 41],
+        iconAnchor: this.config.iconOptions.markerIconAnchor || [12, 41],
+      })
+      return L.marker([lat, lng], { icon: customIcon })
+    }
+    return L.marker([lat, lng])
   }
 
   private parseCoordinates(
@@ -233,28 +270,28 @@ class EmbeddedMap {
 
     mapContainer.innerHTML = ''
 
-    // Create a div for Leaflet
     const mapDiv = document.createElement('div')
     mapDiv.className = 'absolute inset-0 w-full h-full'
     mapContainer.appendChild(mapDiv)
 
     try {
-      // Initialize Leaflet map
       this.map = L.map(mapDiv, {
         zoomControl: false,
         attributionControl: true,
       }).setView([coordinates.lat, coordinates.lng], 14)
 
-      // Add OpenStreetMap tiles
       L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
         maxZoom: 19,
         attribution: '© OpenStreetMap contributors',
       }).addTo(this.map)
 
-      // Add a marker
-      L.marker([coordinates.lat, coordinates.lng]).addTo(this.map)
+      // Özel marker'ı ekle
+      if (this.map) {
+        this.createCustomMarker(coordinates.lat, coordinates.lng).addTo(
+          this.map,
+        )
+      }
 
-      // Add custom zoom controls
       const zoomControl = L.control.zoom({
         position: 'bottomright',
       })
