@@ -6,6 +6,11 @@ import { TouchDirectionDetector } from './packages/touch-event.js'
 import { UpdateElementInnerHTMLById } from './packages/image-gallery.js'
 import { UpdateProductSliderDataItems } from './packages/image-gallery.js'
 import { EmbeddedMap } from './packages/leaflet.js'
+import { initScrollObserver } from './packages/scroll-observer.js'
+
+document.addEventListener('DOMContentLoaded', () => {
+  initScrollObserver('otel-price-table', 'scroll-notification')
+})
 
 document.addEventListener('DOMContentLoaded', () => {
   new ModalController(
@@ -80,7 +85,6 @@ document.addEventListener('DOMContentLoaded', () => {
   })
 })
 
-// Main slider
 document.addEventListener('DOMContentLoaded', () => {
   const mainSlider = new Slider({
     container: '#otel-slider-container',
@@ -145,7 +149,6 @@ document.addEventListener('DOMContentLoaded', () => {
   UpdateElementInnerHTMLById('otel-slider-image-count', childCount.toString())
 })
 
-// Dynamic Gallery
 document.addEventListener('DOMContentLoaded', () => {
   const multiGroupGallery = new MultiGroupImageGallery({
     groups: [],

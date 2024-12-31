@@ -67,6 +67,7 @@ import {
   DoorOpen,
   Baby,
   FileText,
+  Hand,
 } from 'lucide'
 
 const icons = {
@@ -80,6 +81,7 @@ const icons = {
   LogIn,
   LogOut,
   Settings,
+  Hand,
   ChevronDown,
   CalendarClock,
   CalendarCheck,

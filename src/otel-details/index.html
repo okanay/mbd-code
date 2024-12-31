@@ -2176,7 +2176,7 @@
 
               <h2 class="mb-4 mt-4 text-base font-bold lg:text-xl">Sonuçlar</h2>
               <!-- Table Container -->
-              <div class="w-full overflow-x-auto">
+              <div class="relative w-full overflow-x-auto">
                 <div
                   id="otel-price-table"
                   class="relative min-w-[1200px] overflow-hidden rounded"
@@ -2944,8 +2944,34 @@
                       </div>
                     </div>
                   </div>
+
+                  <!-- Scroll Notification -->
+                  <div
+                    id="scroll-notification"
+                    data-hidden="false"
+                    class="pointer-events-none absolute left-0 top-0 flex h-10 w-full items-start gap-3 bg-gray-950/60 px-4 py-2 text-white shadow-lg transition-all duration-300 data-[hidden=true]:opacity-0 sm:hidden"
+                  >
+                    <span>Seçenekleri Görüntülemek İçin Kaydırın</span>
+                    <i
+                      data-lucide="hand"
+                      class="size-5 animate-[bounceRight_1s_ease-in-out_infinite]"
+                    ></i>
+                  </div>
                 </div>
               </div>
+
+              <!-- Animation Keyframes -->
+              <style>
+                @keyframes bounceRight {
+                  0%,
+                  100% {
+                    transform: translateX(0);
+                  }
+                  50% {
+                    transform: translateX(10px);
+                  }
+                }
+              </style>
 
               <!-- No Results State -->
               <div class="flex flex-1 divide-x divide-gray-200 bg-white">
