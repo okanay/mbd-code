@@ -184,7 +184,6 @@ document.addEventListener('DOMContentLoaded', () => {
       })
 
       if (hasRelevantChanges) {
-        console.log('Hidden gallery changed, refreshing gallery...')
         gallery.refreshGallery()
       }
     })
@@ -198,7 +197,6 @@ document.addEventListener('DOMContentLoaded', () => {
         attributes: true, // Attribute değişikliklerini izle
         attributeFilter: ['data-src', 'src'], // Sadece bu attribute'ları izle
       })
-      console.log('Gallery observer started')
     }
 
     return observer
