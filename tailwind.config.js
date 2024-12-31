@@ -25,6 +25,10 @@ module.exports = {
           '50%': { transform: 'scaleX(0.7)' },
           '100%': { transform: 'scaleX(1)' },
         },
+        bounceRight: {
+          '0%, 100%': { transform: 'translateX(0)' },
+          '50%': { transform: 'translateX(10px)' },
+        },
       },
     },
   },
