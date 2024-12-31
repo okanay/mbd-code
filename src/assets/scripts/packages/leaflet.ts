@@ -23,6 +23,91 @@ interface EmbeddedMapConfig {
   iconOptions?: MapIconOptions
 }
 
+interface MapLayer {
+  url: string
+  options: L.TileLayerOptions
+  name: string
+}
+
+export enum MapLayerType {
+  OpenStreetMap = 'openStreetMap',
+  OpenTopoMap = 'openTopoMap',
+  CycleMap = 'cycleMap',
+  Satellite = 'satellite',
+  DarkMatter = 'darkMatter', // Yeni
+  Voyager = 'voyager', // Yeni
+  Watercolor = 'watercolor', // Yeni
+  Streets = 'streets', // Yeni
+}
+
+const mapLayers: { [key in MapLayerType]: MapLayer } = {
+  [MapLayerType.OpenStreetMap]: {
+    name: 'Open Street Map',
+    url: 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+    options: {
+      maxZoom: 19,
+      attribution: '© OpenStreetMap contributors',
+    },
+  },
+  [MapLayerType.OpenTopoMap]: {
+    name: 'Open Topo Map',
+    url: 'https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png',
+    options: {
+      maxZoom: 17,
+      attribution: '© OpenTopoMap contributors',
+    },
+  },
+  [MapLayerType.CycleMap]: {
+    name: 'Cycle Map',
+    url: 'https://{s}.tile-cyclosm.openstreetmap.fr/cyclosm/{z}/{x}/{y}.png',
+    options: {
+      maxZoom: 20,
+      attribution: '© CyclOSM contributors',
+    },
+  },
+  [MapLayerType.Satellite]: {
+    name: 'ESRI Satellite',
+    url: 'https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',
+    options: {
+      maxZoom: 19,
+      attribution: '© Esri',
+    },
+  },
+  [MapLayerType.DarkMatter]: {
+    name: 'Dark Matter',
+    url: 'https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png',
+    options: {
+      maxZoom: 19,
+      attribution: '© CARTO',
+    },
+  },
+  [MapLayerType.Voyager]: {
+    name: 'Voyager',
+    url: 'https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png',
+    options: {
+      maxZoom: 19,
+      attribution: '© CARTO',
+    },
+  },
+  [MapLayerType.Watercolor]: {
+    name: 'Light',
+    url: 'https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png',
+    options: {
+      maxZoom: 19,
+      attribution: '© CARTO',
+    },
+  },
+  [MapLayerType.Streets]: {
+    name: 'Streets',
+    url: 'https://{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png',
+    options: {
+      maxZoom: 19,
+      attribution:
+        '© OpenStreetMap contributors, Tiles style by Humanitarian OpenStreetMap Team',
+    },
+  },
+}
+
 // Global map instances yönetimi
 class MapInstanceManager {
   private static instances: Map<string, ModalMap> = new Map()
@@ -58,12 +143,15 @@ window.RefreshMapButtons = function (mapId: string): boolean {
 // Modal Map Class
 class ModalMap {
   private modal: HTMLElement
-  private mapContainer: HTMLElement
+  private container: HTMLElement
   private closeButton: HTMLElement
   private elements: MapModalElements
   private mapButtons: NodeListOf<Element>
   private map: L.Map | null = null
   private iconOptions: MapIconOptions
+  private currentLayer: L.TileLayer | null = null
+  private layerControl: L.Control.Layers | null = null
+  private defaultLayerType: MapLayerType
 
   constructor(
     options: Partial<MapModalElements> = {},
@@ -79,23 +167,108 @@ class ModalMap {
     this.elements = { ...defaultElements, ...options }
     this.iconOptions = iconOptions
 
-    // Leaflet ikonlarının yolunu ayarla
-    if (this.iconOptions.iconPath) {
-      L.Icon.Default.imagePath = this.iconOptions.iconPath
-    }
-
-    // Initialize DOM elements
+    // DOM elementlerini başlat
     this.modal = document.getElementById(this.elements.modalId)!
-    this.mapContainer = document.getElementById(this.elements.mapContainerId)!
+    this.container = document.getElementById(this.elements.mapContainerId)!
     this.closeButton = document.getElementById(this.elements.closeButtonId)!
     this.mapButtons = document.querySelectorAll('.map-ctr-button')
+
+    // data-layer attribute'undan default layer'ı al
+    this.defaultLayerType = this.getDefaultLayerType()
 
     if (this.elements.mapId) {
       MapInstanceManager.addInstance(this.elements.mapId, this)
     }
 
+    // Leaflet ikonlarının yolunu ayarla
+    if (this.iconOptions.iconPath) {
+      L.Icon.Default.imagePath = this.iconOptions.iconPath
+    }
+
     this.bindEvents()
     this.refreshButtons()
+  }
+
+  private getDefaultLayerType(): MapLayerType {
+    const containerLayer = this.container.getAttribute('data-layer')
+    console.log(containerLayer)
+    switch (containerLayer) {
+      case 'satellite':
+        return MapLayerType.Satellite
+      case 'openTopoMap':
+        return MapLayerType.OpenTopoMap
+      case 'cycleMap':
+        return MapLayerType.CycleMap
+      case 'openStreetMap':
+        return MapLayerType.OpenStreetMap
+      case 'darkMatter':
+        return MapLayerType.DarkMatter
+      case 'voyager':
+        return MapLayerType.Voyager
+      case 'watercolor':
+        return MapLayerType.Watercolor
+      case 'streets':
+        return MapLayerType.Streets
+      default:
+        return MapLayerType.OpenStreetMap
+    }
+  }
+
+  private addMapLayers(): void {
+    if (!this.map) return
+
+    const baseLayers: { [key: string]: L.TileLayer } = {}
+
+    Object.entries(mapLayers).forEach(([layerType, layer]) => {
+      const tileLayer = L.tileLayer(layer.url, layer.options)
+
+      if (layerType === this.defaultLayerType) {
+        this.currentLayer = tileLayer
+        tileLayer.addTo(this.map!)
+      }
+
+      baseLayers[layer.name] = tileLayer
+    })
+
+    this.layerControl = L.control
+      .layers(
+        baseLayers,
+        {},
+        {
+          position: 'topleft',
+        },
+      )
+      .addTo(this.map)
+  }
+
+  public openMap(lat: number, lng: number): void {
+    this.container.innerHTML = ''
+
+    const mapDiv = document.createElement('div')
+    mapDiv.className = 'w-full h-full'
+    this.container.appendChild(mapDiv)
+
+    try {
+      this.map = L.map(mapDiv, {
+        zoomControl: false,
+        attributionControl: true,
+      }).setView([lat, lng], 15)
+
+      this.addMapLayers()
+
+      if (this.map) {
+        this.createCustomMarker(lat, lng).addTo(this.map)
+      }
+
+      const zoomControl = L.control.zoom({
+        position: 'bottomright',
+      })
+      zoomControl.addTo(this.map)
+
+      this.modal.setAttribute('data-state', 'open')
+    } catch (error) {
+      console.error('Error initializing map:', error)
+    }
   }
 
   private createCustomMarker(lat: number, lng: number): L.Marker {
@@ -160,47 +333,20 @@ class ModalMap {
     })
   }
 
-  public openMap(lat: number, lng: number): void {
-    this.mapContainer.innerHTML = ''
-
-    const mapDiv = document.createElement('div')
-    mapDiv.className = 'w-full h-full'
-    this.mapContainer.appendChild(mapDiv)
-
-    try {
-      this.map = L.map(mapDiv, {
-        zoomControl: false,
-        attributionControl: true,
-      }).setView([lat, lng], 15)
-
-      L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-        maxZoom: 19,
-        attribution: '© OpenStreetMap contributors',
-      }).addTo(this.map)
-
-      // Özel marker oluştur
-      if (this.map) {
-        this.createCustomMarker(lat, lng).addTo(this.map)
-      }
-
-      const zoomControl = L.control.zoom({
-        position: 'bottomright',
-      })
-      zoomControl.addTo(this.map)
-
-      this.modal.setAttribute('data-state', 'open')
-    } catch (error) {
-      console.error('Error initializing map:', error)
-    }
-  }
-
   private closeMap(): void {
     if (this.map) {
+      if (this.layerControl) {
+        this.layerControl.remove()
+        this.layerControl = null
+      }
+      if (this.currentLayer) {
+        this.currentLayer.remove()
+        this.currentLayer = null
+      }
       this.map.remove()
       this.map = null
     }
     this.modal.setAttribute('data-state', 'closed')
-    this.mapContainer.innerHTML = ''
   }
 
   public refreshButtons(): void {
@@ -214,6 +360,9 @@ class EmbeddedMap {
   private container: HTMLElement
   private config: EmbeddedMapConfig
   private map: L.Map | null = null
+  private currentLayer: L.TileLayer | null = null
+  private layerControl: L.Control.Layers | null = null
+  private defaultLayerType: MapLayerType
 
   constructor(containerId: string, iconOptions: MapIconOptions = {}) {
     const container = document.getElementById(containerId)
@@ -221,6 +370,10 @@ class EmbeddedMap {
       throw new Error(`Container with id "${containerId}" not found`)
     }
     this.container = container
+
+    // data-layer attribute'undan default layer'ı al
+    this.defaultLayerType = this.getDefaultLayerType()
+
     const coordinate = container.getAttribute('data-coordinate')
     if (!coordinate) {
       throw new Error(`Container must have a "data-coordinate" attribute`)
@@ -235,6 +388,54 @@ class EmbeddedMap {
       L.Icon.Default.imagePath = iconOptions.iconPath
     }
     this.initialize()
+  }
+
+  private getDefaultLayerType(): MapLayerType {
+    const containerLayer = this.container.getAttribute('data-layer')
+
+    // Enum değerlerini dizi olarak al
+    const validLayers = Object.values(MapLayerType)
+
+    // Eğer containerLayer varsa ve geçerli bir değerse kullan
+    if (
+      containerLayer &&
+      validLayers.includes(containerLayer as MapLayerType)
+    ) {
+      return containerLayer as MapLayerType
+    }
+
+    return MapLayerType.OpenStreetMap
+  }
+
+  private addMapLayers(): void {
+    if (!this.map) return
+
+    // Base layers objesi
+    const baseLayers: { [key: string]: L.TileLayer } = {}
+
+    // Her bir katmanı ekle
+    Object.entries(mapLayers).forEach(([layerType, layer]) => {
+      const tileLayer = L.tileLayer(layer.url, layer.options)
+
+      // Eğer bu default layer ise ekle
+      if (layerType === this.defaultLayerType) {
+        this.currentLayer = tileLayer
+        tileLayer.addTo(this.map!)
+      }
+
+      baseLayers[layer.name] = tileLayer
+    })
+
+    // Katman kontrolünü ekle
+    this.layerControl = L.control
+      .layers(
+        baseLayers,
+        {},
+        {
+          position: 'topright',
+        },
+      )
+      .addTo(this.map)
   }
 
   private createCustomMarker(lat: number, lng: number): L.Marker {
@@ -280,10 +481,8 @@ class EmbeddedMap {
         attributionControl: true,
       }).setView([coordinates.lat, coordinates.lng], 14)
 
-      L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-        maxZoom: 19,
-        attribution: '© OpenStreetMap contributors',
-      }).addTo(this.map)
+      // Harita katmanlarını ekle
+      this.addMapLayers()
 
       // Özel marker'ı ekle
       if (this.map) {
@@ -303,6 +502,14 @@ class EmbeddedMap {
 
   public refresh(): void {
     if (this.map) {
+      if (this.layerControl) {
+        this.layerControl.remove()
+        this.layerControl = null
+      }
+      if (this.currentLayer) {
+        this.currentLayer.remove()
+        this.currentLayer = null
+      }
       this.map.remove()
       this.map = null
     }

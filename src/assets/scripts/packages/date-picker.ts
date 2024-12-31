@@ -857,8 +857,6 @@ class DatePicker {
     const containerLanguage =
       this.containerElement?.getAttribute('data-language')
 
-    console.log(containerLanguage)
-
     // Eğer container'da dil bilgisi varsa ve config'de bu dil mevcutsa onu kullan
     if (
       containerLanguage &&
