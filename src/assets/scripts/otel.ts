@@ -4,6 +4,22 @@ import { RangeSlider } from './packages/range-slider.js'
 import { ModalMap } from './packages/leaflet.js'
 
 document.addEventListener('DOMContentLoaded', () => {
+  new ModalMap(
+    {
+      mapId: 'map-modal',
+    },
+    {
+      iconPath: '/assets/images/leaflet/marker.png',
+      markerIconUrl: '/assets/images/leaflet/marker.png',
+      markerIconSize: [32, 32],
+      markerIconAnchor: [16, 32],
+    },
+  )
+
+  // window.RefreshMapButtons('map-modal')
+})
+
+document.addEventListener('DOMContentLoaded', () => {
   new RangeSlider({
     containerId: 'price-range-1',
     minDisplayId: 'display-min-value-1',
@@ -61,20 +77,4 @@ document.addEventListener('DOMContentLoaded', () => {
 
 document.addEventListener('DOMContentLoaded', () => {
   new Pagination('pagination-container')
-})
-
-document.addEventListener('DOMContentLoaded', () => {
-  new ModalMap(
-    {
-      mapId: 'map-modal',
-    },
-    {
-      iconPath: '/assets/images/leaflet/marker.png',
-      markerIconUrl: '/assets/images/leaflet/marker.png',
-      markerIconSize: [32, 32],
-      markerIconAnchor: [16, 32],
-    },
-  )
-
-  // window.RefreshMapButtons('map-modal')
 })

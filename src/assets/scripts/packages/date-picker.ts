@@ -177,6 +177,7 @@ interface ResetOptions {
   inputId?: string
   date?: Date
   keepStart?: boolean
+  language?: string // Yeni eklenen dil parametresi
 }
 
 class DatePicker {
@@ -211,6 +212,7 @@ class DatePicker {
   constructor(config: DatePickerConfig) {
     this.config = config
     this.classes = this.mergeClasses(DEFAULT_CLASSES, config.classes || {})
+    this.containerElement = document.getElementById(config.elements.container)
 
     // Reset hours, minutes, seconds, and milliseconds for consistent date comparison
     this.currentDate = this.stripTime(new Date())
@@ -256,7 +258,6 @@ class DatePicker {
       config.elements.monthContainer,
     )
     this.daysContainer = document.getElementById(config.elements.daysContainer)
-    this.containerElement = document.getElementById(config.elements.container)
     this.prevButton = document.getElementById(config.elements.buttons.prev)
     this.nextButton = document.getElementById(config.elements.buttons.next)
 
@@ -294,6 +295,7 @@ class DatePicker {
 
   private initializeDefaultDates(defaultDates: DefaultDates) {
     const { input } = this.config
+    const selectedLanguage = this.getSelectedLanguage()
 
     if (input.type === 'single' && defaultDates.single) {
       const dateInput = document.getElementById(
@@ -302,10 +304,12 @@ class DatePicker {
 
       if (dateInput) {
         const date = this.stripTime(defaultDates.single)
+        // Dil bilgisini resetState'e geçir
         this.resetState({
           type: 'between-new',
           inputId: dateInput.id,
           date: date,
+          language: selectedLanguage.language,
         })
       }
     }
@@ -319,19 +323,21 @@ class DatePicker {
         const startDate = this.stripTime(defaultDates.between.start)
         const endDate = this.stripTime(defaultDates.between.end)
 
-        // Önce start date'i set et
+        // Start date için dil bilgisini geçir
         this.resetState({
           type: 'between-new',
           inputId: dateInput.id,
           date: startDate,
+          language: selectedLanguage.language,
         })
 
-        // Sonra end date'i ekle
+        // End date için dil bilgisini geçir
         this.resetState({
           type: 'between-update',
           inputId: dateInput.id,
           date: endDate,
           keepStart: true,
+          language: selectedLanguage.language,
         })
       }
     }
@@ -349,6 +355,7 @@ class DatePicker {
             type: 'between-new',
             inputId: startInput.id,
             date: startDate,
+            language: selectedLanguage.language,
           })
         }
       }
@@ -363,6 +370,7 @@ class DatePicker {
             type: 'between-new',
             inputId: endInput.id,
             date: endDate,
+            language: selectedLanguage.language,
           })
         }
       }
@@ -371,6 +379,7 @@ class DatePicker {
 
   private initializeFromDataAttributes() {
     const { input } = this.config
+    const selectedLanguage = this.getSelectedLanguage() // Dil bilgisini al
 
     if (input.type === 'single') {
       const dateInput = document.getElementById(
@@ -385,6 +394,7 @@ class DatePicker {
               type: 'between-new',
               inputId: dateInput.id,
               date: date,
+              language: selectedLanguage.language,
             })
           }
         }
@@ -416,10 +426,10 @@ class DatePicker {
           this.selectedDates.set(`${dateInput.id}-end`, endDate)
           this.dateValues.set(`${dateInput.id}-end`, endDate)
 
-          // Input değerini güncelle
+          // Input değerini güncel dil ile formatlayarak güncelle
           dateInput.value = `${this.formatDateBasedOnConfig(startDate)}${this.outputConfig.between}${this.formatDateBasedOnConfig(endDate)}`
         } else if (startDate) {
-          // Sadece start date varsa
+          // Sadece start date varsa, güncel dil ile formatla
           dateInput.value = this.formatDateBasedOnConfig(startDate)
         }
       }
@@ -843,12 +853,24 @@ class DatePicker {
   }
 
   private getSelectedLanguage(): LanguageConfig {
-    const languageAttr =
-      this.containerElement?.getAttribute('data-language') || 'tr'
-    return (
-      this.config.language.find(lang => lang.language === languageAttr) ||
-      this.config.language[0]
-    )
+    // Önce container'dan dil bilgisini almaya çalış
+    const containerLanguage =
+      this.containerElement?.getAttribute('data-language')
+
+    console.log(containerLanguage)
+
+    // Eğer container'da dil bilgisi varsa ve config'de bu dil mevcutsa onu kullan
+    if (
+      containerLanguage &&
+      this.config.language.find(lang => lang.language === containerLanguage)
+    ) {
+      return this.config.language.find(
+        lang => lang.language === containerLanguage,
+      )!
+    }
+
+    // Yoksa default dili kullan (ilk dil)
+    return this.config.language[0]
   }
 
   private renderMonthShortNames() {
@@ -1585,7 +1607,12 @@ class DatePicker {
   }
 
   private resetState(options: ResetOptions) {
-    const { type, inputId, date, keepStart = false } = options
+    const { type, inputId, date, keepStart = false, language } = options
+
+    // Eğer language parametresi verilmişse, container'ın data-language attribute'unu güncelle
+    if (language && this.containerElement) {
+      this.containerElement.setAttribute('data-language', language)
+    }
 
     // Seçilen input için temel kontroller
     const input = inputId
