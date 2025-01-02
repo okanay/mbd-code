@@ -60,8 +60,11 @@
     />
 
     <link rel="stylesheet" href="/assets/styles/globals-out.css" />
+    <link rel="stylesheet" href="/assets/styles/leaflet.css" />
+
     <script type="module" src="/assets/scripts/deps/lucide-icons.js"></script>
     <script type="module" src="/assets/scripts/layout.js"></script>
+    <script type="module" src="/assets/scripts/payment.js"></script>
   </head>
   <body class="bg-white">
     <header class="w-full border-gray-200 lg:h-[80px] lg:border-b">
@@ -1090,11 +1093,12 @@
                       class="text-nowrap text-primary-500 hover:underline"
                       >Deyra, Dubai</a
                     >
-                    <a
-                      href="#"
-                      class="text-nowrap text-primary-500 hover:underline"
-                      >Haritada Göster</a
+                    <button
+                      data-coordinate="41.0082,28.9784"
+                      class="map-ctr-button text-nowrap text-primary-500 hover:underline"
                     >
+                      Haritada Göster
+                    </button>
                     <span class="text-nowrap">Merkez 9,3 KM</span>
                   </div>
                 </div>

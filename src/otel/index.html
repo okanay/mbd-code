@@ -1395,6 +1395,7 @@
                   name="select-room-options"
                   data-adult="1"
                   data-child="3"
+                  data-baby="1"
                   data-room="1"
                   data-country="US"
                   class="h-12 w-full appearance-none !rounded border border-gray-200 bg-white px-3 py-2 text-sm outline-none group-data-[state=open]:!rounded-b-none group-data-[state=open]:border-gray-200 sm:text-base"
@@ -1447,7 +1448,7 @@
                   <script>
                     document.addEventListener('DOMContentLoaded', async () => {
                       if (typeof window !== 'undefined') {
-                        window.SetOptions('flag-select', 'US', 'TR') // Default Value, Dil Desteği ("TR", "EN")
+                        window.SetOptions('flag-select', 'BE', 'TR') // Default Value, Dil Desteği ("TR", "EN")
                       }
                     })
                   </script>
@@ -1461,9 +1462,15 @@
                     data-max="4"
                     id="adult-container"
                   >
-                    <div class="flex items-center gap-2">
+                    <div class="flex items-start gap-2">
                       <i data-lucide="user" class="size-5 text-gray-600"></i>
-                      <span id="adult-text" class="text-sm">Yetişkin</span>
+
+                      <span class="flex flex-col">
+                        <span id="adult-text" class="text-sm">Yetişkin</span>
+                        <span class="text-xs text-gray-500">
+                          (<span>1 min</span>, <span>4 max</span>)</span
+                        >
+                      </span>
                     </div>
                     <div class="flex items-center gap-2">
                       <button
@@ -1491,9 +1498,18 @@
                     data-max="4"
                     id="child-container"
                   >
-                    <div class="flex items-center gap-2">
-                      <i data-lucide="baby" class="size-5 text-gray-600"></i>
-                      <span id="child-text" class="text-sm">Çocuk</span>
+                    <div class="flex items-start gap-2">
+                      <i
+                        data-lucide="person-standing"
+                        class="size-5 text-gray-600"
+                      ></i>
+
+                      <span class="flex flex-col">
+                        <span id="child-text" class="text-sm">Çocuk</span>
+                        <span class="text-xs text-gray-500">
+                          (<span>1 min</span>, <span>4 max</span>)</span
+                        >
+                      </span>
                     </div>
                     <div class="flex items-center gap-2">
                       <button
@@ -1514,6 +1530,45 @@
                     </div>
                   </div>
 
+                  <!-- Çocuk -->
+                  <div
+                    class="flex items-center justify-between px-4"
+                    data-min="1"
+                    data-max="4"
+                    id="baby-container"
+                  >
+                    <div class="flex items-start gap-2">
+                      <i data-lucide="baby" class="size-5 text-gray-600"></i>
+
+                      <span class="flex flex-col">
+                        <span id="baby-text" class="text-sm">Bebek</span>
+                        <span class="text-xs text-gray-500">
+                          (
+                          <span>1 min</span>,
+                          <span>4 max</span>
+                          )
+                        </span>
+                      </span>
+                    </div>
+                    <div class="flex items-start gap-2">
+                      <button
+                        type="button"
+                        id="baby-minus"
+                        class="flex h-8 w-8 items-center justify-center rounded-full border border-gray-200 text-primary-500 transition-transform duration-300 hover:scale-105 disabled:cursor-not-allowed disabled:text-gray-500 disabled:hover:scale-100"
+                      >
+                        -
+                      </button>
+                      <span id="baby-count" class="w-8 text-center">0</span>
+                      <button
+                        type="button"
+                        id="baby-plus"
+                        class="flex h-8 w-8 items-center justify-center rounded-full border border-gray-200 text-primary-500 transition-transform duration-300 hover:scale-105 disabled:cursor-not-allowed disabled:text-gray-500 disabled:hover:scale-100"
+                      >
+                        +
+                      </button>
+                    </div>
+                  </div>
+
                   <!-- Oda -->
                   <div
                     class="flex items-center justify-between px-4"
@@ -1521,12 +1576,21 @@
                     data-max="4"
                     id="room-container"
                   >
-                    <div class="flex items-center gap-2">
+                    <div class="flex items-start gap-2">
                       <i
                         data-lucide="door-open"
                         class="size-5 text-gray-600"
                       ></i>
-                      <span id="room-text" class="text-sm">Oda</span>
+
+                      <span class="flex flex-col">
+                        <span id="room-text" class="text-sm">Oda</span>
+                        <span class="text-xs text-gray-500">
+                          (
+                          <span>1 min</span>,
+                          <span>4 max</span>
+                          )
+                        </span>
+                      </span>
                     </div>
                     <div class="flex items-center gap-2">
                       <button
@@ -1565,13 +1629,28 @@
           </div>
 
           <!-- Filter Button Container (20% on desktop) -->
-          <div class="w-full lg:w-fit">
+          <div class="w-full lg:w-[120px]">
             <button
               type="submit"
-              class="flex h-12 w-full items-center justify-center gap-2 rounded bg-primary-500 px-4 text-sm font-semibold text-white transition-colors hover:bg-primary-600 active:scale-95"
+              class="disabled:pointe-disabled:bg-primary-500 group flex h-12 w-full rounded bg-primary-500 px-4 text-sm font-semibold text-white transition-colors hover:bg-primary-600 active:scale-95 disabled:opacity-75 disabled:hover:scale-100"
             >
-              <i data-lucide="filter" class="size-4"></i>
-              Filtrele
+              <span
+                class="flex h-12 w-full items-center justify-center gap-2 group-disabled:hidden"
+              >
+                <i data-lucide="filter" class="size-4"></i>
+                Filtrele
+              </span>
+
+              <span
+                class="hidden h-12 w-full items-center justify-center gap-2 group-disabled:flex"
+              >
+                <span class="lg:hidden"> İşlem Devam Ediyor </span>
+                <img
+                  src="/assets/images/icons/loading-spinner.svg"
+                  alt="Loading"
+                  class="size-6 animate-spin brightness-0 invert !duration-[2500ms]"
+                />
+              </span>
             </button>
           </div>
         </form>
@@ -1925,13 +2004,30 @@
                       >
 
                       <button
-                        data-coordinate="40.1885,29.0610"
+                        id="test-coordinates"
+                        data-coordinate="41.0082,28.9784"
                         class="map-ctr-button text-primary-500 hover:underline"
                       >
                         Haritada Göster
                       </button>
+
                       <span class="text-gray-500">Merkez 9,3 KM</span>
                     </div>
+
+                    <script>
+                      document.addEventListener('keydown', function (event) {
+                        if (event.key === 't' || event.key === 'T') {
+                          document
+                            .getElementById('test-coordinates')
+                            .setAttribute(
+                              'data-coordinate',
+                              '41.088000, 28.661700',
+                            )
+
+                          window.RefreshMapButtons('map-modal')
+                        }
+                      })
+                    </script>
 
                     <!-- Feature Tags -->
                     <div class="flex flex-wrap gap-2">
