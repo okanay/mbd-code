@@ -2269,8 +2269,9 @@
               <script>
                 document.addEventListener('keydown', function (event) {
                   if (event.key === 'u' || event.key === 'U') {
-                    const container =
-                      document.getElementById('otel-price-table')
+                    const container = document.getElementById(
+                      'otel-price-table-container',
+                    )
                     if (container.classList.contains('lg:flex')) {
                       container.classList.remove('lg:flex')
                       container.classList.add('hidden')
