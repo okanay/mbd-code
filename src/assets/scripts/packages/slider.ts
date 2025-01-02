@@ -492,11 +492,24 @@ class Slider {
     )
   }
 
+  private lastKnownWidth: number | null = null
+
   private checkResponsiveState(): void {
     const wasEnabled = this.isSliderEnabled()
     const isNowEnabled = this.isSliderEnabled()
+    const currentWidth = window.innerWidth
+    const wasInMobileRange = this.lastKnownWidth
+      ? this.lastKnownWidth < this.responsiveConfig.maxWidth
+      : currentWidth < this.responsiveConfig.maxWidth
+    const isNowInMobileRange = currentWidth < this.responsiveConfig.maxWidth
 
-    if (wasEnabled !== isNowEnabled) {
+    // Ekran genişliği değişimini takip et
+    this.lastKnownWidth = currentWidth
+
+    if (
+      wasEnabled !== isNowEnabled ||
+      wasInMobileRange !== isNowInMobileRange
+    ) {
       if (isNowEnabled) {
         // Grid modundan slider moduna geçiş
         this.enableSlider()
@@ -520,10 +533,42 @@ class Slider {
         this.disableSlider()
         this.resetAllAnimations()
 
-        // Grid moduna geçince IntersectionObserver başlat
+        // Grid moduna geçince IntersectionObserver'ı yeniden başlat
         if (this.lazyLoadConfig.enabled) {
+          // Önceki observer'ı temizle
+          if (this.intersectionObserver) {
+            this.intersectionObserver.disconnect()
+            this.intersectionObserver = null
+          }
+          // Yeni observer başlat
           this.setupGridLazyLoading()
         }
+      }
+
+      // Mobil moddan desktop moda geçiş kontrolü
+      if (wasInMobileRange && !isNowInMobileRange) {
+        // Tüm görsellerin lazy loading durumunu kontrol et
+        this.slides.forEach(slide => {
+          const img = slide.querySelector('img')
+          if (img && !this.loadedElements.has(img) && this.isImageLazy(img)) {
+            if (this.isSliderEnabled()) {
+              // Slider modunda ise sadece aktif ve komşu görselleri yükle
+              const slideIndex = Array.from(this.slides).indexOf(slide)
+              if (
+                slideIndex === this.activeIndex ||
+                slideIndex === (this.activeIndex + 1) % this.slides.length ||
+                slideIndex ===
+                  (this.activeIndex - 1 + this.slides.length) %
+                    this.slides.length
+              ) {
+                this.loadImage(img)
+              }
+            } else {
+              // Grid modunda ise intersection observer kullan
+              this.setupGridLazyLoading()
+            }
+          }
+        })
       }
     }
 

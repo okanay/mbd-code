@@ -20,7 +20,7 @@ export const initScrollObserver = (
           // Hide after delay
           setTimeout(() => {
             notification.dataset.hidden = 'true'
-          }, 2000)
+          }, 3500)
 
           // Stop observing
           observer.unobserve(container)

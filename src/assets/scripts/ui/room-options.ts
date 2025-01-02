@@ -46,6 +46,15 @@ document.addEventListener('DOMContentLoaded', () => {
       containerId: 'child-container',
     },
     {
+      type: 'baby',
+      dataAttribute: 'data-baby',
+      textElementId: 'baby-text',
+      minusButtonId: 'baby-minus',
+      plusButtonId: 'baby-plus',
+      countElementId: 'baby-count',
+      containerId: 'baby-container',
+    },
+    {
       type: 'room',
       dataAttribute: 'data-room',
       textElementId: 'room-text',
@@ -66,4 +75,6 @@ document.addEventListener('DOMContentLoaded', () => {
   ]
 
   new InputCounter('select-room-options', counterConfig, selectConfig)
+
+  window.RefreshAllTextInputs()
 })

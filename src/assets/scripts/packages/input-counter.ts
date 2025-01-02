@@ -53,6 +53,9 @@ export class InputCounter {
     this.bindEvents()
     this.setupObservers()
     this.updateInputValue()
+
+    // Manager'a kaydet
+    InputCounterManager.addInstance(inputId, this)
   }
 
   private initialize() {
@@ -60,6 +63,54 @@ export class InputCounter {
     this.initializeCounters()
     // Select'leri başlat
     this.initializeSelects()
+  }
+
+  public refresh(): void {
+    // Counter'ları yenile
+    this.counters.forEach((config, type) => {
+      console.log(`Refreshing counter of type: ${type}`)
+
+      // Limitleri güncelle
+      if (config.container) {
+        const newMin = Number(config.container.dataset.min || 0)
+        const newMax = Number(config.container.dataset.max || 99)
+        console.log(
+          `Updating limits for type ${type}: min=${newMin}, max=${newMax}`,
+        )
+        config.minValue = newMin
+        config.maxValue = newMax
+      }
+
+      // Değeri limitlere göre ayarla
+      const oldValue = config.value
+      config.value = Math.min(
+        Math.max(config.value, config.minValue),
+        config.maxValue,
+      )
+      console.log(
+        `Adjusted value for type ${type}: from ${oldValue} to ${config.value}`,
+      )
+
+      // Görünümü güncelle
+      if (config.countElement) {
+        config.countElement.textContent = config.value.toString()
+        console.log(`Updated count element for type ${type}: ${config.value}`)
+      }
+    })
+
+    // Select'leri yenile
+    this.selectItems.forEach(item => {
+      const select = this.selects.get(item.type)
+      if (select) {
+        const dataAttrName = item.dataAttribute.replace('data-', '')
+        this.input.dataset[dataAttrName] = select.value
+        console.log(`Updated select for type ${item.type}: ${select.value}`)
+      }
+    })
+
+    // Input değerini güncelle
+    this.updateInputValue()
+    console.log('Input value updated')
   }
 
   private initializeCounters() {
@@ -189,31 +240,6 @@ export class InputCounter {
     this.updateButtonStates()
   }
 
-  private updateInputValue() {
-    const parts: string[] = []
-
-    // Select değerlerini güncelle ve ekle
-    this.selectItems.forEach(item => {
-      const select = this.selects.get(item.type)
-      if (select) {
-        const dataAttrName = item.dataAttribute.replace('data-', '')
-        this.input.dataset[dataAttrName] = select.value
-        parts.push(select.value)
-      }
-    })
-
-    // Counter değerlerini ekle
-    this.counters.forEach((config, type) => {
-      const translation = config.textElement?.textContent
-      if (translation) {
-        parts.push(`${config.value} ${translation}`)
-      }
-    })
-
-    this.input.value = parts.join(', ')
-    this.updateButtonStates()
-  }
-
   private bindEvents() {
     this.counterItems.forEach(item => {
       const config = this.counters.get(item.type)
@@ -240,4 +266,84 @@ export class InputCounter {
     })
     this.updateInputValue()
   }
+
+  public updateInputValue(): void {
+    const parts: string[] = []
+
+    // Select değerlerini ekle
+    this.selectItems.forEach(item => {
+      const select = this.selects.get(item.type)
+      if (select) {
+        parts.push(select.value)
+      }
+    })
+
+    // Counter değerlerini ekle
+    this.counters.forEach((config, type) => {
+      const translation = config.textElement?.textContent
+      if (translation) {
+        parts.push(`${config.value} ${translation}`)
+      }
+    })
+
+    this.input.value = parts.join(', ')
+    this.updateButtonStates()
+  }
+}
+
+// Manager sınıfı
+class InputCounterManager {
+  private static instances: Map<string, InputCounter> = new Map()
+
+  static addInstance(id: string, instance: InputCounter): void {
+    this.instances.set(id, instance)
+  }
+
+  static getInstance(id: string): InputCounter | undefined {
+    return this.instances.get(id)
+  }
+
+  static refreshInstance(id: string): boolean {
+    const instance = this.instances.get(id)
+    if (instance) {
+      try {
+        instance.refresh()
+        return true
+      } catch (error) {
+        console.error(`Error refreshing input counter ${id}:`, error)
+        return false
+      }
+    }
+    return false
+  }
+
+  static refreshAll(): boolean {
+    let success = true
+    this.instances.forEach((instance, id) => {
+      try {
+        instance.refresh()
+      } catch (error) {
+        console.error(`Error refreshing input counter ${id}:`, error)
+        success = false
+      }
+    })
+    return success
+  }
+}
+
+// Window interface genişletmesi
+declare global {
+  interface Window {
+    RefreshTextInput: (inputId: string) => boolean
+    RefreshAllTextInputs: () => boolean
+  }
+}
+
+// Window metodlarını tanımla
+window.RefreshTextInput = function (inputId: string): boolean {
+  return InputCounterManager.refreshInstance(inputId)
+}
+
+window.RefreshAllTextInputs = function (): boolean {
+  return InputCounterManager.refreshAll()
 }

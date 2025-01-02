@@ -964,6 +964,36 @@
       </div>
     </header>
 
+    <!-- Map Modal -->
+    <div
+      id="map-modal"
+      data-state="closed"
+      class="fixed inset-0 z-[9001] flex items-center justify-center bg-black/90 p-4 backdrop-blur-md data-[state=closed]:hidden"
+      aria-hidden="true"
+      role="dialog"
+    >
+      <div
+        id="map-modal-content"
+        class="relative w-full max-w-5xl overflow-hidden rounded-xl bg-neutral-900 shadow-2xl"
+      >
+        <!-- Map container -->
+        <!-- openStreetMap, openTopoMap, cycleMap, satellite, darkMatter, voyager, watercolor, streets -->
+        <div
+          id="map-container"
+          data-layer="watercolor"
+          class="relative h-[70vh] w-full bg-neutral-950"
+        ></div>
+        <!-- Close button -->
+        <button
+          id="close-map-modal"
+          class="absolute right-2 top-2 isolate z-[1000] rounded-full border border-white/20 bg-neutral-900 p-1.5 transition-all duration-300 active:scale-90 md:hover:opacity-60 lg:p-2"
+          aria-label="Close Map"
+        >
+          <i data-lucide="x" class="size-4 brightness-0 invert lg:size-6"></i>
+        </button>
+      </div>
+    </div>
+
     <main
       class="mx-auto max-w-7xl space-y-6 px-3.5 pb-6 pt-12 lg:px-4 lg:pb-6 lg:pt-6"
     >
@@ -1268,6 +1298,35 @@
                     class="h-12 flex-1 !rounded-r border border-gray-200 px-3 py-2 outline-none focus:border-primary-200 rtl:!rounded-l rtl:!rounded-r-none rtl:text-end"
                     placeholder="Telefon numarası giriniz"
                   />
+                </div>
+              </div>
+            </div>
+
+            <!-- Cinsiyet Select -->
+            <div class="grid grid-cols-1 gap-4 md:grid-cols-2">
+              <!-- Cinsiyet -->
+              <div class="space-y-2">
+                <label for="sex" class="text-sm font-medium text-gray-700"
+                  >Cinsiyet</label
+                >
+                <div class="relative">
+                  <select
+                    id="sex"
+                    class="h-12 w-full appearance-none rounded border border-gray-200 bg-white px-3 py-2 outline-none focus:border-primary-200"
+                  >
+                    <option value="none">Belirtilmedi</option>
+                    <option value="male">Erkek</option>
+                    <option value="female">Kadın</option>
+                    <option value="other">İbne</option>
+                  </select>
+                  <div
+                    class="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2"
+                  >
+                    <i
+                      data-lucide="chevron-down"
+                      class="h-5 w-5 text-gray-400"
+                    ></i>
+                  </div>
                 </div>
               </div>
             </div>

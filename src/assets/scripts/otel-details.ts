@@ -217,6 +217,34 @@ document.addEventListener('DOMContentLoaded', () => {
   })
 })
 
+document.addEventListener('DOMContentLoaded', () => {
+  const stickyPriceSection = document.getElementById('sticky-price-section')
+  const whatsappButton = document.getElementById('whatsapp-button')
+
+  if (!stickyPriceSection || !whatsappButton) {
+    return
+  }
+
+  const updateWhatsappButtonPosition = (): void => {
+    const hiddenMobile = stickyPriceSection.getAttribute('data-mobile')
+    if (hiddenMobile === 'false') {
+      whatsappButton.setAttribute('data-position', 'down')
+    } else {
+      whatsappButton.setAttribute('data-position', 'up')
+    }
+  }
+
+  // Initial check
+  updateWhatsappButtonPosition()
+
+  // Observe changes to the attribute
+  const observer = new MutationObserver(updateWhatsappButtonPosition)
+  observer.observe(stickyPriceSection, {
+    attributes: true,
+    attributeFilter: ['data-hiddenMobile'],
+  })
+})
+
 const config = {
   auto: true,
   autoInterval: 6000,
