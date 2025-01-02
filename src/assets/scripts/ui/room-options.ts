@@ -76,9 +76,3 @@ document.addEventListener('DOMContentLoaded', () => {
 
   new InputCounter('select-room-options', counterConfig, selectConfig)
 })
-
-document.addEventListener('keydown', e => {
-  if (e.key === 'p' || e.key === 'P') {
-    window.RefreshAllCounterInputs()
-  }
-})
