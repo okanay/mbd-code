@@ -1423,7 +1423,8 @@
                 <div class="flex flex-col gap-4 py-4">
                   <!-- Ülke -->
                   <div
-                    class="flex items-center justify-between px-4"
+                    data-active="active"
+                    class="hidden items-center justify-between px-4 data-[active=active]:flex"
                     id="flag-container"
                   >
                     <div class="flex items-center gap-2">
@@ -1457,9 +1458,10 @@
 
                   <!-- Yetişkin -->
                   <div
-                    class="flex items-center justify-between px-4"
+                    class="hidden items-center justify-between px-4 data-[active=active]:flex"
                     data-min="1"
                     data-max="4"
+                    data-active="active"
                     id="adult-container"
                   >
                     <div class="flex items-start gap-2">
@@ -1493,9 +1495,10 @@
 
                   <!-- Çocuk -->
                   <div
-                    class="flex items-center justify-between px-4"
+                    class="hidden items-center justify-between px-4 data-[active=active]:flex"
                     data-min="1"
                     data-max="4"
+                    data-active="active"
                     id="child-container"
                   >
                     <div class="flex items-start gap-2">
@@ -1532,8 +1535,9 @@
 
                   <!-- Çocuk -->
                   <div
-                    class="flex items-center justify-between px-4"
+                    class="hidden items-center justify-between px-4 data-[active=active]:flex"
                     data-min="1"
+                    data-active="active"
                     data-max="4"
                     id="baby-container"
                   >
@@ -1571,9 +1575,10 @@
 
                   <!-- Oda -->
                   <div
-                    class="flex items-center justify-between px-4"
+                    class="hidden items-center justify-between px-4 data-[active=active]:flex"
                     data-min="1"
                     data-max="4"
+                    data-active="active"
                     id="room-container"
                   >
                     <div class="flex items-start gap-2">

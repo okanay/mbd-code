@@ -25,6 +25,7 @@ interface CounterConfig {
   countElement: HTMLElement | null
   textElement: HTMLElement | null
   container: HTMLElement | null // Parent element referansı eklendi
+  isActive: boolean // Yeni eklenen alan
 }
 
 export class InputCounter {
@@ -65,52 +66,183 @@ export class InputCounter {
     this.initializeSelects()
   }
 
-  public refresh(): void {
-    // Counter'ları yenile
-    this.counters.forEach((config, type) => {
-      console.log(`Refreshing counter of type: ${type}`)
+  private initializeSelects() {
+    this.selectItems.forEach(item => {
+      const select = document.getElementById(
+        item.selectElementId,
+      ) as HTMLSelectElement
+      const container = document.getElementById(item.containerId)
 
-      // Limitleri güncelle
+      if (select && container) {
+        this.selects.set(item.type, select)
+        const dataAttrName = item.dataAttribute.replace('data-', '')
+
+        // Select değeri değiştiğinde input'u güncelle
+        select.addEventListener('change', () => {
+          this.input.dataset[dataAttrName] = select.value
+          this.updateInputValue()
+        })
+
+        // Başlangıç değerini ayarla
+        this.input.dataset[dataAttrName] = select.value
+
+        // Container için observer ekle
+        const observer = new MutationObserver(mutations => {
+          mutations.forEach(mutation => {
+            if (
+              mutation.type === 'attributes' &&
+              mutation.attributeName === 'data-active'
+            ) {
+              this.updateInputValue() // Select aktiflik durumu değiştiğinde input değerini güncelle
+            }
+          })
+        })
+
+        observer.observe(container, {
+          attributes: true,
+          attributeFilter: ['data-active'],
+        })
+
+        this.observers.set(`select_${item.type}`, observer)
+      }
+    })
+  }
+
+  public updateInputValue(): void {
+    const parts: string[] = []
+
+    // Sadece aktif select değerlerini ekle
+    this.selectItems.forEach(item => {
+      const select = this.selects.get(item.type)
+      const container = document.getElementById(item.containerId)
+
+      if (select && container && container.dataset.active === 'active') {
+        parts.push(select.value)
+      }
+    })
+
+    // Sadece aktif counter değerlerini ekle
+    this.counters.forEach((config, type) => {
+      if (config.isActive && config.textElement?.textContent) {
+        parts.push(`${config.value} ${config.textElement.textContent}`)
+      }
+    })
+
+    this.input.value = parts.join(', ')
+    this.updateButtonStates()
+  }
+
+  // Refresh metodunu da güncelleyelim
+  public refresh(): void {
+    // Counter'ları güncelle
+    this.counterItems.forEach(item => {
+      const config = this.counters.get(item.type)
+      if (!config) return
+
+      // Container'dan min/max ve active değerlerini güncelle
       if (config.container) {
         const newMin = Number(config.container.dataset.min || 0)
         const newMax = Number(config.container.dataset.max || 99)
-        console.log(
-          `Updating limits for type ${type}: min=${newMin}, max=${newMax}`,
-        )
+        const isActive = config.container.dataset.active === 'active'
+
         config.minValue = newMin
         config.maxValue = newMax
-      }
+        config.isActive = isActive
 
-      // Değeri limitlere göre ayarla
-      const oldValue = config.value
-      config.value = Math.min(
-        Math.max(config.value, config.minValue),
-        config.maxValue,
-      )
-      console.log(
-        `Adjusted value for type ${type}: from ${oldValue} to ${config.value}`,
-      )
+        // Input dataset'ten değeri al
+        const dataAttrName = item.dataAttribute.replace('data-', '')
+        const newValue = Number(this.input.dataset[dataAttrName] || 0)
 
-      // Görünümü güncelle
-      if (config.countElement) {
-        config.countElement.textContent = config.value.toString()
-        console.log(`Updated count element for type ${type}: ${config.value}`)
+        // Değeri limitlere göre ayarla
+        config.value = Math.min(
+          Math.max(newValue, config.minValue),
+          config.maxValue,
+        )
+
+        // Dataset'i limitlere göre güncelle
+        this.input.dataset[dataAttrName] = config.value.toString()
+
+        // Count elementini güncelle
+        if (config.countElement) {
+          config.countElement.textContent = config.value.toString()
+        }
+
+        // Button state'lerini active durumuna göre güncelle
+        if (config.minusBtn) {
+          config.minusBtn.disabled =
+            !isActive || config.value <= config.minValue
+        }
+        if (config.plusBtn) {
+          config.plusBtn.disabled = !isActive || config.value >= config.maxValue
+        }
       }
     })
 
-    // Select'leri yenile
+    // Select'leri güncelle
     this.selectItems.forEach(item => {
       const select = this.selects.get(item.type)
-      if (select) {
-        const dataAttrName = item.dataAttribute.replace('data-', '')
+      const container = document.getElementById(item.containerId)
+      if (!select || !container) return
+
+      const isActive = container.dataset.active === 'active'
+      const dataAttrName = item.dataAttribute.replace('data-', '')
+
+      if (isActive) {
+        const datasetValue = this.input.dataset[dataAttrName]
+        // Input dataset'ten değeri al ve select'i güncelle
+        if (datasetValue && datasetValue !== select.value) {
+          select.value = datasetValue
+        }
+        // Input dataset'i güncelle (select değeri değişmiş olabilir)
         this.input.dataset[dataAttrName] = select.value
-        console.log(`Updated select for type ${item.type}: ${select.value}`)
+
+        // Select elementinin disabled durumunu güncelle
+        select.disabled = false
+      } else {
+        // Active değilse select'i disable et
+        select.disabled = true
       }
     })
 
-    // Input değerini güncelle
+    // Input değerini güncelle (görünen metin)
+    const parts: string[] = []
+
+    // Aktif select değerlerini ekle
+    this.selectItems.forEach(item => {
+      const select = this.selects.get(item.type)
+      const container = document.getElementById(item.containerId)
+      if (select && container && container.dataset.active === 'active') {
+        parts.push(select.value)
+      }
+    })
+
+    // Aktif counter değerlerini ekle
+    this.counters.forEach((config, type) => {
+      if (config.isActive && config.textElement?.textContent) {
+        parts.push(`${config.value} ${config.textElement.textContent}`)
+      }
+    })
+
+    // Input değerini ayarla
+    this.input.value = parts.join(', ')
+  }
+
+  private updateActiveState(type: string) {
+    const config = this.counters.get(type)
+    if (!config || !config.container) return
+
+    const isActive = config.container.dataset.active === 'active'
+    config.isActive = isActive
+
+    // Pasif durumdaysa butonları devre dışı bırak
+    if (config.plusBtn) {
+      config.plusBtn.disabled = !isActive || config.value >= config.maxValue
+    }
+    if (config.minusBtn) {
+      config.minusBtn.disabled = !isActive || config.value <= config.minValue
+    }
+
     this.updateInputValue()
-    console.log('Input value updated')
   }
 
   private initializeCounters() {
@@ -126,6 +258,7 @@ export class InputCounter {
 
       const minValue = Number(container?.dataset.min || 0)
       const maxValue = Number(container?.dataset.max || 99)
+      const isActive = container?.dataset.active === 'active' // Yeni eklenen
 
       if (countElement) {
         countElement.textContent = initialValue.toString()
@@ -140,28 +273,8 @@ export class InputCounter {
         countElement,
         textElement,
         container,
+        isActive, // Yeni eklenen
       })
-    })
-  }
-
-  private initializeSelects() {
-    this.selectItems.forEach(item => {
-      const select = document.getElementById(
-        item.selectElementId,
-      ) as HTMLSelectElement
-      if (select) {
-        this.selects.set(item.type, select)
-        const dataAttrName = item.dataAttribute.replace('data-', '')
-
-        // Select değeri değiştiğinde input'u güncelle
-        select.addEventListener('change', () => {
-          this.input.dataset[dataAttrName] = select.value
-          this.updateInputValue()
-        })
-
-        // Başlangıç değerini ayarla
-        this.input.dataset[dataAttrName] = select.value
-      }
     })
   }
 
@@ -170,19 +283,22 @@ export class InputCounter {
       if (config.container) {
         const observer = new MutationObserver(mutations => {
           mutations.forEach(mutation => {
-            if (
-              mutation.type === 'attributes' &&
-              (mutation.attributeName === 'data-min' ||
-                mutation.attributeName === 'data-max')
-            ) {
-              this.updateLimits(type)
+            if (mutation.type === 'attributes') {
+              if (
+                mutation.attributeName === 'data-min' ||
+                mutation.attributeName === 'data-max'
+              ) {
+                this.updateLimits(type)
+              } else if (mutation.attributeName === 'data-active') {
+                this.updateActiveState(type)
+              }
             }
           })
         })
 
         observer.observe(config.container, {
           attributes: true,
-          attributeFilter: ['data-min', 'data-max'],
+          attributeFilter: ['data-min', 'data-max', 'data-active'],
         })
 
         this.observers.set(type, observer)
@@ -232,6 +348,14 @@ export class InputCounter {
     if (newValue === config.value) return
 
     config.value = newValue
+
+    // Dataset'i güncelle - eklenen kısım
+    const item = this.counterItems.find(item => item.type === type)
+    if (item) {
+      const dataAttrName = item.dataAttribute.replace('data-', '')
+      this.input.dataset[dataAttrName] = newValue.toString()
+    }
+
     if (config.countElement) {
       config.countElement.textContent = newValue.toString()
     }
@@ -265,29 +389,6 @@ export class InputCounter {
       }
     })
     this.updateInputValue()
-  }
-
-  public updateInputValue(): void {
-    const parts: string[] = []
-
-    // Select değerlerini ekle
-    this.selectItems.forEach(item => {
-      const select = this.selects.get(item.type)
-      if (select) {
-        parts.push(select.value)
-      }
-    })
-
-    // Counter değerlerini ekle
-    this.counters.forEach((config, type) => {
-      const translation = config.textElement?.textContent
-      if (translation) {
-        parts.push(`${config.value} ${translation}`)
-      }
-    })
-
-    this.input.value = parts.join(', ')
-    this.updateButtonStates()
   }
 }
 
@@ -334,16 +435,16 @@ class InputCounterManager {
 // Window interface genişletmesi
 declare global {
   interface Window {
-    RefreshTextInput: (inputId: string) => boolean
-    RefreshAllTextInputs: () => boolean
+    RefreshCounterInput: (inputId: string) => boolean
+    RefreshAllCounterInputs: () => boolean
   }
 }
 
 // Window metodlarını tanımla
-window.RefreshTextInput = function (inputId: string): boolean {
+window.RefreshCounterInput = function (inputId: string): boolean {
   return InputCounterManager.refreshInstance(inputId)
 }
 
-window.RefreshAllTextInputs = function (): boolean {
+window.RefreshAllCounterInputs = function (): boolean {
   return InputCounterManager.refreshAll()
 }

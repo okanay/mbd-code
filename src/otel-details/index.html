@@ -2005,7 +2005,8 @@
                       <div class="flex flex-col gap-4 py-4">
                         <!-- Ülke -->
                         <div
-                          class="flex items-center justify-between px-4"
+                          data-active="active"
+                          class="hidden items-center justify-between px-4 data-[active=active]:flex"
                           id="flag-container"
                         >
                           <div class="flex items-center gap-2">
@@ -2045,9 +2046,10 @@
 
                         <!-- Yetişkin -->
                         <div
-                          class="flex items-center justify-between px-4"
+                          class="hidden items-center justify-between px-4 data-[active=active]:flex"
                           data-min="1"
                           data-max="4"
+                          data-active="active"
                           id="adult-container"
                         >
                           <div class="flex items-start gap-2">
@@ -2061,7 +2063,7 @@
                                 >Yetişkin</span
                               >
                               <span class="text-xs text-gray-500">
-                                (<span>0 min</span>, <span>6 max</span>)</span
+                                (<span>1 min</span>, <span>4 max</span>)</span
                               >
                             </span>
                           </div>
@@ -2088,9 +2090,10 @@
 
                         <!-- Çocuk -->
                         <div
-                          class="flex items-center justify-between px-4"
+                          class="hidden items-center justify-between px-4 data-[active=active]:flex"
                           data-min="1"
                           data-max="4"
+                          data-active="active"
                           id="child-container"
                         >
                           <div class="flex items-start gap-2">
@@ -2102,7 +2105,7 @@
                             <span class="flex flex-col">
                               <span id="child-text" class="text-sm">Çocuk</span>
                               <span class="text-xs text-gray-500">
-                                (<span>0 min</span>, <span>6 max</span>)</span
+                                (<span>1 min</span>, <span>4 max</span>)</span
                               >
                             </span>
                           </div>
@@ -2129,8 +2132,9 @@
 
                         <!-- Çocuk -->
                         <div
-                          class="flex items-center justify-between px-4"
+                          class="hidden items-center justify-between px-4 data-[active=active]:flex"
                           data-min="1"
+                          data-active="active"
                           data-max="4"
                           id="baby-container"
                         >
@@ -2144,8 +2148,8 @@
                               <span id="baby-text" class="text-sm">Bebek</span>
                               <span class="text-xs text-gray-500">
                                 (
-                                <span>0 min</span>,
-                                <span>6 max</span>
+                                <span>1 min</span>,
+                                <span>4 max</span>
                                 )
                               </span>
                             </span>
@@ -2173,9 +2177,10 @@
 
                         <!-- Oda -->
                         <div
-                          class="flex items-center justify-between px-4"
+                          class="hidden items-center justify-between px-4 data-[active=active]:flex"
                           data-min="1"
                           data-max="4"
+                          data-active="active"
                           id="room-container"
                         >
                           <div class="flex items-start gap-2">
@@ -2188,8 +2193,8 @@
                               <span id="room-text" class="text-sm">Oda</span>
                               <span class="text-xs text-gray-500">
                                 (
-                                <span>0 min</span>,
-                                <span>6 max</span>
+                                <span>1 min</span>,
+                                <span>4 max</span>
                                 )
                               </span>
                             </span>
@@ -2768,7 +2773,7 @@
                   <div
                     id="scroll-notification"
                     data-hidden="false"
-                    class="pointer-events-none absolute left-0 top-0 z-40 flex h-12 w-full items-center gap-3 bg-gray-950/90 px-4 py-2 text-white shadow-lg transition-all duration-300 data-[hidden=true]:opacity-0 lg:hidden"
+                    class="pointer-events-none absolute left-0 top-0 z-[10] flex h-12 w-full items-center gap-3 bg-gray-950/90 px-4 py-2 text-white shadow-lg transition-all duration-300 data-[hidden=true]:opacity-0 lg:hidden"
                   >
                     <span>Seçenekleri Görüntülemek İçin Kaydırın</span>
                     <i
