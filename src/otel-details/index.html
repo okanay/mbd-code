@@ -2265,8 +2265,25 @@
                 </div>
               </form>
               <h2 class="mb-4 mt-4 text-base font-bold lg:text-xl">Sonuçlar</h2>
+
+              <script>
+                document.addEventListener('keydown', function (event) {
+                  if (event.key === 'u' || event.key === 'U') {
+                    const container =
+                      document.getElementById('otel-price-table')
+                    if (container.classList.contains('lg:flex')) {
+                      container.classList.remove('lg:flex')
+                      container.classList.add('hidden')
+                    } else {
+                      container.classList.remove('hidden')
+                      container.classList.add('lg:flex')
+                    }
+                  }
+                })
+              </script>
               <!-- Tablo Alanı: 80%,  Ücret Alanı 20% -->
               <div
+                id="otel-price-table-container"
                 class="overflow-x-auto lg:flex lg:flex-row lg:overflow-visible"
               >
                 <div
