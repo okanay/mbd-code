@@ -1,3 +1,18 @@
+import SearchableSelect from '../packages/searchable-select.js'
+
+// Initialization
+document.addEventListener('DOMContentLoaded', () => {
+  new SearchableSelect({
+    elements: {
+      container: 'flag-container',
+      select: 'flag-select',
+      input: 'flag-search-input',
+      suggestions: 'flag-suggestions',
+      clearButton: 'clear-button', // opsiyonel
+    },
+  })
+})
+
 function SetOptions(
   containerID: string,
   defaultSelectedValue: string,
