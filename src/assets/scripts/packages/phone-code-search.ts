@@ -476,48 +476,24 @@ class PhoneCodeSearch {
         this.options.elements.afterFocusElement,
       )
 
-      if (afterElement && 'focus' in afterElement) {
-        if (this.isMobileWidth()) {
-          // Safari Mobile için özel fokus yönetimi
-          setTimeout(() => {
-            // Ekranı inputa doğru scroll et
-            afterElement.scrollIntoView({
-              behavior: 'auto',
-              block: 'center',
-            })
+      if (afterElement && this.isMobileWidth()) {
+        // Geçici input oluştur
+        const temp = document.createElement('input')
+        temp.setAttribute('type', 'tel')
+        temp.style.position = 'absolute'
+        temp.style.opacity = '0'
+        temp.style.height = '0px'
+        temp.style.width = '0px'
 
-            // Bir tıklama simüle et
-            const clickEvent = new MouseEvent('click', {
-              bubbles: true,
-              cancelable: true,
-              view: window,
-            })
-            afterElement.dispatchEvent(clickEvent)
+        // DOM'a ekle ve focus yap
+        document.body.appendChild(temp)
+        temp.focus()
 
-            // Focus ve input işlemleri
-            if (afterElement instanceof HTMLInputElement) {
-              // Inputu aktif et
-              afterElement.disabled = false
-              afterElement.readOnly = false
-
-              // Değerini geçici olarak manipüle et (klavyeyi tetiklemek için)
-              const currentValue = afterElement.value
-              afterElement.value = ''
-              afterElement.value = currentValue
-
-              // Focus ve blur kombinasyonu
-              afterElement.blur()
-              afterElement.focus()
-
-              // Cursor'ı sona al
-              const length = afterElement.value.length
-              afterElement.setSelectionRange(length, length)
-            }
-          }, 300)
-        } else {
-          // Desktop için normal focus
+        // Asıl input'a geç
+        setTimeout(() => {
           afterElement.focus()
-        }
+          document.body.removeChild(temp)
+        }, 100)
       }
     }
   }
