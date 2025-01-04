@@ -493,7 +493,7 @@ class PhoneCodeSearch {
           if (isMobile) {
             // Mobilde klavyeyi açmak için
             setTimeout(() => {
-              ;(afterElement as HTMLElement).focus({ preventScroll: false })
+              ;(afterElement as HTMLElement).click()
               // Input elementiyse blur-focus yaparak klavyeyi強制的に açıyoruz
               if (afterElement instanceof HTMLInputElement) {
                 afterElement.blur()
