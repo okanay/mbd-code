@@ -491,30 +491,24 @@ class PhoneCodeSearch {
           }
 
           if (isMobile) {
-            // Mobilde klavyeyi açmak için
-            setTimeout(() => {
+            requestAnimationFrame(() => {
               if (afterElement instanceof HTMLInputElement) {
-                // Önce input'u görünür alana getir
-                afterElement.scrollIntoView({ block: 'center' })
+                afterElement.readOnly = false
+                afterElement.style.opacity = '1'
+                afterElement.style.webkitUserSelect = 'tel'
+                afterElement.style.userSelect = 'tel'
 
-                // Safari için özel sıralama
-                afterElement.readOnly = false // readOnly'i kaldır
-                afterElement.blur() // Önce blur
-                afterElement.focus() // Sonra focus
+                // Double focus trick for Safari
+                afterElement.focus()
+                requestAnimationFrame(() => {
+                  afterElement.blur()
+                  afterElement.focus()
 
-                // Cursor'ı en sona al
-                const length = afterElement.value.length
-                afterElement.setSelectionRange(length, length)
-
-                // Programmatik click yerine touch event tetikle
-                afterElement.dispatchEvent(
-                  new TouchEvent('touchstart', { bubbles: true }),
-                )
-                afterElement.dispatchEvent(
-                  new TouchEvent('touchend', { bubbles: true }),
-                )
+                  // Force keyboard
+                  afterElement.click()
+                })
               }
-            }, 300) // Süreyi biraz artıralım
+            })
           } else {
             // Desktop davranışı
             ;(afterElement as HTMLElement).focus({ preventScroll: true })
