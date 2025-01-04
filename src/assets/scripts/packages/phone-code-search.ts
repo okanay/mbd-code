@@ -268,15 +268,61 @@ class PhoneCodeSearch {
     this.options.onPhoneChange?.(value)
   }
 
+  private isMobileWidth(): boolean {
+    return window.innerWidth <= 510 // 510px ve altı mobil olarak kabul edilecek
+  }
+
   private openModal(): void {
     this.isOpen = true
     this.elements.searchModal.classList.remove('hidden')
     this.elements.searchModal.classList.remove('pointer-events-none')
     this.elements.searchInput.value = ''
-    this.elements.searchInput.focus()
+
+    // Modalı görünür yap ve pozisyonunu ayarla
+    requestAnimationFrame(() => {
+      this.adjustModalPosition()
+
+      // Mobil genişlikte değilse input'a odaklan
+      if (!this.isMobileWidth()) {
+        this.elements.searchInput.focus()
+      }
+    })
+
     this.filterAndRenderSuggestions('')
     this.options.onModalOpen?.()
     this.updateFocusState(true)
+  }
+
+  private adjustModalPosition(): void {
+    const modalRect = this.elements.searchModal.getBoundingClientRect()
+    const viewportHeight = window.innerHeight
+    const modalHeight = modalRect.height
+    const isMobile = this.isMobileWidth()
+
+    if (isMobile) {
+      // Mobil genişlikte ise, modalı viewport'un üst kısmına konumlandır
+      const targetTop = Math.min(viewportHeight * 0.15, 80) // Viewport'un en fazla %15'i veya 80px
+      const currentScroll = window.pageYOffset
+      const targetScroll = currentScroll + modalRect.top - targetTop
+
+      window.scrollTo({
+        top: targetScroll,
+        behavior: 'smooth',
+      })
+    } else {
+      // Desktop genişlikte ise, ortalama pozisyonlama yap
+      const idealPosition = (viewportHeight - modalHeight) / 2
+
+      if (modalRect.top < 0 || modalRect.top + modalHeight > viewportHeight) {
+        const currentScroll = window.pageYOffset
+        const targetScroll = currentScroll + modalRect.top - idealPosition
+
+        window.scrollTo({
+          top: targetScroll,
+          behavior: 'smooth',
+        })
+      }
+    }
   }
 
   private closeModal(): void {
@@ -451,28 +497,6 @@ class PhoneCodeSearch {
           console.warn('Focus attempt failed:', error)
         }
       }
-    }
-  }
-
-  // Modal ayarları için adjustModalPosition metodunu güncelleme
-  private adjustModalPosition(): void {
-    const modalRect = this.elements.searchModal.getBoundingClientRect()
-    const viewportHeight = window.innerHeight
-    const modalHeight = modalRect.height
-    const modalTop = modalRect.top
-
-    // Modal'ın ideal pozisyonu: viewport'un ortasında
-    const idealPosition = (viewportHeight - modalHeight) / 2
-
-    // Eğer modal viewport'un üst veya alt kısmında kalıyorsa
-    if (modalTop < 0 || modalTop + modalHeight > viewportHeight) {
-      const currentScroll = window.pageYOffset
-      const targetScroll = currentScroll + modalTop - idealPosition
-
-      window.scrollTo({
-        top: targetScroll,
-        behavior: 'smooth',
-      })
     }
   }
 
