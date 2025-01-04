@@ -48,7 +48,7 @@ function SetOptions(
 
 declare global {
   interface Window {
-    SetOptions: (
+    SetCountryNameOptions: (
       containerID: string,
       defaultSelectedValue: string,
       lang: 'TR' | 'EN',
@@ -56,7 +56,7 @@ declare global {
   }
 }
 
-window.SetOptions = SetOptions
+window.SetCountryNameOptions = SetOptions
 
 const enCodes = [
   { name: 'Afghanistan', value: 'AF' },

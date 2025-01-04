@@ -2004,15 +2004,6 @@
                     >
                       <div class="flex flex-col gap-4 py-4">
                         <!-- Ülke -->
-
-                        <script>
-                          document.addEventListener('keydown', e => {
-                            if (e.key === 'F' || e.key === 'f') {
-                              console.log('Test Ortaminda F Tuşuna Basıldı')
-                              window.FocusCountrySearchInput()
-                            }
-                          })
-                        </script>
                         <div
                           data-active="active"
                           id="flag-container"
@@ -2085,10 +2076,21 @@
                             'DOMContentLoaded',
                             async () => {
                               if (typeof window !== 'undefined') {
-                                window.SetOptions('flag-select', 'TR', 'EN') // Default Value, Dil Desteği ("TR", "EN")
+                                window.SetCountryNameOptions(
+                                  'flag-select',
+                                  'TR',
+                                  'EN',
+                                ) // Default Value, Dil Desteği ("TR", "EN")
                               }
                             },
                           )
+
+                          document.addEventListener('keydown', e => {
+                            if (e.key === 'F' || e.key === 'f') {
+                              console.log('Test Ortaminda F Tuşuna Basıldı')
+                              window.FocusCountrySearchInput()
+                            }
+                          })
                         </script>
 
                         <hr class="border-t border-gray-200" />
@@ -2838,12 +2840,20 @@
                 <div
                   id="sticky-price-section"
                   data-mobile="true"
-                  class="lg: fixed bottom-0 left-0 z-[100] w-full flex-shrink-0 border border-gray-200 transition-transform duration-300 ease-out data-[mobile=false]:translate-y-[100%] lg:relative lg:bottom-auto lg:left-auto lg:z-[10] lg:w-[240px] lg:!translate-y-[0%] lg:border-primary-300 lg:transition-none lg:duration-0"
+                  class="fixed bottom-0 left-0 z-[100] w-full flex-shrink-0 border border-gray-200 transition-transform duration-300 ease-out data-[mobile=false]:translate-y-[100%] lg:relative lg:bottom-auto lg:left-auto lg:z-[10] lg:w-[240px] lg:!translate-y-[0%] lg:border-l-0 lg:transition-none lg:duration-0"
                 >
                   <div
                     class="sticky top-0 h-full w-full bg-white lg:bg-primary-50"
                   >
                     <div class="sticky top-0">
+                      <div
+                        class="hidden h-12 w-full translate-y-[-2%] bg-primary-500 lg:block"
+                      >
+                        <span class="h-12 w-32 px-4 text-center opacity-0"
+                          >Oda seç</span
+                        >
+                      </div>
+
                       <div class="flex flex-col gap-3 p-4 lg:gap-4">
                         <div
                           class="flex items-start justify-between gap-2 gap-x-8 lg:flex-col lg:justify-start"
@@ -2895,6 +2905,88 @@
                           </div>
                         </div>
                       </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Idle State -->
+              <div class="flex flex-1 bg-white">
+                <div class="w-full px-3.5 py-8">
+                  <div
+                    class="flex flex-col items-center justify-start gap-3 text-center"
+                  >
+                    <!-- İkon container -->
+                    <div
+                      class="flex size-16 items-center justify-center rounded-full bg-gray-100"
+                    >
+                      <i data-lucide="search" class="size-8 text-gray-400"></i>
+                    </div>
+
+                    <!-- Metin içeriği -->
+                    <div class="max-w-[360px] space-y-1">
+                      <h3 class="text-sm font-semibold text-gray-900">
+                        Arama Yapmaya Başlayın
+                      </h3>
+                      <p class="text-sm text-gray-500">
+                        Size en uygun odaları bulmak için lütfen tarih ve
+                        misafir bilgilerinizi girin.
+                      </p>
+                    </div>
+
+                    <!-- Hızlı Seçimler -->
+                    <div class="mt-4 flex flex-col items-center gap-3">
+                      <!-- Popüler tarih aralıkları -->
+                      <div class="flex flex-wrap justify-center gap-2">
+                        <button
+                          class="flex items-center gap-1.5 rounded-full border border-gray-200 px-4 py-2 text-xs transition-colors hover:border-primary-500 hover:text-primary-600"
+                        >
+                          <i data-lucide="calendar" class="size-3.5"></i>
+                          <span>Bu hafta sonu</span>
+                        </button>
+                        <button
+                          class="flex items-center gap-1.5 rounded-full border border-gray-200 px-4 py-2 text-xs transition-colors hover:border-primary-500 hover:text-primary-600"
+                        >
+                          <i data-lucide="calendar" class="size-3.5"></i>
+                          <span>Gelecek hafta</span>
+                        </button>
+                        <button
+                          class="flex items-center gap-1.5 rounded-full border border-gray-200 px-4 py-2 text-xs transition-colors hover:border-primary-500 hover:text-primary-600"
+                        >
+                          <i data-lucide="calendar" class="size-3.5"></i>
+                          <span>2 hafta sonra</span>
+                        </button>
+                      </div>
+
+                      <!-- Popüler misafir seçenekleri -->
+                      <div class="flex flex-wrap justify-center gap-2">
+                        <button
+                          class="flex items-center gap-1.5 rounded-full border border-gray-200 px-4 py-2 text-xs transition-colors hover:border-primary-500 hover:text-primary-600"
+                        >
+                          <i data-lucide="users" class="size-3.5"></i>
+                          <span>2 Yetişkin</span>
+                        </button>
+                        <button
+                          class="flex items-center gap-1.5 rounded-full border border-gray-200 px-4 py-2 text-xs transition-colors hover:border-primary-500 hover:text-primary-600"
+                        >
+                          <i data-lucide="users" class="size-3.5"></i>
+                          <span>2 Yetişkin, 1 Çocuk</span>
+                        </button>
+                      </div>
+                    </div>
+
+                    <!-- İpucu mesajı -->
+                    <div
+                      class="mt-4 flex items-center gap-2 text-sm text-gray-600"
+                    >
+                      <i
+                        data-lucide="lightbulb"
+                        class="size-[18px] flex-shrink-0 text-amber-500"
+                      ></i>
+                      <span
+                        >İpucu: Daha iyi fiyatlar için esnek tarihlerle arama
+                        yapın.</span
+                      >
                     </div>
                   </div>
                 </div>

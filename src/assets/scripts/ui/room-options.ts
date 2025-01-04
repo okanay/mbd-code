@@ -34,6 +34,15 @@ document.addEventListener('DOMContentLoaded', () => {
     controller.setActiveModal('select-room-options')
     await new Promise(resolve => setTimeout(resolve, 300))
     input?.focus()
+    // scroll position focus to id select-room-options
+    const element = document.getElementById('select-room-options')
+    console.log(element)
+    if (element) {
+      element.scrollIntoView({
+        behavior: 'smooth',
+        block: 'center',
+      })
+    }
   }
 
   window.FocusCountrySearchInput = FocusCountrySearchInput

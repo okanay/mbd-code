@@ -1057,6 +1057,24 @@
                     >
                   </button>
                 </li>
+                <!-- Otel Rezervasyon -->
+                <li class="group">
+                  <button
+                    id="profile-view-control-7"
+                    data-state="closed"
+                    class="group flex items-center rounded-lg p-2 font-medium transition-all duration-300 hover:opacity-75 data-[state=open]:hover:!opacity-100"
+                  >
+                    <span
+                      class="size-[22px] flex-shrink-0 transition-all duration-300 group-hover:text-primary-600 group-data-[state=open]:text-primary-500"
+                    >
+                      <i data-lucide="building" class="size-full"></i>
+                    </span>
+                    <span
+                      class="ms-3 text-nowrap group-data-[state=open]:font-semibold group-data-[state=open]:text-gray-800 group-data-[state=closed]/nav:opacity-0 md:!opacity-100"
+                      >Otel Paketlerim</span
+                    >
+                  </button>
+                </li>
                 <!-- Visa -->
                 <li class="group">
                   <button
@@ -1879,6 +1897,18 @@
                 <div class="h-full w-full">
                   <h2 class="mb-4 text-2xl font-semibold text-gray-800">
                     Visa Başvurularım
+                  </h2>
+                </div>
+              </div>
+              <!-- Otel Rezervasyon -->
+              <div
+                data-state="closed"
+                id="otel-reservation"
+                class="flex h-full data-[state=closed]:hidden group-data-[query=otel-reservation]/query:!block"
+              >
+                <div class="h-full w-full">
+                  <h2 class="mb-4 text-2xl font-semibold text-gray-800">
+                    Otel Rezervasyonlarım
                   </h2>
                 </div>
               </div>
