@@ -40,8 +40,10 @@ class SearchableSelect {
   }
 
   constructor(options: SearchableSelectOptions) {
+    // 1. Options'ı kaydet
     this.options = options
 
+    // 2. Gerekli elementleri bul ve validate et
     const container = document.getElementById(options.elements.container)
     const select = document.getElementById(
       options.elements.select,
@@ -54,10 +56,12 @@ class SearchableSelect {
       ? document.getElementById(options.elements.clearButton)
       : null
 
+    // 3. Element validasyonu
     if (!container || !select || !input || !suggestions) {
       throw new Error('Required elements not found')
     }
 
+    // 4. Element referanslarını kaydet
     this.elements = {
       container,
       select,
@@ -66,17 +70,7 @@ class SearchableSelect {
       clearButton,
     }
 
-    this.templates = this.captureTemplates()
-    this.initialize()
-
-    SearchableSelect.instances.set(container, this)
-  }
-
-  private captureTemplates(): {
-    suggestionItem: HTMLElement
-    noResults: HTMLElement
-    noneItem: HTMLElement
-  } {
+    // 5. Template'leri yakala ve valide et (kritik nokta)
     const suggestionItem =
       this.elements.suggestions.querySelector('.suggestion-item')
     const noResults = this.elements.suggestions.querySelector('.no-results')
@@ -88,42 +82,77 @@ class SearchableSelect {
       )
     }
 
-    this.elements.suggestions.innerHTML = ''
-
-    return {
+    // 6. Template'leri kaydet
+    this.templates = {
       suggestionItem: suggestionItem.cloneNode(true) as HTMLElement,
       noResults: noResults.cloneNode(true) as HTMLElement,
       noneItem: noneItem.cloneNode(true) as HTMLElement,
     }
-  }
 
-  private initialize(): void {
+    // 7. Suggestions container'ı temizle
+    this.elements.suggestions.innerHTML = ''
+
+    // 8. Select options'ları yakala
     this.captureSelectOptions()
+
+    // 9. Event listener'ları bağla
     this.setupEventListeners()
+
+    // 10. Orijinal select'i gizle
     this.hideOriginalSelect()
 
-    const currentValue = this.elements.select.value
-    const selectedOption = this.allOptions.find(
-      opt => opt.value === currentValue,
-    )
+    // 11. Başlangıç değerini ayarla
+    const noneValue = this.templates.noneItem.getAttribute('data-value') || ''
+    this.setValue(noneValue)
 
-    if (selectedOption) {
-      this.elements.input.value = selectedOption.text
-    } else {
+    // Eğer select'in değeri yoksa veya none ise
+    if (
+      !this.elements.select.value ||
+      this.elements.select.value === noneValue
+    ) {
       this.elements.input.value = ''
-      this.elements.select.value = ''
+      this.elements.select.value = noneValue
+
+      // Dataset'i güncelle
+      const datasetKey = Object.keys(this.elements.select.dataset)[0]
+      if (datasetKey) {
+        this.elements.select.dataset[datasetKey] = noneValue
+      }
+    } else {
+      // Specific bir değer seçili ise
+      const selectedOption = this.allOptions.find(
+        opt => opt.value === this.elements.select.value,
+      )
+      if (selectedOption) {
+        this.elements.input.value = selectedOption.text
+      }
     }
 
+    // 12. Önerileri ilk kez render et
     this.filterAndRenderSuggestions('')
+
+    // 13. Instance'ı kaydet
+    SearchableSelect.instances.set(container, this)
   }
 
   private captureSelectOptions(): void {
-    this.allOptions = Array.from(this.elements.select.options)
-      .filter(option => option.value !== '')
-      .map(option => ({
-        value: option.value,
-        text: option.text,
-      }))
+    // Select options'ları al ve kaydet
+    // None option'ı da dahil edilmeli
+    this.allOptions = Array.from(this.elements.select.options).map(option => ({
+      value: option.value,
+      text: option.text,
+    }))
+
+    // None option'ı ekle (eğer yoksa)
+    const noneValue = this.templates.noneItem.getAttribute('data-value') || ''
+    const hasNoneOption = this.allOptions.some(opt => opt.value === noneValue)
+
+    if (!hasNoneOption) {
+      const noneOption = document.createElement('option')
+      noneOption.value = noneValue
+      noneOption.text = this.templates.noneItem.textContent || ''
+      this.elements.select.appendChild(noneOption)
+    }
   }
 
   private filterAndRenderSuggestions(searchText: string): void {
@@ -216,9 +245,10 @@ class SearchableSelect {
   private handleSuggestionClick(e: Event): void {
     const target = e.target as HTMLElement
     const suggestionEl = target.closest('[data-value]') as HTMLElement
+    const noneValue = this.templates.noneItem.getAttribute('data-value') || ''
 
     if (suggestionEl) {
-      const value = suggestionEl.dataset.value || ''
+      const value = suggestionEl.dataset.value || noneValue
       this.selectOption(value)
     }
   }
@@ -228,12 +258,7 @@ class SearchableSelect {
 
     if (value === noneValue || !value) {
       this.elements.input.value = ''
-      this.elements.select.value = ''
-
-      const datasetKey = Object.keys(this.elements.select.dataset)[0]
-      if (datasetKey) {
-        delete this.elements.select.dataset[datasetKey]
-      }
+      this.elements.select.value = noneValue
     } else {
       const selectedOption = this.allOptions.find(opt => opt.value === value)
       if (!selectedOption) return

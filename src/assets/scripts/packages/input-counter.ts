@@ -126,7 +126,7 @@ export class InputCounter {
         select &&
         container &&
         container.dataset.active === 'active' &&
-        select.value
+        select.value !== 'not-selected'
       ) {
         parts.push(select.value)
       }

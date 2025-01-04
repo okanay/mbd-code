@@ -188,7 +188,7 @@
                   <button
                     type="button"
                     class="none-item cursor-pointer bg-gray-200 px-3 py-2 text-start opacity-75 transition-opacity duration-300 hover:opacity-100 data-[hide=true]:hidden"
-                    data-value="none"
+                    data-value="not-selected"
                     data-hide="false"
                   >
                     Seçim Yok
@@ -208,12 +208,12 @@
                   </div>
                 </div>
                 <script>
-                  document.addEventListener('DOMContentLoaded', async () => {
+                  document.addEventListener('DOMContentLoaded', () => {
                     window.SetCountryNameOptions(
                       'country-select-input',
-                      'none',
+                      'not-selected',
                       'EN',
-                    ) // Default Value, Dil Desteği ("TR", "EN")
+                    )
                   })
                 </script>
               </div>

@@ -2030,7 +2030,7 @@
                             <input
                               type="text"
                               id="country-search-input"
-                              class="peer h-11 w-52 rounded border border-gray-300 px-3 pe-9 text-sm outline-none transition-colors focus:border-primary-200"
+                              class="peer h-11 w-56 rounded border border-gray-300 px-3 pe-9 text-sm outline-none transition-colors focus:border-primary-200"
                               placeholder="Ülke Seçiniz"
                             />
 
@@ -2050,13 +2050,13 @@
                             <div
                               id="country-suggestions"
                               style="scrollbar-width: none"
-                              class="pointer-events-none absolute left-0 right-0 top-full z-[30] mt-1 flex max-h-40 flex-col overflow-y-auto rounded border border-gray-200 bg-white opacity-0 shadow-lg transition-all duration-300 peer-focus:pointer-events-auto peer-focus:opacity-100"
+                              class="pointer-events-none absolute left-0 right-0 top-full z-[30] mt-1 flex max-h-72 flex-col overflow-y-auto rounded border border-gray-200 bg-white opacity-0 shadow-lg transition-all duration-300 peer-focus:pointer-events-auto peer-focus:opacity-100"
                             >
                               <!-- None State -->
                               <button
                                 type="button"
                                 class="none-item cursor-pointer bg-gray-200 px-3 py-2 text-start text-sm opacity-75 transition-opacity duration-300 hover:opacity-100 data-[hide=true]:hidden"
-                                data-value="none"
+                                data-value="not-selected"
                                 data-hide="false"
                               >
                                 Seçim Yok
@@ -2084,24 +2084,23 @@
                           document.addEventListener('DOMContentLoaded', () => {
                             window.SetCountryNameOptions(
                               'country-select-input',
-                              'none',
+                              'not-selected',
                               'EN',
                             )
                           })
 
                           document.addEventListener('keydown', e => {
                             if (e.key === 'f' || e.key === 'F') {
-                              console.log('Test Ortaminda F Tuşuna Basıldı')
                               window.FocusCountrySearchInput()
                             }
                           })
 
                           document.addEventListener('keydown', e => {
-                            if (e.key === 'u' || e.key === 'U') {
+                            if (e.key === 't' || e.key === 'T') {
                               window.CountrySelectInput.setValue('TR')
                             }
-                            if (e.key === 'b' || e.key === 'B') {
-                              window.CountrySelectInput.setValue('BE')
+                            if (e.key === 'n' || e.key === 'N') {
+                              window.CountrySelectInput.setValue('not-selected')
                             }
                           })
                         </script>
