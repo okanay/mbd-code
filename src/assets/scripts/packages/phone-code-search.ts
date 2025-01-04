@@ -478,39 +478,39 @@ class PhoneCodeSearch {
 
       if (afterElement && 'focus' in afterElement) {
         try {
-          const rect = afterElement.getBoundingClientRect()
-          const isVisible = rect.top >= 0 && rect.bottom <= window.innerHeight
-          const isMobile = this.isMobileWidth()
+          if (this.isMobileWidth()) {
+            // Önce stil özelliklerini geçici olarak kaldır
+            const originalStyle = afterElement.style.cssText
 
-          // Element görünür değilse, scroll yap
-          if (!isVisible) {
+            // Input'u temizle
+            afterElement.style.cssText = ''
+            afterElement.style.opacity = '1'
+
+            // Scroll işlemini yap
             afterElement.scrollIntoView({
-              behavior: isMobile ? 'auto' : 'smooth',
+              behavior: 'auto',
               block: 'center',
             })
-          }
 
-          if (isMobile) {
-            requestAnimationFrame(() => {
-              if (afterElement instanceof HTMLInputElement) {
-                afterElement.readOnly = false
-                afterElement.style.opacity = '1'
-                afterElement.style.webkitUserSelect = 'tel'
-                afterElement.style.userSelect = 'tel'
-
-                // Double focus trick for Safari
-                afterElement.focus()
-                requestAnimationFrame(() => {
-                  afterElement.blur()
+            // Yeni yaklaşım: Async sıralama
+            Promise.resolve()
+              .then(() => new Promise(resolve => setTimeout(resolve, 100)))
+              .then(() => {
+                if (afterElement instanceof HTMLInputElement) {
+                  // Mobil Safari için özel sıralama
+                  afterElement.setAttribute('readonly', 'readonly')
+                  afterElement.removeAttribute('readonly')
+                  afterElement.click()
                   afterElement.focus()
 
-                  // Force keyboard
-                  afterElement.click()
-                })
-              }
-            })
+                  // 300ms sonra orijinal stilleri geri yükle
+                  setTimeout(() => {
+                    afterElement.style.cssText = originalStyle
+                  }, 300)
+                }
+              })
           } else {
-            // Desktop davranışı
+            // Desktop davranışı değişmiyor
             ;(afterElement as HTMLElement).focus({ preventScroll: true })
           }
         } catch (error) {
