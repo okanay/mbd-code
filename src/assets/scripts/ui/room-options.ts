@@ -1,8 +1,14 @@
 import { InputCounter } from '../packages/input-counter.js'
 import { ModalController } from '../packages/modal.js'
 
+declare global {
+  interface Window {
+    FocusCountrySearchInput: () => void
+  }
+}
+
 document.addEventListener('DOMContentLoaded', () => {
-  new ModalController(
+  const controller = new ModalController(
     [
       {
         id: 'select-room-options',
@@ -22,6 +28,15 @@ document.addEventListener('DOMContentLoaded', () => {
       },
     },
   )
+
+  const FocusCountrySearchInput = async () => {
+    const input = document.getElementById('flag-search-input')
+    controller.setActiveModal('select-room-options')
+    await new Promise(resolve => setTimeout(resolve, 300))
+    input?.focus()
+  }
+
+  window.FocusCountrySearchInput = FocusCountrySearchInput
 })
 
 // DOM yüklendiğinde

@@ -1,35 +1,29 @@
-import { phoneCodes } from '../../constants/phone-code.js'
+import { phoneCodesTR, phoneCodesEN } from '../../constants/phone-code.js'
+import PhoneCodeSearch from '../packages/phone-code-search.js'
 
-function setupCountrySelect() {
-  const select = document.getElementById('country-code')
-  const flag = document.getElementById('country-flag')
-  const prefix = document.getElementById('country-prefix')
-
-  if (!select || !flag || !prefix) return
-
-  // Populate options
-  select.innerHTML = phoneCodes
-    .map(
-      country => `
-    <option value="${country.code}">
-      ${country.name} (${country.dial_code})
-    </option>
-  `,
-    )
-    .join('')
-
-  // Update flag and prefix on change
-  select.addEventListener('change', e => {
-    const selectedCountry = phoneCodes.find(
-      country => country.code === (e.target as HTMLSelectElement).value,
-    )
-
-    if (selectedCountry) {
-      ;(flag as HTMLImageElement).src =
-        `https://flagcdn.com/${selectedCountry.code.toLowerCase()}.svg`
-      prefix.textContent = `${selectedCountry.dial_code}`
-    }
+document.addEventListener('DOMContentLoaded', () => {
+  new PhoneCodeSearch({
+    elements: {
+      container: 'phone-container',
+      select: 'country-code',
+      flag: 'country-flag',
+      prefix: 'country-prefix',
+      phoneInput: 'phone-input', // telefon input id'sini eklemeniz gerekiyor
+      searchInput: 'phone-search-input',
+      suggestions: 'phone-suggestions',
+      searchModal: 'phone-search-modal',
+      clearButton: 'phone-clear-button',
+    },
+    languages: [
+      {
+        id: 'TR',
+        data: phoneCodesTR,
+      },
+      {
+        id: 'EN',
+        data: phoneCodesEN,
+      },
+    ],
+    defaultLanguage: 'EN',
   })
-}
-
-document.addEventListener('DOMContentLoaded', setupCountrySelect)
+})

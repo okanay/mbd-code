@@ -55,6 +55,10 @@
     <link rel="stylesheet" href="/assets/styles/globals-out.css" />
     <script type="module" src="/assets/scripts/ui/phone-number.js"></script>
     <script type="module" src="/assets/scripts/ui/password-visible.js"></script>
+    <script
+      type="module"
+      src="/assets/scripts/ui/country-select-input.js"
+    ></script>
   </head>
   <body class="bg-white">
     <main>
@@ -110,6 +114,7 @@
 
           <!-- Form -->
           <form
+            autocomplete="off"
             class="relative z-20 flex w-full flex-col gap-4 bg-white [&>*]:flex-shrink-0"
           >
             <!-- Name -->
@@ -130,6 +135,191 @@
               placeholder="Soyadınız"
             />
 
+            <!-- Ülke -->
+            <div id="flag-container">
+              <div
+                id="country-select"
+                class="group relative flex items-center gap-2"
+              >
+                <!-- Hidden Observer Select Input -->
+                <select id="flag-select" class="hidden"></select>
+
+                <!-- Search Input -->
+                <input
+                  type="text"
+                  id="flag-search-input"
+                  name="country-search-input"
+                  aria-autocomplete="off"
+                  autocomplete="new-password"
+                  class="peer h-12 w-full rounded border border-gray-200 px-3 pe-9 outline-none transition-colors focus:border-primary-200"
+                  placeholder="Ülke"
+                />
+
+                <!--  Clear Button -->
+                <button
+                  class="absolute right-4 top-[50%] flex h-full -translate-y-1/2 items-center justify-center peer-placeholder-shown:hidden peer-focus:visible"
+                  id="clear-button"
+                  type="button"
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    class="size-3.5"
+                  >
+                    <path d="M18 6 6 18" />
+                    <path d="m6 6 12 12" />
+                  </svg>
+                </button>
+
+                <!-- Suggestion Dropdown -->
+                <div
+                  id="flag-suggestions"
+                  style="scrollbar-width: none"
+                  class="pointer-events-none absolute left-0 right-0 top-full z-[30] mt-1 flex max-h-40 flex-col overflow-y-auto rounded border border-gray-200 bg-white opacity-0 shadow-lg transition-all duration-300 peer-focus:pointer-events-auto peer-focus:opacity-100"
+                >
+                  <!-- Template elements -->
+                  <button
+                    type="button"
+                    class="suggestion-item cursor-pointer px-3 py-2 text-start hover:bg-primary-100 data-[selected=true]:bg-primary-500 data-[selected=true]:text-white data-[selected=true]:hover:bg-primary-600"
+                    data-value="suggestion"
+                    data-selected="false"
+                  >
+                    Suggestion
+                  </button>
+                  <!-- No Results -->
+                  <div class="no-results px-3 py-2 text-gray-500">
+                    Sonuç bulunamadı
+                  </div>
+                </div>
+                <script>
+                  document.addEventListener('DOMContentLoaded', async () => {
+                    if (typeof window !== 'undefined') {
+                      window.SetOptions('flag-select', 'NONE', 'EN') // Default Value, Dil Desteği ("TR", "EN")
+                    }
+                  })
+                </script>
+              </div>
+            </div>
+
+            <!--  Country Code Input (YENILENDI CUSTOM PAKET EKLENDI VAOV VAOV VAOV DIKKAT!!)-->
+            <div
+              id="phone-container"
+              class="group/focus relative"
+              data-focus="false"
+            >
+              <!-- Mevcut Telefon Input Yapısı -->
+              <div class="flex max-w-md">
+                <div class="relative">
+                  <div
+                    id="phone-code-button"
+                    class="flex h-12 cursor-pointer items-center gap-1 rounded-l border border-r-0 border-gray-200 bg-white px-3 text-xs hover:bg-gray-50 group-data-[focus=true]/focus:rounded-b-none rtl:rounded-l-none rtl:rounded-r rtl:border-l-0 rtl:border-r"
+                  >
+                    <img
+                      id="country-flag"
+                      src="https://flagcdn.com/us.svg"
+                      alt="flag"
+                      class="h-4 w-5 !rounded object-cover"
+                    />
+                    <span id="country-prefix">+1</span>
+                  </div>
+                  <select
+                    id="country-code"
+                    data-language="TR"
+                    data-default="TR"
+                    disabled
+                    style="-webkit-border-radius: 0; border-radius: 0"
+                    class="pointer-events-none absolute inset-0 h-full w-full cursor-pointer opacity-0"
+                  >
+                    <option value="US" data-prefix="+1" data-flag="us">
+                      United States (+1)
+                    </option>
+                  </select>
+                </div>
+                <input
+                  type="tel"
+                  id="phone-input"
+                  style="-webkit-border-radius: 0; border-radius: 0"
+                  class="h-12 flex-1 !rounded-r border border-gray-200 px-3 py-2 outline-none focus:border-primary-200 group-data-[focus=true]/focus:!rounded-b-none rtl:!rounded-l rtl:!rounded-r-none rtl:text-end"
+                  placeholder="Telefon numarası giriniz (YENI SELECT)"
+                />
+              </div>
+
+              <!-- Arama ve Öneri Modal/Dropdown -->
+              <div
+                id="phone-search-modal"
+                class="pointer-events-none absolute left-0 right-0 top-[calc(100%)] z-[30] hidden rounded rounded-t-none border border-t-0 border-gray-200 bg-white shadow-lg"
+              >
+                <!-- Search Input -->
+                <div class="relative border-b border-gray-200">
+                  <input
+                    type="text"
+                    id="phone-search-input"
+                    class="h-12 w-full rounded-t px-3 py-2 outline-none"
+                    placeholder="Ülke Ara"
+                  />
+                  <button
+                    id="phone-clear-button"
+                    class="absolute right-2 top-1/2 hidden -translate-y-1/2 p-1"
+                  >
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="24"
+                      height="24"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="2"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      class="size-4"
+                    >
+                      <path d="M18 6 6 18" />
+                      <path d="m6 6 12 12" />
+                    </svg>
+                  </button>
+                </div>
+
+                <!-- Suggestions List -->
+                <div
+                  id="phone-suggestions"
+                  class="mt-1 max-h-60 overflow-y-auto bg-gray-50"
+                  style="scrollbar-width: none"
+                >
+                  <!-- Template elements -->
+                  <button
+                    type="button"
+                    class="suggestion-item group flex w-full cursor-pointer items-center gap-2 px-3 py-2.5 text-start hover:bg-gray-50 data-[selected=true]:bg-primary-500 data-[selected=true]:text-white"
+                    data-value="US"
+                    data-selected="false"
+                  >
+                    <img
+                      src="https://flagcdn.com/us.svg"
+                      alt="flag"
+                      class="h-4 w-5 object-cover"
+                    />
+                    <span class="flex-1">United States</span>
+                    <span
+                      class="text-xs text-gray-500 group-data-[selected=true]:text-white"
+                    >
+                      +1</span
+                    >
+                  </button>
+
+                  <!-- No Results Template -->
+                  <div class="no-results px-3 py-2.5 text-gray-500">
+                    Sonuç bulunamadı
+                  </div>
+                </div>
+              </div>
+            </div>
+
             <!-- E-Posta -->
             <input
               type="text"
@@ -138,38 +328,6 @@
               class="h-12 !rounded border border-gray-200 px-3 py-2 outline-none focus:border-primary-200"
               placeholder="E-Posta Adresiniz"
             />
-
-            <!--  Country Code Input -->
-            <div class="flex max-w-md">
-              <div class="relative">
-                <div
-                  class="flex h-12 cursor-pointer items-center gap-1 rounded-l border border-r-0 border-gray-200 bg-white px-3 text-xs hover:bg-gray-50 rtl:rounded-l-none rtl:rounded-r rtl:border-l-0 rtl:border-r"
-                >
-                  <img
-                    id="country-flag"
-                    src="https://flagcdn.com/us.svg"
-                    alt="flag"
-                    class="h-4 w-5 !rounded object-cover"
-                  />
-                  <span id="country-prefix">+1</span>
-                </div>
-                <select
-                  id="country-code"
-                  style="-webkit-border-radius: 0; border-radius: 0"
-                  class="absolute inset-0 h-full w-full cursor-pointer opacity-0"
-                >
-                  <option value="US" data-prefix="+1" data-flag="us">
-                    United States (+1)
-                  </option>
-                </select>
-              </div>
-              <input
-                type="tel"
-                style="-webkit-border-radius: 0; border-radius: 0"
-                class="h-12 flex-1 !rounded-r border border-gray-200 px-3 py-2 outline-none focus:border-primary-200 rtl:!rounded-l rtl:!rounded-r-none rtl:text-end"
-                placeholder="Telefon numarası giriniz"
-              />
-            </div>
 
             <!-- Şifre -->
             <div class="group relative" data-visible="false">
