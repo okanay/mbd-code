@@ -494,10 +494,11 @@ class PhoneCodeSearch {
             // Mobilde klavyeyi açmak için
             setTimeout(() => {
               ;(afterElement as HTMLElement).click()
-              // Input elementiyse blur-focus yaparak klavyeyi強制的に açıyoruz
+              // Input elementiyse blur-focus yaparak klavyeyi açıyoruz
               if (afterElement instanceof HTMLInputElement) {
                 afterElement.blur()
                 afterElement.focus()
+                afterElement.click()
               }
             }, 200)
           } else {
