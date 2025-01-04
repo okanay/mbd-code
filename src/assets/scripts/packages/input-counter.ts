@@ -79,12 +79,15 @@ export class InputCounter {
 
         // Select değeri değiştiğinde input'u güncelle
         select.addEventListener('change', () => {
-          this.input.dataset[dataAttrName] = select.value
+          // Boş değer kontrolü ekleyelim
+          const value = select.value || ''
+          this.input.dataset[dataAttrName] = value // Her durumda dataset'i güncelle
           this.updateInputValue()
         })
 
-        // Başlangıç değerini ayarla
-        this.input.dataset[dataAttrName] = select.value
+        // Başlangıç değerini ayarla - burada da boş değer kontrolü yapalım
+        const initialValue = select.value || ''
+        this.input.dataset[dataAttrName] = initialValue
 
         // Container için observer ekle
         const observer = new MutationObserver(mutations => {
@@ -93,7 +96,10 @@ export class InputCounter {
               mutation.type === 'attributes' &&
               mutation.attributeName === 'data-active'
             ) {
-              this.updateInputValue() // Select aktiflik durumu değiştiğinde input değerini güncelle
+              // Aktiflik değiştiğinde dataset'i güncelle
+              const currentValue = select.value || ''
+              this.input.dataset[dataAttrName] = currentValue
+              this.updateInputValue()
             }
           })
         })
@@ -111,24 +117,34 @@ export class InputCounter {
   public updateInputValue(): void {
     const parts: string[] = []
 
-    // Sadece aktif select değerlerini ekle
+    // Sadece aktif select değerlerini ekle (boş olmayan değerler için)
     this.selectItems.forEach(item => {
       const select = this.selects.get(item.type)
       const container = document.getElementById(item.containerId)
 
-      if (select && container && container.dataset.active === 'active') {
+      if (
+        select &&
+        container &&
+        container.dataset.active === 'active' &&
+        select.value
+      ) {
         parts.push(select.value)
       }
     })
 
     // Sadece aktif counter değerlerini ekle
     this.counters.forEach((config, type) => {
-      if (config.isActive && config.textElement?.textContent) {
+      if (
+        config.isActive &&
+        config.textElement?.textContent &&
+        config.value > 0
+      ) {
         parts.push(`${config.value} ${config.textElement.textContent}`)
       }
     })
 
-    this.input.value = parts.join(', ')
+    // Boş olmayan parçaları birleştir
+    this.input.value = parts.filter(part => part.trim()).join(', ')
     this.updateButtonStates()
   }
 

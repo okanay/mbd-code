@@ -2006,7 +2006,7 @@
                         <!-- Ülke -->
                         <div
                           data-active="active"
-                          id="flag-container"
+                          id="country-container"
                           class="hidden items-center justify-between px-4 data-[active=active]:flex"
                         >
                           <!-- Label -->
@@ -2015,21 +2015,21 @@
                               data-lucide="map-pin"
                               class="size-5 text-gray-600"
                             ></i>
-                            <span id="flag-text" class="text-sm">Ülke</span>
+                            <span id="country-text" class="text-sm">Ülke</span>
                           </div>
 
                           <!-- Input -->
-                          <div
-                            id="country-select"
-                            class="group relative flex items-center gap-2"
-                          >
+                          <div class="group relative flex items-center gap-2">
                             <!-- Hidden Observer Select Input -->
-                            <select id="flag-select" class="hidden"></select>
+                            <select
+                              id="country-select-input"
+                              class="hidden"
+                            ></select>
 
                             <!-- Search Input -->
                             <input
                               type="text"
-                              id="flag-search-input"
+                              id="country-search-input"
                               class="peer h-11 w-52 rounded border border-gray-300 px-3 pe-9 text-sm outline-none transition-colors focus:border-primary-200"
                               placeholder="Ülke Seçiniz"
                             />
@@ -2048,10 +2048,19 @@
 
                             <!-- Suggestion Dropdown -->
                             <div
-                              id="flag-suggestions"
+                              id="country-suggestions"
                               style="scrollbar-width: none"
                               class="pointer-events-none absolute left-0 right-0 top-full z-[30] mt-1 flex max-h-40 flex-col overflow-y-auto rounded border border-gray-200 bg-white opacity-0 shadow-lg transition-all duration-300 peer-focus:pointer-events-auto peer-focus:opacity-100"
                             >
+                              <!-- None State -->
+                              <button
+                                type="button"
+                                class="none-item cursor-pointer bg-gray-200 px-3 py-2 text-start text-sm opacity-75 transition-opacity duration-300 hover:opacity-100 data-[hide=true]:hidden"
+                                data-value="none"
+                                data-hide="false"
+                              >
+                                Seçim Yok
+                              </button>
                               <!-- Template elements -->
                               <button
                                 type="button"
@@ -2072,23 +2081,27 @@
                         </div>
 
                         <script>
-                          document.addEventListener(
-                            'DOMContentLoaded',
-                            async () => {
-                              if (typeof window !== 'undefined') {
-                                window.SetCountryNameOptions(
-                                  'flag-select',
-                                  'TR',
-                                  'EN',
-                                ) // Default Value, Dil Desteği ("TR", "EN")
-                              }
-                            },
-                          )
+                          document.addEventListener('DOMContentLoaded', () => {
+                            window.SetCountryNameOptions(
+                              'country-select-input',
+                              'none',
+                              'EN',
+                            )
+                          })
 
                           document.addEventListener('keydown', e => {
-                            if (e.key === 'F' || e.key === 'f') {
+                            if (e.key === 'f' || e.key === 'F') {
                               console.log('Test Ortaminda F Tuşuna Basıldı')
                               window.FocusCountrySearchInput()
+                            }
+                          })
+
+                          document.addEventListener('keydown', e => {
+                            if (e.key === 'u' || e.key === 'U') {
+                              window.CountrySelectInput.setValue('TR')
+                            }
+                            if (e.key === 'b' || e.key === 'B') {
+                              window.CountrySelectInput.setValue('BE')
                             }
                           })
                         </script>

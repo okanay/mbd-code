@@ -30,13 +30,12 @@ document.addEventListener('DOMContentLoaded', () => {
   )
 
   const FocusCountrySearchInput = async () => {
-    const input = document.getElementById('flag-search-input')
+    const input = document.getElementById('country-search-input')
     controller.setActiveModal('select-room-options')
     await new Promise(resolve => setTimeout(resolve, 300))
     input?.focus()
-    // scroll position focus to id select-room-options
+
     const element = document.getElementById('select-room-options')
-    console.log(element)
     if (element) {
       element.scrollIntoView({
         behavior: 'smooth',
@@ -93,8 +92,8 @@ document.addEventListener('DOMContentLoaded', () => {
     {
       type: 'country',
       dataAttribute: 'data-country',
-      selectElementId: 'flag-select',
-      containerId: 'flag-container',
+      selectElementId: 'country-select-input',
+      containerId: 'country-container',
     },
   ]
 

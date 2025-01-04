@@ -1,16 +1,24 @@
 import SearchableSelect from '../packages/searchable-select.js'
 
+declare global {
+  interface Window {
+    CountrySelectInput: SearchableSelect
+  }
+}
+
 // Initialization
 document.addEventListener('DOMContentLoaded', () => {
-  new SearchableSelect({
+  const CountrySelectInput = new SearchableSelect({
     elements: {
-      container: 'flag-container',
-      select: 'flag-select',
-      input: 'flag-search-input',
-      suggestions: 'flag-suggestions',
+      container: 'country-container',
+      select: 'country-select-input',
+      input: 'country-search-input',
+      suggestions: 'country-suggestions',
       clearButton: 'clear-button', // opsiyonel
     },
   })
+
+  window.CountrySelectInput = CountrySelectInput
 })
 
 function SetOptions(
