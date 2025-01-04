@@ -493,14 +493,28 @@ class PhoneCodeSearch {
           if (isMobile) {
             // Mobilde klavyeyi açmak için
             setTimeout(() => {
-              ;(afterElement as HTMLElement).click()
-              // Input elementiyse blur-focus yaparak klavyeyi açıyoruz
               if (afterElement instanceof HTMLInputElement) {
-                afterElement.blur()
-                afterElement.focus()
-                afterElement.click()
+                // Önce input'u görünür alana getir
+                afterElement.scrollIntoView({ block: 'center' })
+
+                // Safari için özel sıralama
+                afterElement.readOnly = false // readOnly'i kaldır
+                afterElement.blur() // Önce blur
+                afterElement.focus() // Sonra focus
+
+                // Cursor'ı en sona al
+                const length = afterElement.value.length
+                afterElement.setSelectionRange(length, length)
+
+                // Programmatik click yerine touch event tetikle
+                afterElement.dispatchEvent(
+                  new TouchEvent('touchstart', { bubbles: true }),
+                )
+                afterElement.dispatchEvent(
+                  new TouchEvent('touchend', { bubbles: true }),
+                )
               }
-            }, 200)
+            }, 300) // Süreyi biraz artıralım
           } else {
             // Desktop davranışı
             ;(afterElement as HTMLElement).focus({ preventScroll: true })
