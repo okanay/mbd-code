@@ -471,31 +471,7 @@ class PhoneCodeSearch {
   }
 
   private focusAfterElement(): void {
-    if (this.options.elements.afterFocusElement) {
-      const afterElement = document.getElementById(
-        this.options.elements.afterFocusElement,
-      )
-
-      if (afterElement && this.isMobileWidth()) {
-        // Geçici input oluştur
-        const temp = document.createElement('input')
-        temp.setAttribute('type', 'tel')
-        temp.style.position = 'absolute'
-        temp.style.opacity = '0'
-        temp.style.height = '0px'
-        temp.style.width = '0px'
-
-        // DOM'a ekle ve focus yap
-        document.body.appendChild(temp)
-        temp.focus()
-
-        // Asıl input'a geç
-        setTimeout(() => {
-          afterElement.focus()
-          document.body.removeChild(temp)
-        }, 100)
-      }
-    }
+    // TODO:: focus yapılacak elementin ID'sini alıp focus yap
   }
 
   // initialize metodunu da güncelliyoruz
