@@ -471,7 +471,6 @@ class PhoneCodeSearch {
   }
 
   private focusAfterElement(): void {
-    // Focus yapılacak element var mı kontrol et
     if (this.options.elements.afterFocusElement) {
       const afterElement = document.getElementById(
         this.options.elements.afterFocusElement,
@@ -479,20 +478,32 @@ class PhoneCodeSearch {
 
       if (afterElement && 'focus' in afterElement) {
         try {
-          // Önce element görünür mü kontrol et
           const rect = afterElement.getBoundingClientRect()
           const isVisible = rect.top >= 0 && rect.bottom <= window.innerHeight
+          const isMobile = this.isMobileWidth()
 
           // Element görünür değilse, scroll yap
           if (!isVisible) {
             afterElement.scrollIntoView({
-              behavior: 'smooth',
-              block: 'nearest',
+              behavior: isMobile ? 'auto' : 'smooth',
+              block: 'center',
             })
           }
 
-          // Focus işlemini yap
-          ;(afterElement as HTMLElement).focus({ preventScroll: true })
+          if (isMobile) {
+            // Mobilde klavyeyi açmak için
+            setTimeout(() => {
+              ;(afterElement as HTMLElement).focus({ preventScroll: false })
+              // Input elementiyse blur-focus yaparak klavyeyi強制的に açıyoruz
+              if (afterElement instanceof HTMLInputElement) {
+                afterElement.blur()
+                afterElement.focus()
+              }
+            }, 200)
+          } else {
+            // Desktop davranışı
+            ;(afterElement as HTMLElement).focus({ preventScroll: true })
+          }
         } catch (error) {
           console.warn('Focus attempt failed:', error)
         }
