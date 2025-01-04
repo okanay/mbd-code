@@ -477,72 +477,46 @@ class PhoneCodeSearch {
       )
 
       if (afterElement && 'focus' in afterElement) {
-        try {
-          if (this.isMobileWidth()) {
-            // Daha agresif bir yaklaşım
-            window.scrollTo(0, 0) // Scroll pozisyonunu sıfırla
-
-            const input = afterElement as HTMLInputElement
-
-            // Input'u geçici olarak görünür hale getir
-            const originalStyles = {
-              position: input.style.position,
-              top: input.style.top,
-              opacity: input.style.opacity,
-              transform: input.style.transform,
-            }
-
-            // Ekranın ortasına konumlandır
-            input.style.position = 'fixed'
-            input.style.top = '50%'
-            input.style.opacity = '1'
-            input.style.transform = 'translateY(-50%)'
-
-            // Tüm event'leri sırayla tetikle
-            const events = [
-              'touchstart',
-              'touchend',
-              'mousedown',
-              'mouseup',
-              'click',
-            ]
-
-            events.forEach(eventName => {
-              input.dispatchEvent(new Event(eventName, { bubbles: true }))
+        if (this.isMobileWidth()) {
+          // Safari Mobile için özel fokus yönetimi
+          setTimeout(() => {
+            // Ekranı inputa doğru scroll et
+            afterElement.scrollIntoView({
+              behavior: 'auto',
+              block: 'center',
             })
 
-            // Klavyeyi zorla açmak için sıralı işlemler
-            setTimeout(() => {
-              input.blur()
-              input.focus()
-              input.click()
+            // Bir tıklama simüle et
+            const clickEvent = new MouseEvent('click', {
+              bubbles: true,
+              cancelable: true,
+              view: window,
+            })
+            afterElement.dispatchEvent(clickEvent)
 
-              // iOS için özel teknik
-              input.setAttribute('readonly', 'readonly')
-              setTimeout(() => {
-                input.removeAttribute('readonly')
-                input.value = input.value // Cursor'ı sona al
+            // Focus ve input işlemleri
+            if (afterElement instanceof HTMLInputElement) {
+              // Inputu aktif et
+              afterElement.disabled = false
+              afterElement.readOnly = false
 
-                // Orijinal stilleri geri yükle
-                Object.assign(input.style, originalStyles)
-              }, 100)
-            }, 100)
+              // Değerini geçici olarak manipüle et (klavyeyi tetiklemek için)
+              const currentValue = afterElement.value
+              afterElement.value = ''
+              afterElement.value = currentValue
 
-            // Son bir deneme daha
-            setTimeout(() => {
-              input.focus()
-              if (document.activeElement !== input) {
-                // Eğer hala focus olmadıysa
-                input.dispatchEvent(new Event('touchend', { bubbles: true }))
-                input.focus()
-              }
-            }, 300)
-          } else {
-            // Desktop davranışı aynı kalıyor
-            ;(afterElement as HTMLElement).focus({ preventScroll: true })
-          }
-        } catch (error) {
-          console.warn('Focus attempt failed:', error)
+              // Focus ve blur kombinasyonu
+              afterElement.blur()
+              afterElement.focus()
+
+              // Cursor'ı sona al
+              const length = afterElement.value.length
+              afterElement.setSelectionRange(length, length)
+            }
+          }, 300)
+        } else {
+          // Desktop için normal focus
+          afterElement.focus()
         }
       }
     }
