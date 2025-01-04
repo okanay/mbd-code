@@ -8,6 +8,7 @@ interface PhoneCodeElements {
   suggestions: string
   searchModal: string
   clearButton: string
+  afterFocusElement?: string // Yeni eklenen element ID'si
 }
 
 interface PhoneCodeOption {
@@ -141,14 +142,20 @@ class PhoneCodeSearch {
     this.initialize(defaultOption)
   }
 
-  private initialize(defaultOption?: PhoneCodeOption): void {
-    this.setupEventListeners()
-    this.updateSelectOptions()
-
-    // Default ülkeyi ayarla
-    if (defaultOption) {
-      this.updateSelectedOption(defaultOption)
+  private handleCodeButtonClick(): void {
+    if (this.isOpen) {
+      this.closeModal()
+    } else {
+      this.openModal()
     }
+
+    // Modal açıldığında scroll pozisyonunu ayarla
+    if (this.isOpen) {
+      this.adjustModalPosition()
+    }
+
+    // Focus durumunu güncelle
+    this.updateFocusState(this.isOpen)
   }
 
   public setLanguage(languageId: 'TR' | 'EN'): void {
@@ -256,33 +263,9 @@ class PhoneCodeSearch {
     this.elements.searchInput.focus()
   }
 
-  private handleSuggestionClick(e: Event): void {
-    const target = e.target as HTMLElement
-    const suggestionEl = target.closest('[data-value]') as HTMLElement
-
-    if (suggestionEl) {
-      const code = suggestionEl.dataset.value
-      const selectedOption = this.allOptions.find(opt => opt.code === code)
-      if (selectedOption) {
-        this.updateSelectedOption(selectedOption)
-        this.closeModal()
-      }
-    }
-  }
-
   private handlePhoneInput(e: Event): void {
     const value = (e.target as HTMLInputElement).value
     this.options.onPhoneChange?.(value)
-  }
-
-  private handleCodeButtonClick(): void {
-    if (this.isOpen) {
-      this.closeModal()
-    } else {
-      this.openModal()
-    }
-    // Focus durumunu güncelle
-    this.updateFocusState(this.isOpen)
   }
 
   private openModal(): void {
@@ -328,24 +311,6 @@ class PhoneCodeSearch {
         `,
       )
       .join('')
-  }
-
-  private updateSelectedOption(option: PhoneCodeOption): void {
-    // Select elementine veriyi set et
-    this.elements.select.value = option.code
-
-    // Data attribute'leri ekle
-    this.elements.select.setAttribute('data-code', option.code)
-    this.elements.select.setAttribute('data-dial-code', option.dial_code)
-    this.elements.select.setAttribute('data-country', option.name)
-    this.elements.select.setAttribute('data-flag', option.code.toLowerCase())
-
-    // Görsel güncelleme
-    this.elements.flag.src = `https://flagcdn.com/${option.code.toLowerCase()}.svg`
-    this.elements.prefix.textContent = option.dial_code
-
-    // Callback'i çağır
-    this.options.onSelect?.(option)
   }
 
   private createSuggestionElement(option: PhoneCodeOption): HTMLElement {
@@ -416,16 +381,123 @@ class PhoneCodeSearch {
     this.elements.suggestions.appendChild(fragment)
   }
 
+  private handleSuggestionClick(e: Event): void {
+    const target = e.target as HTMLElement
+    const suggestionEl = target.closest('[data-value]') as HTMLElement
+
+    if (suggestionEl) {
+      const code = suggestionEl.dataset.value
+      const selectedOption = this.allOptions.find(opt => opt.code === code)
+      if (selectedOption) {
+        this.updateSelectedOption(selectedOption, true) // shouldFocus true olarak geçiyoruz
+        this.closeModal()
+      }
+    }
+  }
+
+  private updateSelectedOption(
+    option: PhoneCodeOption,
+    shouldFocus: boolean = false,
+  ): void {
+    // Select elementine veriyi set et
+    this.elements.select.value = option.code
+
+    // Data attribute'leri ekle
+    this.elements.select.setAttribute('data-code', option.code)
+    this.elements.select.setAttribute('data-dial-code', option.dial_code)
+    this.elements.select.setAttribute('data-country', option.name)
+    this.elements.select.setAttribute('data-flag', option.code.toLowerCase())
+
+    // Görsel güncelleme
+    this.elements.flag.src = `https://flagcdn.com/${option.code.toLowerCase()}.svg`
+    this.elements.prefix.textContent = option.dial_code
+
+    // Callback'i çağır
+    this.options.onSelect?.(option)
+
+    // Focus işlemini en sona alıyoruz ve shouldFocus kontrolü yapıyoruz
+    if (shouldFocus) {
+      // Modal kapandıktan sonra focus yapması için setTimeout kullanıyoruz
+      setTimeout(() => {
+        this.focusAfterElement()
+      }, 150) // Modal kapanma animasyonundan sonra çalışması için biraz daha uzun bir süre
+    }
+  }
+
+  private focusAfterElement(): void {
+    // Focus yapılacak element var mı kontrol et
+    if (this.options.elements.afterFocusElement) {
+      const afterElement = document.getElementById(
+        this.options.elements.afterFocusElement,
+      )
+
+      if (afterElement && 'focus' in afterElement) {
+        try {
+          // Önce element görünür mü kontrol et
+          const rect = afterElement.getBoundingClientRect()
+          const isVisible = rect.top >= 0 && rect.bottom <= window.innerHeight
+
+          // Element görünür değilse, scroll yap
+          if (!isVisible) {
+            afterElement.scrollIntoView({
+              behavior: 'smooth',
+              block: 'nearest',
+            })
+          }
+
+          // Focus işlemini yap
+          ;(afterElement as HTMLElement).focus({ preventScroll: true })
+        } catch (error) {
+          console.warn('Focus attempt failed:', error)
+        }
+      }
+    }
+  }
+
+  // Modal ayarları için adjustModalPosition metodunu güncelleme
+  private adjustModalPosition(): void {
+    const modalRect = this.elements.searchModal.getBoundingClientRect()
+    const viewportHeight = window.innerHeight
+    const modalHeight = modalRect.height
+    const modalTop = modalRect.top
+
+    // Modal'ın ideal pozisyonu: viewport'un ortasında
+    const idealPosition = (viewportHeight - modalHeight) / 2
+
+    // Eğer modal viewport'un üst veya alt kısmında kalıyorsa
+    if (modalTop < 0 || modalTop + modalHeight > viewportHeight) {
+      const currentScroll = window.pageYOffset
+      const targetScroll = currentScroll + modalTop - idealPosition
+
+      window.scrollTo({
+        top: targetScroll,
+        behavior: 'smooth',
+      })
+    }
+  }
+
+  // initialize metodunu da güncelliyoruz
+  private initialize(defaultOption?: PhoneCodeOption): void {
+    this.setupEventListeners()
+    this.updateSelectOptions()
+
+    // Default ülkeyi ayarla - initialize'da focus yapma
+    if (defaultOption) {
+      this.updateSelectedOption(defaultOption, false)
+    }
+  }
+
   // Public API metodları
   public getValue(): PhoneCodeOption | undefined {
     const code = this.elements.select.value
     return this.allOptions.find(opt => opt.code === code)
   }
 
-  public setValue(code: string): void {
+  // setValue metodunu da güncelliyoruz
+  public setValue(code: string, shouldFocus: boolean = false): void {
     const option = this.allOptions.find(opt => opt.code === code)
     if (option) {
-      this.updateSelectedOption(option)
+      this.updateSelectedOption(option, shouldFocus)
     }
   }
 

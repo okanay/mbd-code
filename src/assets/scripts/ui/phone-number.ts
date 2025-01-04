@@ -13,6 +13,7 @@ document.addEventListener('DOMContentLoaded', () => {
       suggestions: 'phone-suggestions',
       searchModal: 'phone-search-modal',
       clearButton: 'phone-clear-button',
+      afterFocusElement: 'phone-input',
     },
     languages: [
       {
