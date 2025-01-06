@@ -29,19 +29,21 @@ document.addEventListener('DOMContentLoaded', () => {
     },
   )
 
-  const FocusCountrySearchInput = async () => {
-    const input = document.getElementById('country-search-input')
-    controller.setActiveModal('select-room-options')
-    await new Promise(resolve => setTimeout(resolve, 300))
-    input?.focus()
+  const FocusCountrySearchInput = () => {
+    setTimeout(() => {
+      const focusInput = document.getElementById('country-search-input')
+      const element = document.getElementById('select-room-options')
 
-    const element = document.getElementById('select-room-options')
-    if (element) {
-      element.scrollIntoView({
-        behavior: 'smooth',
-        block: 'center',
-      })
-    }
+      if (element && focusInput) {
+        element.scrollIntoView({
+          behavior: 'smooth',
+          block: 'center',
+        })
+
+        focusInput.focus()
+        controller.setActiveModal('select-room-options')
+      }
+    }, 100)
   }
 
   window.FocusCountrySearchInput = FocusCountrySearchInput
