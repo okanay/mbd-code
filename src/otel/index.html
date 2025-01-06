@@ -1426,12 +1426,14 @@
                   <div
                     data-active="active"
                     id="country-container"
-                    class="hidden items-center justify-between px-4 data-[active=active]:flex"
+                    class="hidden items-center justify-between gap-4 px-4 data-[active=active]:flex"
                   >
                     <!-- Label -->
                     <div class="flex items-center gap-2">
                       <i data-lucide="map-pin" class="size-5 text-gray-600"></i>
-                      <span id="country-text" class="text-sm">Ülke</span>
+                      <span id="country-text" class="text-nowrap text-sm">
+                        Nationality
+                      </span>
                     </div>
 
                     <!-- Input -->
@@ -1443,7 +1445,7 @@
                       <input
                         type="text"
                         id="country-search-input"
-                        class="peer h-11 w-56 rounded border border-gray-300 px-3 pe-9 text-sm outline-none transition-colors focus:border-primary-200"
+                        class="peer h-11 w-full rounded border border-gray-300 px-3 pe-9 text-sm outline-none transition-colors focus:border-primary-200"
                         placeholder="Ülke Seçiniz"
                       />
 

@@ -42,7 +42,7 @@ export enum MapLayerType {
 
 const mapLayers: { [key in MapLayerType]: MapLayer } = {
   [MapLayerType.OpenStreetMap]: {
-    name: 'Open Street Map',
+    name: 'Street Map',
     url: 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
     options: {
       maxZoom: 19,
@@ -50,7 +50,7 @@ const mapLayers: { [key in MapLayerType]: MapLayer } = {
     },
   },
   [MapLayerType.OpenTopoMap]: {
-    name: 'Open Topo Map',
+    name: 'Topo Map',
     url: 'https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png',
     options: {
       maxZoom: 17,

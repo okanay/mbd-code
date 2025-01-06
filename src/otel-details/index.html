@@ -2007,7 +2007,7 @@
                         <div
                           data-active="active"
                           id="country-container"
-                          class="hidden items-center justify-between px-4 data-[active=active]:flex"
+                          class="hidden items-center justify-between gap-4 px-4 data-[active=active]:flex"
                         >
                           <!-- Label -->
                           <div class="flex items-center gap-2">
@@ -2015,7 +2015,9 @@
                               data-lucide="map-pin"
                               class="size-5 text-gray-600"
                             ></i>
-                            <span id="country-text" class="text-sm">Ülke</span>
+                            <span id="country-text" class="text-nowrap text-sm">
+                              Nationality
+                            </span>
                           </div>
 
                           <!-- Input -->
@@ -2030,7 +2032,7 @@
                             <input
                               type="text"
                               id="country-search-input"
-                              class="peer h-11 w-56 rounded border border-gray-300 px-3 pe-9 text-sm outline-none transition-colors focus:border-primary-200"
+                              class="peer h-11 w-full rounded border border-gray-300 px-3 pe-9 text-sm outline-none transition-colors focus:border-primary-200"
                               placeholder="Ülke Seçiniz"
                             />
 
@@ -2110,7 +2112,7 @@
                         <!-- Yetişkin -->
                         <div
                           class="hidden items-center justify-between px-4 data-[active=active]:flex"
-                          data-min="1"
+                          data-min="0"
                           data-max="4"
                           data-active="active"
                           id="adult-container"
@@ -2303,9 +2305,8 @@
                 <!-- Filter Button Container (20% on desktop) -->
                 <div class="w-full lg:w-[120px]">
                   <button
-                    type="submit"
+                    type="button"
                     class="disabled:pointe-disabled:bg-primary-500 group flex h-12 w-full rounded bg-primary-500 px-4 text-sm font-semibold text-white transition-colors hover:bg-primary-600 active:scale-95 disabled:opacity-75 disabled:hover:scale-100"
-                    disabled
                   >
                     <span
                       class="flex h-12 w-full items-center justify-center gap-2 group-disabled:hidden"
