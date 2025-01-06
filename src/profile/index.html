@@ -64,6 +64,10 @@
     <script type="module" src="/assets/scripts/layout.js"></script>
     <script type="module" src="/assets/scripts/profile.js"></script>
     <script type="module" src="/assets/scripts/ui/password-visible.js"></script>
+    <script
+      type="module"
+      src="/assets/scripts/ui/country-select-input.js"
+    ></script>
 
     <script>
       ;(function () {
@@ -1653,6 +1657,92 @@
                         </span>
                         <span class="text-gray-700">Kadın</span>
                       </label>
+                    </div>
+
+                    <div id="country-container">
+                      <div
+                        id="country-select"
+                        class="group relative flex items-center gap-2"
+                      >
+                        <!-- Hidden Observer Select Input -->
+                        <select
+                          id="country-select-input"
+                          class="hidden"
+                        ></select>
+
+                        <!-- Search Input -->
+                        <input
+                          type="text"
+                          id="country-search-input"
+                          name="country-search-input"
+                          aria-autocomplete="off"
+                          autocomplete="new-password"
+                          class="peer h-12 w-full rounded border border-gray-200 px-3 pe-9 outline-none transition-colors focus:border-primary-200"
+                          placeholder="Ülke"
+                        />
+
+                        <!--  Clear Button -->
+                        <button
+                          class="absolute right-4 top-[50%] flex h-full -translate-y-1/2 items-center justify-center peer-placeholder-shown:hidden peer-focus:visible"
+                          id="clear-button"
+                          type="button"
+                        >
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            width="24"
+                            height="24"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            stroke-width="2"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            class="size-3.5"
+                          >
+                            <path d="M18 6 6 18" />
+                            <path d="m6 6 12 12" />
+                          </svg>
+                        </button>
+
+                        <!-- Suggestion Dropdown -->
+                        <div
+                          id="country-suggestions"
+                          style="scrollbar-width: none"
+                          class="pointer-events-none absolute left-0 right-0 top-full z-[30] mt-1 flex max-h-64 flex-col overflow-y-auto rounded border border-gray-200 bg-white opacity-0 shadow-lg transition-all duration-300 peer-focus:pointer-events-auto peer-focus:opacity-100"
+                        >
+                          <!-- None Item -->
+                          <button
+                            type="button"
+                            class="none-item cursor-pointer bg-gray-200 px-3 py-2 text-start opacity-75 transition-opacity duration-300 hover:opacity-100 data-[hide=true]:hidden"
+                            data-value="not-selected"
+                            data-hide="false"
+                          >
+                            Seçim Yok
+                          </button>
+                          <!-- Template elements -->
+                          <button
+                            type="button"
+                            class="suggestion-item cursor-pointer px-3 py-2 text-start hover:bg-primary-100 data-[selected=true]:bg-primary-500 data-[selected=true]:text-white data-[selected=true]:hover:bg-primary-600"
+                            data-value="suggestion"
+                            data-selected="false"
+                          >
+                            Suggestion
+                          </button>
+                          <!-- No Results -->
+                          <div class="no-results px-3 py-2 text-gray-500">
+                            Sonuç bulunamadı
+                          </div>
+                        </div>
+                        <script>
+                          document.addEventListener('DOMContentLoaded', () => {
+                            window.SetCountryNameOptions(
+                              'country-select-input',
+                              'not-selected',
+                              'TR',
+                            )
+                          })
+                        </script>
+                      </div>
                     </div>
 
                     <input
