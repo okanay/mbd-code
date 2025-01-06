@@ -5,7 +5,7 @@ import { Slider } from './packages/slider.js'
 import { TouchDirectionDetector } from './packages/touch-event.js'
 import { UpdateElementInnerHTMLById } from './packages/image-gallery.js'
 import { UpdateProductSliderDataItems } from './packages/image-gallery.js'
-import { EmbeddedMap } from './packages/leaflet.js'
+
 import { initScrollObserver } from './packages/scroll-observer.js'
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -206,15 +206,6 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   createGalleryObserver(multiGroupGallery)
-})
-
-document.addEventListener('DOMContentLoaded', () => {
-  new EmbeddedMap('location-map', {
-    iconPath: '/assets/images/leaflet/marker.png',
-    markerIconUrl: '/assets/images/leaflet/marker.png',
-    markerIconSize: [32, 32],
-    markerIconAnchor: [16, 32],
-  })
 })
 
 document.addEventListener('DOMContentLoaded', () => {

@@ -11,10 +11,23 @@ interface MapModalElements {
 }
 
 interface MapIconOptions {
-  iconPath?: string // İkon dosyalarının bulunduğu klasör yolu
-  markerIconUrl?: string // Özel marker ikonu URL'si
-  markerIconSize?: [number, number] // Marker ikonu boyutu
-  markerIconAnchor?: [number, number] // Marker ikonu anchor noktası
+  // Marker related
+  markerIconUrl?: string
+  markerIconSize?: [number, number]
+  markerIconAnchor?: [number, number]
+  markerShadowUrl?: string
+  markerShadowSize?: [number, number]
+  markerShadowAnchor?: [number, number]
+
+  // Popup related
+  popupCloseIconUrl?: string
+
+  // Controls related
+  zoomInIconUrl?: string
+  zoomOutIconUrl?: string
+  layerControlCheckboxIconUrl?: string
+  layerControlRadioIconUrl?: string
+  layerControlToggleIconUrl?: string // Layer control açma/kapama ikonu
 }
 
 interface EmbeddedMapConfig {
@@ -34,10 +47,10 @@ export enum MapLayerType {
   OpenTopoMap = 'openTopoMap',
   CycleMap = 'cycleMap',
   Satellite = 'satellite',
-  DarkMatter = 'darkMatter', // Yeni
-  Voyager = 'voyager', // Yeni
-  Watercolor = 'watercolor', // Yeni
-  Streets = 'streets', // Yeni
+  DarkMatter = 'darkMatter',
+  Voyager = 'voyager',
+  Watercolor = 'watercolor',
+  Streets = 'streets',
 }
 
 const mapLayers: { [key in MapLayerType]: MapLayer } = {
@@ -180,18 +193,133 @@ class ModalMap {
       MapInstanceManager.addInstance(this.elements.mapId, this)
     }
 
-    // Leaflet ikonlarının yolunu ayarla
-    if (this.iconOptions.iconPath) {
-      L.Icon.Default.imagePath = this.iconOptions.iconPath
-    }
-
+    this.initializeIcons()
     this.bindEvents()
     this.refreshButtons()
   }
 
+  private initializeIcons(): void {
+    // Marker icon özelleştirmesi
+    if (this.iconOptions.markerIconUrl) {
+      L.Icon.Default.prototype.options.iconUrl = this.iconOptions.markerIconUrl
+
+      if (this.iconOptions.markerIconSize) {
+        L.Icon.Default.prototype.options.iconSize =
+          this.iconOptions.markerIconSize
+      }
+
+      if (this.iconOptions.markerIconAnchor) {
+        L.Icon.Default.prototype.options.iconAnchor =
+          this.iconOptions.markerIconAnchor
+      }
+    }
+
+    // Shadow icon özelleştirmesi
+    if (this.iconOptions.markerShadowUrl) {
+      L.Icon.Default.prototype.options.shadowUrl =
+        this.iconOptions.markerShadowUrl
+
+      if (this.iconOptions.markerShadowSize) {
+        L.Icon.Default.prototype.options.shadowSize =
+          this.iconOptions.markerShadowSize
+      }
+
+      if (this.iconOptions.markerShadowAnchor) {
+        L.Icon.Default.prototype.options.shadowAnchor =
+          this.iconOptions.markerShadowAnchor
+      }
+    }
+
+    // Control iconları için stil ekleme
+    if (
+      this.iconOptions.zoomInIconUrl ||
+      this.iconOptions.zoomOutIconUrl ||
+      this.iconOptions.layerControlCheckboxIconUrl ||
+      this.iconOptions.layerControlRadioIconUrl ||
+      this.iconOptions.popupCloseIconUrl ||
+      this.iconOptions.layerControlToggleIconUrl
+    ) {
+      const styles: string[] = []
+
+      // Zoom kontrolleri
+      if (this.iconOptions.zoomInIconUrl) {
+        styles.push(`
+            .leaflet-control-zoom-in {
+              background-image: url('${this.iconOptions.zoomInIconUrl}') !important;
+              background-size: contain !important;
+            }
+          `)
+      }
+
+      if (this.iconOptions.zoomOutIconUrl) {
+        styles.push(`
+            .leaflet-control-zoom-out {
+              background-image: url('${this.iconOptions.zoomOutIconUrl}') !important;
+              background-size: contain !important;
+            }
+          `)
+      }
+
+      // Layer kontrolleri
+      if (this.iconOptions.layerControlCheckboxIconUrl) {
+        styles.push(`
+            .leaflet-control-layers-overlays input[type="checkbox"] {
+              background-image: url('${this.iconOptions.layerControlCheckboxIconUrl}') !important;
+              -webkit-appearance: none;
+              appearance: none;
+              background-size: contain !important;
+              width: 16px;
+              height: 16px;
+            }
+          `)
+      }
+
+      if (this.iconOptions.layerControlRadioIconUrl) {
+        styles.push(`
+            .leaflet-control-layers-base input[type="radio"] {
+              background-image: url('${this.iconOptions.layerControlRadioIconUrl}') !important;
+              -webkit-appearance: none;
+              appearance: none;
+              background-size: contain !important;
+              width: 16px;
+              height: 16px;
+            }
+          `)
+      }
+
+      // Layer control toggle ikonu
+      if (this.iconOptions.layerControlToggleIconUrl) {
+        styles.push(`
+            .leaflet-control-layers-toggle {
+              background-image: url('${this.iconOptions.layerControlToggleIconUrl}') !important;
+              background-size: contain !important;
+              width: 36px !important;
+              height: 36px !important;
+            }
+          `)
+      }
+
+      // Popup close ikonu
+      if (this.iconOptions.popupCloseIconUrl) {
+        styles.push(`
+            .leaflet-popup-close-button {
+              background-image: url('${this.iconOptions.popupCloseIconUrl}') !important;
+              background-size: contain !important;
+              width: 20px !important;
+              height: 20px !important;
+            }
+          `)
+      }
+
+      // Tüm stilleri tek bir style elementinde birleştir
+      const styleElement = document.createElement('style')
+      styleElement.textContent = styles.join('\n')
+      document.head.appendChild(styleElement)
+    }
+  }
+
   private getDefaultLayerType(): MapLayerType {
     const containerLayer = this.container.getAttribute('data-layer')
-    console.log(containerLayer)
     switch (containerLayer) {
       case 'satellite':
         return MapLayerType.Satellite
@@ -277,6 +405,9 @@ class ModalMap {
         iconUrl: this.iconOptions.markerIconUrl,
         iconSize: this.iconOptions.markerIconSize || [25, 41],
         iconAnchor: this.iconOptions.markerIconAnchor || [12, 41],
+        shadowUrl: this.iconOptions.markerShadowUrl,
+        shadowSize: this.iconOptions.markerShadowSize,
+        shadowAnchor: this.iconOptions.markerShadowAnchor,
       })
       return L.marker([lat, lng], { icon: customIcon })
     }
@@ -371,7 +502,6 @@ class EmbeddedMap {
     }
     this.container = container
 
-    // data-layer attribute'undan default layer'ı al
     this.defaultLayerType = this.getDefaultLayerType()
 
     const coordinate = container.getAttribute('data-coordinate')
@@ -384,19 +514,133 @@ class EmbeddedMap {
       iconOptions,
     }
 
-    if (iconOptions.iconPath) {
-      L.Icon.Default.imagePath = iconOptions.iconPath
-    }
+    this.initializeIcons()
     this.initialize()
+  }
+
+  private initializeIcons(): void {
+    const iconOptions = this.config.iconOptions || {}
+
+    // Marker icon özelleştirmesi
+    if (iconOptions.markerIconUrl) {
+      L.Icon.Default.prototype.options.iconUrl = iconOptions.markerIconUrl
+
+      if (iconOptions.markerIconSize) {
+        L.Icon.Default.prototype.options.iconSize = iconOptions.markerIconSize
+      }
+
+      if (iconOptions.markerIconAnchor) {
+        L.Icon.Default.prototype.options.iconAnchor =
+          iconOptions.markerIconAnchor
+      }
+    }
+
+    // Shadow icon özelleştirmesi
+    if (iconOptions.markerShadowUrl) {
+      L.Icon.Default.prototype.options.shadowUrl = iconOptions.markerShadowUrl
+
+      if (iconOptions.markerShadowSize) {
+        L.Icon.Default.prototype.options.shadowSize =
+          iconOptions.markerShadowSize
+      }
+
+      if (iconOptions.markerShadowAnchor) {
+        L.Icon.Default.prototype.options.shadowAnchor =
+          iconOptions.markerShadowAnchor
+      }
+    }
+
+    // Control iconları için stil ekleme
+    if (
+      iconOptions.zoomInIconUrl ||
+      iconOptions.zoomOutIconUrl ||
+      iconOptions.layerControlCheckboxIconUrl ||
+      iconOptions.layerControlRadioIconUrl ||
+      iconOptions.popupCloseIconUrl ||
+      iconOptions.layerControlToggleIconUrl
+    ) {
+      const styles: string[] = []
+
+      // Zoom kontrolleri
+      if (iconOptions.zoomInIconUrl) {
+        styles.push(`
+          .leaflet-control-zoom-in {
+            background-image: url('${iconOptions.zoomInIconUrl}') !important;
+            background-size: contain !important;
+          }
+        `)
+      }
+
+      if (iconOptions.zoomOutIconUrl) {
+        styles.push(`
+          .leaflet-control-zoom-out {
+            background-image: url('${iconOptions.zoomOutIconUrl}') !important;
+            background-size: contain !important;
+          }
+        `)
+      }
+
+      // Layer kontrolleri
+      if (iconOptions.layerControlCheckboxIconUrl) {
+        styles.push(`
+          .leaflet-control-layers-overlays input[type="checkbox"] {
+            background-image: url('${iconOptions.layerControlCheckboxIconUrl}') !important;
+            -webkit-appearance: none;
+            appearance: none;
+            background-size: contain !important;
+            width: 16px;
+            height: 16px;
+          }
+        `)
+      }
+
+      if (iconOptions.layerControlRadioIconUrl) {
+        styles.push(`
+          .leaflet-control-layers-base input[type="radio"] {
+            background-image: url('${iconOptions.layerControlRadioIconUrl}') !important;
+            -webkit-appearance: none;
+            appearance: none;
+            background-size: contain !important;
+            width: 16px;
+            height: 16px;
+          }
+        `)
+      }
+
+      // Layer control toggle ikonu
+      if (iconOptions.layerControlToggleIconUrl) {
+        styles.push(`
+          .leaflet-control-layers-toggle {
+            background-image: url('${iconOptions.layerControlToggleIconUrl}') !important;
+            background-size: contain !important;
+            width: 36px !important;
+            height: 36px !important;
+          }
+        `)
+      }
+
+      // Popup close ikonu
+      if (iconOptions.popupCloseIconUrl) {
+        styles.push(`
+          .leaflet-popup-close-button {
+            background-image: url('${iconOptions.popupCloseIconUrl}') !important;
+            background-size: contain !important;
+            width: 20px !important;
+            height: 20px !important;
+          }
+        `)
+      }
+
+      const styleElement = document.createElement('style')
+      styleElement.textContent = styles.join('\n')
+      document.head.appendChild(styleElement)
+    }
   }
 
   private getDefaultLayerType(): MapLayerType {
     const containerLayer = this.container.getAttribute('data-layer')
 
-    // Enum değerlerini dizi olarak al
     const validLayers = Object.values(MapLayerType)
-
-    // Eğer containerLayer varsa ve geçerli bir değerse kullan
     if (
       containerLayer &&
       validLayers.includes(containerLayer as MapLayerType)
@@ -410,14 +654,11 @@ class EmbeddedMap {
   private addMapLayers(): void {
     if (!this.map) return
 
-    // Base layers objesi
     const baseLayers: { [key: string]: L.TileLayer } = {}
 
-    // Her bir katmanı ekle
     Object.entries(mapLayers).forEach(([layerType, layer]) => {
       const tileLayer = L.tileLayer(layer.url, layer.options)
 
-      // Eğer bu default layer ise ekle
       if (layerType === this.defaultLayerType) {
         this.currentLayer = tileLayer
         tileLayer.addTo(this.map!)
@@ -426,7 +667,6 @@ class EmbeddedMap {
       baseLayers[layer.name] = tileLayer
     })
 
-    // Katman kontrolünü ekle
     this.layerControl = L.control
       .layers(
         baseLayers,
@@ -444,6 +684,9 @@ class EmbeddedMap {
         iconUrl: this.config.iconOptions.markerIconUrl,
         iconSize: this.config.iconOptions.markerIconSize || [25, 41],
         iconAnchor: this.config.iconOptions.markerIconAnchor || [12, 41],
+        shadowUrl: this.config.iconOptions.markerShadowUrl,
+        shadowSize: this.config.iconOptions.markerShadowSize,
+        shadowAnchor: this.config.iconOptions.markerShadowAnchor,
       })
       return L.marker([lat, lng], { icon: customIcon })
     }
@@ -481,10 +724,8 @@ class EmbeddedMap {
         attributionControl: true,
       }).setView([coordinates.lat, coordinates.lng], 14)
 
-      // Harita katmanlarını ekle
       this.addMapLayers()
 
-      // Özel marker'ı ekle
       if (this.map) {
         this.createCustomMarker(coordinates.lat, coordinates.lng).addTo(
           this.map,
@@ -517,4 +758,10 @@ class EmbeddedMap {
   }
 }
 
-export { ModalMap, EmbeddedMap, type MapModalElements, type EmbeddedMapConfig }
+export {
+  ModalMap,
+  EmbeddedMap,
+  type MapModalElements,
+  type MapIconOptions,
+  type EmbeddedMapConfig,
+}
