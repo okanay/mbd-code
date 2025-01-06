@@ -1,7 +1,13 @@
 import { ModalMap } from '../packages/leaflet.js'
 
+declare global {
+  interface Window {
+    ModalMapControl: ModalMap
+  }
+}
+
 document.addEventListener('DOMContentLoaded', () => {
-  new ModalMap(
+  const modalMap = new ModalMap(
     {
       mapId: 'map-modal',
     },
@@ -18,4 +24,6 @@ document.addEventListener('DOMContentLoaded', () => {
       markerShadowSize: [41, 24],
     },
   )
+
+  window.ModalMapControl = modalMap
 })

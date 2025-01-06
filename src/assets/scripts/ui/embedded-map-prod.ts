@@ -1,7 +1,13 @@
 import { EmbeddedMap } from '../packages/leaflet.js'
 
+declare global {
+  interface Window {
+    EmbeddedMapControl: EmbeddedMap
+  }
+}
+
 document.addEventListener('DOMContentLoaded', () => {
-  new EmbeddedMap('location-map', {
+  const embeddedMap = new EmbeddedMap('location-map', {
     zoomInIconUrl: '/assets/images/leaflet/plus.svg',
     zoomOutIconUrl: '/assets/images/leaflet/minus.svg',
     layerControlToggleIconUrl: '/assets/images/leaflet/layer.svg',
@@ -13,4 +19,6 @@ document.addEventListener('DOMContentLoaded', () => {
     markerShadowAnchor: [28, 22],
     markerShadowSize: [41, 24],
   })
+
+  window.EmbeddedMapControl = embeddedMap
 })
