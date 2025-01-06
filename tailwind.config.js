@@ -1,5 +1,5 @@
 /** @type {import('tailwindcss').Config} */
-module.exports = {
+const tailwind = {
   content: ['./src/**/*.{ts,html,css}', './dist/**/*.html'],
   theme: {
     extend: {
@@ -51,3 +51,5 @@ function setColors(color) {
     950: `rgb(var(--${color}-950))`,
   }
 }
+
+export default tailwind
