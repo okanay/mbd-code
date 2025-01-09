@@ -369,34 +369,33 @@ class ModalMap {
       .addTo(this.map)
   }
 
+  // HERE
   public openMap(lat: number, lng: number): void {
     this.container.innerHTML = ''
+    this.modal.setAttribute('data-state', 'open')
 
-    const mapDiv = document.createElement('div')
-    mapDiv.className = 'w-full h-full'
-    this.container.appendChild(mapDiv)
+    // DOM güncellenmesi için bekle
+    requestAnimationFrame(() => {
+      const mapDiv = document.createElement('div')
+      mapDiv.className = 'w-full h-full'
+      this.container.appendChild(mapDiv)
 
-    try {
       this.map = L.map(mapDiv, {
         zoomControl: false,
         attributionControl: true,
       }).setView([lat, lng], 15)
 
       this.addMapLayers()
-
       if (this.map) {
         this.createCustomMarker(lat, lng).addTo(this.map)
       }
 
-      const zoomControl = L.control.zoom({
-        position: 'bottomright',
-      })
-      zoomControl.addTo(this.map)
-
-      this.modal.setAttribute('data-state', 'open')
-    } catch (error) {
-      console.error('Error initializing map:', error)
-    }
+      L.control
+        .zoom({
+          position: 'bottomright',
+        })
+        .addTo(this.map)
+    })
   }
 
   private createCustomMarker(lat: number, lng: number): L.Marker {
@@ -423,6 +422,13 @@ class ModalMap {
       return { lat, lng }
     } catch {
       return null
+    }
+  }
+
+  public showMap(coordinates: string): void {
+    const coords = this.parseCoordinates(coordinates)
+    if (coords) {
+      this.openMap(coords.lat, coords.lng)
     }
   }
 

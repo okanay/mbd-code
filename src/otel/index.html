@@ -1031,11 +1031,11 @@
       id="map-modal"
       data-state="closed"
       class="fixed inset-0 z-[9001] flex items-center justify-center bg-black/90 p-4 backdrop-blur-md data-[state=closed]:hidden"
-      aria-hidden="true"
       role="dialog"
     >
       <div
         id="map-modal-content"
+        tabindex="-1"
         class="relative w-full max-w-5xl overflow-hidden rounded-xl bg-neutral-900 shadow-2xl"
       >
         <!-- Map container -->
@@ -2062,9 +2062,8 @@
                       >
 
                       <button
-                        id="test-coordinates"
-                        data-coordinate="41.0082,28.9784"
-                        class="map-ctr-button text-primary-500 hover:underline"
+                        onclick="window.ModalMapControl.showMap('41.0082, 28.9784')"
+                        class="text-primary-500 hover:underline"
                       >
                         Haritada Göster
                       </button>
