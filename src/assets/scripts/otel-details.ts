@@ -89,12 +89,17 @@ document.addEventListener('DOMContentLoaded', () => {
   const mainSlider = new Slider({
     container: '#otel-slider-container',
     slideSelector: '.otel-slide',
-    buttonSelector: '.otel-slider-btn',
     nextButtonSelector: '#slider-next',
     prevButtonSelector: '#slider-prev',
     defaultActiveIndex: 0,
     activeButtonClass: 'otel-slider-active-btn',
     activeButtonClassTarget: '.otel-slider-btn-item',
+    counter: {
+      enabled: true,
+      containerSelector: '.counter',
+      currentSelector: '.current',
+      maxSelector: '.max',
+    },
     ...mainConfig,
     ...config,
   })

@@ -26,8 +26,7 @@ interface ResponsiveConfig {
 interface SliderConfig {
   container: string | HTMLElement
   slideSelector: string
-  buttonSelector: string
-  animationConfig?: SliderAnimationConfig
+  buttonSelector?: string
   nextButtonSelector?: string
   prevButtonSelector?: string
   defaultActiveIndex?: number
@@ -37,6 +36,14 @@ interface SliderConfig {
   autoInterval?: number
   responsive?: ResponsiveConfig
   onIndexChange?: (index?: number) => void
+  animationConfig?: SliderAnimationConfig
+  counter?: {
+    enabled: boolean
+    containerSelector?: string
+    currentSelector?: string
+    maxSelector?: string
+    template?: string
+  }
   lazyLoading?: {
     enabled: boolean
     dataSrcAttribute?: string
@@ -56,18 +63,25 @@ class Slider {
   private container: HTMLElement
   private slider: HTMLElement
   private slides: NodeListOf<HTMLElement>
-  private buttons: NodeListOf<HTMLButtonElement>
+  private buttons: NodeListOf<HTMLButtonElement> | null = null
   private nextButton: HTMLElement | null
   private prevButton: HTMLElement | null
   private activeIndex: number
-  private isAnimating: boolean
+  private isAnimating: boolean = false
   private activeButtonClass: string
   private activeButtonClassTarget: string
-  private autoEnabled: boolean
+  private autoEnabled: boolean = false
   private autoInterval: number
-  private autoTimer: NodeJS.Timeout | null
+  private autoTimer: number | null = null
   private onIndexChange?: (index?: number) => void
   private lastDirection: 'left' | 'right' = 'right'
+  private counterEnabled: boolean = false
+  private counterConfig: {
+    containerSelector: string
+    currentSelector: string
+    maxSelector: string
+    template: string
+  }
   private lazyLoadConfig: {
     enabled: boolean
     dataSrcAttribute: string
@@ -82,18 +96,17 @@ class Slider {
       notSelected: number
     }
   }
-  private animationConfig: SliderAnimationConfig
+  private animationConfig: Required<SliderAnimationConfig>
   private responsiveConfig: ResponsiveConfig
   private resizeObserver: ResizeObserver | null = null
   private mutationObserver: MutationObserver | null = null
-
   private initialConfig: SliderConfig
   private queuedTransition: boolean = false
   private loadedImages: Set<string> = new Set()
   private loadedElements: WeakSet<HTMLElement> = new WeakSet()
   private isEnabled: boolean = false
+  private lastKnownWidth: number | null = null
 
-  // Event handler bağlamaları için bound fonksiyonlar
   private boundNext: () => void
   private boundPrev: () => void
   private boundPauseAutoPlay: () => void
@@ -127,9 +140,19 @@ class Slider {
       throw new Error('Slider element not found')
     }
 
-    // Slides ve buttons'ları başlat ve cache'le
+    // Slides'ları başlat
     this.slides = this.container.querySelectorAll(config.slideSelector)
-    this.buttons = document.querySelectorAll(config.buttonSelector)
+    if (!this.slides.length) {
+      throw new Error('Slides not found')
+    }
+
+    // Buttons'ları opsiyonel olarak başlat
+    if (config.buttonSelector) {
+      this.buttons = document.querySelectorAll(config.buttonSelector)
+      if (!this.buttons.length) {
+        console.warn('Buttons not found but buttonSelector was provided')
+      }
+    }
 
     // Navigation butonlarını başlat
     this.nextButton = config.nextButtonSelector
@@ -139,12 +162,21 @@ class Slider {
       ? document.querySelector(config.prevButtonSelector)
       : null
 
-    if (!this.slides.length || !this.buttons.length) {
-      throw new Error('Slides or buttons not found')
-    }
-
-    // Initial config'i sakla
+    // Initial config ve state
     this.initialConfig = { ...config }
+    this.activeIndex = config.defaultActiveIndex || 0
+    this.isAnimating = false
+    this.activeButtonClass = config.activeButtonClass || 'slider-active-btn'
+    this.activeButtonClassTarget = config.activeButtonClassTarget || ''
+
+    // Counter config'i başlat
+    this.counterEnabled = config.counter?.enabled ?? false
+    this.counterConfig = {
+      containerSelector: config.counter?.containerSelector ?? '.slider-counter',
+      currentSelector: config.counter?.currentSelector ?? '.slider-current',
+      maxSelector: config.counter?.maxSelector ?? '.slider-max',
+      template: config.counter?.template ?? '{current}/{max}',
+    }
 
     // Animation config'i başlat
     this.animationConfig = {
@@ -181,12 +213,7 @@ class Slider {
       maxWidth: config.responsive?.maxWidth ?? 9999,
     }
 
-    // Slider state'ini başlat
-    this.activeIndex = config.defaultActiveIndex || 0
-    this.isAnimating = false
-    this.activeButtonClass = config.activeButtonClass || 'slider-active-btn'
-    this.activeButtonClassTarget =
-      config.activeButtonClassTarget || config.buttonSelector
+    // Auto play config'i başlat
     this.autoEnabled = config.auto || false
     this.autoInterval = config.autoInterval || 5000
     this.autoTimer = null
@@ -212,8 +239,13 @@ class Slider {
     const status = this.slider.getAttribute('data-status')
     this.isEnabled = status ? status === 'enable' : true
 
-    // Change handler ve observer'ı başlat
+    // Change handler'ı başlat
     this.onIndexChange = config.onIndexChange
+
+    // Counter'ı başlat
+    if (this.counterEnabled) {
+      this.initializeCounter()
+    }
 
     // MutationObserver'ı başlat
     this.setupMutationObserver()
@@ -227,15 +259,27 @@ class Slider {
     func: T,
     wait: number,
   ): (...args: Parameters<T>) => void {
-    let timeout: NodeJS.Timeout | null = null
+    let timeout: number | null = null
     return (...args: Parameters<T>) => {
       if (timeout) {
         clearTimeout(timeout)
       }
-      timeout = setTimeout(() => {
+      timeout = window.setTimeout(() => {
         func(...args)
         timeout = null
-      }, wait) as NodeJS.Timeout
+      }, wait)
+    }
+  }
+
+  private startAutoPlay(): void {
+    if (this.autoEnabled && this.isSliderEnabled()) {
+      this.autoTimer = window.setInterval(() => {
+        if (!this.isAnimating) {
+          this.next()
+        } else {
+          this.queuedTransition = true
+        }
+      }, this.autoInterval)
     }
   }
 
@@ -250,18 +294,20 @@ class Slider {
       }
     }
 
-    this.updateActiveButton(this.activeIndex)
+    // Butonlar varsa event listener'ları ekle
+    if (this.buttons?.length) {
+      this.updateActiveButton(this.activeIndex)
 
-    // Event listener'ları ekle
-    this.buttons.forEach((button: HTMLButtonElement) => {
-      button.addEventListener('click', () => {
-        if (!this.isSliderEnabled()) return
-        const target = button.getAttribute('data-target')
-        const targetIndex = parseInt(target as string, 10)
-        const direction = targetIndex > this.activeIndex ? 'right' : 'left'
-        this.goToSlide(targetIndex, direction)
+      this.buttons.forEach((button: HTMLButtonElement) => {
+        button.addEventListener('click', () => {
+          if (!this.isSliderEnabled()) return
+          const target = button.getAttribute('data-target')
+          const targetIndex = parseInt(target as string, 10)
+          const direction = targetIndex > this.activeIndex ? 'right' : 'left'
+          this.goToSlide(targetIndex, direction)
+        })
       })
-    })
+    }
 
     if (this.nextButton) {
       this.nextButton.addEventListener('click', this.boundNext)
@@ -281,6 +327,138 @@ class Slider {
     if (this.responsiveConfig.enabled) {
       this.resizeObserver = new ResizeObserver(this.boundHandleResize)
       this.resizeObserver.observe(document.body)
+    }
+  }
+
+  private initializeCounter(): void {
+    const counterContainer = document.querySelector(
+      this.counterConfig.containerSelector,
+    )
+    if (!counterContainer) return
+
+    const currentElement = counterContainer.querySelector(
+      this.counterConfig.currentSelector,
+    )
+    const maxElement = counterContainer.querySelector(
+      this.counterConfig.maxSelector,
+    )
+
+    if (currentElement && maxElement) {
+      currentElement.textContent = (this.activeIndex + 1).toString()
+      maxElement.textContent = this.slides.length.toString()
+    } else {
+      counterContainer.innerHTML = this.counterConfig.template
+        .replace('{current}', (this.activeIndex + 1).toString())
+        .replace('{max}', this.slides.length.toString())
+    }
+  }
+
+  private updateCounter(): void {
+    if (!this.counterEnabled) return
+
+    const counterContainer = document.querySelector(
+      this.counterConfig.containerSelector,
+    )
+    if (!counterContainer) return
+
+    const currentElement = counterContainer.querySelector(
+      this.counterConfig.currentSelector,
+    )
+    const maxElement = counterContainer.querySelector(
+      this.counterConfig.maxSelector,
+    )
+
+    if (currentElement && maxElement) {
+      currentElement.textContent = (this.activeIndex + 1).toString()
+    } else {
+      counterContainer.innerHTML = this.counterConfig.template
+        .replace('{current}', (this.activeIndex + 1).toString())
+        .replace('{max}', this.slides.length.toString())
+    }
+  }
+
+  private updateActiveButton(targetIndex: number): void {
+    if (!this.buttons?.length) return
+
+    const targetElements = document.querySelectorAll(
+      this.activeButtonClassTarget,
+    )
+
+    if (!targetElements.length) return
+
+    targetElements.forEach((element: Element) => {
+      ;(element as HTMLElement).classList.remove(this.activeButtonClass)
+    })
+
+    const activeButton = targetElements[targetIndex] as HTMLElement
+    if (activeButton) {
+      activeButton.classList.add(this.activeButtonClass)
+    }
+  }
+
+  public async goToSlide(
+    targetIndex: number,
+    direction?: 'left' | 'right',
+  ): Promise<void> {
+    if (
+      !this.isEnabled ||
+      !this.isSliderEnabled() ||
+      this.isAnimating ||
+      targetIndex === this.activeIndex
+    ) {
+      return
+    }
+
+    this.onIndexChange?.(targetIndex)
+
+    const slideDirection =
+      direction ||
+      (targetIndex > this.activeIndex
+        ? 'right'
+        : targetIndex < this.activeIndex
+          ? 'left'
+          : this.lastDirection)
+    this.lastDirection = slideDirection
+
+    this.resetAutoPlayTimer()
+    this.isAnimating = true
+
+    const currentSlide = this.slides[this.activeIndex]
+    const targetSlide = this.slides[targetIndex]
+
+    if (this.buttons?.length) {
+      this.updateActiveButton(targetIndex)
+    }
+
+    const clone = this.createCloneElement(targetSlide, slideDirection)
+    this.slider.appendChild(clone)
+
+    await this.animateSlide(currentSlide, clone, slideDirection)
+
+    this.slides.forEach((slide: HTMLElement) => {
+      slide.style.zIndex = this.options.zIndex.notSelected.toString()
+      slide.style.transform = 'translate(0%, 0%)'
+      slide.style.transition = 'none'
+      slide.style.opacity = `${this.animationConfig.opacityNotSelected}`
+      slide.style.scale = `${this.animationConfig.scaleNotSelected}`
+    })
+
+    targetSlide.style.zIndex = this.options.zIndex.selected.toString()
+    targetSlide.style.opacity = `${this.animationConfig.opacitySelected}`
+    targetSlide.style.scale = `${this.animationConfig.scaleSelected}`
+    clone.remove()
+
+    this.activeIndex = targetIndex
+    this.isAnimating = false
+
+    // Counter'ı güncelle
+    if (this.counterEnabled) {
+      this.updateCounter()
+    }
+
+    // Lazy loading için görselleri yükle
+    if (this.lazyLoadConfig.enabled) {
+      this.loadSlideImages(this.activeIndex)
     }
   }
 
@@ -492,8 +670,6 @@ class Slider {
     )
   }
 
-  private lastKnownWidth: number | null = null
-
   private checkResponsiveState(): void {
     const wasEnabled = this.isSliderEnabled()
     const isNowEnabled = this.isSliderEnabled()
@@ -647,34 +823,6 @@ class Slider {
     return clone
   }
 
-  private updateActiveButton(targetIndex: number): void {
-    const targetElements = document.querySelectorAll(
-      this.activeButtonClassTarget,
-    )
-
-    targetElements.forEach((element: Element) => {
-      ;(element as HTMLElement).classList.remove(this.activeButtonClass)
-    })
-
-    const activeButton = targetElements[targetIndex] as HTMLElement
-    if (activeButton) {
-      activeButton.classList.add(this.activeButtonClass)
-    }
-  }
-
-  private startAutoPlay(): void {
-    if (this.autoEnabled && this.isSliderEnabled()) {
-      this.autoTimer = setInterval(() => {
-        if (!this.isAnimating) {
-          this.next()
-        } else {
-          // Eğer animasyon devam ediyorsa, bir sonraki geçişi işaretle
-          this.queuedTransition = true
-        }
-      }, this.autoInterval) as unknown as NodeJS.Timeout
-    }
-  }
-
   private pauseAutoPlay(): void {
     if (this.autoTimer) {
       clearInterval(this.autoTimer)
@@ -726,65 +874,6 @@ class Slider {
         }, this.animationConfig.duration)
       })
     })
-  }
-
-  public async goToSlide(
-    targetIndex: number,
-    direction?: 'left' | 'right',
-  ): Promise<void> {
-    if (
-      !this.isEnabled ||
-      !this.isSliderEnabled() ||
-      this.isAnimating ||
-      targetIndex === this.activeIndex
-    ) {
-      return
-    }
-
-    this.onIndexChange && this.onIndexChange(targetIndex)
-
-    const slideDirection =
-      direction ||
-      (targetIndex > this.activeIndex
-        ? 'right'
-        : targetIndex < this.activeIndex
-          ? 'left'
-          : this.lastDirection)
-    this.lastDirection = slideDirection
-
-    this.resetAutoPlayTimer()
-    this.isAnimating = true
-
-    const currentSlide = this.slides[this.activeIndex]
-    const targetSlide = this.slides[targetIndex]
-
-    this.updateActiveButton(targetIndex)
-
-    const clone = this.createCloneElement(targetSlide, slideDirection)
-    this.slider.appendChild(clone)
-
-    await this.animateSlide(currentSlide, clone, slideDirection)
-
-    this.slides.forEach((slide: HTMLElement) => {
-      slide.style.zIndex = this.options.zIndex.notSelected.toString()
-      slide.style.transform = 'translate(0%, 0%)'
-      slide.style.transition = 'none'
-      slide.style.opacity = `${this.animationConfig.opacityNotSelected}`
-      slide.style.scale = `${this.animationConfig.scaleNotSelected}`
-    })
-
-    targetSlide.style.zIndex = this.options.zIndex.selected.toString()
-    targetSlide.style.opacity = `${this.animationConfig.opacitySelected}`
-    targetSlide.style.scale = `${this.animationConfig.scaleSelected}`
-    clone.remove()
-
-    this.activeIndex = targetIndex
-    this.isAnimating = false
-
-    // Yeni slide'lar için görselleri yükle
-    if (this.lazyLoadConfig.enabled) {
-      this.loadSlideImages(this.activeIndex)
-    }
   }
 
   public updateAnimationConfig(config: SliderAnimationConfig): void {
