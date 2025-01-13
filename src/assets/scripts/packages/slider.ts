@@ -790,7 +790,7 @@ class Slider {
   }
 
   private disableSlider(): void {
-    this.container.style.pointerEvents = 'none'
+    // this.container.style.pointerEvents = 'auto'
     this.pauseAutoPlay()
 
     // Tüm slide'ları varsayılan konumlarına getir

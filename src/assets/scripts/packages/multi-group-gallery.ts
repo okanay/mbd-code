@@ -57,6 +57,7 @@ class MultiGroupImageGallery {
   private dynamicButtons: HTMLElement[] = []
 
   private onImageCountCallback?: (groupId: string, count: number) => void
+  private intersectionObserver: IntersectionObserver | null = null
 
   constructor(options: GalleryOptions) {
     const defaultElements: GalleryElements = {
@@ -97,6 +98,7 @@ class MultiGroupImageGallery {
       this.initializeDynamicGallery()
     }
 
+    this.initIntersectionObserver()
     this.initializeGallery()
     this.bindEvents()
   }
@@ -281,8 +283,12 @@ class MultiGroupImageGallery {
     this.currentGroup = groupId
     this.currentIndex = index
     this.modal.setAttribute('data-state', 'open')
-    this.updateMainImage(index)
+
+    // Önce thumbnailleri render et
     this.renderThumbnails()
+
+    // Sonra aktif resmi yükle
+    this.updateMainImage(index)
   }
 
   private closeGallery(): void {
@@ -300,34 +306,18 @@ class MultiGroupImageGallery {
     this.currentIndex = index
     const mainImage = this.mainImageContainer.querySelector('img')
     if (mainImage && images[index]) {
-      // Ana görsel için de loading="eager" ekleyelim
-      mainImage.setAttribute('loading', 'eager')
       mainImage.src = images[index].src
       mainImage.alt = images[index].alt
+
+      // Bir sonraki ve bir önceki resimleri prefetch et
+      const nextIndex = (index + 1) % images.length
+      const prevIndex = (index - 1 + images.length) % images.length
+
+      this.prefetchMainImage(nextIndex)
+      this.prefetchMainImage(prevIndex)
     }
 
     this.updateThumbnailStates()
-  }
-
-  private renderThumbnails(): void {
-    if (!this.currentGroup) return
-
-    const images = this.groups.get(this.currentGroup)
-    if (!images) return
-
-    // Thumbnail'ler için loading="eager" ekleyelim
-    this.thumbnailsContainer.innerHTML = images
-      .map(
-        (img, index) => `
-          <img
-            src="${img.src}"
-            alt="${img.alt}"
-            loading="eager"
-            class="${this.thumbnailClass} ${index === this.currentIndex ? this.activeThumbnailClass : ''}"
-          />
-        `,
-      )
-      .join('')
   }
 
   private updateThumbnailStates(): void {
@@ -360,6 +350,73 @@ class MultiGroupImageGallery {
     container.scrollTo({
       left: offsetLeft,
       behavior: 'smooth',
+    })
+  }
+
+  private initIntersectionObserver(): void {
+    this.intersectionObserver = new IntersectionObserver(
+      entries => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            const img = entry.target as HTMLImageElement
+            const actualSrc = img.getAttribute('data-src')
+            if (actualSrc) {
+              // Ana resmi yükle
+              img.src = actualSrc
+              img.removeAttribute('data-src')
+
+              // Thumbnail'ın karşılık geldiği ana resmi de prefetch et
+              const index = parseInt(img.getAttribute('data-index') || '0')
+              this.prefetchMainImage(index)
+            }
+            // Görüntülenen thumbnail'ı artık izlemeyi bırak
+            this.intersectionObserver?.unobserve(entry.target)
+          }
+        })
+      },
+      {
+        root: this.thumbnailsContainer,
+        rootMargin: '50px', // Biraz daha erken yüklemeye başla
+        threshold: 0.1,
+      },
+    )
+  }
+
+  private prefetchMainImage(index: number): void {
+    if (!this.currentGroup) return
+    const images = this.groups.get(this.currentGroup)
+    if (!images || !images[index]) return
+
+    const img = new Image()
+    img.src = images[index].src
+  }
+
+  private renderThumbnails(): void {
+    if (!this.currentGroup) return
+
+    const images = this.groups.get(this.currentGroup)
+    if (!images) return
+
+    // Thumbnail container'ı temizle
+    this.thumbnailsContainer.innerHTML = ''
+
+    // Thumbnail'leri oluştur
+    images.forEach((img, index) => {
+      const thumbnail = document.createElement('img')
+      thumbnail.setAttribute('data-src', img.src)
+      thumbnail.setAttribute('data-index', index.toString())
+      thumbnail.src = '/assets/images/gray-placeholder.webp' // Placeholder görsel
+      thumbnail.alt = img.alt
+      thumbnail.className = `${this.thumbnailClass} ${
+        index === this.currentIndex ? this.activeThumbnailClass : ''
+      }`
+
+      this.thumbnailsContainer.appendChild(thumbnail)
+
+      // Intersection Observer'a ekle
+      if (this.intersectionObserver) {
+        this.intersectionObserver.observe(thumbnail)
+      }
     })
   }
 
