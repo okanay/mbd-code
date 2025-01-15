@@ -161,10 +161,6 @@
     display: none;
   }
 
-  .dynamic-gallery-button {
-    @apply !cursor-pointer underline transition-all duration-200 hover:text-primary-400 active:scale-95;
-  }
-
   .slider-active-btn {
     @apply !scale-[102%] !border-primary-500;
   }
