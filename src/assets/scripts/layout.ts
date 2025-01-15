@@ -50,7 +50,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
   new LazyImageLoadController({
     imageSelector: '.lazy-image',
-    rootMargin: '50px 0px',
+    rootMargin: '400px 0px',
     threshold: 0.1,
     filterStyle: 'blur(5px)',
     maxConcurrentLoads: 3,

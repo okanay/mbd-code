@@ -116,7 +116,7 @@ document.addEventListener('DOMContentLoaded', () => {
         transform: 'translateY(100%)',
       },
       onClick: () => {
-        document.querySelector('#purchase-form')?.scrollIntoView({
+        document.querySelector('#purchase-submit-btn')?.scrollIntoView({
           behavior: 'smooth',
           block: 'center',
         })
