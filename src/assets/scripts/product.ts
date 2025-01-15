@@ -90,7 +90,7 @@ document.addEventListener('DOMContentLoaded', () => {
   new ScrollManager([
     {
       id: 'complete-purchase-container',
-      watchSelector: '#purchase-form',
+      watchSelector: '#purchase-submit-btn',
       order: 1,
       position: {
         position: 'fixed',
