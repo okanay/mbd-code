@@ -65,209 +65,304 @@
     <script type="module" src="/assets/scripts/main.js"></script>
   </head>
   <body class="bg-white">
-    <header class="w-full border-gray-200 lg:h-[80px] lg:border-b">
+    <header class="h-fit w-full">
       <!-- Desktop Navigation -->
-      <nav
-        class="relative z-[5000] mx-auto hidden h-full max-w-7xl items-center justify-between px-6 lg:flex"
-        aria-label="Main Navigation"
-      >
-        <div class="flex items-center gap-8">
-          <!-- Logo Section -->
-          <div class="flex-shrink-0">
-            <a href="/">
-              <img
-                src="/assets/images/brand-images/guide_of_dubai_yatay.svg"
-                alt="MBD Travel"
-                width="128"
-                height="64"
-                class="object-cover"
-                loading="eager"
-              />
-            </a>
-          </div>
-          <!-- Navigation Links -->
-          <div class="hidden text-wrap lg:block">
-            <ul class="flex gap-5 text-xs font-medium min-[1080px]:text-sm">
+      <nav class="relative z-[5000] hidden gap-2 lg:flex lg:flex-col">
+        <div class="w-full bg-primary-500">
+          <div
+            class="mx-auto flex max-w-7xl items-center justify-between px-6 py-2 font-medium text-white"
+          >
+            <ul
+              class="flex w-full items-start justify-start gap-4 text-[0.65rem]"
+            >
               <li>
                 <a
-                  href="#"
-                  class="transition-colors duration-300 hover:text-primary-500"
-                  aria-label="Abu Dhabi Şehir Turu"
-                  >Çöl Safari</a
+                  href="/visit-dubai"
+                  class="transition-opacity duration-300 hover:opacity-75"
                 >
-              </li>
-              <li class="group relative" id="desktop-nav-1">
-                <!-- Ana link -->
-                <a
-                  href="/sehir-turlari"
-                  class="flex items-center gap-0.5 transition-colors duration-300 hover:text-primary-500"
-                  aria-label="Şehir Turları"
-                >
-                  <span>Şehir Turları</span>
-                  <i
-                    data-lucide="chevron-down"
-                    class="size-[16px] object-cover transition-transform duration-300 group-hover:rotate-180"
-                  ></i>
+                  VISIT DUBAI
                 </a>
-
-                <!-- Görünmez köprü -->
-                <div
-                  class="invisible absolute left-0 h-4 w-full group-hover:visible"
-                ></div>
-
-                <!-- Dropdown menü -->
-                <ul
-                  class="invisible absolute bottom-0 left-[50%] flex h-fit w-fit -translate-x-1/2 translate-y-[110%] flex-col gap-2 rounded border border-gray-200 bg-white px-3 py-3 text-xs opacity-0 transition-all duration-300 group-hover:visible group-hover:opacity-100"
-                >
-                  <li class="transition-opacity duration-300 hover:opacity-75">
-                    <a href="/sehir-turlari/dubai" class="text-nowrap"
-                      >Dubai Şehir Turu</a
-                    >
-                  </li>
-                  <li class="transition-opacity duration-300 hover:opacity-75">
-                    <a href="/sehir-turlari/abu-dhabi" class="text-nowrap"
-                      >Abu Dhabi Şehir Turu</a
-                    >
-                  </li>
-                </ul>
-              </li>
-              <li class="group relative" id="desktop-nav-2">
-                <!-- Ana link -->
-                <a
-                  href="/activities"
-                  class="flex items-center gap-0.5 transition-colors duration-300 hover:text-primary-500"
-                  aria-label="Dubai Aktiviteleri"
-                >
-                  <span>Aktiviteler</span>
-                  <i
-                    data-lucide="chevron-down"
-                    class="size-[16px] object-cover transition-transform duration-300 group-hover:rotate-180"
-                  ></i>
-                </a>
-
-                <!-- Görünmez köprü -->
-                <div
-                  class="invisible absolute left-0 h-4 w-full group-hover:visible"
-                ></div>
-
-                <!-- Dropdown menü -->
-                <ul
-                  class="invisible absolute bottom-0 left-[50%] flex h-fit w-fit -translate-x-1/2 translate-y-[110%] flex-col gap-2 rounded border border-gray-200 bg-white px-3 py-3 text-xs opacity-0 transition-all duration-300 group-hover:visible group-hover:opacity-100"
-                >
-                  <li class="transition-opacity duration-300 hover:opacity-75">
-                    <a href="/aktiviteler/burj-khalifa" class="text-nowrap"
-                      >Burj Khalifa</a
-                    >
-                  </li>
-                  <li class="transition-opacity duration-300 hover:opacity-75">
-                    <a href="/aktiviteler/museum-of-future" class="text-nowrap"
-                      >Museum of the Future</a
-                    >
-                  </li>
-                  <li class="transition-opacity duration-300 hover:opacity-75">
-                    <a href="/aktiviteler/miracle-garden" class="text-nowrap"
-                      >Miracle Garden</a
-                    >
-                  </li>
-                </ul>
               </li>
               <li>
                 <a
-                  href="#"
-                  class="transition-colors duration-300 hover:text-primary-500"
-                  aria-label="Dubai Atlı Safari"
-                  >Dubai Vizesi</a
+                  href="/invest-dubai"
+                  class="transition-opacity duration-300 hover:opacity-75"
                 >
-              </li>
-              <li class="group relative" id="desktop-nav-3">
-                <!-- Ana link -->
-                <a
-                  href="/corporate"
-                  class="flex items-center gap-0.5 transition-colors duration-300 hover:text-primary-500"
-                  aria-label="Corporate"
-                >
-                  <span>Corporate</span>
-                  <i
-                    data-lucide="chevron-down"
-                    class="size-[16px] object-cover transition-transform duration-300 group-hover:rotate-180"
-                  ></i>
+                  INVEST IN DUBAI
                 </a>
-
-                <!-- Görünmez köprü -->
-                <div
-                  class="invisible absolute left-0 h-4 w-full group-hover:visible"
-                ></div>
-
-                <!-- Dropdown menü -->
-                <ul
-                  class="invisible absolute bottom-0 left-[50%] flex h-fit w-fit -translate-x-1/2 translate-y-[110%] flex-col gap-2 rounded border border-gray-200 bg-white px-3 py-3 text-xs opacity-0 transition-all duration-300 group-hover:visible group-hover:opacity-100"
+              </li>
+              <li>
+                <a
+                  href="/travel-trade"
+                  class="transition-opacity duration-300 hover:opacity-75"
                 >
-                  <li class="transition-opacity duration-300 hover:opacity-75">
-                    <a href="/corporate/about-us" class="text-nowrap"
-                      >About Us</a
-                    >
-                  </li>
-                  <li class="transition-opacity duration-300 hover:opacity-75">
-                    <a href="/corporate/contact" class="text-nowrap">Contact</a>
-                  </li>
-                  <li class="transition-opacity duration-300 hover:opacity-75">
-                    <a href="/corporate/career" class="text-nowrap">Career</a>
-                  </li>
-                  <li class="transition-opacity duration-300 hover:opacity-75">
-                    <a href="/corporate/faq" class="text-nowrap">F.A.Q</a>
-                  </li>
-                </ul>
+                  TRAVEL TRADE
+                </a>
+              </li>
+              <li>
+                <a
+                  href="/study-dubai"
+                  class="transition-opacity duration-300 hover:opacity-75"
+                >
+                  STUDY DUBAI
+                </a>
+              </li>
+              <li>
+                <a
+                  href="/mice"
+                  class="transition-opacity duration-300 hover:opacity-75"
+                >
+                  MICE
+                </a>
+              </li>
+              <li>
+                <a
+                  href="/retire-dubai"
+                  class="transition-opacity duration-300 hover:opacity-75"
+                >
+                  RETIRE IN DUBAI
+                </a>
+              </li>
+              <li>
+                <a
+                  href="/dubai-det"
+                  class="transition-opacity duration-300 hover:opacity-75"
+                >
+                  DUBAI DET
+                </a>
               </li>
             </ul>
+
+            <div class="flex items-center gap-3 text-white">
+              <!-- Search Button -->
+              <button
+                id="search-button"
+                class="relative z-20 size-[24px] rounded-full border border-gray-200 bg-white p-1 transition-[opacity,transform] duration-500 hover:scale-105 hover:opacity-50"
+              >
+                <i
+                  data-lucide="search"
+                  class="size-full rounded-full object-cover text-black"
+                ></i>
+              </button>
+
+              <!-- Language and Currency Selector -->
+              <button
+                id="language-currency-selector-button"
+                class="flex items-center gap-2 transition-opacity duration-300 hover:opacity-75"
+                aria-label="Select Language and Currency"
+              >
+                <img
+                  src="/assets/images/flags/tr.svg"
+                  alt="Turkey Flag"
+                  class="size-[22px] rounded-full object-cover"
+                />
+                <span class="text-sm">TL</span>
+              </button>
+            </div>
           </div>
         </div>
-        <div class="flex items-center gap-10 text-nowrap">
-          <!-- Search Button -->
-          <div class="flex items-center gap-4">
-            <button
-              id="search-button"
-              class="relative z-20 size-[32px] rounded-full border border-gray-200 bg-white p-1 transition-[opacity,transform] duration-500 hover:scale-105 hover:opacity-50"
-            >
-              <i
-                data-lucide="search"
-                class="size-full rounded-full object-cover"
-              ></i>
-            </button>
 
-            <!-- Language and Currency Selector -->
-            <button
-              id="language-currency-selector-button"
-              class="flex items-center gap-2 transition-opacity duration-300 hover:opacity-75"
-              aria-label="Select Language and Currency"
-            >
-              <img
-                src="/assets/images/flags/tr.svg"
-                alt="Turkey Flag"
-                class="size-[28px] rounded-full object-cover"
-              />
-              <span class="text-sm">TL</span>
-            </button>
-          </div>
+        <div class="w-full border-b border-gray-200 pb-2">
+          <div class="mx-auto flex max-w-7xl justify-between px-6">
+            <div class="flex w-full items-center gap-8">
+              <!-- Logo Section -->
+              <div class="flex-shrink-0">
+                <a href="/">
+                  <img
+                    src="/assets/images/brand-images/guide_of_dubai_yatay.svg"
+                    alt="MBD Travel"
+                    width="128"
+                    height="64"
+                    class="object-cover"
+                    loading="eager"
+                  />
+                </a>
+              </div>
+              <!-- Navigation Links -->
+              <div class="hidden text-wrap lg:block">
+                <ul class="flex gap-5 text-xs font-medium min-[1080px]:text-sm">
+                  <li>
+                    <a
+                      href="#"
+                      class="transition-colors duration-300 hover:text-primary-500"
+                      aria-label="Abu Dhabi Şehir Turu"
+                      >Çöl Safari</a
+                    >
+                  </li>
+                  <li class="group relative" id="desktop-nav-1">
+                    <!-- Ana link -->
+                    <a
+                      href="/sehir-turlari"
+                      class="flex items-center gap-0.5 transition-colors duration-300 hover:text-primary-500"
+                      aria-label="Şehir Turları"
+                    >
+                      <span>Şehir Turları</span>
+                      <i
+                        data-lucide="chevron-down"
+                        class="size-[16px] object-cover transition-transform duration-300 group-hover:rotate-180"
+                      ></i>
+                    </a>
 
-          <div class="flex items-center gap-4">
-            <!-- Sign Up Button -->
-            <a
-              href="/profile"
-              class="flex h-[40px] items-center gap-2 rounded-full border border-gray-200 bg-gray-100 px-5 text-center text-sm font-semibold transition-opacity duration-300 hover:opacity-75"
-            >
-              <i data-lucide="circle-user" class="size-5"></i>
-              <span id="user-name" class="w-[48px] truncate">
-                John Michael Andrew Richardson
-              </span>
-            </a>
-            <!-- Logout Link -->
-            <a
-              href="/logout"
-              class="text-sm font-semibold transition-opacity duration-300 hover:opacity-75"
-              aria-label="Giriş Yap"
-            >
-              Çıkış Yap
-            </a>
+                    <!-- Görünmez köprü -->
+                    <div
+                      class="invisible absolute left-0 h-4 w-full group-hover:visible"
+                    ></div>
+
+                    <!-- Dropdown menü -->
+                    <ul
+                      class="invisible absolute bottom-0 left-[50%] flex h-fit w-fit -translate-x-1/2 translate-y-[110%] flex-col gap-2 rounded border border-gray-200 bg-white px-3 py-3 text-xs opacity-0 transition-all duration-300 group-hover:visible group-hover:opacity-100"
+                    >
+                      <li
+                        class="transition-opacity duration-300 hover:opacity-75"
+                      >
+                        <a href="/sehir-turlari/dubai" class="text-nowrap"
+                          >Dubai Şehir Turu</a
+                        >
+                      </li>
+                      <li
+                        class="transition-opacity duration-300 hover:opacity-75"
+                      >
+                        <a href="/sehir-turlari/abu-dhabi" class="text-nowrap"
+                          >Abu Dhabi Şehir Turu</a
+                        >
+                      </li>
+                    </ul>
+                  </li>
+                  <li class="group relative" id="desktop-nav-2">
+                    <!-- Ana link -->
+                    <a
+                      href="/activities"
+                      class="flex items-center gap-0.5 transition-colors duration-300 hover:text-primary-500"
+                      aria-label="Dubai Aktiviteleri"
+                    >
+                      <span>Aktiviteler</span>
+                      <i
+                        data-lucide="chevron-down"
+                        class="size-[16px] object-cover transition-transform duration-300 group-hover:rotate-180"
+                      ></i>
+                    </a>
+
+                    <!-- Görünmez köprü -->
+                    <div
+                      class="invisible absolute left-0 h-4 w-full group-hover:visible"
+                    ></div>
+
+                    <!-- Dropdown menü -->
+                    <ul
+                      class="invisible absolute bottom-0 left-[50%] flex h-fit w-fit -translate-x-1/2 translate-y-[110%] flex-col gap-2 rounded border border-gray-200 bg-white px-3 py-3 text-xs opacity-0 transition-all duration-300 group-hover:visible group-hover:opacity-100"
+                    >
+                      <li
+                        class="transition-opacity duration-300 hover:opacity-75"
+                      >
+                        <a href="/aktiviteler/burj-khalifa" class="text-nowrap"
+                          >Burj Khalifa</a
+                        >
+                      </li>
+                      <li
+                        class="transition-opacity duration-300 hover:opacity-75"
+                      >
+                        <a
+                          href="/aktiviteler/museum-of-future"
+                          class="text-nowrap"
+                          >Museum of the Future</a
+                        >
+                      </li>
+                      <li
+                        class="transition-opacity duration-300 hover:opacity-75"
+                      >
+                        <a
+                          href="/aktiviteler/miracle-garden"
+                          class="text-nowrap"
+                          >Miracle Garden</a
+                        >
+                      </li>
+                    </ul>
+                  </li>
+                  <li>
+                    <a
+                      href="#"
+                      class="transition-colors duration-300 hover:text-primary-500"
+                      aria-label="Dubai Atlı Safari"
+                      >Dubai Vizesi</a
+                    >
+                  </li>
+                  <li class="group relative" id="desktop-nav-3">
+                    <!-- Ana link -->
+                    <a
+                      href="/corporate"
+                      class="flex items-center gap-0.5 transition-colors duration-300 hover:text-primary-500"
+                      aria-label="Corporate"
+                    >
+                      <span>Corporate</span>
+                      <i
+                        data-lucide="chevron-down"
+                        class="size-[16px] object-cover transition-transform duration-300 group-hover:rotate-180"
+                      ></i>
+                    </a>
+
+                    <!-- Görünmez köprü -->
+                    <div
+                      class="invisible absolute left-0 h-4 w-full group-hover:visible"
+                    ></div>
+
+                    <!-- Dropdown menü -->
+                    <ul
+                      class="invisible absolute bottom-0 left-[50%] flex h-fit w-fit -translate-x-1/2 translate-y-[110%] flex-col gap-2 rounded border border-gray-200 bg-white px-3 py-3 text-xs opacity-0 transition-all duration-300 group-hover:visible group-hover:opacity-100"
+                    >
+                      <li
+                        class="transition-opacity duration-300 hover:opacity-75"
+                      >
+                        <a href="/corporate/about-us" class="text-nowrap"
+                          >About Us</a
+                        >
+                      </li>
+                      <li
+                        class="transition-opacity duration-300 hover:opacity-75"
+                      >
+                        <a href="/corporate/contact" class="text-nowrap"
+                          >Contact</a
+                        >
+                      </li>
+                      <li
+                        class="transition-opacity duration-300 hover:opacity-75"
+                      >
+                        <a href="/corporate/career" class="text-nowrap"
+                          >Career</a
+                        >
+                      </li>
+                      <li
+                        class="transition-opacity duration-300 hover:opacity-75"
+                      >
+                        <a href="/corporate/faq" class="text-nowrap">F.A.Q</a>
+                      </li>
+                    </ul>
+                  </li>
+                </ul>
+              </div>
+            </div>
+
+            <div class="flex flex-shrink-0 items-center gap-10 text-nowrap">
+              <div class="flex items-center gap-4">
+                <!-- Sign Up Button -->
+                <a
+                  href="/profile"
+                  class="flex h-[40px] items-center gap-2 rounded-full border border-gray-200 bg-gray-100 px-5 text-center text-sm font-semibold transition-opacity duration-300 hover:opacity-75"
+                >
+                  <i data-lucide="circle-user" class="size-5"></i>
+                  <span id="user-name" class="w-[48px] truncate">
+                    John Michael Andrew Richardson
+                  </span>
+                </a>
+                <!-- Logout Link -->
+                <a
+                  href="/logout"
+                  class="text-sm font-semibold transition-opacity duration-300 hover:opacity-75"
+                  aria-label="Giriş Yap"
+                >
+                  Çıkış Yap
+                </a>
+              </div>
+            </div>
           </div>
         </div>
       </nav>
@@ -1609,72 +1704,76 @@
           </li>
           <!-- İkinci kart (aynı yapı) -->
           <li class="group">
-            <!-- İkinci kart (aynı yapı) -->
-            <div
-              class="flex h-full flex-col justify-start overflow-hidden rounded-2xl border border-gray-200 bg-white transition-all duration-300 hover:border-primary-500"
-            >
-              <!-- Image Container -->
-              <div class="relative h-[200px] overflow-hidden rounded-b-2xl">
-                <img
-                  src="/assets/images/gray-placeholder.webp"
-                  data-src="/assets/images/gray-placeholder.webp"
-                  loading="lazy"
-                  style="filter: blur(10px)"
-                  class="lazy-image filter-blur h-full w-full object-cover transition-all duration-300 group-hover:scale-105 group-hover:filter-none"
-                />
-                <span
-                  class="rounded-custom absolute right-2 top-2 bg-primary-500 px-2 py-1 text-xs font-semibold text-white rtl:left-2 rtl:right-auto"
-                >
-                  Fırsat
-                </span>
-              </div>
-
-              <div class="flex-grow p-4 pb-2">
-                <h2 class="line-clamp-2 text-xl font-semibold text-gray-800">
-                  Deluxe Safari Royal Al Sahara Deluxe Safari Royal Al Sahara
-                </h2>
-              </div>
-
-              <div class="flex flex-col gap-1.5 p-4">
-                <!-- Rating -->
-                <div class="flex items-center gap-2">
-                  <i
-                    data-lucide="star"
-                    class="size-4 fill-yellow-400 text-yellow-400"
-                  ></i>
-                  <span class="text-sm font-medium text-gray-600">4.4</span>
-                  <span class="text-sm text-gray-500">(128 değerlendirme)</span>
-                </div>
-
-                <!-- People Count -->
-                <div class="space-y-2">
-                  <div class="flex items-center gap-2">
-                    <img
-                      src="/assets/images/icons/group.svg"
-                      alt="Daha Fazla Bilgi"
-                      class="size-4 fill-primary-500"
-                    />
-                    <span class="text-sm text-gray-600">4 kişi</span>
-                  </div>
-                </div>
-
-                <!-- Price -->
-                <div class="flex items-center justify-between">
+            <a href="/">
+              <!-- İkinci kart (aynı yapı) -->
+              <div
+                class="flex h-full flex-col justify-start overflow-hidden rounded-2xl border border-gray-200 bg-white transition-all duration-300 hover:border-primary-500"
+              >
+                <!-- Image Container -->
+                <div class="relative h-[200px] overflow-hidden rounded-b-2xl">
+                  <img
+                    src="/assets/images/gray-placeholder.webp"
+                    data-src="/assets/images/gray-placeholder.webp"
+                    loading="lazy"
+                    style="filter: blur(10px)"
+                    class="lazy-image filter-blur h-full w-full object-cover transition-all duration-300 group-hover:scale-105 group-hover:filter-none"
+                  />
                   <span
-                    class="bg-gradient-to-br from-primary-400 to-primary-600 bg-clip-text text-2xl font-bold text-transparent"
+                    class="rounded-custom absolute right-2 top-2 bg-primary-500 px-2 py-1 text-xs font-semibold text-white rtl:left-2 rtl:right-auto"
                   >
-                    349$
+                    Fırsat
                   </span>
                 </div>
 
-                <!-- Button -->
-                <button
-                  class="w-full rounded-lg bg-primary-500 py-3 font-semibold text-white transition-colors hover:bg-primary-600"
-                >
-                  Aktivite Detayları
-                </button>
+                <div class="flex-grow p-4 pb-2">
+                  <h2 class="line-clamp-2 text-xl font-semibold text-gray-800">
+                    Deluxe Safari Royal Al Sahara Deluxe Safari Royal Al Sahara
+                  </h2>
+                </div>
+
+                <div class="flex flex-col gap-1.5 p-4">
+                  <!-- Rating -->
+                  <div class="flex items-center gap-2">
+                    <i
+                      data-lucide="star"
+                      class="size-4 fill-yellow-400 text-yellow-400"
+                    ></i>
+                    <span class="text-sm font-medium text-gray-600">4.4</span>
+                    <span class="text-sm text-gray-500"
+                      >(128 değerlendirme)</span
+                    >
+                  </div>
+
+                  <!-- People Count -->
+                  <div class="space-y-2">
+                    <div class="flex items-center gap-2">
+                      <img
+                        src="/assets/images/icons/group.svg"
+                        alt="Daha Fazla Bilgi"
+                        class="size-4 fill-primary-500"
+                      />
+                      <span class="text-sm text-gray-600">4 kişi</span>
+                    </div>
+                  </div>
+
+                  <!-- Price -->
+                  <div class="flex items-center justify-between">
+                    <span
+                      class="bg-gradient-to-br from-primary-400 to-primary-600 bg-clip-text text-2xl font-bold text-transparent"
+                    >
+                      349$
+                    </span>
+                  </div>
+
+                  <!-- Button -->
+                  <button
+                    class="w-full rounded-lg bg-primary-500 py-3 font-semibold text-white transition-colors hover:bg-primary-600"
+                  >
+                    Aktivite Detayları
+                  </button>
+                </div>
               </div>
-            </div>
+            </a>
           </li>
 
           <!-- Mobilde yatay kaydırılabilir alan 3,4,5,6... kart-->
@@ -1684,250 +1783,262 @@
               class="hide-scrollbar flex gap-4 overflow-x-auto pb-4"
             >
               <li class="group w-1/2 min-w-[220px] flex-shrink-0">
-                <div
-                  class="grid h-full overflow-hidden rounded-2xl border border-gray-200 bg-white transition-all duration-300 hover:border-primary-500"
-                >
-                  <!-- Image Container -->
-                  <div class="relative h-[200px] overflow-hidden rounded-b-2xl">
-                    <img
-                      src="/assets/images/gray-placeholder.webp"
-                      data-src="https://images.project-test.info/11.webp"
-                      loading="lazy"
-                      style="filter: blur(10px)"
-                      class="lazy-image filter-blur h-full w-full object-cover transition-all duration-300 group-hover:scale-105 group-hover:filter-none"
-                    />
-                    <span
-                      class="rounded-custom absolute right-2 top-2 bg-primary-500 px-2 py-1 text-xs font-semibold text-white rtl:left-2 rtl:right-auto"
+                <a href="/">
+                  <div
+                    class="grid h-full overflow-hidden rounded-2xl border border-gray-200 bg-white transition-all duration-300 hover:border-primary-500"
+                  >
+                    <!-- Image Container -->
+                    <div
+                      class="relative h-[200px] overflow-hidden rounded-b-2xl"
                     >
-                      Fırsat
-                    </span>
-                  </div>
-
-                  <!-- Title Container - Auto height -->
-                  <div class="px-2 pb-2 pt-4 sm:px-4">
-                    <h2
-                      class="line-clamp-2 text-pretty text-base font-semibold text-gray-800 sm:text-xl lg:min-h-[56px]"
-                    >
-                      Dubai Şehir Turu
-                    </h2>
-                  </div>
-
-                  <div class="flex flex-col justify-end">
-                    <div class="flex flex-col gap-2 px-2 sm:gap-4 sm:px-4">
-                      <div
-                        class="flex flex-col items-start gap-2 sm:flex-row sm:items-center"
+                      <img
+                        src="/assets/images/gray-placeholder.webp"
+                        data-src="https://images.project-test.info/11.webp"
+                        loading="lazy"
+                        style="filter: blur(10px)"
+                        class="lazy-image filter-blur h-full w-full object-cover transition-all duration-300 group-hover:scale-105 group-hover:filter-none"
+                      />
+                      <span
+                        class="rounded-custom absolute right-2 top-2 bg-primary-500 px-2 py-1 text-xs font-semibold text-white rtl:left-2 rtl:right-auto"
                       >
-                        <div class="order-2 flex gap-2 sm:order-1">
-                          <i
-                            data-lucide="star"
-                            class="size-4 fill-yellow-400 text-yellow-400"
-                          ></i>
-                          <span
-                            class="text-xs font-medium text-gray-600 sm:text-sm"
-                            >4.4</span
-                          >
-                        </div>
-
-                        <span
-                          class="order-1 text-xs text-gray-500 sm:order-2 sm:text-sm"
-                        >
-                          (128 değerlendirme)</span
-                        >
-                      </div>
-                      <div class="space-y-2">
-                        <div class="flex items-center gap-2">
-                          <img
-                            src="/assets/images/icons/group.svg"
-                            alt="Daha Fazla Bilgi"
-                            class="size-3.5 fill-primary-500 sm:size-4"
-                          />
-                          <span class="text-xs text-gray-600 sm:text-sm"
-                            >4 kişi</span
-                          >
-                        </div>
-                        <div class="flex items-center justify-between">
-                          <span
-                            class="bg-gradient-to-br from-primary-400 to-primary-600 bg-clip-text text-2xl font-bold text-transparent"
-                          >
-                            529$
-                          </span>
-                        </div>
-                      </div>
+                        Fırsat
+                      </span>
                     </div>
 
-                    <div class="p-2 sm:p-4">
-                      <button
-                        class="w-full rounded-lg bg-primary-500 py-3 font-semibold text-white transition-colors hover:bg-primary-600"
+                    <!-- Title Container - Auto height -->
+                    <div class="px-2 pb-2 pt-4 sm:px-4">
+                      <h2
+                        class="line-clamp-2 text-pretty text-base font-semibold text-gray-800 sm:text-xl lg:min-h-[56px]"
                       >
-                        Aktivite Detayları
-                      </button>
+                        Dubai Şehir Turu
+                      </h2>
+                    </div>
+
+                    <div class="flex flex-col justify-end">
+                      <div class="flex flex-col gap-2 px-2 sm:gap-4 sm:px-4">
+                        <div
+                          class="flex flex-col items-start gap-2 sm:flex-row sm:items-center"
+                        >
+                          <div class="order-2 flex gap-2 sm:order-1">
+                            <i
+                              data-lucide="star"
+                              class="size-4 fill-yellow-400 text-yellow-400"
+                            ></i>
+                            <span
+                              class="text-xs font-medium text-gray-600 sm:text-sm"
+                              >4.4</span
+                            >
+                          </div>
+
+                          <span
+                            class="order-1 text-xs text-gray-500 sm:order-2 sm:text-sm"
+                          >
+                            (128 değerlendirme)</span
+                          >
+                        </div>
+                        <div class="space-y-2">
+                          <div class="flex items-center gap-2">
+                            <img
+                              src="/assets/images/icons/group.svg"
+                              alt="Daha Fazla Bilgi"
+                              class="size-3.5 fill-primary-500 sm:size-4"
+                            />
+                            <span class="text-xs text-gray-600 sm:text-sm"
+                              >4 kişi</span
+                            >
+                          </div>
+                          <div class="flex items-center justify-between">
+                            <span
+                              class="bg-gradient-to-br from-primary-400 to-primary-600 bg-clip-text text-2xl font-bold text-transparent"
+                            >
+                              529$
+                            </span>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div class="p-2 sm:p-4">
+                        <button
+                          class="w-full rounded-lg bg-primary-500 py-3 font-semibold text-white transition-colors hover:bg-primary-600"
+                        >
+                          Aktivite Detayları
+                        </button>
+                      </div>
                     </div>
                   </div>
-                </div>
+                </a>
               </li>
               <li class="group w-1/2 min-w-[220px] flex-shrink-0">
-                <div
-                  class="grid h-full overflow-hidden rounded-2xl border border-gray-200 bg-white transition-all duration-300 hover:border-primary-500"
-                >
-                  <!-- Image Container -->
-                  <div class="relative h-[200px] overflow-hidden rounded-b-2xl">
-                    <img
-                      src="/assets/images/gray-placeholder.webp"
-                      data-src="https://images.project-test.info/12.webp"
-                      loading="lazy"
-                      style="filter: blur(10px)"
-                      class="lazy-image filter-blur h-full w-full object-cover transition-all duration-300 group-hover:scale-105 group-hover:filter-none"
-                    />
-                    <span
-                      class="rounded-custom absolute right-2 top-2 bg-primary-500 px-2 py-1 text-xs font-semibold text-white rtl:left-2 rtl:right-auto"
+                <a href="/">
+                  <div
+                    class="grid h-full overflow-hidden rounded-2xl border border-gray-200 bg-white transition-all duration-300 hover:border-primary-500"
+                  >
+                    <!-- Image Container -->
+                    <div
+                      class="relative h-[200px] overflow-hidden rounded-b-2xl"
                     >
-                      Fırsat
-                    </span>
-                  </div>
-
-                  <!-- Title Container - Auto height -->
-                  <div class="px-2 pb-2 pt-4 sm:px-4">
-                    <h2
-                      class="line-clamp-2 text-pretty text-base font-semibold text-gray-800 sm:text-xl lg:min-h-[56px]"
-                    >
-                      Dubai Şehir Turu
-                    </h2>
-                  </div>
-
-                  <div class="flex flex-col justify-end">
-                    <div class="flex flex-col gap-2 px-2 sm:gap-4 sm:px-4">
-                      <div
-                        class="flex flex-col items-start gap-2 sm:flex-row sm:items-center"
+                      <img
+                        src="/assets/images/gray-placeholder.webp"
+                        data-src="https://images.project-test.info/12.webp"
+                        loading="lazy"
+                        style="filter: blur(10px)"
+                        class="lazy-image filter-blur h-full w-full object-cover transition-all duration-300 group-hover:scale-105 group-hover:filter-none"
+                      />
+                      <span
+                        class="rounded-custom absolute right-2 top-2 bg-primary-500 px-2 py-1 text-xs font-semibold text-white rtl:left-2 rtl:right-auto"
                       >
-                        <div class="order-2 flex gap-2 sm:order-1">
-                          <i
-                            data-lucide="star"
-                            class="size-4 fill-yellow-400 text-yellow-400"
-                          ></i>
-                          <span
-                            class="text-xs font-medium text-gray-600 sm:text-sm"
-                            >4.4</span
-                          >
-                        </div>
-
-                        <span
-                          class="order-1 text-xs text-gray-500 sm:order-2 sm:text-sm"
-                        >
-                          (128 değerlendirme)</span
-                        >
-                      </div>
-                      <div class="space-y-2">
-                        <div class="flex items-center gap-2">
-                          <img
-                            src="/assets/images/icons/group.svg"
-                            alt="Daha Fazla Bilgi"
-                            class="size-3.5 fill-primary-500 sm:size-4"
-                          />
-                          <span class="text-xs text-gray-600 sm:text-sm"
-                            >4 kişi</span
-                          >
-                        </div>
-                        <div class="flex items-center justify-between">
-                          <span
-                            class="bg-gradient-to-br from-primary-400 to-primary-600 bg-clip-text text-2xl font-bold text-transparent"
-                          >
-                            529$
-                          </span>
-                        </div>
-                      </div>
+                        Fırsat
+                      </span>
                     </div>
 
-                    <div class="p-2 sm:p-4">
-                      <button
-                        class="w-full rounded-lg bg-primary-500 py-3 font-semibold text-white transition-colors hover:bg-primary-600"
+                    <!-- Title Container - Auto height -->
+                    <div class="px-2 pb-2 pt-4 sm:px-4">
+                      <h2
+                        class="line-clamp-2 text-pretty text-base font-semibold text-gray-800 sm:text-xl lg:min-h-[56px]"
                       >
-                        Aktivite Detayları
-                      </button>
+                        Dubai Şehir Turu
+                      </h2>
+                    </div>
+
+                    <div class="flex flex-col justify-end">
+                      <div class="flex flex-col gap-2 px-2 sm:gap-4 sm:px-4">
+                        <div
+                          class="flex flex-col items-start gap-2 sm:flex-row sm:items-center"
+                        >
+                          <div class="order-2 flex gap-2 sm:order-1">
+                            <i
+                              data-lucide="star"
+                              class="size-4 fill-yellow-400 text-yellow-400"
+                            ></i>
+                            <span
+                              class="text-xs font-medium text-gray-600 sm:text-sm"
+                              >4.4</span
+                            >
+                          </div>
+
+                          <span
+                            class="order-1 text-xs text-gray-500 sm:order-2 sm:text-sm"
+                          >
+                            (128 değerlendirme)</span
+                          >
+                        </div>
+                        <div class="space-y-2">
+                          <div class="flex items-center gap-2">
+                            <img
+                              src="/assets/images/icons/group.svg"
+                              alt="Daha Fazla Bilgi"
+                              class="size-3.5 fill-primary-500 sm:size-4"
+                            />
+                            <span class="text-xs text-gray-600 sm:text-sm"
+                              >4 kişi</span
+                            >
+                          </div>
+                          <div class="flex items-center justify-between">
+                            <span
+                              class="bg-gradient-to-br from-primary-400 to-primary-600 bg-clip-text text-2xl font-bold text-transparent"
+                            >
+                              529$
+                            </span>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div class="p-2 sm:p-4">
+                        <button
+                          class="w-full rounded-lg bg-primary-500 py-3 font-semibold text-white transition-colors hover:bg-primary-600"
+                        >
+                          Aktivite Detayları
+                        </button>
+                      </div>
                     </div>
                   </div>
-                </div>
+                </a>
               </li>
               <li class="group w-1/2 min-w-[220px] flex-shrink-0">
-                <div
-                  class="grid h-full overflow-hidden rounded-2xl border border-gray-200 bg-white transition-all duration-300 hover:border-primary-500"
-                >
-                  <!-- Image Container -->
-                  <div class="relative h-[200px] overflow-hidden rounded-b-2xl">
-                    <img
-                      src="/assets/images/gray-placeholder.webp"
-                      data-src="https://images.project-test.info/11.webp"
-                      loading="lazy"
-                      style="filter: blur(10px)"
-                      class="lazy-image filter-blur h-full w-full object-cover transition-all duration-300 group-hover:scale-105 group-hover:filter-none"
-                    />
-                    <span
-                      class="rounded-custom absolute right-2 top-2 bg-primary-500 px-2 py-1 text-xs font-semibold text-white rtl:left-2 rtl:right-auto"
+                <a href="/">
+                  <div
+                    class="grid h-full overflow-hidden rounded-2xl border border-gray-200 bg-white transition-all duration-300 hover:border-primary-500"
+                  >
+                    <!-- Image Container -->
+                    <div
+                      class="relative h-[200px] overflow-hidden rounded-b-2xl"
                     >
-                      Fırsat
-                    </span>
-                  </div>
-
-                  <!-- Title Container - Auto height -->
-                  <div class="px-2 pb-2 pt-4 sm:px-4">
-                    <h2
-                      class="line-clamp-2 text-pretty text-base font-semibold text-gray-800 sm:text-xl lg:min-h-[56px]"
-                    >
-                      Dubai Şehir Turu
-                    </h2>
-                  </div>
-
-                  <div class="flex flex-col justify-end">
-                    <div class="flex flex-col gap-2 px-2 sm:gap-4 sm:px-4">
-                      <div
-                        class="flex flex-col items-start gap-2 sm:flex-row sm:items-center"
+                      <img
+                        src="/assets/images/gray-placeholder.webp"
+                        data-src="https://images.project-test.info/11.webp"
+                        loading="lazy"
+                        style="filter: blur(10px)"
+                        class="lazy-image filter-blur h-full w-full object-cover transition-all duration-300 group-hover:scale-105 group-hover:filter-none"
+                      />
+                      <span
+                        class="rounded-custom absolute right-2 top-2 bg-primary-500 px-2 py-1 text-xs font-semibold text-white rtl:left-2 rtl:right-auto"
                       >
-                        <div class="order-2 flex gap-2 sm:order-1">
-                          <i
-                            data-lucide="star"
-                            class="size-4 fill-yellow-400 text-yellow-400"
-                          ></i>
-                          <span
-                            class="text-xs font-medium text-gray-600 sm:text-sm"
-                            >4.4</span
-                          >
-                        </div>
-
-                        <span
-                          class="order-1 text-xs text-gray-500 sm:order-2 sm:text-sm"
-                        >
-                          (128 değerlendirme)</span
-                        >
-                      </div>
-                      <div class="space-y-2">
-                        <div class="flex items-center gap-2">
-                          <img
-                            src="/assets/images/icons/group.svg"
-                            alt="Daha Fazla Bilgi"
-                            class="size-3.5 fill-primary-500 sm:size-4"
-                          />
-                          <span class="text-xs text-gray-600 sm:text-sm"
-                            >4 kişi</span
-                          >
-                        </div>
-                        <div class="flex items-center justify-between">
-                          <span
-                            class="bg-gradient-to-br from-primary-400 to-primary-600 bg-clip-text text-2xl font-bold text-transparent"
-                          >
-                            529$
-                          </span>
-                        </div>
-                      </div>
+                        Fırsat
+                      </span>
                     </div>
 
-                    <div class="p-2 sm:p-4">
-                      <button
-                        class="w-full rounded-lg bg-primary-500 py-3 font-semibold text-white transition-colors hover:bg-primary-600"
+                    <!-- Title Container - Auto height -->
+                    <div class="px-2 pb-2 pt-4 sm:px-4">
+                      <h2
+                        class="line-clamp-2 text-pretty text-base font-semibold text-gray-800 sm:text-xl lg:min-h-[56px]"
                       >
-                        Aktivite Detayları
-                      </button>
+                        Dubai Şehir Turu
+                      </h2>
+                    </div>
+
+                    <div class="flex flex-col justify-end">
+                      <div class="flex flex-col gap-2 px-2 sm:gap-4 sm:px-4">
+                        <div
+                          class="flex flex-col items-start gap-2 sm:flex-row sm:items-center"
+                        >
+                          <div class="order-2 flex gap-2 sm:order-1">
+                            <i
+                              data-lucide="star"
+                              class="size-4 fill-yellow-400 text-yellow-400"
+                            ></i>
+                            <span
+                              class="text-xs font-medium text-gray-600 sm:text-sm"
+                              >4.4</span
+                            >
+                          </div>
+
+                          <span
+                            class="order-1 text-xs text-gray-500 sm:order-2 sm:text-sm"
+                          >
+                            (128 değerlendirme)</span
+                          >
+                        </div>
+                        <div class="space-y-2">
+                          <div class="flex items-center gap-2">
+                            <img
+                              src="/assets/images/icons/group.svg"
+                              alt="Daha Fazla Bilgi"
+                              class="size-3.5 fill-primary-500 sm:size-4"
+                            />
+                            <span class="text-xs text-gray-600 sm:text-sm"
+                              >4 kişi</span
+                            >
+                          </div>
+                          <div class="flex items-center justify-between">
+                            <span
+                              class="bg-gradient-to-br from-primary-400 to-primary-600 bg-clip-text text-2xl font-bold text-transparent"
+                            >
+                              529$
+                            </span>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div class="p-2 sm:p-4">
+                        <button
+                          class="w-full rounded-lg bg-primary-500 py-3 font-semibold text-white transition-colors hover:bg-primary-600"
+                        >
+                          Aktivite Detayları
+                        </button>
+                      </div>
                     </div>
                   </div>
-                </div>
+                </a>
               </li>
             </div>
 
@@ -1959,139 +2070,147 @@
           <!-- Tablet ve desktop'ta gösterilecek kartlar, 3,4,5,6... kart -->
           <li class="group hidden md:block">
             <!-- İkinci kart (aynı yapı) -->
-            <div
-              class="flex h-full flex-col justify-start overflow-hidden rounded-2xl border border-gray-200 bg-white transition-all duration-300 hover:border-primary-500"
-            >
-              <!-- Image Container -->
-              <div class="relative h-[200px] overflow-hidden rounded-b-2xl">
-                <img
-                  src="/assets/images/gray-placeholder.webp"
-                  data-src="https://images.project-test.info/11.webp"
-                  loading="lazy"
-                  style="filter: blur(10px)"
-                  class="lazy-image filter-blur h-full w-full object-cover transition-all duration-300 group-hover:scale-105 group-hover:filter-none"
-                />
-                <span
-                  class="rounded-custom absolute right-2 top-2 bg-primary-500 px-2 py-1 text-xs font-semibold text-white rtl:left-2 rtl:right-auto"
-                >
-                  Fırsat
-                </span>
-              </div>
-
-              <div class="flex-grow p-4 pb-2">
-                <h2 class="line-clamp-2 text-xl font-semibold text-gray-800">
-                  Deluxe Safari Royal Al Sahara
-                </h2>
-              </div>
-
-              <div class="flex flex-col gap-1.5 p-4">
-                <!-- Rating -->
-                <div class="flex items-center gap-2">
-                  <i
-                    data-lucide="star"
-                    class="size-4 fill-yellow-400 text-yellow-400"
-                  ></i>
-                  <span class="text-sm font-medium text-gray-600">4.4</span>
-                  <span class="text-sm text-gray-500">(128 değerlendirme)</span>
-                </div>
-
-                <!-- People Count -->
-                <div class="space-y-2">
-                  <div class="flex items-center gap-2">
-                    <img
-                      src="/assets/images/icons/group.svg"
-                      alt="Daha Fazla Bilgi"
-                      class="size-4 fill-primary-500"
-                    />
-                    <span class="text-sm text-gray-600">4 kişi</span>
-                  </div>
-                </div>
-
-                <!-- Price -->
-                <div class="flex items-center justify-between">
+            <a href="/">
+              <div
+                class="flex h-full flex-col justify-start overflow-hidden rounded-2xl border border-gray-200 bg-white transition-all duration-300 hover:border-primary-500"
+              >
+                <!-- Image Container -->
+                <div class="relative h-[200px] overflow-hidden rounded-b-2xl">
+                  <img
+                    src="/assets/images/gray-placeholder.webp"
+                    data-src="https://images.project-test.info/11.webp"
+                    loading="lazy"
+                    style="filter: blur(10px)"
+                    class="lazy-image filter-blur h-full w-full object-cover transition-all duration-300 group-hover:scale-105 group-hover:filter-none"
+                  />
                   <span
-                    class="bg-gradient-to-br from-primary-400 to-primary-600 bg-clip-text text-2xl font-bold text-transparent"
+                    class="rounded-custom absolute right-2 top-2 bg-primary-500 px-2 py-1 text-xs font-semibold text-white rtl:left-2 rtl:right-auto"
                   >
-                    349$
+                    Fırsat
                   </span>
                 </div>
 
-                <!-- Button -->
-                <button
-                  class="w-full rounded-lg bg-primary-500 py-3 font-semibold text-white transition-colors hover:bg-primary-600"
-                >
-                  Aktivite Detayları
-                </button>
+                <div class="flex-grow p-4 pb-2">
+                  <h2 class="line-clamp-2 text-xl font-semibold text-gray-800">
+                    Deluxe Safari Royal Al Sahara
+                  </h2>
+                </div>
+
+                <div class="flex flex-col gap-1.5 p-4">
+                  <!-- Rating -->
+                  <div class="flex items-center gap-2">
+                    <i
+                      data-lucide="star"
+                      class="size-4 fill-yellow-400 text-yellow-400"
+                    ></i>
+                    <span class="text-sm font-medium text-gray-600">4.4</span>
+                    <span class="text-sm text-gray-500"
+                      >(128 değerlendirme)</span
+                    >
+                  </div>
+
+                  <!-- People Count -->
+                  <div class="space-y-2">
+                    <div class="flex items-center gap-2">
+                      <img
+                        src="/assets/images/icons/group.svg"
+                        alt="Daha Fazla Bilgi"
+                        class="size-4 fill-primary-500"
+                      />
+                      <span class="text-sm text-gray-600">4 kişi</span>
+                    </div>
+                  </div>
+
+                  <!-- Price -->
+                  <div class="flex items-center justify-between">
+                    <span
+                      class="bg-gradient-to-br from-primary-400 to-primary-600 bg-clip-text text-2xl font-bold text-transparent"
+                    >
+                      349$
+                    </span>
+                  </div>
+
+                  <!-- Button -->
+                  <button
+                    class="w-full rounded-lg bg-primary-500 py-3 font-semibold text-white transition-colors hover:bg-primary-600"
+                  >
+                    Aktivite Detayları
+                  </button>
+                </div>
               </div>
-            </div>
+            </a>
           </li>
           <li class="group hidden md:block">
             <!-- İkinci kart (aynı yapı) -->
-            <div
-              class="flex h-full flex-col justify-start overflow-hidden rounded-2xl border border-gray-200 bg-white transition-all duration-300 hover:border-primary-500"
-            >
-              <!-- Image Container -->
-              <div class="relative h-[200px] overflow-hidden rounded-b-2xl">
-                <img
-                  src="/assets/images/gray-placeholder.webp"
-                  data-src="https://images.project-test.info/12.webp"
-                  loading="lazy"
-                  style="filter: blur(10px)"
-                  class="lazy-image filter-blur h-full w-full object-cover transition-all duration-300 group-hover:scale-105 group-hover:filter-none"
-                />
-                <span
-                  class="rounded-custom absolute right-2 top-2 bg-primary-500 px-2 py-1 text-xs font-semibold text-white rtl:left-2 rtl:right-auto"
-                >
-                  Fırsat
-                </span>
-              </div>
-
-              <div class="flex-grow p-4 pb-2">
-                <h2 class="line-clamp-2 text-xl font-semibold text-gray-800">
-                  Deluxe Safari
-                </h2>
-              </div>
-
-              <div class="flex flex-col gap-1.5 p-4">
-                <!-- Rating -->
-                <div class="flex items-center gap-2">
-                  <i
-                    data-lucide="star"
-                    class="size-4 fill-yellow-400 text-yellow-400"
-                  ></i>
-                  <span class="text-sm font-medium text-gray-600">4.4</span>
-                  <span class="text-sm text-gray-500">(128 değerlendirme)</span>
-                </div>
-
-                <!-- People Count -->
-                <div class="space-y-2">
-                  <div class="flex items-center gap-2">
-                    <img
-                      src="/assets/images/icons/group.svg"
-                      alt="Daha Fazla Bilgi"
-                      class="size-4 fill-primary-500"
-                    />
-                    <span class="text-sm text-gray-600">4 kişi</span>
-                  </div>
-                </div>
-
-                <!-- Price -->
-                <div class="flex items-center justify-between">
+            <a href="/">
+              <div
+                class="flex h-full flex-col justify-start overflow-hidden rounded-2xl border border-gray-200 bg-white transition-all duration-300 hover:border-primary-500"
+              >
+                <!-- Image Container -->
+                <div class="relative h-[200px] overflow-hidden rounded-b-2xl">
+                  <img
+                    src="/assets/images/gray-placeholder.webp"
+                    data-src="https://images.project-test.info/12.webp"
+                    loading="lazy"
+                    style="filter: blur(10px)"
+                    class="lazy-image filter-blur h-full w-full object-cover transition-all duration-300 group-hover:scale-105 group-hover:filter-none"
+                  />
                   <span
-                    class="bg-gradient-to-br from-primary-400 to-primary-600 bg-clip-text text-2xl font-bold text-transparent"
+                    class="rounded-custom absolute right-2 top-2 bg-primary-500 px-2 py-1 text-xs font-semibold text-white rtl:left-2 rtl:right-auto"
                   >
-                    349$
+                    Fırsat
                   </span>
                 </div>
 
-                <!-- Button -->
-                <button
-                  class="w-full rounded-lg bg-primary-500 py-3 font-semibold text-white transition-colors hover:bg-primary-600"
-                >
-                  Aktivite Detayları
-                </button>
+                <div class="flex-grow p-4 pb-2">
+                  <h2 class="line-clamp-2 text-xl font-semibold text-gray-800">
+                    Deluxe Safari
+                  </h2>
+                </div>
+
+                <div class="flex flex-col gap-1.5 p-4">
+                  <!-- Rating -->
+                  <div class="flex items-center gap-2">
+                    <i
+                      data-lucide="star"
+                      class="size-4 fill-yellow-400 text-yellow-400"
+                    ></i>
+                    <span class="text-sm font-medium text-gray-600">4.4</span>
+                    <span class="text-sm text-gray-500"
+                      >(128 değerlendirme)</span
+                    >
+                  </div>
+
+                  <!-- People Count -->
+                  <div class="space-y-2">
+                    <div class="flex items-center gap-2">
+                      <img
+                        src="/assets/images/icons/group.svg"
+                        alt="Daha Fazla Bilgi"
+                        class="size-4 fill-primary-500"
+                      />
+                      <span class="text-sm text-gray-600">4 kişi</span>
+                    </div>
+                  </div>
+
+                  <!-- Price -->
+                  <div class="flex items-center justify-between">
+                    <span
+                      class="bg-gradient-to-br from-primary-400 to-primary-600 bg-clip-text text-2xl font-bold text-transparent"
+                    >
+                      349$
+                    </span>
+                  </div>
+
+                  <!-- Button -->
+                  <button
+                    class="w-full rounded-lg bg-primary-500 py-3 font-semibold text-white transition-colors hover:bg-primary-600"
+                  >
+                    Aktivite Detayları
+                  </button>
+                </div>
               </div>
-            </div>
+            </a>
           </li>
         </ul>
       </section>
