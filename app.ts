@@ -148,8 +148,8 @@ app.post('/github-push-event', async c => {
 
 function runBuildProcess(): void {
   exec(
-    'git pull && bun run build && sudo systemctl restart mdb-menuarts.service',
-    { cwd: '/root/mdb-code' },
+    'git pull && bun run build && sudo systemctl restart mbd-menuarts.service',
+    { cwd: '/root/mbd-code' },
     (error: Error | null, stdout: string, stderr: string) => {
       if (error) {
         console.error(`Exec error: ${error}`)
