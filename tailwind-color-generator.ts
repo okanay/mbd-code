@@ -41,17 +41,17 @@ function convertHexToTailwindRgb(
 
 // Örnek kullanım
 const colorObject: HexColorObject = {
-  '50': '#effefb',
-  '100': '#c7fff3',
-  '200': '#90ffe7',
-  '300': '#51f7da',
-  '400': '#1de4c7',
-  '500': '#04c8ae',
-  '600': '#00af9c',
-  '700': '#058074',
-  '800': '#0a655d',
-  '900': '#0d544e',
-  '950': '#003331',
+  '50': '#f0fdf9',
+  '100': '#cdfaef',
+  '200': '#9bf4df',
+  '300': '#60e8cc',
+  '400': '#30d1b6',
+  '500': '#17b59d',
+  '600': '#0f9280',
+  '700': '#127d70',
+  '800': '#125d55',
+  '900': '#144d47',
+  '950': '#052e2b',
 }
 
 console.log(convertHexToTailwindRgb(colorObject, 'primary', 'light'))
